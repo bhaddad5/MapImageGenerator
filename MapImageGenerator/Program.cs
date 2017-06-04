@@ -11,11 +11,28 @@ class Program
 	{
 		Bitmap mapIn = new Bitmap("mapIn.png");
 
-		StoredTerrainMap tileMap = new StoredTerrainMap(mapIn);
+		StoredTerrainMap terrainMap = new StoredTerrainMap(mapIn);
 
-		Console.WriteLine(tileMap.TileAreaValue(15, 15));
+		StoredRegionsMap regionsMap = new StoredRegionsMap(terrainMap, 35);
 
+		WriteRegionsMapToPng(regionsMap);
+		Console.WriteLine("Done");
 		Console.ReadLine();
+	}
+
+	static void WriteRegionsMapToPng(StoredRegionsMap map)
+	{
+		Bitmap mapOut = new Bitmap(map.Width, map.Height);
+
+		for(int i = 0; i < mapOut.Width; i++)
+		{
+			for(int j = 0; j < mapOut.Height; j++)
+			{
+				mapOut.SetPixel(i, j, map.GetTileColor(new Int2(i, j)));
+			}
+		}
+
+		mapOut.Save("mapOut.png");
 	}
 }
 

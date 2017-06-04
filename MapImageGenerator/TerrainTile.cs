@@ -15,7 +15,8 @@ class TerrainTile
 		Mountain,
 		Forest,
 		Grass,
-		Fertile
+		Fertile,
+		Coast
 	}
 
 	public static Dictionary<TileType, float> tileDifficulties = new Dictionary<TileType, float>()
@@ -27,17 +28,19 @@ class TerrainTile
 		{ TileType.Forest, .25f },
 		{ TileType.Grass, .2f },
 		{ TileType.Fertile, .1f },
+		{ TileType.Coast, .1f },
 	};
 
 	public static Dictionary<TileType, float> tileValues = new Dictionary<TileType, float>()
 	{
 		{ TileType.Ocean, 0f },
-		{ TileType.River, .4f },
+		{ TileType.River, .5f },
 		{ TileType.Swamp, .1f },
 		{ TileType.Mountain, .1f },
 		{ TileType.Forest, .2f },
 		{ TileType.Grass, .2f },
-		{ TileType.Fertile, .5f },
+		{ TileType.Fertile, .4f },
+		{ TileType.Coast, .6f },
 	};
 
 	public static Dictionary<Color, TileType> tileColors = new Dictionary<Color, TileType>()
@@ -49,6 +52,7 @@ class TerrainTile
 		{ Color.FromArgb(255, 0, 0, 0), TileType.Forest },
 		{ Color.FromArgb(255, 0, 130, 0), TileType.Grass},
 		{ Color.FromArgb(255, 255, 255, 0), TileType.Fertile },
+		{ Color.FromArgb(255, 255, 255, 255), TileType.Coast },
 	};
 
 	public TileType tileType = TileType.Grass;
