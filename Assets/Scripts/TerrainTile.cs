@@ -43,11 +43,22 @@ class TerrainTile
 	{
 		{ TileType.Ocean, -.1f },
 		{ TileType.Swamp, .1f },
-		{ TileType.Mountain, .4f },
+		{ TileType.Mountain, .6f },
 		{ TileType.Forest, .15f },
 		{ TileType.Grass, .1f },
 		{ TileType.Fertile, .1f },
 		{ TileType.Coast, .05f },
+	};
+
+	public static Dictionary<TileType, float> tileEdgeHeights = new Dictionary<TileType, float>()
+	{
+		{ TileType.Ocean, -.1f },
+		{ TileType.Swamp, .1f },
+		{ TileType.Mountain, .3f },
+		{ TileType.Forest, .15f },
+		{ TileType.Grass, .1f },
+		{ TileType.Fertile, .1f },
+		{ TileType.Coast, .02f },
 	};
 
 	public static Dictionary<Color, TileType> tileColors = new Dictionary<Color, TileType>()

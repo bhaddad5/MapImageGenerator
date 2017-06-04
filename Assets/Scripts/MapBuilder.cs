@@ -23,7 +23,8 @@ public class MapBuilder : MonoBehaviour
 
 		outMeshToSet.mesh = meshBuilder.GetBuiltMesh();
 		outMeshToSet.transform.localScale = new Vector3(10, 1, 10);
-		//outMeshToSet.transform.localPosition = new Vector3(5f, 0, 5f);
+		outMeshToSet.transform.localPosition = new Vector3(5f, 1, 5f);
+		outMeshToSet.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
 
 		WriteRegionsMapToPng(regionsMap);
 

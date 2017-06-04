@@ -5,30 +5,89 @@ using UnityEngine;
 class MeshBuilder
 {
 	private Mesh builtMesh = new Mesh();
-	private List<Vector3> vertices = new List<Vector3>();
-	public MeshBuilder(StoredTerrainMap map)
+		public MeshBuilder(StoredTerrainMap map)
 	{
 		BuildMesh(map);
 	}
 
 	private void BuildMesh(StoredTerrainMap map)
 	{
-		for(int i = 0; i < map.Height; i++)
-		{
-			for(int j = 0; j < map.Width; j++)
-			{
-				SetVerticesFromTile(new Int2(j, i), map.TileAt(new Int2(j, i)), (float)map.Width, (float)map.Height);
-			}
-		}
+		List<Vector3> vertices = new List<Vector3>();
+		float[][] vertHeights = populateVertHeights(map);
+		SetVerticesFromHeights(vertices, vertHeights);
 		builtMesh.vertices = vertices.ToArray();
-		SetUVsAndTriangles(builtMesh, map.Width, map.Height);
+		SetUVsAndTriangles(builtMesh, vertHeights.Length, vertHeights[0].Length);
 		builtMesh.name = "MapMesh";
 	}
 
-	private void SetVerticesFromTile(Int2 pos, TerrainTile tile, float width, float height)
+	private float[][] populateVertHeights(StoredTerrainMap map)
 	{
-		vertices.Add(new Vector3(pos.X/width, TerrainTile.tileHeights[tile.tileType], pos.Y/height));
+		float[][] vertHeights = new float[map.Width][];
+		for (int i = 0; i < vertHeights.Length; i++)
+		{
+			vertHeights[i] = new float[map.Height];
+		}
+
+		for (int i = 0; i < map.Width; i++)
+		{
+			for (int j = 0; j < map.Height; j++)
+			{
+				var tile = map.TileAt(new Int2(i, j));
+				vertHeights[i][j] = TerrainTile.tileHeights[tile.tileType];
+			}
+		}
+
+		return vertHeights;
 	}
+
+	private void SetVerticesFromHeights(List<Vector3> vertices, float[][] heights)
+	{
+		for (int i = 0; i < heights.Length; i++)
+		{
+			for (int j = 0; j < heights[0].Length; j++)
+			{
+				vertices.Add(new Vector3(j, heights[j][i] * 50f, i));
+			}
+		}
+	}
+
+	/*private float[][] populateVertHeights(StoredTerrainMap map)
+	{
+		float[][] vertHeights = new float[map.Width * 2 + 1][];
+		for (int i = 0; i < vertHeights.Length; i++)
+		{
+			vertHeights[i] = new float[map.Height * 2 + 1];
+		}
+
+		for (int i = 0; i < map.Width; i++)
+		{
+			for (int j = 0; j < map.Height; j++)
+			{
+				var tile = map.TileAt(new Int2(j, i));
+				vertHeights[i * 2][j * 2] = TerrainTile.tileEdgeHeights[tile.tileType];
+				vertHeights[i * 2 + 1][j * 2] = TerrainTile.tileEdgeHeights[tile.tileType];
+				vertHeights[i * 2][j * 2 + 1] = TerrainTile.tileEdgeHeights[tile.tileType];
+				vertHeights[i * 2 + 1][j * 2 + 1] = TerrainTile.tileHeights[tile.tileType];
+
+				if (i == map.Width - 1)
+				{
+					vertHeights[i * 2 + 2][j * 2] = TerrainTile.tileEdgeHeights[tile.tileType];
+					vertHeights[i * 2 + 2][j * 2 + 1] = TerrainTile.tileEdgeHeights[tile.tileType];
+				}
+				if (j == map.Height - 1)
+				{
+					vertHeights[i * 2][j * 2 + 2] = TerrainTile.tileEdgeHeights[tile.tileType];
+					vertHeights[i * 2 + 1][j * 2 + 2] = TerrainTile.tileEdgeHeights[tile.tileType];
+				}
+				if (i == map.Width - 1 && j == map.Height - 1)
+				{
+					vertHeights[i * 2 + 2][j * 2 + 2] = TerrainTile.tileEdgeHeights[tile.tileType];
+				}
+			}
+		}
+
+		return vertHeights;
+	}*/
 
 	//FROM: http://answers.unity3d.com/questions/667029/convert-an-array-of-points-into-a-mesh-generate-tr.html
 	private void SetUVsAndTriangles(Mesh m, int lrLengthx, int lrLengthz)
