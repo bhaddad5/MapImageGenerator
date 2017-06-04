@@ -18,7 +18,8 @@ class StoredTerrainMap
 			mapTiles.Insert(i, new List<TerrainTile>());
 			for (int j = 0; j < mapIn.Height; j++)
 			{
-				mapTiles[i].Insert(j, new TerrainTile(mapIn.GetPixel(i, j)));			
+				Int2 pos = new Int2(i, j);
+				mapTiles[i].Insert(j, new TerrainTile(mapIn.GetPixel(i, j), TileNextToOcean(pos, mapIn), TileNextToRiver(pos, mapIn)));			
 			}
 		}
 	}
@@ -77,6 +78,40 @@ class StoredTerrainMap
 	public bool TileIsRiver(Int2 pos)
 	{
 		return TileInBounds(pos) && TileAt(pos).tileType == TerrainTile.TileType.River;
+	}
+
+	private bool TileNextToRiver(Int2 pos, Bitmap mapIn)
+	{
+		foreach(Color c in GetAdjacentTiles(pos, mapIn))
+		{
+			if (TerrainTile.tileColors[c] == TerrainTile.TileType.River)
+				return true;
+		}
+		return false;
+	}
+
+	private bool TileNextToOcean(Int2 pos, Bitmap mapIn)
+	{
+		foreach (Color c in GetAdjacentTiles(pos, mapIn))
+		{
+			if (TerrainTile.tileColors[c] == TerrainTile.TileType.Ocean)
+				return true;
+		}
+		return false;
+	}
+
+	private List<Color> GetAdjacentTiles(Int2 pos, Bitmap mapIn)
+	{
+		List<Color> colors = new List<Color>();
+		for (int x = pos.X - 1; x <= pos.X + 1; x++)
+		{
+			for (int y = pos.Y - 1; y <= pos.Y + 1; y++)
+			{
+				if (TileInBounds(new Int2(x, y)))
+					colors.Add(mapIn.GetPixel(x, y));
+			}
+		}
+		return colors;
 	}
 
 	public float TileDifficulty(Int2 pos)
