@@ -25,7 +25,7 @@ class StoredTerrainMap
 
 	public float TileAreaValue(Int2 pos)
 	{
-		float value = 0f;
+		float value = GetTile(pos).GetValue();
 
 		foreach (TerrainTile t in GetAdjacentTiles(pos))
 			value += t.GetValue();

@@ -33,14 +33,14 @@ class TerrainTile
 
 	public static Dictionary<TileType, float> tileValues = new Dictionary<TileType, float>()
 	{
-		{ TileType.Ocean, 0f },
-		{ TileType.River, .5f },
+		{ TileType.Ocean, .8f },
+		{ TileType.River, .8f },
 		{ TileType.Swamp, .1f },
 		{ TileType.Mountain, .1f },
 		{ TileType.Forest, .2f },
 		{ TileType.Grass, .2f },
 		{ TileType.Fertile, .4f },
-		{ TileType.Coast, .6f },
+		{ TileType.Coast, .7f },
 	};
 
 	public static Dictionary<Color, TileType> tileColors = new Dictionary<Color, TileType>()

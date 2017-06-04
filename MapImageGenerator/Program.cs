@@ -13,7 +13,7 @@ class Program
 
 		StoredTerrainMap terrainMap = new StoredTerrainMap(mapIn);
 
-		StoredRegionsMap regionsMap = new StoredRegionsMap(terrainMap, 35);
+		StoredRegionsMap regionsMap = new StoredRegionsMap(terrainMap, 50);
 
 		WriteRegionsMapToPng(regionsMap);
 		Console.WriteLine("Done");

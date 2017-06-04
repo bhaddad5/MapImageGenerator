@@ -40,35 +40,38 @@ class StoredRegionsMap
 		for(int i = 0; i < numberOfSettlements * 10; i++)
 		{
 			Int2 testPos = new Int2(r.Next(0, terrainMap.Width), r.Next(terrainMap.Height));
-			if (!terrainMap.TileIsOceanOrRiver(testPos) && !TooCloseToExistingSettlement(testPos, regions))
+			if (!terrainMap.TileIsOceanOrRiver(testPos) &&
+				!TooCloseToExistingSettlement(testPos, regions) &&
+				!TooCloseToBorder(testPos, new Int2(terrainMap.Width, terrainMap.Height)))
 			{
 				regions.Insert(terrainMap.TileAreaValue(testPos), testPos);
 			}
 		}
 
+		return PickUsedSettlementsFromSortedList(numberOfSettlements, regions);
+	}
+
+	private List<Int2> PickUsedSettlementsFromSortedList(int numOfSettlements, SortedDupList<Int2> regions)
+	{
 		List<Int2> usedSettlements = new List<Int2>();
 		int regionsIndex = 0;
-		bool past50Percent = false;
-		bool past75Percent = false;
-		for (int i = 0; i < numberOfSettlements; i++)
+		for (int i = 0; i < numOfSettlements; i++)
 		{
-			if(regionsIndex >= regions.Count)
+			if (regionsIndex >= regions.Count)
 			{
 				Console.WriteLine("We ran out of regions!");
 				break;
 			}
 
 			usedSettlements.Add(regions.ValueAt(regionsIndex));
-			if (!past50Percent && i > numberOfSettlements * .5f)
-			{
-				regionsIndex = (int) (regions.Count * .5f);
-				past50Percent = true;
-			}
-			else if(!past75Percent && i > numberOfSettlements * .75)
-			{
+			if (i == (int)(numOfSettlements * .75f))
+				regionsIndex = (int)(regions.Count * .75f);
+			if (i == (int)(numOfSettlements * .5f))
+				regionsIndex = (int)(regions.Count * .5f);
+			else if (i == (int)(numOfSettlements * .25f))
 				regionsIndex = (int)(regions.Count * .25f);
-				past75Percent = true;
-			}
+			else if (i == (int)(numOfSettlements * .10f))
+				regionsIndex = (int)(regions.Count * .15f);
 
 			regionsIndex++;
 		}
@@ -77,7 +80,7 @@ class StoredRegionsMap
 
 	private bool TooCloseToExistingSettlement(Int2 pos, SortedDupList<Int2> existingSettlements)
 	{
-		int minDist = 3;
+		int minDist = 4;
 		for(int i = 0; i < existingSettlements.Count; i++)
 		{
 			Int2 existing = existingSettlements.ValueAt(i);
@@ -86,6 +89,13 @@ class StoredRegionsMap
 				return true;
 		}
 		return false;
+	}
+
+	private bool TooCloseToBorder(Int2 pos, Int2 mapDimensions)
+	{
+		int minDist = 3;
+		return pos.X < minDist || pos.X > mapDimensions.X - minDist ||
+			pos.Y < minDist || pos.Y > mapDimensions.Y - minDist;
 	}
 
 	public Color GetTileColor(Int2 pos)
