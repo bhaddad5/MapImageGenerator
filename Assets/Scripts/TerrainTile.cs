@@ -41,7 +41,7 @@ class TerrainTile
 
 	public static Dictionary<TileType, float> tileHeights = new Dictionary<TileType, float>()
 	{
-		{ TileType.Ocean, -.1f },
+		{ TileType.Ocean, -.3f },
 		{ TileType.Swamp, .1f },
 		{ TileType.Mountain, .6f },
 		{ TileType.Forest, .15f },
@@ -52,7 +52,7 @@ class TerrainTile
 
 	public static Dictionary<TileType, float> tileEdgeHeights = new Dictionary<TileType, float>()
 	{
-		{ TileType.Ocean, -.1f },
+		{ TileType.Ocean, -.3f },
 		{ TileType.Swamp, .1f },
 		{ TileType.Mountain, .3f },
 		{ TileType.Forest, .15f },

@@ -14,7 +14,8 @@ class MeshBuilder
 	{
 		List<Vector3> vertices = new List<Vector3>();
 		float[][] vertHeights = populateVertHeights(map);
-		SetVerticesFromHeights(vertices, vertHeights);
+		vertHeights = RandomizeVertHeights(vertHeights);
+		SetVerticesFromHeights(vertices, vertHeights);		
 		builtMesh.vertices = vertices.ToArray();
 		SetUVsAndTriangles(builtMesh, vertHeights.Length, vertHeights[0].Length);
 		builtMesh.name = "MapMesh";
@@ -56,6 +57,18 @@ class MeshBuilder
 		}
 
 		return vertHeights;
+	}
+
+	private float[][] RandomizeVertHeights(float[][] heights)
+	{
+		for(int i = 0; i < heights.Length; i++)
+		{
+			for(int j = 0; j < heights[0].Length; j++)
+			{
+				heights[i][j] = heights[i][j] + Random.Range(-.1f, .1f);
+			}
+		}
+		return heights;
 	}
 
 	private void SetVerticesFromHeights(List<Vector3> vertices, float[][] heights)
