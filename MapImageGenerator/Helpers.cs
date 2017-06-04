@@ -19,6 +19,11 @@ public class Int2
 	{
 		return obj is Int2 && (obj as Int2).X == X && (obj as Int2).Y == Y;
 	}
+
+	public static Int2 operator +(Int2 a, Int2 b)
+	{
+		return new Int2(a.X + b.X, a.Y + b.Y);
+	}
 }
 
 public class SortedDupList<T>
@@ -56,6 +61,11 @@ public class SortedDupList<T>
 		return entries[index].value;
 	}
 
+	public float KeyAt(int index)
+	{
+		return entries[index].comparator;
+	}
+
 	public List<T> FirstNumValues(int numValues)
 	{
 		List<T> vals = new List<T>();
@@ -74,5 +84,22 @@ public class SortedDupList<T>
 				return true;
 		}
 		return false;
+	}
+
+	public float TopKey()
+	{
+		return entries[0].comparator;
+	}
+
+	public T TopValue()
+	{
+		return entries[0].value;
+	}
+
+	public T Pop()
+	{
+		T val = entries[0].value;
+		entries.RemoveAt(0);
+		return val;
 	}
 }

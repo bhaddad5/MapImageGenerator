@@ -10,10 +10,11 @@ class Program
 	static void Main(string[] args)
 	{
 		Bitmap mapIn = new Bitmap("mapIn.png");
+		int averagePixelsPerRegion = 60;
 
 		StoredTerrainMap terrainMap = new StoredTerrainMap(mapIn);
 
-		StoredRegionsMap regionsMap = new StoredRegionsMap(terrainMap, 50);
+		StoredRegionsMap regionsMap = new StoredRegionsMap(terrainMap, (mapIn.Width * mapIn.Height) / averagePixelsPerRegion);
 
 		WriteRegionsMapToPng(regionsMap);
 		Console.WriteLine("Done");

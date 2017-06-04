@@ -67,5 +67,10 @@ class TerrainTile
 		return tileValues[tileType];
 	}
 
+	public float GetDifficulty()
+	{
+		return tileDifficulties[tileType];
+	}
+
 }
 

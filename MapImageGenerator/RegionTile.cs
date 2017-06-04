@@ -8,6 +8,7 @@ using System.Drawing;
 class RegionTile
 {
 	public Region region;
+	public float holdingStrength;
 	public bool isSettlement = false;
 
 	public RegionTile(Region r)
@@ -18,6 +19,17 @@ class RegionTile
 	public void SetIsSettlement(bool settlement)
 	{
 		isSettlement = settlement;
+	}
+
+	public bool TrySetRegion(Region r, float strength)
+	{
+		if(strength > holdingStrength)
+		{
+			region = r;
+			holdingStrength = strength;
+			return true;
+		}
+		return false;
 	}
 
 	public Color GetColor()

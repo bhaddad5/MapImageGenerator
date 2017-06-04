@@ -18,6 +18,7 @@ class Settlement
 
 class Region
 {
+	public static Random rand = new Random();
 	public Settlement settlement;
 	public Color color;
 	public float value;
@@ -26,8 +27,7 @@ class Region
 	{
 		settlement = new Settlement(name, (int)v);
 		value = v;
-		Random r = new Random();
-		color = Color.FromArgb(255, r.Next(0, 255), r.Next(0, 255), r.Next(0, 255));
+		color = Color.FromArgb(255, rand.Next(0, 255), rand.Next(0, 255), rand.Next(0, 255));
 	}
 }
 

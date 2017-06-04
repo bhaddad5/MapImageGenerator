@@ -18,14 +18,14 @@ class StoredTerrainMap
 			mapTiles.Insert(i, new List<TerrainTile>());
 			for (int j = 0; j < mapIn.Height; j++)
 			{
-				mapTiles[i].Insert(j, new TerrainTile(mapIn.GetPixel(i, j)));
+				mapTiles[i].Insert(j, new TerrainTile(mapIn.GetPixel(i, j)));			
 			}
 		}
 	}
 
 	public float TileAreaValue(Int2 pos)
 	{
-		float value = GetTile(pos).GetValue();
+		float value = TileAt(pos).GetValue();
 
 		foreach (TerrainTile t in GetAdjacentTiles(pos))
 			value += t.GetValue();
@@ -42,9 +42,8 @@ class StoredTerrainMap
 		{
 			for (int y = pos.Y - 1; y <= pos.Y + 1; y++)
 			{
-				TerrainTile tile = GetTile(new Int2(x, y));
-				if (tile != null)
-					tiles.Add(tile);
+				if (TileInBounds(new Int2(x, y)))
+					tiles.Add(TileAt(new Int2(x, y)));
 			}
 		}
 		return tiles;
@@ -57,29 +56,36 @@ class StoredTerrainMap
 		{
 			for(int y = pos.Y - 2; y <= pos.Y + 2; y++)
 			{
-				TerrainTile tile = GetTile(new Int2(x, y));
-				if (tile != null)
-					tiles.Add(tile);
+				if (TileInBounds(new Int2(x, y)))
+					tiles.Add(TileAt(new Int2(x, y)));
 			}
 		}
 		return tiles;
 	}
 
-	private TerrainTile GetTile(Int2 pos)
+	public bool TileInBounds(Int2 pos)
 	{
-		if(pos.X > 0 && pos.X < mapTiles.Count)
-		{
-			if(pos.Y > 0 && pos.Y < mapTiles[pos.X].Count)
-			{
-				return mapTiles[pos.X][pos.Y];
-			}
-		}
-		return null;
+		return pos.X >= 0 && pos.X < mapTiles.Count &&
+			pos.Y >= 0 && pos.Y < mapTiles[pos.X].Count;
 	}
 
-	public bool TileIsOceanOrRiver(Int2 pos)
+	public bool TileIsOcean(Int2 pos)
 	{
-		var tile = GetTile(pos);
-		return tile != null && (tile.tileType == TerrainTile.TileType.Ocean || tile.tileType == TerrainTile.TileType.River);
+		return TileInBounds(pos) && TileAt(pos).tileType == TerrainTile.TileType.Ocean;
+	}
+
+	public bool TileIsRiver(Int2 pos)
+	{
+		return TileInBounds(pos) && TileAt(pos).tileType == TerrainTile.TileType.River;
+	}
+
+	public float TileDifficulty(Int2 pos)
+	{
+		return TileAt(pos).GetDifficulty();
+	}
+
+	private TerrainTile TileAt(Int2 pos)
+	{
+		return mapTiles[pos.X][pos.Y];
 	}
 }
