@@ -6,6 +6,7 @@ using System.IO;
 public class MapBuilder : MonoBehaviour
 {
 	public Texture2D mapIn;
+	public Material outMatToSet;
 	// Use this for initialization
 	void Start () {
 		int averagePixelsPerRegion = 60;
@@ -19,9 +20,13 @@ public class MapBuilder : MonoBehaviour
 		Debug.Log("Done");
 	}
 
-	static void WriteRegionsMapToPng(StoredRegionsMap map)
+	private void WriteRegionsMapToPng(StoredRegionsMap map)
 	{
 		Texture2D mapOut = new Texture2D(map.Width, map.Height);
+		mapOut.anisoLevel = 0;
+		mapOut.filterMode = FilterMode.Point;
+		mapOut.wrapMode = TextureWrapMode.Clamp;
+
 
 		for (int i = 0; i < mapOut.width; i++)
 		{
@@ -32,6 +37,9 @@ public class MapBuilder : MonoBehaviour
 		}
 
 		mapOut.Apply();
+
+		outMatToSet.mainTexture = mapOut;
+
 		byte[] bytes = mapOut.EncodeToPNG();
 		File.WriteAllBytes(Application.dataPath + "/MapTextures/SavedMap.png", bytes);
 	}

@@ -22,14 +22,12 @@ class StoredRegionsMap
 			Region r = new Region("Region" + i, settlementLocations.KeyAt(i));
 			ExpandRegionFromSettlement(2, r, settlementLocations.ValueAt(i), terrainMap);
 		}
+
+		EndFillMap(terrainMap);
 	}
 
 	private void StartFillMap(StoredTerrainMap terrainMap)
 	{
-		Region OceanRegion = new Region("Ocean", 0f);
-		OceanRegion.color = Color.blue;
-		regions.Add(OceanRegion);
-
 		Region NoMansLand = new Region("NoMansLand", 0f);
 		NoMansLand.color = Color.black;
 		regions.Add(NoMansLand);
@@ -39,9 +37,23 @@ class StoredRegionsMap
 			mapTiles.Insert(i, new List<RegionTile>());
 			for (int j = 0; j < terrainMap.Height; j++)
 			{
+				mapTiles[i].Insert(j, new RegionTile(NoMansLand));
+			}
+		}
+	}
+
+	private void EndFillMap(StoredTerrainMap terrainMap)
+	{
+		Region OceanRegion = new Region("Ocean", 0f);
+		OceanRegion.color = Color.blue;
+		regions.Add(OceanRegion);
+
+		for (int i = 0; i < terrainMap.Width; i++)
+		{
+			for (int j = 0; j < terrainMap.Height; j++)
+			{
 				if (terrainMap.TileIsOcean(new Int2(i, j)))
-					mapTiles[i].Insert(j, new RegionTile(OceanRegion));
-				else mapTiles[i].Insert(j, new RegionTile(NoMansLand));
+					TileAt(new Int2(i, j)).region = OceanRegion;
 			}
 		}
 	}
@@ -54,7 +66,6 @@ class StoredRegionsMap
 		{
 			Int2 testPos = new Int2(UnityEngine.Random.Range(0, terrainMap.Width), UnityEngine.Random.Range(0, terrainMap.Height));
 			if (!terrainMap.TileIsOcean(testPos) &&
-				!terrainMap.TileIsRiver(testPos) &&
 				!TooCloseToExistingSettlement(testPos, regions) &&
 				!TooCloseToBorder(testPos, new Int2(terrainMap.Width, terrainMap.Height)))
 			{
@@ -155,7 +166,7 @@ class StoredRegionsMap
 
 	private bool IsPossibleNeighbor(Int2 neighbor, Region region, StoredTerrainMap terrainMap)
 	{
-		return terrainMap.TileInBounds(neighbor) && TileAt(neighbor).region != region && !terrainMap.TileIsOcean(neighbor);
+		return terrainMap.TileInBounds(neighbor) && TileAt(neighbor).region != region;
 	}
 
 	private RegionTile TileAt(Int2 pos)

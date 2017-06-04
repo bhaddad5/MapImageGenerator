@@ -18,7 +18,7 @@ class StoredTerrainMap
 			for (int j = 0; j < mapIn.height; j++)
 			{
 				Int2 pos = new Int2(i, j);
-				mapTiles[i].Insert(j, new TerrainTile(mapIn.GetPixel(i, j), TileNextToOcean(pos, mapIn), TileNextToRiver(pos, mapIn)));			
+				mapTiles[i].Insert(j, new TerrainTile(mapIn.GetPixel(i, j), TileNextToOcean(pos, mapIn)));			
 			}
 		}
 	}
@@ -72,21 +72,6 @@ class StoredTerrainMap
 	public bool TileIsOcean(Int2 pos)
 	{
 		return TileInBounds(pos) && TileAt(pos).tileType == TerrainTile.TileType.Ocean;
-	}
-
-	public bool TileIsRiver(Int2 pos)
-	{
-		return TileInBounds(pos) && TileAt(pos).tileType == TerrainTile.TileType.River;
-	}
-
-	private bool TileNextToRiver(Int2 pos, Texture2D mapIn)
-	{
-		foreach(Color c in GetAdjacentTiles(pos, mapIn))
-		{
-			if (TerrainTile.tileColors[c] == TerrainTile.TileType.River)
-				return true;
-		}
-		return false;
 	}
 
 	private bool TileNextToOcean(Int2 pos, Texture2D mapIn)
