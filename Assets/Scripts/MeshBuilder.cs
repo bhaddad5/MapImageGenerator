@@ -22,37 +22,6 @@ class MeshBuilder
 
 	private float[][] populateVertHeights(StoredTerrainMap map)
 	{
-		float[][] vertHeights = new float[map.Width][];
-		for (int i = 0; i < vertHeights.Length; i++)
-		{
-			vertHeights[i] = new float[map.Height];
-		}
-
-		for (int i = 0; i < map.Width; i++)
-		{
-			for (int j = 0; j < map.Height; j++)
-			{
-				var tile = map.TileAt(new Int2(i, j));
-				vertHeights[i][j] = TerrainTile.tileHeights[tile.tileType];
-			}
-		}
-
-		return vertHeights;
-	}
-
-	private void SetVerticesFromHeights(List<Vector3> vertices, float[][] heights)
-	{
-		for (int i = 0; i < heights.Length; i++)
-		{
-			for (int j = 0; j < heights[0].Length; j++)
-			{
-				vertices.Add(new Vector3(j, heights[j][i] * 50f, i));
-			}
-		}
-	}
-
-	/*private float[][] populateVertHeights(StoredTerrainMap map)
-	{
 		float[][] vertHeights = new float[map.Width * 2 + 1][];
 		for (int i = 0; i < vertHeights.Length; i++)
 		{
@@ -63,7 +32,7 @@ class MeshBuilder
 		{
 			for (int j = 0; j < map.Height; j++)
 			{
-				var tile = map.TileAt(new Int2(j, i));
+				var tile = map.TileAt(new Int2(i, j));
 				vertHeights[i * 2][j * 2] = TerrainTile.tileEdgeHeights[tile.tileType];
 				vertHeights[i * 2 + 1][j * 2] = TerrainTile.tileEdgeHeights[tile.tileType];
 				vertHeights[i * 2][j * 2 + 1] = TerrainTile.tileEdgeHeights[tile.tileType];
@@ -87,7 +56,18 @@ class MeshBuilder
 		}
 
 		return vertHeights;
-	}*/
+	}
+
+	private void SetVerticesFromHeights(List<Vector3> vertices, float[][] heights)
+	{
+		for (int i = 0; i < heights.Length; i++)
+		{
+			for (int j = 0; j < heights[0].Length; j++)
+			{
+				vertices.Add(new Vector3(j, heights[j][i] * 50f, i));
+			}
+		}
+	}
 
 	//FROM: http://answers.unity3d.com/questions/667029/convert-an-array-of-points-into-a-mesh-generate-tr.html
 	private void SetUVsAndTriangles(Mesh m, int lrLengthx, int lrLengthz)
