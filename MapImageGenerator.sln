@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapImageGenerator.CSharp", "MapImageGenerator.CSharp.csproj", "{4527E1EC-AFD6-5E82-FAA4-DD5D044518A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapImageGenerator", "MapImageGenerator\MapImageGenerator.csproj", "{6D072081-533A-489B-8159-03E59D08E6B8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,10 +13,6 @@ Global
 		{4527E1EC-AFD6-5E82-FAA4-DD5D044518A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4527E1EC-AFD6-5E82-FAA4-DD5D044518A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4527E1EC-AFD6-5E82-FAA4-DD5D044518A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D072081-533A-489B-8159-03E59D08E6B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D072081-533A-489B-8159-03E59D08E6B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D072081-533A-489B-8159-03E59D08E6B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D072081-533A-489B-8159-03E59D08E6B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
