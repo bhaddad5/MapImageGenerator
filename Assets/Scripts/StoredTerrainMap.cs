@@ -103,7 +103,7 @@ class StoredTerrainMap
 		return TileAt(pos).GetDifficulty();
 	}
 
-	private TerrainTile TileAt(Int2 pos)
+	public TerrainTile TileAt(Int2 pos)
 	{
 		return mapTiles[pos.X][pos.Y];
 	}

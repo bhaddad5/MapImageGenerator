@@ -39,6 +39,17 @@ class TerrainTile
 		{ TileType.Coast, .7f },
 	};
 
+	public static Dictionary<TileType, float> tileHeights = new Dictionary<TileType, float>()
+	{
+		{ TileType.Ocean, -.1f },
+		{ TileType.Swamp, .1f },
+		{ TileType.Mountain, .4f },
+		{ TileType.Forest, .15f },
+		{ TileType.Grass, .1f },
+		{ TileType.Fertile, .1f },
+		{ TileType.Coast, .05f },
+	};
+
 	public static Dictionary<Color, TileType> tileColors = new Dictionary<Color, TileType>()
 	{
 		{ new Color(0, 0, 255/255f), TileType.Ocean },
@@ -54,7 +65,7 @@ class TerrainTile
 	public TerrainTile(Color c, bool nextToOcean)
 	{
 		tileType = tileColors[c];
-		if (tileType != TileType.Ocean && nextToOcean)
+		if (tileType != TileType.Ocean && tileType != TileType.Swamp && nextToOcean)
 			tileType = TileType.Coast;
 	}
 

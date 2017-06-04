@@ -6,7 +6,11 @@ using System.IO;
 public class MapBuilder : MonoBehaviour
 {
 	public Texture2D mapIn;
+
+	//DEBUG
 	public Material outMatToSet;
+	public MeshFilter outMeshToSet;
+
 	// Use this for initialization
 	void Start () {
 		int averagePixelsPerRegion = 60;
@@ -14,6 +18,12 @@ public class MapBuilder : MonoBehaviour
 		StoredTerrainMap terrainMap = new StoredTerrainMap(mapIn);
 
 		StoredRegionsMap regionsMap = new StoredRegionsMap(terrainMap, (mapIn.width * mapIn.height) / averagePixelsPerRegion);
+
+		MeshBuilder meshBuilder = new MeshBuilder(terrainMap);
+
+		outMeshToSet.mesh = meshBuilder.GetBuiltMesh();
+		outMeshToSet.transform.localScale = new Vector3(10, 1, 10);
+		//outMeshToSet.transform.localPosition = new Vector3(5f, 0, 5f);
 
 		WriteRegionsMapToPng(regionsMap);
 
