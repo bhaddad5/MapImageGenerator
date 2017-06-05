@@ -15,7 +15,7 @@ class MeshBuilder
 		int vertsPerTileAcross = 3;
 		List<Vector3> vertices = new List<Vector3>();
 		float[][] vertHeights = populateVertHeights(map, vertsPerTileAcross);
-		//vertHeights = RandomizeVertHeights(vertHeights);
+		vertHeights = RandomizeVertHeights(vertHeights);
 		SetVerticesFromHeights(vertices, vertHeights, vertsPerTileAcross);		
 		builtMesh.vertices = vertices.ToArray();
 		SetUVsAndTriangles(builtMesh, vertHeights.Length, vertHeights[0].Length);
@@ -78,10 +78,36 @@ class MeshBuilder
 		{
 			for(int j = 0; j < heights[0].Length; j++)
 			{
-				heights[i][j] = heights[i][j] + Random.Range(-.1f, .1f);
+				heights[i][j] = (heights[i][j] + neighborAverageHeight(i, j, heights))/2 * Random.Range(.75f, 1.3f);
 			}
 		}
 		return heights;
+	}
+
+	private float neighborAverageHeight(int x, int y, float[][] heights)
+	{
+		List<float> points = new List<float>();
+		TryAddPoint(points, x - 1, y - 1, heights.Length - 1, heights[0].Length - 1, heights);
+		TryAddPoint(points, x, y - 1, heights.Length - 1, heights[0].Length - 1, heights);
+		TryAddPoint(points, x + 1, y - 1, heights.Length - 1, heights[0].Length - 1, heights);
+		TryAddPoint(points, x - 1, y, heights.Length - 1, heights[0].Length - 1, heights);
+		TryAddPoint(points, x + 1, y, heights.Length - 1, heights[0].Length - 1, heights);
+		TryAddPoint(points, x - 1, y + 1, heights.Length - 1, heights[0].Length - 1, heights);
+		TryAddPoint(points, x, y + 1, heights.Length - 1, heights[0].Length - 1, heights);
+		TryAddPoint(points, x + 1, y + 1, heights.Length - 1, heights[0].Length - 1, heights);
+
+		float average = 0f;
+		foreach (var pt in points)
+		{
+			average += pt;
+		}
+		return average/points.Count;
+	}
+
+	private void TryAddPoint(List<float> points, int x, int y, int maxX, int maxY, float[][] heights)
+	{
+		if (x >= 0 && x < maxX && y >= 0 && y < maxY)
+			points.Add(heights[x][y]);
 	}
 
 	private void SetVerticesFromHeights(List<Vector3> vertices, float[][] heights, float vertsPerTileAcross)
