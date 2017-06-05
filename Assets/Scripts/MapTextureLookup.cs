@@ -8,6 +8,7 @@ public class MapTextureLookup : MonoBehaviour {
 	public Texture2D Fertile;
 	public Texture2D Wilderness;
 	public Texture2D Forest;
+	public Texture2D Swamp;
 
 	public Texture2D GetTileTypeTexture(TerrainTile.TileType type)
 	{
@@ -19,6 +20,8 @@ public class MapTextureLookup : MonoBehaviour {
 			return Forest;
 		if (type == TerrainTile.TileType.Fertile)
 			return Fertile;
+		if (type == TerrainTile.TileType.Swamp)
+			return Swamp;
 		return Fertile;
 	}
 }

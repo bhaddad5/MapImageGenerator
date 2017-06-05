@@ -55,8 +55,8 @@ public class TerrainTile
 		{ new Color(0, 0, 255/255f), TileType.Ocean },
 		{ new Color(0, 188/255f, 106/255f), TileType.Swamp },
 		{ new Color(144/255f, 92/255f, 0), TileType.Mountain },
-		{ new Color(0, 0, 0), TileType.Forest },
-		{ new Color(0, 130/255f, 0), TileType.Grass},
+		{ new Color(0, 130/255f, 0), TileType.Forest },
+		{ new Color(0, 0, 0), TileType.Grass},
 		{ new Color(255/255f, 255/255f, 0), TileType.Fertile },
 	};
 

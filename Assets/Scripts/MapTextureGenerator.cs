@@ -35,6 +35,10 @@ class MapTextureGenerator
 
 	private void AddMapChunkForTile(int i, int j, int scale, TerrainTile tile, MapTextureLookup lookup)
 	{
+		if(i == 55 && j == 55)
+		{
+			Debug.Log("hit");
+		}
 		Int2 textureCoord = new Int2(Random.Range(0, 400), Random.Range(0, 400));
 		Texture2D tileTexture = lookup.GetTileTypeTexture(tile.tileType);
 		for(int x = i*scale - scale/4; x < i*scale + scale + scale/4; x++)
