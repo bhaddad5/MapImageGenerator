@@ -17,7 +17,7 @@ class StoredRegionsMap
 
 		var settlementLocations = GetSettlementLocations(terrainMap, numberOfSettlements);
 
-		for(int i = 0; i < settlementLocations.Count; i++)
+		for(int i = settlementLocations.Count - 1; i >= 0; i--)
 		{
 			Region r = new Region("Region" + i, settlementLocations.KeyAt(i));
 			ExpandRegionFromSettlement(2, r, settlementLocations.ValueAt(i), terrainMap);

@@ -66,7 +66,7 @@ public class TerrainTile
 	public TerrainTile(Color c, bool nextToOcean)
 	{
 		tileType = tileColors[c];
-		if (tileType != TileType.Ocean && tileType != TileType.Swamp && nextToOcean)
+		if (tileType != TileType.Ocean && tileType == TileType.Fertile && nextToOcean)
 			tileType = TileType.Coast;
 	}
 
