@@ -2,6 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
+
+public static class Helpers
+{
+	public static void DEBUGSphereAtPoint(Vector3 point, float scale)
+	{
+		GameObject sphere = GameObject.Instantiate(Resources.Load("DebugSphere") as GameObject);
+		sphere.transform.position = point;
+		sphere.transform.localScale = new Vector3(scale, scale, scale);
+	}
+}
 
 public class Int2
 {

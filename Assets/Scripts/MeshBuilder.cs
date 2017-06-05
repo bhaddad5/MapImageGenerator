@@ -58,16 +58,16 @@ class MeshBuilder
 		if (i == mapWidth - 1)
 		{
 			for(int x = 0; x < vertsPerTileAcross - 1; x++)
-				heights[baseI + vertsPerTileAcross - 1][baseJ + x] = TerrainTile.tileEdgeHeights[tile.tileType];
+				heights[baseI + vertsPerTileAcross - 1][baseJ + x] = TerrainTile.tileHeights[tile.tileType];
 		}
 		if (j == mapHeight - 1)
 		{
 			for (int x = 0; x < vertsPerTileAcross - 1; x++)
-				heights[baseI + x][baseJ + vertsPerTileAcross - 1] = TerrainTile.tileEdgeHeights[tile.tileType];
+				heights[baseI + x][baseJ + vertsPerTileAcross - 1] = TerrainTile.tileHeights[tile.tileType];
 		}
 		if (i == mapWidth - 1 && j == mapHeight - 1)
 		{
-			heights[baseI + vertsPerTileAcross - 1][baseJ + vertsPerTileAcross - 1] = TerrainTile.tileEdgeHeights[tile.tileType];
+			heights[baseI + vertsPerTileAcross - 1][baseJ + vertsPerTileAcross - 1] = TerrainTile.tileHeights[tile.tileType];
 		}
 		return heights;
 	}
@@ -84,7 +84,7 @@ class MeshBuilder
 		return heights;
 	}
 
-	private void SetVerticesFromHeights(List<Vector3> vertices, float[][] heights, int vertsPerTileAcross)
+	private void SetVerticesFromHeights(List<Vector3> vertices, float[][] heights, float vertsPerTileAcross)
 	{
 		for (int i = 0; i < heights.Length; i++)
 		{
