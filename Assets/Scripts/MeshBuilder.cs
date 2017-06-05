@@ -12,21 +12,23 @@ class MeshBuilder
 
 	private void BuildMesh(StoredTerrainMap map)
 	{
+		int vertsPerTileAcross = 3;
 		List<Vector3> vertices = new List<Vector3>();
-		float[][] vertHeights = populateVertHeights(map);
-		vertHeights = RandomizeVertHeights(vertHeights);
-		SetVerticesFromHeights(vertices, vertHeights);		
+		float[][] vertHeights = populateVertHeights(map, vertsPerTileAcross);
+		//vertHeights = RandomizeVertHeights(vertHeights);
+		SetVerticesFromHeights(vertices, vertHeights, vertsPerTileAcross);		
 		builtMesh.vertices = vertices.ToArray();
 		SetUVsAndTriangles(builtMesh, vertHeights.Length, vertHeights[0].Length);
 		builtMesh.name = "MapMesh";
+		Debug.Log(vertices.Count);
 	}
 
-	private float[][] populateVertHeights(StoredTerrainMap map)
+	private float[][] populateVertHeights(StoredTerrainMap map, int vertsPerTileAcross)
 	{
-		float[][] vertHeights = new float[map.Width * 2 + 1][];
+		float[][] vertHeights = new float[map.Width * (vertsPerTileAcross-1) + 1][];
 		for (int i = 0; i < vertHeights.Length; i++)
 		{
-			vertHeights[i] = new float[map.Height * 2 + 1];
+			vertHeights[i] = new float[map.Height * (vertsPerTileAcross - 1) + 1];
 		}
 
 		for (int i = 0; i < map.Width; i++)
@@ -34,29 +36,40 @@ class MeshBuilder
 			for (int j = 0; j < map.Height; j++)
 			{
 				var tile = map.TileAt(new Int2(i, j));
-				vertHeights[i * 2][j * 2] = TerrainTile.tileEdgeHeights[tile.tileType];
-				vertHeights[i * 2 + 1][j * 2] = TerrainTile.tileEdgeHeights[tile.tileType];
-				vertHeights[i * 2][j * 2 + 1] = TerrainTile.tileEdgeHeights[tile.tileType];
-				vertHeights[i * 2 + 1][j * 2 + 1] = TerrainTile.tileHeights[tile.tileType];
-
-				if (i == map.Width - 1)
-				{
-					vertHeights[i * 2 + 2][j * 2] = TerrainTile.tileEdgeHeights[tile.tileType];
-					vertHeights[i * 2 + 2][j * 2 + 1] = TerrainTile.tileEdgeHeights[tile.tileType];
-				}
-				if (j == map.Height - 1)
-				{
-					vertHeights[i * 2][j * 2 + 2] = TerrainTile.tileEdgeHeights[tile.tileType];
-					vertHeights[i * 2 + 1][j * 2 + 2] = TerrainTile.tileEdgeHeights[tile.tileType];
-				}
-				if (i == map.Width - 1 && j == map.Height - 1)
-				{
-					vertHeights[i * 2 + 2][j * 2 + 2] = TerrainTile.tileEdgeHeights[tile.tileType];
-				}
+				vertHeights = fillHeightsForTile(vertHeights, i, j, vertsPerTileAcross, tile, map.Width, map.Height);			
 			}
 		}
 
 		return vertHeights;
+	}
+
+	private float[][] fillHeightsForTile(float[][] heights, int i, int j, int vertsPerTileAcross, TerrainTile tile, int mapWidth, int mapHeight)
+	{
+		int baseI = i * (vertsPerTileAcross - 1);
+		int baseJ = j * (vertsPerTileAcross - 1);
+		for (int x = 0; x < vertsPerTileAcross-1; x++)
+		{
+			for (int y = 0; y < vertsPerTileAcross-1; y++)
+			{
+				heights[baseI + x][baseJ + y] = TerrainTile.tileHeights[tile.tileType];
+			}
+		}
+
+		if (i == mapWidth - 1)
+		{
+			for(int x = 0; x < vertsPerTileAcross - 1; x++)
+				heights[baseI + vertsPerTileAcross - 1][baseJ + x] = TerrainTile.tileEdgeHeights[tile.tileType];
+		}
+		if (j == mapHeight - 1)
+		{
+			for (int x = 0; x < vertsPerTileAcross - 1; x++)
+				heights[baseI + x][baseJ + vertsPerTileAcross - 1] = TerrainTile.tileEdgeHeights[tile.tileType];
+		}
+		if (i == mapWidth - 1 && j == mapHeight - 1)
+		{
+			heights[baseI + vertsPerTileAcross - 1][baseJ + vertsPerTileAcross - 1] = TerrainTile.tileEdgeHeights[tile.tileType];
+		}
+		return heights;
 	}
 
 	private float[][] RandomizeVertHeights(float[][] heights)
@@ -71,13 +84,13 @@ class MeshBuilder
 		return heights;
 	}
 
-	private void SetVerticesFromHeights(List<Vector3> vertices, float[][] heights)
+	private void SetVerticesFromHeights(List<Vector3> vertices, float[][] heights, int vertsPerTileAcross)
 	{
 		for (int i = 0; i < heights.Length; i++)
 		{
 			for (int j = 0; j < heights[0].Length; j++)
 			{
-				vertices.Add(new Vector3(j, heights[j][i] * 50f, i));
+				vertices.Add(new Vector3(j/ vertsPerTileAcross, heights[j][i] * 10f, i/ vertsPerTileAcross));
 			}
 		}
 	}
