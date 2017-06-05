@@ -20,7 +20,6 @@ class MeshBuilder
 		builtMesh.vertices = vertices.ToArray();
 		SetUVsAndTriangles(builtMesh, vertHeights.Length, vertHeights[0].Length);
 		builtMesh.name = "MapMesh";
-		Debug.Log(vertices.Count);
 	}
 
 	private float[][] populateVertHeights(StoredTerrainMap map, int vertsPerTileAcross)
@@ -131,7 +130,6 @@ class MeshBuilder
 		{
 			for (int x = 0; x < lrLengthx - 1; x++)
 			{
-				uvs[x + z * lrLengthx] = new Vector2(x / (lrLengthx - 1.0f), z / (lrLengthz - 1.0f));
 				triangles[index + 2] = x + z * lrLengthx;
 				triangles[index + 1] = x + 1 + z * lrLengthx;
 				triangles[index + 0] = x + z * lrLengthx + lrLengthx;
@@ -142,6 +140,15 @@ class MeshBuilder
 				index += 6;
 			}
 		}
+
+		for (int z = 0; z <= lrLengthz - 1; z++)
+		{
+			for (int x = 0; x <= lrLengthx - 1; x++)
+			{
+				uvs[x + z * lrLengthx] = new Vector2(x / (lrLengthx - 1.0f), z / (lrLengthz - 1.0f));
+			}
+		}
+
 		m.triangles = triangles;
 		m.uv = uvs;
 	} 
