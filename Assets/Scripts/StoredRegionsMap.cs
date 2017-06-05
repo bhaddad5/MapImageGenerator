@@ -135,6 +135,12 @@ class StoredRegionsMap
 			foreach(var neighbor in GetPossibleNeighborTiles(frontierTiles.TopValue(), region, terrainMap))
 			{
 				float strength = frontierTiles.TopKey() - terrainMap.TileDifficulty(neighbor);
+				if(terrainMap.TileIsOcean(neighbor) &&
+					!terrainMap.TileIsOcean(frontierTiles.TopValue()))
+				{
+					strength = strength - TerrainTile.startOceanDifficulty;
+				}
+
 				if (TileAt(neighbor).TrySetRegion(region, strength))
 				{
 					frontierTiles.Insert(strength, neighbor);

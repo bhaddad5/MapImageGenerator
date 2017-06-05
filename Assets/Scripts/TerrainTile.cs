@@ -17,6 +17,7 @@ public class TerrainTile
 		Coast,
 	}
 
+	public static float startOceanDifficulty = 0.35f;
 	public static Dictionary<TileType, float> tileDifficulties = new Dictionary<TileType, float>()
 	{
 		{ TileType.Ocean, .1f },

@@ -22,7 +22,7 @@ class RegionTile
 
 	public bool TrySetRegion(Region r, float strength)
 	{
-		if(strength > holdingStrength)
+		if(strength >= holdingStrength)
 		{
 			region = r;
 			holdingStrength = strength;
