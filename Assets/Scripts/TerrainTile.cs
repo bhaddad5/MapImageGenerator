@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-class TerrainTile
+public class TerrainTile
 {
 	public enum TileType
 	{

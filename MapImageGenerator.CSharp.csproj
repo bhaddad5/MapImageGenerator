@@ -80,6 +80,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Helpers.cs" />
     <Compile Include="Assets\Scripts\MapBuilder.cs" />
+    <Compile Include="Assets\Scripts\MapTextureGenerator.cs" />
+    <Compile Include="Assets\Scripts\MapTextureLookup.cs" />
     <Compile Include="Assets\Scripts\MeshBuilder.cs" />
     <Compile Include="Assets\Scripts\Region.cs" />
     <Compile Include="Assets\Scripts\RegionTile.cs" />
