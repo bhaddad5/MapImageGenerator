@@ -84,7 +84,6 @@ class MapTextureGenerator
 	private void AddMapChunkForTile(int i, int j, int scale, TerrainTile tile, MapTextureLookup lookup)
 	{
 		int distanceOutToFade = 10;
-		Int2 textureCoord = new Int2(Random.Range(0, 400), Random.Range(0, 400));
 		Texture2D tileTexture = lookup.GetTileTypeTexture(tile.tileType);
 		for(int x = i*scale - distanceOutToFade; x < i*scale + scale + distanceOutToFade; x++)
 		{
@@ -95,7 +94,7 @@ class MapTextureGenerator
 				float strength = ((distanceOutToFade * 2) - Mathf.Max(0, (distFromCenter - ((scale/2) - distanceOutToFade)))) / (distanceOutToFade * 2);
 				strength = Mathf.Min(Mathf.Max(0, strength), 1);
 
-				TrySetPixel(x, y, tileTexture.GetPixel(textureCoord.X + x, textureCoord.Y + y), strength);
+				TrySetPixel(x, y, tileTexture.GetPixel(x, y), strength);
 			}
 		}
 	}
