@@ -22,15 +22,15 @@ class MapTextureGenerator
 
 		public Color GetPixelColor()
 		{
-			Vector4 claimStrengths = Vector4.zero;
+			float claimStrengthsSum = 0;
 			for(int i = 0; i < claims.Count; i++)
 			{
-				claimStrengths[i] = claims[i].strength;
+				claimStrengthsSum += claims[i].strength;
 			}
 			List<Color> strengthAdjustedColors = new List<Color>();
 			for (int i = 0; i < claims.Count; i++)
 			{
-				strengthAdjustedColors.Add(claims[i].color * claimStrengths.normalized[i]);
+				strengthAdjustedColors.Add(claims[i].color * claims[i].strength/claimStrengthsSum);
 			}
 			Color finalColor = new Color(0, 0, 0, 1);
 			foreach(Color c in strengthAdjustedColors)
@@ -65,10 +65,6 @@ class MapTextureGenerator
 			}
 		}
 		mapTexture.SetPixels(pixelsToSet.ToArray());
-
-		mapTexture.Apply();
-		byte[] bytes = mapTexture.EncodeToPNG();
-		File.WriteAllBytes(Application.dataPath + "/MapTextures/SavedTineTerrain.png", bytes);
 	}
 
 	private void setUpMapTexture(int scale, int width, int height)
