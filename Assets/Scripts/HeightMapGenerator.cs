@@ -16,6 +16,7 @@ public class HeightMapGenerator
 		}
 
 		GenerateMountainRanges(Random.Range(5, 15));
+		BlendHeightMap();
 
 		List<Color> pixels = new List<Color>();
 		foreach (float[] column in map)
@@ -91,6 +92,52 @@ public class HeightMapGenerator
 
 		map[pixel.X][pixel.Y] = height;
 		return true;
+	}
+
+	private void BlendHeightMap()
+	{
+		int passes = 6;
+		for(int i = 0; i < passes; i++)
+		{
+			BlendHeightMapPass();
+		}
+	}
+
+	private void BlendHeightMapPass()
+	{
+		for(int i = 0; i < map.Length; i++)
+		{
+			for(int j = 0; j < map[0].Length; j++)
+			{
+				map[i][j] = (map[i][j] + NeighborAverageHeight(i, j)) / 2;
+			}
+		}
+	}
+
+	private float NeighborAverageHeight(int x, int y)
+	{
+		List<float> points = new List<float>();
+		TryAddPoint(points, x - 1, y - 1);
+		TryAddPoint(points, x, y - 1);
+		TryAddPoint(points, x + 1, y - 1);
+		TryAddPoint(points, x - 1, y);
+		TryAddPoint(points, x + 1, y);
+		TryAddPoint(points, x - 1, y + 1);
+		TryAddPoint(points, x, y + 1);
+		TryAddPoint(points, x + 1, y + 1);
+
+		float average = 0f;
+		foreach (var pt in points)
+		{
+			average += pt;
+		}
+		return average / points.Count;
+	}
+
+	private void TryAddPoint(List<float> points, int x, int y)
+	{
+		if (x >= 0 && x < map.Length - 1 && y >= 0 && y < map[0].Length - 1)
+			points.Add(map[x][y]);
 	}
 
 	public Texture2D GetHeightMapTexture()
