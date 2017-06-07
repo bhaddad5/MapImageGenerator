@@ -8,6 +8,7 @@ public class MapBuilder : MonoBehaviour
 	public Texture2D mapIn;
 	public MapTextureLookup lookup;
 
+	public GameObject generatedMapInputDisplay;
 	public GameObject terrainMeshDisplay;
 	public GameObject regionsMeshDisplay;
 
@@ -15,7 +16,10 @@ public class MapBuilder : MonoBehaviour
 	void Start () {
 		int averagePixelsPerRegion = 60;
 
-		StoredTerrainMap terrainMap = new StoredTerrainMap(mapIn);
+		HeightMapGenerator heightGenerator = new HeightMapGenerator(56, 56);
+		generatedMapInputDisplay.GetComponent<MeshRenderer>().material.mainTexture = heightGenerator.GetHeightMapTexture();
+
+		/*StoredTerrainMap terrainMap = new StoredTerrainMap(mapIn);
 
 		StoredRegionsMap regionsMap = new StoredRegionsMap(terrainMap, (mapIn.width * mapIn.height) / averagePixelsPerRegion);
 
@@ -29,7 +33,7 @@ public class MapBuilder : MonoBehaviour
 		terrainMeshDisplay.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
 		terrainMeshDisplay.GetComponent<MeshRenderer>().material.mainTexture = textureGenerator.GetMapTexture();
 
-		WriteRegionsMap(regionsMap, meshBuilder);
+		WriteRegionsMap(regionsMap, meshBuilder);*/
 
 		Debug.Log("Done");
 	}
