@@ -47,12 +47,13 @@ public class HeightMapGenerator
 		float startingStrength = Random.Range(.5f, .9f);
 		Int2 mountainDirection = new Int2(Random.Range(-1, 1), Random.Range(-1, 1));
 		int mountainsLength = Random.Range(4, 50);
+		int distToCoast = Random.Range(1, 10);
 
 		Int2 currPixel = startingPixel;
 		for(int k = 0; k < mountainsLength; k++)
 		{
 			float strength = startingStrength + Random.Range(-.2f, .2f);
-			TrySetPixel(currPixel, strength);
+			TrySetPixel(currPixel, strength, distToCoast);
 			currPixel = TryGetNextMountainPixel(currPixel, mountainDirection); ;
 		}
 	}
@@ -85,18 +86,77 @@ public class HeightMapGenerator
 		return dirs[index];
 	}
 
-	private bool TrySetPixel(Int2 pixel, float height)
+	private bool TrySetPixel(Int2 pixel, float height, int distanceToCoast)
 	{
-		if (pixel.X < 0 || pixel.X >= map.Length || pixel.Y < 0 || pixel.Y >= map[0].Length)
+		if (!pixelInBounds(pixel))
 			return false;
 
 		map[pixel.X][pixel.Y] = height;
+		TrySpreadLandArea(pixel, distanceToCoast);
 		return true;
+	}
+
+	private bool pixelInBounds(Int2 pixel)
+	{
+		return !(pixel.X < 0 || pixel.X >= map.Length || pixel.Y < 0 || pixel.Y >= map[0].Length);
+	}
+
+	private class LandPixel
+	{
+		public Int2 pixel;
+		public int remainingToCoast;
+		public LandPixel(Int2 p, int rem){pixel = p; remainingToCoast = rem;}
+	}
+	private void TrySpreadLandArea(Int2 startPixel, int distanceToCoast)
+	{
+		float landHeight = 0.1f;
+		List<LandPixel> pixelsToSpreadTo = new List<LandPixel>() { new LandPixel(startPixel, distanceToCoast) };
+		
+		while(pixelsToSpreadTo.Count > 0)
+		{
+			Int2 currPixel = pixelsToSpreadTo[0].pixel;
+			if (map[currPixel.X][currPixel.Y].Equals(0))
+				map[currPixel.X][currPixel.Y] = landHeight;
+
+			if (pixelsToSpreadTo[0].remainingToCoast > 0) {
+				List<Int2> neighbors = GetNeighborTiles(pixelsToSpreadTo[0].pixel);
+				foreach (Int2 neighbor in neighbors)
+				{
+					pixelsToSpreadTo.Add(new LandPixel(neighbor, pixelsToSpreadTo[0].remainingToCoast - 1));
+				}
+			}
+			pixelsToSpreadTo.RemoveAt(0);
+		}
+	}
+
+	private List<Int2> GetNeighborTiles(Int2 pos)
+	{
+		List<Int2> neighbors = new List<Int2>();
+		neighbors.Add(pos + new Int2(1, 1));
+		neighbors.Add(pos + new Int2(1, 0));
+		neighbors.Add(pos + new Int2(1, -1));
+		neighbors.Add(pos + new Int2(0, 1));
+		neighbors.Add(pos + new Int2(0, -1));
+		neighbors.Add(pos + new Int2(-1, 1));
+		neighbors.Add(pos + new Int2(-1, 0));
+		neighbors.Add(pos + new Int2(-1, -1));
+
+		for (int i = neighbors.Count - 1; i >= 0; i--)
+		{
+			if (!IsPossibleNeighbor(neighbors[i]))
+				neighbors.RemoveAt(i);
+		}
+		return neighbors;
+	}
+
+	private bool IsPossibleNeighbor(Int2 neighbor)
+	{
+		return pixelInBounds(neighbor) && map[neighbor.X][neighbor.Y].Equals(0);
 	}
 
 	private void BlendHeightMap()
 	{
-		int passes = 6;
+		int passes = 0;
 		for(int i = 0; i < passes; i++)
 		{
 			BlendHeightMapPass();
