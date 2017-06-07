@@ -15,7 +15,7 @@ public class HeightMapGenerator
 			map[i] = new float[height];
 		}
 
-		GenerateMountainRanges();
+		GenerateMountainRanges(Random.Range(5, 15));
 
 		List<Color> pixels = new List<Color>();
 		foreach (float[] column in map)
@@ -32,29 +32,64 @@ public class HeightMapGenerator
 		heightMapImage.SetPixels(pixels.ToArray());		
 	}
 
-	private void GenerateMountainRanges()
+	private void GenerateMountainRanges(int numOfRanges)
+	{
+		for(int i = 0; i < numOfRanges; i++)
+		{
+			GenerateMountainRange();
+		}
+	}
+
+	private void GenerateMountainRange()
 	{
 		Int2 startingPixel = new Int2(Random.Range(0, map.Length - 1), Random.Range(0, map[0].Length - 1));
 		float startingStrength = Random.Range(.5f, .9f);
 		Int2 mountainDirection = new Int2(Random.Range(-1, 1), Random.Range(-1, 1));
-		int mountainsLength = Random.Range(1, 20);
+		int mountainsLength = Random.Range(4, 50);
 
+		Int2 currPixel = startingPixel;
 		for(int k = 0; k < mountainsLength; k++)
 		{
 			float strength = startingStrength + Random.Range(-.2f, .2f);
-			int x = (int)(startingPixel.X + mountainDirection.X*k);
-			int y = (int)(startingPixel.Y + mountainDirection.Y*k);
-			if (!TrySetPixel(x, y, strength))
-				break;
+			TrySetPixel(currPixel, strength);
+			currPixel = TryGetNextMountainPixel(currPixel, mountainDirection); ;
 		}
 	}
 
-	private bool TrySetPixel(int x, int y, float height)
+	private Int2 TryGetNextMountainPixel(Int2 currPoint, Int2 direction)
 	{
-		if (x < 0 || x > map.Length || y < 0 || y > map[0].Length || map[x][y] > 0)
+		Int2[] potentials = new Int2[10];
+		potentials[0] = currPoint + nextDirection(direction, 0);
+		potentials[1] = currPoint + nextDirection(direction, 0);
+		potentials[2] = currPoint + nextDirection(direction, 0);
+		potentials[3] = currPoint + nextDirection(direction, 0);
+		potentials[4] = currPoint + nextDirection(direction, 1);
+		potentials[5] = currPoint + nextDirection(direction, 1);
+		potentials[6] = currPoint + nextDirection(direction, 2);
+		potentials[7] = currPoint + nextDirection(direction, -1);
+		potentials[8] = currPoint + nextDirection(direction, -1);
+		potentials[9] = currPoint + nextDirection(direction, -2);
+
+		return potentials[Random.Range(0, 9)];
+	}
+
+	private Int2 nextDirection(Int2 dir, int forwardOrBack)
+	{
+		List<Int2> dirs = new List<Int2> { new Int2(-1, -1), new Int2(-1, 0), new Int2(-1, 1), new Int2(0, 1), new Int2(1, 1), new Int2(1, 0), new Int2(1, -1), new Int2(0, -1), };
+		int index = dirs.IndexOf(dir) + forwardOrBack;
+		if (index >= dirs.Count)
+			index = index - dirs.Count;
+		if (index < 0)
+			index = dirs.Count + index;
+		return dirs[index];
+	}
+
+	private bool TrySetPixel(Int2 pixel, float height)
+	{
+		if (pixel.X < 0 || pixel.X >= map.Length || pixel.Y < 0 || pixel.Y >= map[0].Length)
 			return false;
 
-		map[x][y] = height;
+		map[pixel.X][pixel.Y] = height;
 		return true;
 	}
 
