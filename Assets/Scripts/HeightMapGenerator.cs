@@ -6,6 +6,7 @@ public class HeightMapGenerator
 {
 	float[][] map;
 	private Texture2D heightMapImage;
+	private const float landHeight = 0.1f;
 
 	public HeightMapGenerator(int width, int height)
 	{
@@ -16,6 +17,7 @@ public class HeightMapGenerator
 		}
 
 		GenerateMountainRanges(Random.Range(5, 15));
+		RandomizeCoastline();
 		BlendHeightMap();
 
 		List<Color> pixels = new List<Color>();
@@ -103,7 +105,6 @@ public class HeightMapGenerator
 
 	private void TrySpreadLandArea(Int2 startPixel, int distanceToCoast)
 	{
-		float landHeight = 0.1f;
 		SortedDupList<Int2> pixelsToSpreadTo = new SortedDupList<Int2>();
 		pixelsToSpreadTo.Insert(distanceToCoast, startPixel);
 
@@ -146,9 +147,66 @@ public class HeightMapGenerator
 		return pixelInBounds(neighbor) && map[neighbor.X][neighbor.Y].Equals(0);
 	}
 
+	private void RandomizeCoastline()
+	{
+		for(int i = 0; i < map.Length; i++)
+		{
+			for(int j = 0; j <map[0].Length; j++)
+			{
+				TryRandomizeCoastTile(new Int2(i, j));
+			}
+		}
+	}
+
+	private void TryRandomizeCoastTile(Int2 tile)
+	{
+		float probOfWaterfy = 0.4f;
+		if(IsCoastline(tile) && !BordersMountain(tile))
+		{
+			if (Random.Range(0f, 1f) <= probOfWaterfy)
+				map[tile.X][tile.Y] = 0f;
+		}
+	}
+
+	private bool IsCoastline(Int2 tile)
+	{
+		foreach(Int2 neighbor in GetNeighborTiles(tile))
+		{
+			if (HeightAt(neighbor).Equals(0))
+				return true;
+		}
+		return false;
+	}
+
+	private bool BordersMountain(Int2 tile)
+	{
+		foreach (Int2 neighbor in GetNeighborTiles(tile))
+		{
+			if (HeightAt(neighbor) > landHeight)
+				return true;
+		}
+		foreach (Int2 neighbor in GetDiagNeighborTiles(tile))
+		{
+			if (HeightAt(neighbor) > landHeight)
+				return true;
+		}
+		return false;
+	}
+
+	private List<Int2> GetDiagNeighborTiles(Int2 pos)
+	{
+		List<Int2> neighbors = new List<Int2>();
+		TryAddNeighbor(pos + new Int2(1, 1), neighbors);
+		TryAddNeighbor(pos + new Int2(-1, 1), neighbors);
+		TryAddNeighbor(pos + new Int2(1, -1), neighbors);
+		TryAddNeighbor(pos + new Int2(-1, -1), neighbors);
+
+		return neighbors;
+	}
+
 	private void BlendHeightMap()
 	{
-		int passes = 0;
+		int passes = 2;
 		for(int i = 0; i < passes; i++)
 		{
 			BlendHeightMapPass();
@@ -192,5 +250,10 @@ public class HeightMapGenerator
 	{
 		heightMapImage.Apply();
 		return heightMapImage;
+	}
+
+	private float HeightAt(Int2 px)
+	{
+		return map[px.X][px.Y];
 	}
 }
