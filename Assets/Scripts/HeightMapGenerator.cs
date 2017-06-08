@@ -47,7 +47,7 @@ public class HeightMapGenerator
 		float startingStrength = Random.Range(.5f, .9f);
 		Int2 mountainDirection = new Int2(Random.Range(-1, 1), Random.Range(-1, 1));
 		int mountainsLength = Random.Range(4, 50);
-		int distToCoast = Random.Range(1, 10);
+		int distToCoast = Random.Range(1, 15);
 
 		Int2 currPixel = startingPixel;
 		for(int k = 0; k < mountainsLength; k++)
@@ -101,52 +101,44 @@ public class HeightMapGenerator
 		return !(pixel.X < 0 || pixel.X >= map.Length || pixel.Y < 0 || pixel.Y >= map[0].Length);
 	}
 
-	private class LandPixel
-	{
-		public Int2 pixel;
-		public int remainingToCoast;
-		public LandPixel(Int2 p, int rem){pixel = p; remainingToCoast = rem;}
-	}
 	private void TrySpreadLandArea(Int2 startPixel, int distanceToCoast)
 	{
 		float landHeight = 0.1f;
-		List<LandPixel> pixelsToSpreadTo = new List<LandPixel>() { new LandPixel(startPixel, distanceToCoast) };
-		
-		while(pixelsToSpreadTo.Count > 0)
-		{
-			Int2 currPixel = pixelsToSpreadTo[0].pixel;
-			if (map[currPixel.X][currPixel.Y].Equals(0))
-				map[currPixel.X][currPixel.Y] = landHeight;
+		SortedDupList<Int2> pixelsToSpreadTo = new SortedDupList<Int2>();
+		pixelsToSpreadTo.Insert(distanceToCoast, startPixel);
 
-			if (pixelsToSpreadTo[0].remainingToCoast > 0) {
-				List<Int2> neighbors = GetNeighborTiles(pixelsToSpreadTo[0].pixel);
+		while (pixelsToSpreadTo.Count > 0)
+		{
+			Int2 currPixel = pixelsToSpreadTo.TopValue();
+
+			if (pixelsToSpreadTo.TopKey() > 0)
+			{
+				List<Int2> neighbors = GetNeighborTiles(pixelsToSpreadTo.TopValue());
 				foreach (Int2 neighbor in neighbors)
 				{
-					pixelsToSpreadTo.Add(new LandPixel(neighbor, pixelsToSpreadTo[0].remainingToCoast - 1));
+					map[neighbor.X][neighbor.Y] = landHeight;
+					pixelsToSpreadTo.Insert(pixelsToSpreadTo.TopKey() - 1,  neighbor);
 				}
 			}
-			pixelsToSpreadTo.RemoveAt(0);
+			pixelsToSpreadTo.Pop();
 		}
 	}
 
 	private List<Int2> GetNeighborTiles(Int2 pos)
 	{
 		List<Int2> neighbors = new List<Int2>();
-		neighbors.Add(pos + new Int2(1, 1));
-		neighbors.Add(pos + new Int2(1, 0));
-		neighbors.Add(pos + new Int2(1, -1));
-		neighbors.Add(pos + new Int2(0, 1));
-		neighbors.Add(pos + new Int2(0, -1));
-		neighbors.Add(pos + new Int2(-1, 1));
-		neighbors.Add(pos + new Int2(-1, 0));
-		neighbors.Add(pos + new Int2(-1, -1));
+		TryAddNeighbor(pos + new Int2(1, 0), neighbors);
+		TryAddNeighbor(pos + new Int2(0, 1), neighbors);
+		TryAddNeighbor(pos + new Int2(0, -1), neighbors);
+		TryAddNeighbor(pos + new Int2(-1, 0), neighbors);
 
-		for (int i = neighbors.Count - 1; i >= 0; i--)
-		{
-			if (!IsPossibleNeighbor(neighbors[i]))
-				neighbors.RemoveAt(i);
-		}
 		return neighbors;
+	}
+
+	private void TryAddNeighbor(Int2 neighborPos, List<Int2> neighbors)
+	{
+		if (IsPossibleNeighbor(neighborPos))
+			neighbors.Add(neighborPos);
 	}
 
 	private bool IsPossibleNeighbor(Int2 neighbor)
@@ -177,14 +169,10 @@ public class HeightMapGenerator
 	private float NeighborAverageHeight(int x, int y)
 	{
 		List<float> points = new List<float>();
-		TryAddPoint(points, x - 1, y - 1);
 		TryAddPoint(points, x, y - 1);
-		TryAddPoint(points, x + 1, y - 1);
 		TryAddPoint(points, x - 1, y);
 		TryAddPoint(points, x + 1, y);
-		TryAddPoint(points, x - 1, y + 1);
 		TryAddPoint(points, x, y + 1);
-		TryAddPoint(points, x + 1, y + 1);
 
 		float average = 0f;
 		foreach (var pt in points)
