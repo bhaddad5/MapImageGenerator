@@ -6,7 +6,7 @@ public class HeightMapGenerator
 {
 	float[][] map;
 	private Texture2D heightMapImage;
-	private const float landHeight = 0.1f;
+	public const float LandHeight = 0.1f;
 
 	public HeightMapGenerator(int width, int height)
 	{
@@ -49,7 +49,7 @@ public class HeightMapGenerator
 		float startingStrength = Random.Range(.5f, .9f);
 		Int2 mountainDirection = new Int2(Random.Range(-1, 1), Random.Range(-1, 1));
 		int mountainsLength = Random.Range(4, 50);
-		int distToCoast = Random.Range(1, 15);
+		int distToCoast = Random.Range(2, 20);
 
 		Int2 currPixel = startingPixel;
 		for(int k = 0; k < mountainsLength; k++)
@@ -117,7 +117,7 @@ public class HeightMapGenerator
 				List<Int2> neighbors = GetNeighborTiles(pixelsToSpreadTo.TopValue());
 				foreach (Int2 neighbor in neighbors)
 				{
-					map[neighbor.X][neighbor.Y] = landHeight;
+					map[neighbor.X][neighbor.Y] = LandHeight;
 					pixelsToSpreadTo.Insert(pixelsToSpreadTo.TopKey() - 1,  neighbor);
 				}
 			}
@@ -148,6 +148,15 @@ public class HeightMapGenerator
 	}
 
 	private void RandomizeCoastline()
+	{
+		int numPasses = 2;
+		for(int i = 0; i < numPasses; i++)
+		{
+			RandomizeCoastlinePass();
+		}
+	}
+
+	private void RandomizeCoastlinePass()
 	{
 		for(int i = 0; i < map.Length; i++)
 		{
@@ -182,12 +191,12 @@ public class HeightMapGenerator
 	{
 		foreach (Int2 neighbor in GetNeighborTiles(tile))
 		{
-			if (HeightAt(neighbor) > landHeight)
+			if (HeightAt(neighbor) > LandHeight)
 				return true;
 		}
 		foreach (Int2 neighbor in GetDiagNeighborTiles(tile))
 		{
-			if (HeightAt(neighbor) > landHeight)
+			if (HeightAt(neighbor) > LandHeight)
 				return true;
 		}
 		return false;
@@ -219,7 +228,9 @@ public class HeightMapGenerator
 		{
 			for(int j = 0; j < map[0].Length; j++)
 			{
-				map[i][j] = (map[i][j] + NeighborAverageHeight(i, j)) / 2;
+				float avg = NeighborAverageHeight(i, j);
+				if (map[i][j] != 0 && (map[i][j] != LandHeight || avg >= LandHeight))
+					map[i][j] = (map[i][j] + avg) / 2;
 			}
 		}
 	}
@@ -246,14 +257,19 @@ public class HeightMapGenerator
 			points.Add(map[x][y]);
 	}
 
+	private float HeightAt(Int2 px)
+	{
+		return map[px.X][px.Y];
+	}
+
 	public Texture2D GetHeightMapTexture()
 	{
 		heightMapImage.Apply();
 		return heightMapImage;
 	}
 
-	private float HeightAt(Int2 px)
+	public float[][] GetHeightMap()
 	{
-		return map[px.X][px.Y];
+		return map;
 	}
 }

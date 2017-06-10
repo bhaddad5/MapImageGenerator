@@ -10,6 +10,18 @@ class StoredTerrainMap
 	public int Width { get { return mapTiles.Count; } }
 	public int Height { get { return mapTiles[0].Count; } }
 
+	public StoredTerrainMap(TerrainTile[][] map)
+	{
+		for(int i = 0; i < map.Length; i++)
+		{
+			mapTiles.Insert(i, new List<TerrainTile>());
+			for(int j = 0; j < map[0].Length; j++)
+			{
+				mapTiles[i].Insert(j, map[i][j]);
+			}
+		}
+	}
+
 	public StoredTerrainMap(Texture2D mapIn)
 	{
 		for (int i = 0; i < mapIn.width; i++)
@@ -106,5 +118,19 @@ class StoredTerrainMap
 	public TerrainTile TileAt(Int2 pos)
 	{
 		return mapTiles[pos.X][pos.Y];
+	}
+
+	public int LandPixelCount()
+	{
+		int numTiles = 0;
+		foreach(var column in mapTiles)
+		{
+			foreach(var tile in column)
+			{
+				if (tile.tileType != TerrainTile.TileType.Ocean)
+					numTiles++;
+			}
+		}
+		return numTiles;
 	}
 }

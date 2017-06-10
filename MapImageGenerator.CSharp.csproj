@@ -88,6 +88,7 @@
     <Compile Include="Assets\Scripts\RegionTile.cs" />
     <Compile Include="Assets\Scripts\StoredRegionsMap.cs" />
     <Compile Include="Assets\Scripts\StoredTerrainMap.cs" />
+    <Compile Include="Assets\Scripts\TerrainMapGenerator.cs" />
     <Compile Include="Assets\Scripts\TerrainTile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

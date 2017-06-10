@@ -14,7 +14,6 @@ public class TerrainTile
 		Forest,
 		Grass,
 		Fertile,
-		Coast,
 	}
 
 	public static float startOceanDifficulty = 0.35f;
@@ -26,7 +25,6 @@ public class TerrainTile
 		{ TileType.Forest, .25f },
 		{ TileType.Grass, .2f },
 		{ TileType.Fertile, .1f },
-		{ TileType.Coast, .1f },
 	};
 
 	public static Dictionary<TileType, float> tileValues = new Dictionary<TileType, float>()
@@ -37,7 +35,6 @@ public class TerrainTile
 		{ TileType.Forest, .2f },
 		{ TileType.Grass, .2f },
 		{ TileType.Fertile, .4f },
-		{ TileType.Coast, .7f },
 	};
 
 	public static Dictionary<TileType, float> tileHeights = new Dictionary<TileType, float>()
@@ -48,7 +45,6 @@ public class TerrainTile
 		{ TileType.Forest, .15f },
 		{ TileType.Grass, .1f },
 		{ TileType.Fertile, .1f },
-		{ TileType.Coast, .05f },
 	};
 
 	public static Dictionary<Color, TileType> tileColors = new Dictionary<Color, TileType>()
@@ -61,13 +57,26 @@ public class TerrainTile
 		{ new Color(255/255f, 255/255f, 0), TileType.Fertile },
 	};
 
+	public Color GetTileColor()
+	{
+		foreach(var colorPair in tileColors)
+		{
+			if (colorPair.Value == tileType)
+				return colorPair.Key;
+		}
+		return new Color(1f, .4f, .6f);
+	}
+
 	public TileType tileType = TileType.Grass;
 
 	public TerrainTile(Color c, bool nextToOcean)
 	{
 		tileType = tileColors[c];
-		if (tileType != TileType.Ocean && tileType == TileType.Fertile && nextToOcean)
-			tileType = TileType.Coast;
+	}
+
+	public TerrainTile(TileType t)
+	{
+		tileType = t;
 	}
 
 	public float GetValue()

@@ -5,16 +5,16 @@ using UnityEngine;
 class MeshBuilder
 {
 	private Mesh builtMesh = new Mesh();
-		public MeshBuilder(StoredTerrainMap map)
+	public MeshBuilder(StoredTerrainMap map, float[][] heights)
 	{
-		BuildMesh(map);
+		BuildMesh(map, heights);
 	}
 
-	private void BuildMesh(StoredTerrainMap map)
+	private void BuildMesh(StoredTerrainMap map, float[][] pixelHeights)
 	{
 		int vertsPerTileAcross = 3;
 		List<Vector3> vertices = new List<Vector3>();
-		float[][] vertHeights = populateVertHeights(map, vertsPerTileAcross);
+		float[][] vertHeights = populateVertHeights(map, vertsPerTileAcross, pixelHeights);
 		vertHeights = RandomizeVertHeights(vertHeights);
 		SetVerticesFromHeights(vertices, vertHeights, vertsPerTileAcross);		
 		builtMesh.vertices = vertices.ToArray();
@@ -22,7 +22,7 @@ class MeshBuilder
 		builtMesh.name = "MapMesh";
 	}
 
-	private float[][] populateVertHeights(StoredTerrainMap map, int vertsPerTileAcross)
+	private float[][] populateVertHeights(StoredTerrainMap map, int vertsPerTileAcross, float[][] pixelHeights)
 	{
 		float[][] vertHeights = new float[map.Width * (vertsPerTileAcross-1) + 1][];
 		for (int i = 0; i < vertHeights.Length; i++)
@@ -35,14 +35,14 @@ class MeshBuilder
 			for (int j = 0; j < map.Height; j++)
 			{
 				var tile = map.TileAt(new Int2(i, j));
-				vertHeights = fillHeightsForTile(vertHeights, i, j, vertsPerTileAcross, tile, map.Width, map.Height);			
+				vertHeights = fillHeightsForTile(vertHeights, i, j, vertsPerTileAcross, pixelHeights[i][j] * 2f, map.Width, map.Height);			
 			}
 		}
 
 		return vertHeights;
 	}
 
-	private float[][] fillHeightsForTile(float[][] heights, int i, int j, int vertsPerTileAcross, TerrainTile tile, int mapWidth, int mapHeight)
+	private float[][] fillHeightsForTile(float[][] heights, int i, int j, int vertsPerTileAcross, float tileHeight, int mapWidth, int mapHeight)
 	{
 		int baseI = i * (vertsPerTileAcross - 1);
 		int baseJ = j * (vertsPerTileAcross - 1);
@@ -50,23 +50,23 @@ class MeshBuilder
 		{
 			for (int y = 0; y < vertsPerTileAcross-1; y++)
 			{
-				heights[baseI + x][baseJ + y] = TerrainTile.tileHeights[tile.tileType];
+				heights[baseI + x][baseJ + y] = tileHeight;
 			}
 		}
 
 		if (i == mapWidth - 1)
 		{
 			for(int x = 0; x < vertsPerTileAcross - 1; x++)
-				heights[baseI + vertsPerTileAcross - 1][baseJ + x] = TerrainTile.tileHeights[tile.tileType];
+				heights[baseI + vertsPerTileAcross - 1][baseJ + x] = tileHeight;
 		}
 		if (j == mapHeight - 1)
 		{
 			for (int x = 0; x < vertsPerTileAcross - 1; x++)
-				heights[baseI + x][baseJ + vertsPerTileAcross - 1] = TerrainTile.tileHeights[tile.tileType];
+				heights[baseI + x][baseJ + vertsPerTileAcross - 1] = tileHeight;
 		}
 		if (i == mapWidth - 1 && j == mapHeight - 1)
 		{
-			heights[baseI + vertsPerTileAcross - 1][baseJ + vertsPerTileAcross - 1] = TerrainTile.tileHeights[tile.tileType];
+			heights[baseI + vertsPerTileAcross - 1][baseJ + vertsPerTileAcross - 1] = tileHeight;
 		}
 		return heights;
 	}
@@ -77,7 +77,7 @@ class MeshBuilder
 		{
 			for(int j = 0; j < heights[0].Length; j++)
 			{
-				heights[i][j] = (heights[i][j] + neighborAverageHeight(i, j, heights))/2 * Random.Range(.75f, 1.3f);
+				heights[i][j] = (heights[i][j] + neighborAverageHeight(i, j, heights))/2 * Random.Range(1f, 1.3f);
 			}
 		}
 		return heights;

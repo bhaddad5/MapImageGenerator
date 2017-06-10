@@ -5,12 +5,12 @@ using System.IO;
 
 public class MapBuilder : MonoBehaviour
 {
-	public Texture2D mapIn;
 	public MapTextureLookup lookup;
 
 	public GameObject generatedMapInputDisplay;
 	public GameObject terrainMeshDisplay;
 	public GameObject regionsMeshDisplay;
+	public GameObject generatedTerrainMapInputDisplay;
 
 	// Use this for initialization
 	void Start () {
@@ -19,11 +19,14 @@ public class MapBuilder : MonoBehaviour
 		HeightMapGenerator heightGenerator = new HeightMapGenerator(56, 56);
 		generatedMapInputDisplay.GetComponent<MeshRenderer>().material.mainTexture = heightGenerator.GetHeightMapTexture();
 
-		/*StoredTerrainMap terrainMap = new StoredTerrainMap(mapIn);
+		TerrainMapGenerator terrainMapGenerator = new TerrainMapGenerator(heightGenerator.GetHeightMap(), HeightMapGenerator.LandHeight);
+		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().material.mainTexture = terrainMapGenerator.GetTerrainTexture();
 
-		StoredRegionsMap regionsMap = new StoredRegionsMap(terrainMap, (mapIn.width * mapIn.height) / averagePixelsPerRegion);
+		StoredTerrainMap terrainMap = new StoredTerrainMap(terrainMapGenerator.GetTerrainMap());
 
-		MeshBuilder meshBuilder = new MeshBuilder(terrainMap);
+		StoredRegionsMap regionsMap = new StoredRegionsMap(terrainMap, terrainMap.LandPixelCount() / averagePixelsPerRegion);
+
+		MeshBuilder meshBuilder = new MeshBuilder(terrainMap, heightGenerator.GetHeightMap());
 
 		MapTextureGenerator textureGenerator = new MapTextureGenerator(terrainMap, lookup);
 
@@ -33,7 +36,7 @@ public class MapBuilder : MonoBehaviour
 		terrainMeshDisplay.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
 		terrainMeshDisplay.GetComponent<MeshRenderer>().material.mainTexture = textureGenerator.GetMapTexture();
 
-		WriteRegionsMap(regionsMap, meshBuilder);*/
+		WriteRegionsMap(regionsMap, meshBuilder);
 
 		Debug.Log("Done");
 	}
