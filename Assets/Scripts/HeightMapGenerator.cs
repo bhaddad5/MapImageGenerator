@@ -229,7 +229,7 @@ public class HeightMapGenerator
 			for(int j = 0; j < map[0].Length; j++)
 			{
 				float avg = NeighborAverageHeight(i, j);
-				if (map[i][j] != 0 && (map[i][j] != LandHeight || avg >= LandHeight))
+				if (map[i][j] > 0 && (map[i][j] != LandHeight || avg >= LandHeight))
 					map[i][j] = (map[i][j] + avg) / 2;
 			}
 		}

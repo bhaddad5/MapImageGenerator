@@ -77,7 +77,9 @@ class MeshBuilder
 		{
 			for(int j = 0; j < heights[0].Length; j++)
 			{
-				heights[i][j] = (heights[i][j] + neighborAverageHeight(i, j, heights))/2 * Random.Range(1f, 1.3f);
+				if (heights[i][j] > 0)
+					heights[i][j] = (heights[i][j] + neighborAverageHeight(i, j, heights)) / 2 * Random.Range(1f, 1.3f);
+				else heights[i][j] = 0.095f;
 			}
 		}
 		return heights;

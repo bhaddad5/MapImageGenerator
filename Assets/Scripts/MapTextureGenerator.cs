@@ -83,7 +83,7 @@ class MapTextureGenerator
 
 	private void AddMapChunkForTile(int i, int j, int scale, TerrainTile tile, MapTextureLookup lookup)
 	{
-		int distanceOutToFade = 10;
+		int distanceOutToFade = 20;
 		Texture2D tileTexture = lookup.GetTileTypeTexture(tile.tileType);
 		for(int x = i*scale - distanceOutToFade; x < i*scale + scale + distanceOutToFade; x++)
 		{

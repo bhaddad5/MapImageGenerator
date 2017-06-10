@@ -81,9 +81,9 @@ class StoredTerrainMap
 			pos.Y >= 0 && pos.Y < mapTiles[pos.X].Count;
 	}
 
-	public bool TileIsOcean(Int2 pos)
+	public bool TileIsType(Int2 pos, TerrainTile.TileType t)
 	{
-		return TileInBounds(pos) && TileAt(pos).tileType == TerrainTile.TileType.Ocean;
+		return TileInBounds(pos) && TileAt(pos).tileType == t;
 	}
 
 	private bool TileNextToOcean(Int2 pos, Texture2D mapIn)

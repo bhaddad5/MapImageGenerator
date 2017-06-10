@@ -52,7 +52,7 @@ class StoredRegionsMap
 		{
 			for (int j = 0; j < terrainMap.Height; j++)
 			{
-				if (terrainMap.TileIsOcean(new Int2(i, j)))
+				if (terrainMap.TileIsType(new Int2(i, j), TerrainTile.TileType.Ocean))
 					TileAt(new Int2(i, j)).region = OceanRegion;
 			}
 		}
@@ -65,7 +65,8 @@ class StoredRegionsMap
 		for(int i = 0; i < numberOfSettlements * 10; i++)
 		{
 			Int2 testPos = new Int2(UnityEngine.Random.Range(0, terrainMap.Width), UnityEngine.Random.Range(0, terrainMap.Height));
-			if (!terrainMap.TileIsOcean(testPos) &&
+			if (!terrainMap.TileIsType(testPos, TerrainTile.TileType.Ocean) &&
+				!terrainMap.TileIsType(testPos, TerrainTile.TileType.Mountain) &&
 				!TooCloseToExistingSettlement(testPos, regions) &&
 				!TooCloseToBorder(testPos, new Int2(terrainMap.Width, terrainMap.Height)))
 			{
@@ -135,8 +136,8 @@ class StoredRegionsMap
 			foreach(var neighbor in GetPossibleNeighborTiles(frontierTiles.TopValue(), region, terrainMap))
 			{
 				float strength = frontierTiles.TopKey() - terrainMap.TileDifficulty(neighbor);
-				if(terrainMap.TileIsOcean(neighbor) &&
-					!terrainMap.TileIsOcean(frontierTiles.TopValue()))
+				if(terrainMap.TileIsType(neighbor, TerrainTile.TileType.Ocean) &&
+					!terrainMap.TileIsType(frontierTiles.TopValue(), TerrainTile.TileType.Ocean))
 				{
 					strength = strength - TerrainTile.startOceanDifficulty;
 				}
