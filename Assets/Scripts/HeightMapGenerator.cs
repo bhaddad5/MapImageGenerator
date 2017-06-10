@@ -6,7 +6,6 @@ public class HeightMapGenerator
 {
 	float[][] map;
 	private Texture2D heightMapImage;
-	public const float LandHeight = 0.1f;
 
 	public HeightMapGenerator(int width, int height)
 	{
@@ -117,7 +116,7 @@ public class HeightMapGenerator
 				List<Int2> neighbors = GetNeighborTiles(pixelsToSpreadTo.TopValue());
 				foreach (Int2 neighbor in neighbors)
 				{
-					map[neighbor.X][neighbor.Y] = LandHeight;
+					map[neighbor.X][neighbor.Y] = Globals.MinGroundHeight;
 					pixelsToSpreadTo.Insert(pixelsToSpreadTo.TopKey() - 1,  neighbor);
 				}
 			}
@@ -191,12 +190,12 @@ public class HeightMapGenerator
 	{
 		foreach (Int2 neighbor in GetNeighborTiles(tile))
 		{
-			if (HeightAt(neighbor) > LandHeight)
+			if (HeightAt(neighbor) > Globals.MinGroundHeight)
 				return true;
 		}
 		foreach (Int2 neighbor in GetDiagNeighborTiles(tile))
 		{
-			if (HeightAt(neighbor) > LandHeight)
+			if (HeightAt(neighbor) > Globals.MinGroundHeight)
 				return true;
 		}
 		return false;
@@ -229,7 +228,7 @@ public class HeightMapGenerator
 			for(int j = 0; j < map[0].Length; j++)
 			{
 				float avg = NeighborAverageHeight(i, j);
-				if (map[i][j] > 0 && (map[i][j] != LandHeight || avg >= LandHeight))
+				if (map[i][j] > 0 && (map[i][j] != Globals.MinGroundHeight || avg >= Globals.MinGroundHeight))
 					map[i][j] = (map[i][j] + avg) / 2;
 			}
 		}

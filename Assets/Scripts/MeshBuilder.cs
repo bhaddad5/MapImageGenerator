@@ -12,10 +12,12 @@ class MeshBuilder
 
 	private void BuildMesh(StoredTerrainMap map, float[][] pixelHeights)
 	{
+		float heightScaler = 2f;
 		int vertsPerTileAcross = 3;
 		List<Vector3> vertices = new List<Vector3>();
 		float[][] vertHeights = populateVertHeights(map, vertsPerTileAcross, pixelHeights);
 		vertHeights = RandomizeVertHeights(vertHeights);
+		ScaleVertHeights(vertHeights, heightScaler);
 		SetVerticesFromHeights(vertices, vertHeights, vertsPerTileAcross);		
 		builtMesh.vertices = vertices.ToArray();
 		SetUVsAndTriangles(builtMesh, vertHeights.Length, vertHeights[0].Length);
@@ -35,7 +37,7 @@ class MeshBuilder
 			for (int j = 0; j < map.Height; j++)
 			{
 				var tile = map.TileAt(new Int2(i, j));
-				vertHeights = fillHeightsForTile(vertHeights, i, j, vertsPerTileAcross, pixelHeights[i][j] * 2f, map.Width, map.Height);			
+				vertHeights = fillHeightsForTile(vertHeights, i, j, vertsPerTileAcross, pixelHeights[i][j], map.Width, map.Height);			
 			}
 		}
 
@@ -78,8 +80,8 @@ class MeshBuilder
 			for(int j = 0; j < heights[0].Length; j++)
 			{
 				if (heights[i][j] > 0)
-					heights[i][j] = (heights[i][j] + neighborAverageHeight(i, j, heights)) / 2 * Random.Range(1f, 1.3f);
-				else heights[i][j] = 0.095f;
+					heights[i][j] = Mathf.Max(Globals.MinGroundHeight, (heights[i][j] + neighborAverageHeight(i, j, heights)) / 2 * Random.Range(1f, 1.3f));
+				else heights[i][j] = Globals.MinGroundHeight - 0.05f;
 			}
 		}
 		return heights;
@@ -88,14 +90,10 @@ class MeshBuilder
 	private float neighborAverageHeight(int x, int y, float[][] heights)
 	{
 		List<float> points = new List<float>();
-		TryAddPoint(points, x - 1, y - 1, heights.Length - 1, heights[0].Length - 1, heights);
 		TryAddPoint(points, x, y - 1, heights.Length - 1, heights[0].Length - 1, heights);
-		TryAddPoint(points, x + 1, y - 1, heights.Length - 1, heights[0].Length - 1, heights);
 		TryAddPoint(points, x - 1, y, heights.Length - 1, heights[0].Length - 1, heights);
 		TryAddPoint(points, x + 1, y, heights.Length - 1, heights[0].Length - 1, heights);
-		TryAddPoint(points, x - 1, y + 1, heights.Length - 1, heights[0].Length - 1, heights);
 		TryAddPoint(points, x, y + 1, heights.Length - 1, heights[0].Length - 1, heights);
-		TryAddPoint(points, x + 1, y + 1, heights.Length - 1, heights[0].Length - 1, heights);
 
 		float average = 0f;
 		foreach (var pt in points)
@@ -109,6 +107,17 @@ class MeshBuilder
 	{
 		if (x >= 0 && x < maxX && y >= 0 && y < maxY)
 			points.Add(heights[x][y]);
+	}
+
+	private void ScaleVertHeights(float[][] heights, float scale)
+	{
+		for(int i = 0; i < heights.Length; i++)
+		{
+			for(int j = 0; j < heights[0].Length; j++)
+			{
+				heights[i][j] = heights[i][j] * scale;
+			}
+		}
 	}
 
 	private void SetVerticesFromHeights(List<Vector3> vertices, float[][] heights, float vertsPerTileAcross)
