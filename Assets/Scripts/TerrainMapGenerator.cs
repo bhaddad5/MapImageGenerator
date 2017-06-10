@@ -7,7 +7,7 @@ public class TerrainMapGenerator
 	TerrainTile[][] map;
 	Texture2D terrainMapImage;
 
-	public float mountainHeight = 0.3f;
+	public float mountainHeight = 0.25f;
 
 	public TerrainMapGenerator(float[][] heightMap)
 	{

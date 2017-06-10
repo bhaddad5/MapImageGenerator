@@ -75,11 +75,24 @@ class MeshBuilder
 
 	private float[][] RandomizeVertHeights(float[][] heights)
 	{
+		int numPasses = 3;
+		for(int i = 0; i < numPasses; i++)
+		{
+			heights = RandomizeVertHeightsPass(heights);
+		}
+
+		heights = RandomizeCoastHeights(heights);
+
+		return heights;
+	}
+
+	private float[][] RandomizeVertHeightsPass(float[][] heights)
+	{
 		for(int i = 0; i < heights.Length; i++)
 		{
 			for(int j = 0; j < heights[0].Length; j++)
 			{
-				if (heights[i][j] > 0)
+				if (heights[i][j] >= Globals.MinGroundHeight)
 					heights[i][j] = Mathf.Max(Globals.MinGroundHeight, (heights[i][j] + neighborAverageHeight(i, j, heights)) / 2 * Random.Range(1f, 1.3f));
 				else heights[i][j] = Globals.MinGroundHeight - 0.05f;
 			}
@@ -87,13 +100,41 @@ class MeshBuilder
 		return heights;
 	}
 
+	private float[][] RandomizeCoastHeights(float[][] heights)
+	{
+		float[][] newHeights = new float[heights.Length][];
+
+		for (int i = 0; i < heights.Length; i++)
+		{
+			newHeights[i] = new float[heights[0].Length];
+			for (int j = 0; j < heights[0].Length; j++)
+			{
+				newHeights[i][j] = heights[i][j];
+				float rand = Random.Range(0f, 1f);
+				if (IsOceanCoastVert(i, j, heights) && rand < 0.5f)
+					newHeights[i][j] = Globals.MinGroundHeight;
+			}
+		}
+		return newHeights;
+	}
+
+	private bool IsOceanCoastVert(int x, int y, float[][] heights)
+	{
+		if (heights[x][y] > Globals.MinGroundHeight - 0.05f)
+			return false;
+
+		foreach(var neighbor in getNeighbors(x, y, heights))
+		{
+			if (neighbor > Globals.MinGroundHeight)
+				return true;
+		}
+
+		return false;
+	}
+
 	private float neighborAverageHeight(int x, int y, float[][] heights)
 	{
-		List<float> points = new List<float>();
-		TryAddPoint(points, x, y - 1, heights.Length - 1, heights[0].Length - 1, heights);
-		TryAddPoint(points, x - 1, y, heights.Length - 1, heights[0].Length - 1, heights);
-		TryAddPoint(points, x + 1, y, heights.Length - 1, heights[0].Length - 1, heights);
-		TryAddPoint(points, x, y + 1, heights.Length - 1, heights[0].Length - 1, heights);
+		var points = getNeighbors(x, y, heights);
 
 		float average = 0f;
 		foreach (var pt in points)
@@ -101,6 +142,16 @@ class MeshBuilder
 			average += pt;
 		}
 		return average/points.Count;
+	}
+
+	private List<float> getNeighbors(int x, int y, float[][] heights)
+	{
+		List<float> points = new List<float>();
+		TryAddPoint(points, x, y - 1, heights.Length - 1, heights[0].Length - 1, heights);
+		TryAddPoint(points, x - 1, y, heights.Length - 1, heights[0].Length - 1, heights);
+		TryAddPoint(points, x + 1, y, heights.Length - 1, heights[0].Length - 1, heights);
+		TryAddPoint(points, x, y + 1, heights.Length - 1, heights[0].Length - 1, heights);
+		return points;
 	}
 
 	private void TryAddPoint(List<float> points, int x, int y, int maxX, int maxY, float[][] heights)
