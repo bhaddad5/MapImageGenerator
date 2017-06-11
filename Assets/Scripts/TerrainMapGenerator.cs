@@ -4,38 +4,32 @@ using UnityEngine;
 
 public class TerrainMapGenerator
 {
-	TerrainTile[][] map;
+	Map2D<TerrainTile> map;
 	Texture2D terrainMapImage;
 
 	public float mountainHeight = 0.25f;
 
 	public TerrainMapGenerator(Map2D<float> heightMap)
 	{
-		map = new TerrainTile[heightMap.Width][];
-		for(int i = 0; i < heightMap.Width; i++)
+		map = new Map2D<TerrainTile>(heightMap.Width, heightMap.Height);
+
+		foreach(var point in map.GetMapPoints())
 		{
-			map[i] = new TerrainTile[heightMap.Height];
-			for(int j = 0; j < heightMap.Height; j++)
-			{
-				if (heightMap.GetValueAt(new Int2(i, j)) < Globals.MinGroundHeight)
-					map[i][j] = new TerrainTile(TerrainTile.TileType.Ocean);
-				else if (heightMap.GetValueAt(new Int2(i, j)) >= mountainHeight)
-					map[i][j] = new TerrainTile(TerrainTile.TileType.Mountain);
-				else map[i][j] = new TerrainTile(TerrainTile.TileType.Grass);
-			}
+			if (heightMap.GetValueAt(point) < Globals.MinGroundHeight)
+				map.SetPoint(point, new TerrainTile(TerrainTile.TileType.Ocean));
+			else if (heightMap.GetValueAt(point) >= mountainHeight)
+				map.SetPoint(point, new TerrainTile(TerrainTile.TileType.Mountain));
+			else map.SetPoint(point, new TerrainTile(TerrainTile.TileType.Grass));
 		}
 
 		FillInLandTextures();
 
 		List<Color> pixels = new List<Color>();
-		foreach (TerrainTile[] column in map)
+		foreach(var tile in map.GetMapValues())
 		{
-			foreach (TerrainTile t in column)
-			{
-				pixels.Add(t.GetTileColor());
-			}
+			pixels.Add(tile.GetTileColor());
 		}
-		terrainMapImage = new Texture2D(map.Length, map[0].Length);
+		terrainMapImage = new Texture2D(map.Width, map.Height);
 		terrainMapImage.filterMode = FilterMode.Point;
 		terrainMapImage.anisoLevel = 0;
 		terrainMapImage.SetPixels(pixels.ToArray());
@@ -52,12 +46,9 @@ public class TerrainMapGenerator
 
 	private void FillInLandTexturesPass()
 	{
-		for(int i = 0; i < map.Length; i++)
+		foreach(var tile in map.GetMapPoints())
 		{
-			for(int j = 0; j < map[0].Length; j++)
-			{
-				TryFillInTile(new Int2(i, j));
-			}
+			TryFillInTile(tile);
 		}
 	}
 
@@ -79,11 +70,11 @@ public class TerrainMapGenerator
 		{
 			float f = Random.Range(0, 1f);
 			if (f <= oddsOfFertile)
-				map[tile.X][tile.Y] = new TerrainTile(TerrainTile.TileType.Fertile);
+				map.SetPoint(tile, new TerrainTile(TerrainTile.TileType.Fertile));
 			else if(f - oddsOfFertile <= oddsOfForest)
-				map[tile.X][tile.Y] = new TerrainTile(TerrainTile.TileType.Forest);
+				map.SetPoint(tile, new TerrainTile(TerrainTile.TileType.Forest));
 			else if (f - (oddsOfFertile + oddsOfForest) <= oddsOfSwamp)
-				map[tile.X][tile.Y] = new TerrainTile(TerrainTile.TileType.Swamp);
+				map.SetPoint(tile, new TerrainTile(TerrainTile.TileType.Swamp));
 		}
 	}
 
@@ -116,15 +107,15 @@ public class TerrainMapGenerator
 
 	private bool pixelInBounds(Int2 pixel)
 	{
-		return !(pixel.X < 0 || pixel.X >= map.Length || pixel.Y < 0 || pixel.Y >= map[0].Length);
+		return !(pixel.X < 0 || pixel.X >= map.Width || pixel.Y < 0 || pixel.Y >= map.Height);
 	}
 
 	public TerrainTile GetTile(Int2 pos)
 	{
-		return map[pos.X][pos.Y];
+		return map.GetValueAt(pos);
 	}
 
-	public TerrainTile[][] GetTerrainMap()
+	public Map2D<TerrainTile> GetTerrainMap()
 	{
 		return map;
 	}

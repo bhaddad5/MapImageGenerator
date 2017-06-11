@@ -10,14 +10,14 @@ class StoredTerrainMap
 	public int Width { get { return mapTiles.Count; } }
 	public int Height { get { return mapTiles[0].Count; } }
 
-	public StoredTerrainMap(TerrainTile[][] map)
+	public StoredTerrainMap(Map2D<TerrainTile> map)
 	{
-		for(int i = 0; i < map.Length; i++)
+		for(int i = 0; i < map.Width; i++)
 		{
 			mapTiles.Insert(i, new List<TerrainTile>());
-			for(int j = 0; j < map[0].Length; j++)
+			for(int j = 0; j < map.Height; j++)
 			{
-				mapTiles[i].Insert(j, map[i][j]);
+				mapTiles[i].Insert(j, map.GetValueAt(new Int2(i, j)));
 			}
 		}
 	}
