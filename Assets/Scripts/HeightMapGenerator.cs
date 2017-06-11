@@ -24,12 +24,12 @@ public class HeightMapGenerator
 		heightMapImage = new Texture2D(width, height);
 		heightMapImage.filterMode = FilterMode.Point;
 		heightMapImage.anisoLevel = 0;
-		heightMapImage.SetPixels(pixels.ToArray());		
+		heightMapImage.SetPixels(pixels.ToArray());
 	}
 
 	private void GenerateMountainRanges(int numOfRanges)
 	{
-		for(int i = 0; i < numOfRanges; i++)
+		for (int i = 0; i < numOfRanges; i++)
 		{
 			GenerateMountainRange();
 		}
@@ -44,7 +44,7 @@ public class HeightMapGenerator
 		int distToCoast = Random.Range(2, 20);
 
 		Int2 currPixel = startingPixel;
-		for(int k = 0; k < mountainsLength; k++)
+		for (int k = 0; k < mountainsLength; k++)
 		{
 			float strength = startingStrength + Random.Range(-.2f, .2f);
 			TrySetPixel(currPixel, strength, distToCoast);
@@ -106,43 +106,23 @@ public class HeightMapGenerator
 
 			if (pixelsToSpreadTo.TopKey() > 0)
 			{
-				List<Int2> neighbors = GetNeighborTiles(pixelsToSpreadTo.TopValue());
-				foreach (Int2 neighbor in neighbors)
+				foreach (Int2 neighbor in map.GetAdjacentPoints(pixelsToSpreadTo.TopValue()))
 				{
-					map.SetPoint(neighbor, Globals.MinGroundHeight);
-					pixelsToSpreadTo.Insert(pixelsToSpreadTo.TopKey() - 1,  neighbor);
+					if(map.GetValueAt(neighbor) == 0)
+					{
+						map.SetPoint(neighbor, Globals.MinGroundHeight);
+						pixelsToSpreadTo.Insert(pixelsToSpreadTo.TopKey() - 1, neighbor);
+					}
 				}
 			}
 			pixelsToSpreadTo.Pop();
 		}
 	}
 
-	private List<Int2> GetNeighborTiles(Int2 pos)
-	{
-		List<Int2> neighbors = new List<Int2>();
-		TryAddNeighbor(pos + new Int2(1, 0), neighbors);
-		TryAddNeighbor(pos + new Int2(0, 1), neighbors);
-		TryAddNeighbor(pos + new Int2(0, -1), neighbors);
-		TryAddNeighbor(pos + new Int2(-1, 0), neighbors);
-
-		return neighbors;
-	}
-
-	private void TryAddNeighbor(Int2 neighborPos, List<Int2> neighbors)
-	{
-		if (IsPossibleNeighbor(neighborPos))
-			neighbors.Add(neighborPos);
-	}
-
-	private bool IsPossibleNeighbor(Int2 neighbor)
-	{
-		return pixelInBounds(neighbor) && map.GetValueAt(neighbor).Equals(0);
-	}
-
 	private void RandomizeCoastline()
 	{
 		int numPasses = 2;
-		for(int i = 0; i < numPasses; i++)
+		for (int i = 0; i < numPasses; i++)
 		{
 			RandomizeCoastlinePass();
 		}
@@ -150,19 +130,16 @@ public class HeightMapGenerator
 
 	private void RandomizeCoastlinePass()
 	{
-		for(int i = 0; i < map.Width; i++)
+		foreach(Int2 point in map.GetMapPoints())
 		{
-			for(int j = 0; j <map.Height; j++)
-			{
-				TryRandomizeCoastTile(new Int2(i, j));
-			}
+			TryRandomizeCoastTile(point);
 		}
 	}
 
 	private void TryRandomizeCoastTile(Int2 tile)
 	{
 		float probOfWaterfy = 0.4f;
-		if(IsCoastline(tile) && !BordersMountain(tile))
+		if (IsCoastline(tile) && !BordersMountain(tile))
 		{
 			if (Random.Range(0f, 1f) <= probOfWaterfy)
 				map.SetPoint(tile, 0f);
@@ -171,7 +148,7 @@ public class HeightMapGenerator
 
 	private bool IsCoastline(Int2 tile)
 	{
-		foreach(Int2 neighbor in GetNeighborTiles(tile))
+		foreach (Int2 neighbor in map.GetAdjacentPoints(tile))
 		{
 			if (HeightAt(neighbor).Equals(0))
 				return true;
@@ -181,34 +158,18 @@ public class HeightMapGenerator
 
 	private bool BordersMountain(Int2 tile)
 	{
-		foreach (Int2 neighbor in GetNeighborTiles(tile))
+		foreach (float neighbor in map.GetAllNeighboringValues(tile))
 		{
-			if (HeightAt(neighbor) > Globals.MinGroundHeight)
-				return true;
-		}
-		foreach (Int2 neighbor in GetDiagNeighborTiles(tile))
-		{
-			if (HeightAt(neighbor) > Globals.MinGroundHeight)
+			if (neighbor > Globals.MinGroundHeight)
 				return true;
 		}
 		return false;
 	}
 
-	private List<Int2> GetDiagNeighborTiles(Int2 pos)
-	{
-		List<Int2> neighbors = new List<Int2>();
-		TryAddNeighbor(pos + new Int2(1, 1), neighbors);
-		TryAddNeighbor(pos + new Int2(-1, 1), neighbors);
-		TryAddNeighbor(pos + new Int2(1, -1), neighbors);
-		TryAddNeighbor(pos + new Int2(-1, -1), neighbors);
-
-		return neighbors;
-	}
-
 	private void BlendHeightMap()
 	{
 		int passes = 2;
-		for(int i = 0; i < passes; i++)
+		for (int i = 0; i < passes; i++)
 		{
 			BlendHeightMapPass();
 		}
@@ -216,23 +177,18 @@ public class HeightMapGenerator
 
 	private void BlendHeightMapPass()
 	{
-		foreach(Int2 pixle in map.GetMapPoints())
+		foreach (Int2 pixle in map.GetMapPoints())
 		{
-			float avg = NeighborAverageHeight(pixle.X, pixle.Y);
+			float avg = NeighborAverageHeight(pixle);
 			if (map.GetValueAt(pixle) > 0 && (map.GetValueAt(pixle) != Globals.MinGroundHeight || avg >= Globals.MinGroundHeight))
 				map.SetPoint(pixle, (map.GetValueAt(pixle) + avg) / 2);
 		}
 	}
 
-	private float NeighborAverageHeight(int x, int y)
+	private float NeighborAverageHeight(Int2 pixle)
 	{
-		List<float> points = new List<float>();
-		TryAddPoint(points, x, y - 1);
-		TryAddPoint(points, x - 1, y);
-		TryAddPoint(points, x + 1, y);
-		TryAddPoint(points, x, y + 1);
-
 		float average = 0f;
+		var points = map.GetAdjacentValues(pixle);
 		foreach (var pt in points)
 		{
 			average += pt;

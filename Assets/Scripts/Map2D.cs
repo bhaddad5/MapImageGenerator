@@ -46,6 +46,77 @@ public class Map2D<T>
 		return points;
 	}
 
+	public List<T> GetAdjacentValues(Int2 pos)
+	{
+		List<T> values = new List<T>();
+		TryAddValue(pos + new Int2(0, 1), values);
+		TryAddValue(pos + new Int2(0, -1), values);
+		TryAddValue(pos + new Int2(1, 0), values);
+		TryAddValue(pos + new Int2(1, 0), values);
+		return values;
+	}
+
+	public List<T> GetDiagonalValues(Int2 pos)
+	{
+		List<T> values = new List<T>();
+		TryAddValue(pos + new Int2(1, 1), values);
+		TryAddValue(pos + new Int2(1, -1), values);
+		TryAddValue(pos + new Int2(-1, 1), values);
+		TryAddValue(pos + new Int2(-1, -1), values);
+		return values;
+	}
+
+	public List<T> GetAllNeighboringValues(Int2 pos)
+	{
+		List<T> values = new List<T>();
+		values = GetAdjacentValues(pos).ToArray().Concat(GetDiagonalValues(pos).ToArray()).ToList();
+		return values;
+	}
+
+	private void TryAddValue(Int2 pos, List<T> values)
+	{
+		if (PosInBounds(pos))
+			values.Add(GetValueAt(pos));
+	}
+
+	public List<Int2> GetAdjacentPoints(Int2 pos)
+	{
+		List<Int2> values = new List<Int2>();
+		TryAddPoint(pos + new Int2(0, 1), values);
+		TryAddPoint(pos + new Int2(0, -1), values);
+		TryAddPoint(pos + new Int2(1, 0), values);
+		TryAddPoint(pos + new Int2(1, 0), values);
+		return values;
+	}
+
+	public List<Int2> GetDiagonalPoints(Int2 pos)
+	{
+		List<Int2> values = new List<Int2>();
+		TryAddPoint(pos + new Int2(1, 1), values);
+		TryAddPoint(pos + new Int2(1, -1), values);
+		TryAddPoint(pos + new Int2(-1, 1), values);
+		TryAddPoint(pos + new Int2(-1, -1), values);
+		return values;
+	}
+
+	public List<Int2> GetAllNeighboringPoints(Int2 pos)
+	{
+		List<Int2> values = new List<Int2>();
+		values = GetAdjacentPoints(pos).ToArray().Concat(GetDiagonalPoints(pos).ToArray()).ToList();
+		return values;
+	}
+
+	private void TryAddPoint(Int2 pos, List<Int2> values)
+	{
+		if (PosInBounds(pos))
+			values.Add(pos);
+	}
+
+	public bool PosInBounds(Int2 pos)
+	{
+		return pos.X > 0 && pos.X < Width && pos.Y > 0 && pos.Y < Height;
+	}
+
 	public T GetValueAt(Int2 point)
 	{
 		return map[point.X][point.Y];
