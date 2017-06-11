@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-class StoredRegionsMap
+class RegionsMapGenerator
 {
 	List<Region> regions = new List<Region>();
 	List<List<RegionTile>> mapTiles = new List<List<RegionTile>>();
 	public int Width { get { return mapTiles.Count; } }
 	public int Height { get { return mapTiles[0].Count; } }
 
-	public StoredRegionsMap(StoredTerrainMap terrainMap, int numberOfSettlements)
+	public RegionsMapGenerator(StoredTerrainMap terrainMap, int numberOfSettlements)
 	{
 		StartFillMap(terrainMap);
 

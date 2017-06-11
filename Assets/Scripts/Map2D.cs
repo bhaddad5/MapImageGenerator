@@ -49,20 +49,16 @@ public class Map2D<T>
 	public List<T> GetAdjacentValues(Int2 pos)
 	{
 		List<T> values = new List<T>();
-		TryAddValue(pos + new Int2(0, 1), values);
-		TryAddValue(pos + new Int2(0, -1), values);
-		TryAddValue(pos + new Int2(1, 0), values);
-		TryAddValue(pos + new Int2(1, 0), values);
+		foreach (var point in GetAdjacentPoints(pos))
+			values.Add(GetValueAt(pos));
 		return values;
 	}
 
 	public List<T> GetDiagonalValues(Int2 pos)
 	{
 		List<T> values = new List<T>();
-		TryAddValue(pos + new Int2(1, 1), values);
-		TryAddValue(pos + new Int2(1, -1), values);
-		TryAddValue(pos + new Int2(-1, 1), values);
-		TryAddValue(pos + new Int2(-1, -1), values);
+		foreach (var point in GetDiagonalPoints(pos))
+			values.Add(GetValueAt(pos));
 		return values;
 	}
 
@@ -85,7 +81,7 @@ public class Map2D<T>
 		TryAddPoint(pos + new Int2(0, 1), values);
 		TryAddPoint(pos + new Int2(0, -1), values);
 		TryAddPoint(pos + new Int2(1, 0), values);
-		TryAddPoint(pos + new Int2(1, 0), values);
+		TryAddPoint(pos + new Int2(-1, 0), values);
 		return values;
 	}
 

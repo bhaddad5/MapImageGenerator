@@ -12,7 +12,7 @@ class MeshBuilder
 
 	private void BuildMesh(StoredTerrainMap map, Map2D<float> pixelHeights)
 	{
-		float heightScaler = 2f;
+		float heightScaler = 1f;
 		int vertsPerTileAcross = 3;
 		List<Vector3> vertices = new List<Vector3>();
 		float[][] vertHeights = populateVertHeights(map, vertsPerTileAcross, pixelHeights);

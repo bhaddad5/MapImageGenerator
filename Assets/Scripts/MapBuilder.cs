@@ -24,7 +24,7 @@ public class MapBuilder : MonoBehaviour
 
 		StoredTerrainMap terrainMap = new StoredTerrainMap(terrainMapGenerator.GetTerrainMap());
 
-		StoredRegionsMap regionsMap = new StoredRegionsMap(terrainMap, terrainMap.LandPixelCount() / averagePixelsPerRegion);
+		RegionsMapGenerator regionsMap = new RegionsMapGenerator(terrainMap, terrainMap.LandPixelCount() / averagePixelsPerRegion);
 
 		MeshBuilder meshBuilder = new MeshBuilder(terrainMap, heightGenerator.GetHeightMap());
 
@@ -41,7 +41,7 @@ public class MapBuilder : MonoBehaviour
 		Debug.Log("Done");
 	}
 
-	private void WriteRegionsMap(StoredRegionsMap map, MeshBuilder meshBuilder)
+	private void WriteRegionsMap(RegionsMapGenerator map, MeshBuilder meshBuilder)
 	{
 		Texture2D mapOut = new Texture2D(map.Width, map.Height);
 		mapOut.anisoLevel = 0;
