@@ -4,28 +4,21 @@ using UnityEngine;
 
 public class HeightMapGenerator
 {
-	float[][] map;
+	Map2D<float> map;
 	private Texture2D heightMapImage;
 
 	public HeightMapGenerator(int width, int height)
 	{
-		map = new float[width][];
-		for(int i = 0; i < width; i++)
-		{
-			map[i] = new float[height];
-		}
+		map = new Map2D<float>(width, height);
 
 		GenerateMountainRanges(Random.Range(5, 15));
 		RandomizeCoastline();
 		BlendHeightMap();
 
 		List<Color> pixels = new List<Color>();
-		foreach (float[] column in map)
+		foreach (float h in map.GetMapValues())
 		{
-			foreach(float h in column)
-			{
-				pixels.Add(new Color(h, h, h));
-			}
+			pixels.Add(new Color(h, h, h));
 		}
 
 		heightMapImage = new Texture2D(width, height);
@@ -44,7 +37,7 @@ public class HeightMapGenerator
 
 	private void GenerateMountainRange()
 	{
-		Int2 startingPixel = new Int2(Random.Range(0, map.Length - 1), Random.Range(0, map[0].Length - 1));
+		Int2 startingPixel = new Int2(Random.Range(0, map.Width - 1), Random.Range(0, map.Height - 1));
 		float startingStrength = Random.Range(.5f, .9f);
 		Int2 mountainDirection = new Int2(Random.Range(-1, 1), Random.Range(-1, 1));
 		int mountainsLength = Random.Range(4, 50);
@@ -92,14 +85,14 @@ public class HeightMapGenerator
 		if (!pixelInBounds(pixel))
 			return false;
 
-		map[pixel.X][pixel.Y] = height;
+		map.SetPoint(pixel, height);
 		TrySpreadLandArea(pixel, distanceToCoast);
 		return true;
 	}
 
 	private bool pixelInBounds(Int2 pixel)
 	{
-		return !(pixel.X < 0 || pixel.X >= map.Length || pixel.Y < 0 || pixel.Y >= map[0].Length);
+		return !(pixel.X < 0 || pixel.X >= map.Width || pixel.Y < 0 || pixel.Y >= map.Height);
 	}
 
 	private void TrySpreadLandArea(Int2 startPixel, int distanceToCoast)
@@ -116,7 +109,7 @@ public class HeightMapGenerator
 				List<Int2> neighbors = GetNeighborTiles(pixelsToSpreadTo.TopValue());
 				foreach (Int2 neighbor in neighbors)
 				{
-					map[neighbor.X][neighbor.Y] = Globals.MinGroundHeight;
+					map.SetPoint(neighbor, Globals.MinGroundHeight);
 					pixelsToSpreadTo.Insert(pixelsToSpreadTo.TopKey() - 1,  neighbor);
 				}
 			}
@@ -143,7 +136,7 @@ public class HeightMapGenerator
 
 	private bool IsPossibleNeighbor(Int2 neighbor)
 	{
-		return pixelInBounds(neighbor) && map[neighbor.X][neighbor.Y].Equals(0);
+		return pixelInBounds(neighbor) && map.GetValueAt(neighbor).Equals(0);
 	}
 
 	private void RandomizeCoastline()
@@ -157,9 +150,9 @@ public class HeightMapGenerator
 
 	private void RandomizeCoastlinePass()
 	{
-		for(int i = 0; i < map.Length; i++)
+		for(int i = 0; i < map.Width; i++)
 		{
-			for(int j = 0; j <map[0].Length; j++)
+			for(int j = 0; j <map.Height; j++)
 			{
 				TryRandomizeCoastTile(new Int2(i, j));
 			}
@@ -172,7 +165,7 @@ public class HeightMapGenerator
 		if(IsCoastline(tile) && !BordersMountain(tile))
 		{
 			if (Random.Range(0f, 1f) <= probOfWaterfy)
-				map[tile.X][tile.Y] = 0f;
+				map.SetPoint(tile, 0f);
 		}
 	}
 
@@ -223,14 +216,11 @@ public class HeightMapGenerator
 
 	private void BlendHeightMapPass()
 	{
-		for(int i = 0; i < map.Length; i++)
+		foreach(Int2 pixle in map.GetMapPoints())
 		{
-			for(int j = 0; j < map[0].Length; j++)
-			{
-				float avg = NeighborAverageHeight(i, j);
-				if (map[i][j] > 0 && (map[i][j] != Globals.MinGroundHeight || avg >= Globals.MinGroundHeight))
-					map[i][j] = (map[i][j] + avg) / 2;
-			}
+			float avg = NeighborAverageHeight(pixle.X, pixle.Y);
+			if (map.GetValueAt(pixle) > 0 && (map.GetValueAt(pixle) != Globals.MinGroundHeight || avg >= Globals.MinGroundHeight))
+				map.SetPoint(pixle, (map.GetValueAt(pixle) + avg) / 2);
 		}
 	}
 
@@ -252,13 +242,13 @@ public class HeightMapGenerator
 
 	private void TryAddPoint(List<float> points, int x, int y)
 	{
-		if (x >= 0 && x < map.Length - 1 && y >= 0 && y < map[0].Length - 1)
-			points.Add(map[x][y]);
+		if (x >= 0 && x < map.Width - 1 && y >= 0 && y < map.Height - 1)
+			points.Add(map.GetValueAt(new Int2(x, y)));
 	}
 
 	private float HeightAt(Int2 px)
 	{
-		return map[px.X][px.Y];
+		return map.GetValueAt(px);
 	}
 
 	public Texture2D GetHeightMapTexture()
@@ -267,7 +257,7 @@ public class HeightMapGenerator
 		return heightMapImage;
 	}
 
-	public float[][] GetHeightMap()
+	public Map2D<float> GetHeightMap()
 	{
 		return map;
 	}

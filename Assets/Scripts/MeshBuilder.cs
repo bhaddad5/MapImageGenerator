@@ -5,12 +5,12 @@ using UnityEngine;
 class MeshBuilder
 {
 	private Mesh builtMesh = new Mesh();
-	public MeshBuilder(StoredTerrainMap map, float[][] heights)
+	public MeshBuilder(StoredTerrainMap map, Map2D<float> heights)
 	{
 		BuildMesh(map, heights);
 	}
 
-	private void BuildMesh(StoredTerrainMap map, float[][] pixelHeights)
+	private void BuildMesh(StoredTerrainMap map, Map2D<float> pixelHeights)
 	{
 		float heightScaler = 2f;
 		int vertsPerTileAcross = 3;
@@ -24,7 +24,7 @@ class MeshBuilder
 		builtMesh.name = "MapMesh";
 	}
 
-	private float[][] populateVertHeights(StoredTerrainMap map, int vertsPerTileAcross, float[][] pixelHeights)
+	private float[][] populateVertHeights(StoredTerrainMap map, int vertsPerTileAcross, Map2D<float> pixelHeights)
 	{
 		float[][] vertHeights = new float[map.Width * (vertsPerTileAcross-1) + 1][];
 		for (int i = 0; i < vertHeights.Length; i++)
@@ -37,7 +37,7 @@ class MeshBuilder
 			for (int j = 0; j < map.Height; j++)
 			{
 				var tile = map.TileAt(new Int2(i, j));
-				vertHeights = fillHeightsForTile(vertHeights, i, j, vertsPerTileAcross, pixelHeights[i][j], map.Width, map.Height);			
+				vertHeights = fillHeightsForTile(vertHeights, i, j, vertsPerTileAcross, pixelHeights.GetValueAt(new Int2(i, j)), map.Width, map.Height);			
 			}
 		}
 

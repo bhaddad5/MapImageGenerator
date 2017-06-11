@@ -9,17 +9,17 @@ public class TerrainMapGenerator
 
 	public float mountainHeight = 0.25f;
 
-	public TerrainMapGenerator(float[][] heightMap)
+	public TerrainMapGenerator(Map2D<float> heightMap)
 	{
-		map = new TerrainTile[heightMap.Length][];
-		for(int i = 0; i < heightMap.Length; i++)
+		map = new TerrainTile[heightMap.Width][];
+		for(int i = 0; i < heightMap.Width; i++)
 		{
-			map[i] = new TerrainTile[heightMap[0].Length];
-			for(int j = 0; j < heightMap[0].Length; j++)
+			map[i] = new TerrainTile[heightMap.Height];
+			for(int j = 0; j < heightMap.Height; j++)
 			{
-				if(heightMap[i][j] < Globals.MinGroundHeight)
+				if (heightMap.GetValueAt(new Int2(i, j)) < Globals.MinGroundHeight)
 					map[i][j] = new TerrainTile(TerrainTile.TileType.Ocean);
-				else if (heightMap[i][j] >= mountainHeight)
+				else if (heightMap.GetValueAt(new Int2(i, j)) >= mountainHeight)
 					map[i][j] = new TerrainTile(TerrainTile.TileType.Mountain);
 				else map[i][j] = new TerrainTile(TerrainTile.TileType.Grass);
 			}

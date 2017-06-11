@@ -83,6 +83,7 @@
     <Compile Include="Assets\Scripts\Globals.cs" />
     <Compile Include="Assets\Scripts\HeightMapGenerator.cs" />
     <Compile Include="Assets\Scripts\Helpers.cs" />
+    <Compile Include="Assets\Scripts\Map2D.cs" />
     <Compile Include="Assets\Scripts\MapBuilder.cs" />
     <Compile Include="Assets\Scripts\MapTextureGenerator.cs" />
     <Compile Include="Assets\Scripts\MapTextureLookup.cs" />

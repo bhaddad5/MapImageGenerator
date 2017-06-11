@@ -154,14 +154,10 @@ class StoredRegionsMap
 	private List<Int2> GetPossibleNeighborTiles(Int2 pos, Region region, StoredTerrainMap terrainMap)
 	{
 		List<Int2> neighbors = new List<Int2>();
-		neighbors.Add(pos + new Int2(1, 1));
 		neighbors.Add(pos + new Int2(1, 0));
-		neighbors.Add(pos + new Int2(1, -1));
 		neighbors.Add(pos + new Int2(0, 1));
 		neighbors.Add(pos + new Int2(0, -1));
-		neighbors.Add(pos + new Int2(-1, 1));
 		neighbors.Add(pos + new Int2(-1, 0));
-		neighbors.Add(pos + new Int2(-1, -1));
 
 		for (int i = neighbors.Count - 1; i >= 0; i--)
 		{
