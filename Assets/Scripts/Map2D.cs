@@ -32,6 +32,20 @@ public class Map2D<T>
 		return points;
 	}
 
+	public List<Int2> GetMapPointsFlipped()
+	{
+		List<Int2> points = new List<Int2>();
+		for (int j = 0; j < Height; j++)
+		{
+			for (int i = 0; i < Width; i++)
+			{
+				points.Add(new Int2(i, j));
+			}
+		}
+
+		return points;
+	}
+
 	public List<T> GetMapValues()
 	{
 		List<T> points = new List<T>();

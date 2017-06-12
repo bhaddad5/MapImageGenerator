@@ -141,9 +141,9 @@ class MeshBuilder
 
 	private void SetVerticesFromHeights(List<Vector3> vertices, float vertsPerTileAcross)
 	{
-		foreach(Int2 pos in vertHeights.GetMapPoints())
+		foreach(Int2 pos in vertHeights.GetMapPointsFlipped())
 		{
-			vertices.Add(new Vector3(pos.Y / vertsPerTileAcross, vertHeights.GetValueAt(new Int2(pos.Y, pos.X)) * 10f, pos.X / vertsPerTileAcross));
+			vertices.Add(new Vector3(pos.X / vertsPerTileAcross, vertHeights.GetValueAt(pos) * 10f, pos.Y / vertsPerTileAcross));
 		}
 	}
 

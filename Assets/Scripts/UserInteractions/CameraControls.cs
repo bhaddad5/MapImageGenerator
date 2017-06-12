@@ -2,13 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraControls : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
+public class CameraControls : MonoBehaviour
+{
 	// Update is called once per frame
 	void Update ()
 	{
