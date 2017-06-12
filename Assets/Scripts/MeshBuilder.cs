@@ -10,120 +10,103 @@ class MeshBuilder
 		BuildMesh(map, heights);
 	}
 
+	private Map2D<float> vertHeights;
+
 	private void BuildMesh(StoredTerrainMap map, Map2D<float> pixelHeights)
 	{
 		float heightScaler = 1f;
 		int vertsPerTileAcross = 3;
 		List<Vector3> vertices = new List<Vector3>();
-		float[][] vertHeights = populateVertHeights(map, vertsPerTileAcross, pixelHeights);
-		vertHeights = RandomizeVertHeights(vertHeights);
-		ScaleVertHeights(vertHeights, heightScaler);
-		SetVerticesFromHeights(vertices, vertHeights, vertsPerTileAcross);		
+		populateVertHeights(map, vertsPerTileAcross, pixelHeights);
+		RandomizeVertHeights();
+		ScaleVertHeights(heightScaler);
+		SetVerticesFromHeights(vertices, vertsPerTileAcross);		
 		builtMesh.vertices = vertices.ToArray();
-		SetUVsAndTriangles(builtMesh, vertHeights.Length, vertHeights[0].Length);
+		SetUVsAndTriangles(builtMesh, vertHeights.Width, vertHeights.Height);
 		builtMesh.name = "MapMesh";
 	}
 
-	private float[][] populateVertHeights(StoredTerrainMap map, int vertsPerTileAcross, Map2D<float> pixelHeights)
+	private void populateVertHeights(StoredTerrainMap map, int vertsPerTileAcross, Map2D<float> pixelHeights)
 	{
-		float[][] vertHeights = new float[map.Width * (vertsPerTileAcross-1) + 1][];
-		for (int i = 0; i < vertHeights.Length; i++)
-		{
-			vertHeights[i] = new float[map.Height * (vertsPerTileAcross - 1) + 1];
-		}
+		vertHeights = new Map2D<float>(map.Width * (vertsPerTileAcross - 1) + 1, map.Height * (vertsPerTileAcross - 1) + 1);
 
-		for (int i = 0; i < map.Width; i++)
+		foreach(var pixle in map.MapPixels())
 		{
-			for (int j = 0; j < map.Height; j++)
-			{
-				var tile = map.TileAt(new Int2(i, j));
-				vertHeights = fillHeightsForTile(vertHeights, i, j, vertsPerTileAcross, pixelHeights.GetValueAt(new Int2(i, j)), map.Width, map.Height);			
-			}
+			fillHeightsForTile(pixle, vertsPerTileAcross, pixelHeights.GetValueAt(pixle), map.Width, map.Height);
 		}
-
-		return vertHeights;
 	}
 
-	private float[][] fillHeightsForTile(float[][] heights, int i, int j, int vertsPerTileAcross, float tileHeight, int mapWidth, int mapHeight)
+	private void fillHeightsForTile(Int2 pixle, int vertsPerTileAcross, float tileHeight, int mapWidth, int mapHeight)
 	{
-		int baseI = i * (vertsPerTileAcross - 1);
-		int baseJ = j * (vertsPerTileAcross - 1);
+		int baseI = pixle.X * (vertsPerTileAcross - 1);
+		int baseJ = pixle.Y * (vertsPerTileAcross - 1);
 		for (int x = 0; x < vertsPerTileAcross-1; x++)
 		{
 			for (int y = 0; y < vertsPerTileAcross-1; y++)
 			{
-				heights[baseI + x][baseJ + y] = tileHeight;
+				vertHeights.SetPoint(new Int2(baseI + x, baseJ + y), tileHeight);
 			}
 		}
 
-		if (i == mapWidth - 1)
+		if (pixle.X == mapWidth - 1)
 		{
-			for(int x = 0; x < vertsPerTileAcross - 1; x++)
-				heights[baseI + vertsPerTileAcross - 1][baseJ + x] = tileHeight;
+			for(int y = 0; y < vertsPerTileAcross - 1; y++)
+				vertHeights.SetPoint(new Int2(baseI + vertsPerTileAcross - 1, baseJ + y), tileHeight);
 		}
-		if (j == mapHeight - 1)
+		if (pixle.Y == mapHeight - 1)
 		{
 			for (int x = 0; x < vertsPerTileAcross - 1; x++)
-				heights[baseI + x][baseJ + vertsPerTileAcross - 1] = tileHeight;
+				vertHeights.SetPoint(new Int2(baseI + x, baseJ + vertsPerTileAcross - 1), tileHeight);
 		}
-		if (i == mapWidth - 1 && j == mapHeight - 1)
+		if (pixle.X == mapWidth - 1 && pixle.Y == mapHeight - 1)
 		{
-			heights[baseI + vertsPerTileAcross - 1][baseJ + vertsPerTileAcross - 1] = tileHeight;
+			vertHeights.SetPoint(new Int2(baseI + vertsPerTileAcross - 1, baseJ + vertsPerTileAcross - 1), tileHeight);
 		}
-		return heights;
 	}
 
-	private float[][] RandomizeVertHeights(float[][] heights)
+	private void RandomizeVertHeights()
 	{
 		int numPasses = 3;
 		for(int i = 0; i < numPasses; i++)
 		{
-			heights = RandomizeVertHeightsPass(heights);
+			RandomizeVertHeightsPass();
 		}
 
-		heights = RandomizeCoastHeights(heights);
-
-		return heights;
+		RandomizeCoastHeights();
 	}
 
-	private float[][] RandomizeVertHeightsPass(float[][] heights)
+	private void RandomizeVertHeightsPass()
 	{
-		for(int i = 0; i < heights.Length; i++)
+		foreach(Int2 pos in vertHeights.GetMapPoints())
 		{
-			for(int j = 0; j < heights[0].Length; j++)
+			if (vertHeights.GetValueAt(pos) >= Globals.MinGroundHeight)
 			{
-				if (heights[i][j] >= Globals.MinGroundHeight)
-					heights[i][j] = Mathf.Max(Globals.MinGroundHeight, (heights[i][j] + neighborAverageHeight(i, j, heights)) / 2 * Random.Range(1f, 1.3f));
-				else heights[i][j] = Globals.MinGroundHeight - 0.05f;
+				float newHeight = Mathf.Max(Globals.MinGroundHeight, (vertHeights.GetValueAt(pos) + NeighborAverageHeight(pos)) / 2 * Random.Range(1f, 1.3f));
+				vertHeights.SetPoint(pos, newHeight);
 			}
+			else vertHeights.SetPoint(pos, Globals.MinGroundHeight - 0.05f);
 		}
-		return heights;
 	}
 
-	private float[][] RandomizeCoastHeights(float[][] heights)
+	private void RandomizeCoastHeights()
 	{
-		float[][] newHeights = new float[heights.Length][];
-
-		for (int i = 0; i < heights.Length; i++)
+		Map2D<float> newHeights = new Map2D<float>(vertHeights.Width, vertHeights.Height);
+		foreach(Int2 point in vertHeights.GetMapPoints())
 		{
-			newHeights[i] = new float[heights[0].Length];
-			for (int j = 0; j < heights[0].Length; j++)
-			{
-				newHeights[i][j] = heights[i][j];
-				float rand = Random.Range(0f, 1f);
-				if (IsOceanCoastVert(i, j, heights) && rand < 0.5f)
-					newHeights[i][j] = Globals.MinGroundHeight;
-			}
+			newHeights.SetPoint(point, vertHeights.GetValueAt(point));
+			float rand = Random.Range(0f, 1f);
+			if (IsOceanCoastVert(point) && rand < 0.5f)
+				newHeights.SetPoint(point, Globals.MinGroundHeight);
 		}
-		return newHeights;
+		vertHeights = newHeights;
 	}
 
-	private bool IsOceanCoastVert(int x, int y, float[][] heights)
+	private bool IsOceanCoastVert(Int2 pos)
 	{
-		if (heights[x][y] > Globals.MinGroundHeight - 0.05f)
+		if (vertHeights.GetValueAt(pos) > Globals.MinGroundHeight - 0.05f)
 			return false;
 
-		foreach(var neighbor in getNeighbors(x, y, heights))
+		foreach(var neighbor in vertHeights.GetAdjacentValues(pos))
 		{
 			if (neighbor > Globals.MinGroundHeight)
 				return true;
@@ -132,9 +115,9 @@ class MeshBuilder
 		return false;
 	}
 
-	private float neighborAverageHeight(int x, int y, float[][] heights)
+	private float NeighborAverageHeight(Int2 pos)
 	{
-		var points = getNeighbors(x, y, heights);
+		var points = vertHeights.GetAdjacentValues(pos);
 
 		float average = 0f;
 		foreach (var pt in points)
@@ -144,41 +127,19 @@ class MeshBuilder
 		return average/points.Count;
 	}
 
-	private List<float> getNeighbors(int x, int y, float[][] heights)
+	private void ScaleVertHeights(float scale)
 	{
-		List<float> points = new List<float>();
-		TryAddPoint(points, x, y - 1, heights.Length - 1, heights[0].Length - 1, heights);
-		TryAddPoint(points, x - 1, y, heights.Length - 1, heights[0].Length - 1, heights);
-		TryAddPoint(points, x + 1, y, heights.Length - 1, heights[0].Length - 1, heights);
-		TryAddPoint(points, x, y + 1, heights.Length - 1, heights[0].Length - 1, heights);
-		return points;
-	}
-
-	private void TryAddPoint(List<float> points, int x, int y, int maxX, int maxY, float[][] heights)
-	{
-		if (x >= 0 && x < maxX && y >= 0 && y < maxY)
-			points.Add(heights[x][y]);
-	}
-
-	private void ScaleVertHeights(float[][] heights, float scale)
-	{
-		for(int i = 0; i < heights.Length; i++)
+		foreach(Int2 point in vertHeights.GetMapPoints())
 		{
-			for(int j = 0; j < heights[0].Length; j++)
-			{
-				heights[i][j] = heights[i][j] * scale;
-			}
+			vertHeights.SetPoint(point, vertHeights.GetValueAt(point) * scale);
 		}
 	}
 
-	private void SetVerticesFromHeights(List<Vector3> vertices, float[][] heights, float vertsPerTileAcross)
+	private void SetVerticesFromHeights(List<Vector3> vertices, float vertsPerTileAcross)
 	{
-		for (int i = 0; i < heights.Length; i++)
+		foreach(Int2 pos in vertHeights.GetMapPoints())
 		{
-			for (int j = 0; j < heights[0].Length; j++)
-			{
-				vertices.Add(new Vector3(j/ vertsPerTileAcross, heights[j][i] * 10f, i/ vertsPerTileAcross));
-			}
+			vertices.Add(new Vector3(pos.Y / vertsPerTileAcross, vertHeights.GetValueAt(new Int2(pos.Y, pos.X)) * 10f, pos.X / vertsPerTileAcross));
 		}
 	}
 

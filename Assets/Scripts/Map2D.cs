@@ -50,7 +50,7 @@ public class Map2D<T>
 	{
 		List<T> values = new List<T>();
 		foreach (var point in GetAdjacentPoints(pos))
-			values.Add(GetValueAt(pos));
+			values.Add(GetValueAt(point));
 		return values;
 	}
 
@@ -58,7 +58,7 @@ public class Map2D<T>
 	{
 		List<T> values = new List<T>();
 		foreach (var point in GetDiagonalPoints(pos))
-			values.Add(GetValueAt(pos));
+			values.Add(GetValueAt(point));
 		return values;
 	}
 
@@ -110,7 +110,7 @@ public class Map2D<T>
 
 	public bool PosInBounds(Int2 pos)
 	{
-		return pos.X > 0 && pos.X < Width && pos.Y > 0 && pos.Y < Height;
+		return pos.X >= 0 && pos.X < Width && pos.Y >= 0 && pos.Y < Height;
 	}
 
 	public T GetValueAt(Int2 point)

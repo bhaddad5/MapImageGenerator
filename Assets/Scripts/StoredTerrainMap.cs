@@ -90,4 +90,9 @@ class StoredTerrainMap
 		}
 		return numTiles;
 	}
+
+	public List<Int2> MapPixels()
+	{
+		return map.GetMapPoints();
+	}
 }

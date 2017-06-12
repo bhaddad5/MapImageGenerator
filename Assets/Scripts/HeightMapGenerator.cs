@@ -102,8 +102,6 @@ public class HeightMapGenerator
 
 		while (pixelsToSpreadTo.Count > 0)
 		{
-			Int2 currPixel = pixelsToSpreadTo.TopValue();
-
 			if (pixelsToSpreadTo.TopKey() > 0)
 			{
 				foreach (Int2 neighbor in map.GetAdjacentPoints(pixelsToSpreadTo.TopValue()))
@@ -180,20 +178,20 @@ public class HeightMapGenerator
 		foreach (Int2 pixle in map.GetMapPoints())
 		{
 			float avg = NeighborAverageHeight(pixle);
-			if (map.GetValueAt(pixle) > 0 && (map.GetValueAt(pixle) != Globals.MinGroundHeight || avg >= Globals.MinGroundHeight))
+			if (map.GetValueAt(pixle) > 0 && (map.GetValueAt(pixle) > Globals.MinGroundHeight || avg > Globals.MinGroundHeight))
 				map.SetPoint(pixle, (map.GetValueAt(pixle) + avg) / 2);
 		}
 	}
 
 	private float NeighborAverageHeight(Int2 pixle)
 	{
-		float average = 0f;
+		float sum = 0f;
 		var points = map.GetAdjacentValues(pixle);
 		foreach (var pt in points)
 		{
-			average += pt;
+			sum += pt;
 		}
-		return average / points.Count;
+		return sum / points.Count;
 	}
 
 	private void TryAddPoint(List<float> points, int x, int y)

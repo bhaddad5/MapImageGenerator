@@ -30,6 +30,11 @@ public class Int2
 		return obj is Int2 && (obj as Int2).X == X && (obj as Int2).Y == Y;
 	}
 
+	public override int GetHashCode()
+	{
+		return base.GetHashCode();
+	}
+
 	public static Int2 operator +(Int2 a, Int2 b)
 	{
 		return new Int2(a.X + b.X, a.Y + b.Y);

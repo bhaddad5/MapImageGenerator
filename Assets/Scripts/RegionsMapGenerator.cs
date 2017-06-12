@@ -7,9 +7,9 @@ using UnityEngine;
 class RegionsMapGenerator
 {
 	List<Region> regions = new List<Region>();
-	List<List<RegionTile>> mapTiles = new List<List<RegionTile>>();
-	public int Width { get { return mapTiles.Count; } }
-	public int Height { get { return mapTiles[0].Count; } }
+	Map2D<RegionTile> map;
+	public int Width { get { return map.Width; } }
+	public int Height { get { return map.Height; } }
 
 	public RegionsMapGenerator(StoredTerrainMap terrainMap, int numberOfSettlements)
 	{
@@ -32,13 +32,10 @@ class RegionsMapGenerator
 		NoMansLand.color = Color.black;
 		regions.Add(NoMansLand);
 
-		for (int i = 0; i < terrainMap.Width; i++)
+		map = new Map2D<RegionTile>(terrainMap.Width, terrainMap.Height);
+		foreach(var pixel in map.GetMapPoints())
 		{
-			mapTiles.Insert(i, new List<RegionTile>());
-			for (int j = 0; j < terrainMap.Height; j++)
-			{
-				mapTiles[i].Insert(j, new RegionTile(NoMansLand));
-			}
+			map.SetPoint(pixel, new RegionTile(NoMansLand));
 		}
 	}
 
@@ -48,13 +45,10 @@ class RegionsMapGenerator
 		OceanRegion.color = Color.blue;
 		regions.Add(OceanRegion);
 
-		for (int i = 0; i < terrainMap.Width; i++)
+		foreach (var pixel in map.GetMapPoints())
 		{
-			for (int j = 0; j < terrainMap.Height; j++)
-			{
-				if (terrainMap.TileIsType(new Int2(i, j), TerrainTile.TileType.Ocean))
-					TileAt(new Int2(i, j)).region = OceanRegion;
-			}
+			if(terrainMap.TileIsType(pixel, TerrainTile.TileType.Ocean))
+				map.SetPoint(pixel, new RegionTile(OceanRegion));
 		}
 	}
 
@@ -174,11 +168,11 @@ class RegionsMapGenerator
 
 	private RegionTile TileAt(Int2 pos)
 	{
-		return mapTiles[pos.X][pos.Y];
+		return map.GetValueAt(pos);
 	}
 
 	public Color GetTileColor(Int2 pos)
 	{
-		return mapTiles[pos.X][pos.Y].GetColor();
+		return TileAt(pos).GetColor();
 	}
 }
