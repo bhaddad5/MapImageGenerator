@@ -15,7 +15,7 @@ class MeshBuilder
 	private void BuildMesh(StoredTerrainMap map, Map2D<float> pixelHeights)
 	{
 		float heightScaler = 1f;
-		int vertsPerTileAcross = 3;
+		int vertsPerTileAcross = 5;
 		List<Vector3> vertices = new List<Vector3>();
 		populateVertHeights(map, vertsPerTileAcross, pixelHeights);
 		RandomizeVertHeights();
@@ -72,7 +72,11 @@ class MeshBuilder
 			RandomizeVertHeightsPass();
 		}
 
-		RandomizeCoastHeights();
+		int numCoastPasses = 2;
+		for(int i = 0; i < numCoastPasses; i++)
+		{
+			RandomizeCoastHeights();
+		}
 	}
 
 	private void RandomizeVertHeightsPass()
@@ -108,7 +112,7 @@ class MeshBuilder
 
 		foreach(var neighbor in vertHeights.GetAdjacentValues(pos))
 		{
-			if (neighbor > Globals.MinGroundHeight)
+			if (neighbor > Globals.MinGroundHeight - 0.05f)
 				return true;
 		}
 

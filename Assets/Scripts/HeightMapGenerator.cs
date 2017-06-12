@@ -11,7 +11,10 @@ public class HeightMapGenerator
 	{
 		map = new Map2D<float>(width, height);
 
-		GenerateMountainRanges(Random.Range(5, 15));
+		int pixelsPerRange = 320;
+		int avgNumOfRanges = (width * height) / pixelsPerRange;
+
+		GenerateMountainRanges(Random.Range(avgNumOfRanges/2, avgNumOfRanges + avgNumOfRanges/2));
 		RandomizeCoastline();
 		BlendHeightMap();
 
