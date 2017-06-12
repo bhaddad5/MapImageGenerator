@@ -41,44 +41,33 @@ class MapTextureGenerator
 		}
 	}
 
-	private PixelPoint[][] pixels;
+	private Map2D<PixelPoint> pixels;
 	private Texture2D mapTexture;
 	public MapTextureGenerator(StoredTerrainMap map, MapTextureLookup lookup)
 	{
 		int textureToInputScale = 20;
 		setUpMapTexture(textureToInputScale, map.Width, map.Height);
 
-		for(int i = 0; i < map.Width; i++)
+		foreach(Int2 point in map.MapPixels())
 		{
-			for(int j = 0; j < map.Height; j++)
-			{
-				AddMapChunkForTile(i, j, textureToInputScale, map.TileAt(new Int2(i, j)), lookup);
-			}
+			AddMapChunkForTile(point.X, point.Y, textureToInputScale, map.TileAt(point), lookup);
 		}
 
-		List<Color> pixelsToSet = new List<Color>();
-		for(int i = 0; i < pixels.Length; i++)
+		var pixels = this.pixels.GetMapValuesFlipped();
+		Color[] pixelsToSet = new Color[pixels.Count];
+		for(int i = 0; i < pixels.Count; i++)
 		{
-			for(int j = 0; j < pixels[0].Length; j++)
-			{
-				pixelsToSet.Add(pixels[j][i].GetPixelColor());
-			}
+			pixelsToSet[i] = pixels[i].GetPixelColor();
 		}
-		mapTexture.SetPixels(pixelsToSet.ToArray());
+		mapTexture.SetPixels(pixelsToSet);
 	}
 
 	private void setUpMapTexture(int scale, int width, int height)
 	{
-		mapTexture = new Texture2D(width * scale, height * scale);
-		pixels = new PixelPoint[mapTexture.width][];
-		for (int i = 0; i < mapTexture.width; i++)
-		{
-			pixels[i] = new PixelPoint[mapTexture.height];
-			for(int j = 0; j < mapTexture.height; j++)
-			{
-				pixels[i][j] = new PixelPoint();
-			}
-		}
+		pixels = new Map2D<PixelPoint>(width * scale, height * scale);
+		foreach (var pt in pixels.GetMapPoints())
+			pixels.SetPoint(pt, new PixelPoint());
+		mapTexture = new Texture2D(pixels.Width, pixels.Height);
 	}
 
 	private void AddMapChunkForTile(int i, int j, int scale, TerrainTile tile, MapTextureLookup lookup)
@@ -94,17 +83,15 @@ class MapTextureGenerator
 				float strength = ((distanceOutToFade * 2) - Mathf.Max(0, (distFromCenter - ((scale/2) - distanceOutToFade)))) / (distanceOutToFade * 2);
 				strength = Mathf.Min(Mathf.Max(0, strength), 1);
 
-				TrySetPixel(x, y, tileTexture.GetPixel(x, y), strength);
+				TrySetPixel(new Int2(x, y), tileTexture.GetPixel(x, y), strength);
 			}
 		}
 	}
 
-	private void TrySetPixel(int x, int y, Color c, float strength)
+	private void TrySetPixel(Int2 pos, Color c, float strength)
 	{
-		if (x < 0 || x >= mapTexture.width || y < 0 || y >= mapTexture.height)
-			return;
-
-		pixels[x][y].claims.Add(new PixelPoint.StrengthClaim(c, strength));
+		if(pixels.PosInBounds(pos))
+			pixels.GetValueAt(pos).claims.Add(new PixelPoint.StrengthClaim(c, strength));
 	}
 
 	public Texture2D GetMapTexture()

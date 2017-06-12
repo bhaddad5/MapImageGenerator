@@ -49,14 +49,16 @@ public class Map2D<T>
 	public List<T> GetMapValues()
 	{
 		List<T> points = new List<T>();
-		for (int i = 0; i < Width; i++)
-		{
-			for (int j = 0; j < Height; j++)
-			{
-				points.Add(map[i][j]);
-			}
-		}
+		foreach (Int2 pt in GetMapPoints())
+			points.Add(GetValueAt(pt));
+		return points;
+	}
 
+	public List<T> GetMapValuesFlipped()
+	{
+		List<T> points = new List<T>();
+		foreach (Int2 pt in GetMapPointsFlipped())
+			points.Add(GetValueAt(pt));
 		return points;
 	}
 
