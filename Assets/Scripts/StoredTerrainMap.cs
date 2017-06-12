@@ -28,7 +28,7 @@ class StoredTerrainMap
 	{
 		float value = TileAt(pos).GetValue();
 
-		foreach (TerrainTile t in map.GetAllNeighboringValues(pos))
+		foreach (TerrainTile t in map.GetAdjacentValues(pos))
 			value += t.GetValue();
 		foreach (TerrainTile t in GetTwoLayersAdjacentTiles(pos))
 			value += t.GetValue();
