@@ -9,6 +9,7 @@ public class MapBuilder : MonoBehaviour
 	public MapTextureLookup lookup;
 	public InputField sizeX;
 	public InputField sizeY;
+	public Text displayText;
 
 	public GameObject generatedMapInputDisplay;
 	public GameObject terrainMeshDisplay;
@@ -29,26 +30,46 @@ public class MapBuilder : MonoBehaviour
 		int height = 36;
 		if(sizeY.text != "")
 			height = int.Parse(sizeY.text);
-		BuildMap(width, height);
+		StartCoroutine(BuildMap(width, height));
 	}
 
-	public void BuildMap(int width, int height)
+	public IEnumerator BuildMap(int width, int height)
 	{
+		displayText.enabled = true;
+
+		displayText.text = "Generating Height Map";
+		yield return null;
+
 		int averagePixelsPerRegion = 40;
 
 		HeightMapGenerator heightGenerator = new HeightMapGenerator(width, height);
 		generatedMapInputDisplay.GetComponent<MeshRenderer>().material.mainTexture = heightGenerator.GetHeightMapTexture();
+
+		displayText.text = "Generating Ground Types";
+		yield return null;
 
 		TerrainMapGenerator terrainMapGenerator = new TerrainMapGenerator(heightGenerator.GetHeightMap());
 		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().material.mainTexture = terrainMapGenerator.GetTerrainTexture();
 
 		StoredTerrainMap terrainMap = new StoredTerrainMap(terrainMapGenerator.GetTerrainMap());
 
+		displayText.text = "Generating Regions";
+		yield return null;
+
 		RegionsMapGenerator regionsMap = new RegionsMapGenerator(terrainMap, terrainMap.LandPixelCount() / averagePixelsPerRegion);
+
+		displayText.text = "Building Terrain Mesh";
+		yield return null;
 
 		MeshBuilder meshBuilder = new MeshBuilder(terrainMap, heightGenerator.GetHeightMap());
 
+		displayText.text = "Building Ground Texture";
+		yield return null;
+
 		MapTextureGenerator textureGenerator = new MapTextureGenerator(terrainMap, lookup);
+
+		displayText.text = "Displaying Map";
+		yield return null;
 
 		terrainMeshDisplay.GetComponent<MeshFilter>().mesh = meshBuilder.GetBuiltMesh();
 		terrainMeshDisplay.transform.localScale = new Vector3(.3f, .06f, .3f);
@@ -57,6 +78,8 @@ public class MapBuilder : MonoBehaviour
 		terrainMeshDisplay.GetComponent<MeshRenderer>().material.mainTexture = textureGenerator.GetMapTexture();
 
 		WriteRegionsMap(regionsMap, meshBuilder);
+
+		displayText.enabled = false;
 
 		Debug.Log("Done");
 	}

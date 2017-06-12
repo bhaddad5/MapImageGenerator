@@ -56,7 +56,7 @@ class RegionsMapGenerator
 	{
 		SortedDupList<Int2> regions = new SortedDupList<Int2>();
 
-		for(int i = 0; i < numberOfSettlements * 10; i++)
+		for(int i = 0; i < numberOfSettlements * 40; i++)
 		{
 			Int2 testPos = new Int2(UnityEngine.Random.Range(0, terrainMap.Width), UnityEngine.Random.Range(0, terrainMap.Height));
 			if (!terrainMap.TileIsType(testPos, TerrainTile.TileType.Ocean) &&
