@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 
 public class MapBuilder : MonoBehaviour
 {
 	public MapTextureLookup lookup;
+	public InputField sizeX;
+	public InputField sizeY;
 
 	public GameObject generatedMapInputDisplay;
 	public GameObject terrainMeshDisplay;
@@ -13,10 +16,27 @@ public class MapBuilder : MonoBehaviour
 	public GameObject generatedTerrainMapInputDisplay;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
+		RebuildMap();
+	}
+
+	public void RebuildMap()
+	{
+		int width = 36;
+		if(sizeX.text != "")
+			width = int.Parse(sizeX.text);
+		int height = 36;
+		if(sizeY.text != "")
+			height = int.Parse(sizeY.text);
+		BuildMap(width, height);
+	}
+
+	public void BuildMap(int width, int height)
+	{
 		int averagePixelsPerRegion = 40;
 
-		HeightMapGenerator heightGenerator = new HeightMapGenerator(36, 36);
+		HeightMapGenerator heightGenerator = new HeightMapGenerator(width, height);
 		generatedMapInputDisplay.GetComponent<MeshRenderer>().material.mainTexture = heightGenerator.GetHeightMapTexture();
 
 		TerrainMapGenerator terrainMapGenerator = new TerrainMapGenerator(heightGenerator.GetHeightMap());

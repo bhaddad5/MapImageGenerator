@@ -15,18 +15,18 @@ Platform assembly: C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGen
 Loading C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.016 seconds
+- Completed reload, in  0.017 seconds
 Platform assembly: C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\System.dll (this message is harmless)
-desktop: 3840x2160 60Hz; virtual: 3840x2160 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
+desktop: 3840x2160 60Hz; virtual: 3840x2160 at 0,0
 <RI> Initialized touch support.
-UnloadTime: 1.213545 ms
+UnloadTime: 0.903551 ms
 Done
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 52d4 -> priority: 1 
-  Thread -> id: 70cc -> priority: 1 
+  Thread -> id: 730c -> priority: 1 
+  Thread -> id: 14724 -> priority: 1 
