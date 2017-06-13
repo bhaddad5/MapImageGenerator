@@ -89,7 +89,6 @@
     <Compile Include="Assets\Scripts\MapTextureGenerator.cs" />
     <Compile Include="Assets\Scripts\MapTextureLookup.cs" />
     <Compile Include="Assets\Scripts\MeshBuilder.cs" />
-    <Compile Include="Assets\Scripts\NickCode\MeshSplitter.cs" />
     <Compile Include="Assets\Scripts\Region.cs" />
     <Compile Include="Assets\Scripts\RegionTile.cs" />
     <Compile Include="Assets\Scripts\RegionsMapGenerator.cs" />

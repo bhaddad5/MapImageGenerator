@@ -56,7 +56,7 @@ class MeshBuilder
 
 		meshIn.AddTriangles(tries);
 
-		var meshesOut = MeshSplitter.Split(meshIn, 10000, 10000);
+		var meshesOut = MeshSplitter.Split(meshIn, 64000, 64000);
 		
 		foreach(var meshOut in meshesOut)
 		{

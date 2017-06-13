@@ -88,16 +88,28 @@ public class MapBuilder : MonoBehaviour
 			meshNum++;
 		}
 
+		Texture2D regions = WriteRegionsMap(regionsMap, meshBuilder);
 
-		terrainMeshDisplay.transform.localPosition -= new Vector3(width/10, 0f, height/10);
-		//WriteRegionsMap(regionsMap, meshBuilder);
+		int meshNum2 = 0;
+		foreach (Mesh m in meshBuilder.GetBuiltMeshes())
+		{
+			GameObject g = new GameObject("Mesh" + meshNum2);
+			g.transform.SetParent(terrainMeshDisplay.transform);
+			g.AddComponent<MeshFilter>().mesh = m;
+			g.AddComponent<MeshRenderer>().sharedMaterial = regionsMeshDisplay.GetComponent<MeshRenderer>().material;
+			g.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = regions;
+			g.transform.localPosition += new Vector3(0f, 0.01f, 0f);
+			meshNum2++;
+		}
+
+		terrainMeshDisplay.transform.localPosition -= new Vector3(width / 10, 0f, height / 10);
 
 		displayText.enabled = false;
 
 		Debug.Log("Done");
 	}
 
-	/*private void WriteRegionsMap(RegionsMapGenerator map, MeshBuilder meshBuilder)
+	private Texture2D WriteRegionsMap(RegionsMapGenerator map, MeshBuilder meshBuilder)
 	{
 		Texture2D mapOut = new Texture2D(map.Width, map.Height);
 		mapOut.anisoLevel = 0;
@@ -114,10 +126,6 @@ public class MapBuilder : MonoBehaviour
 
 		mapOut.Apply();
 
-		regionsMeshDisplay.GetComponent<MeshFilter>().mesh = meshBuilder.GetBuiltMesh();
-		regionsMeshDisplay.transform.localScale = new Vector3(.3f, .06f, .3f);
-		regionsMeshDisplay.transform.localPosition = new Vector3(5f, 1.01f, 5f);
-		regionsMeshDisplay.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
-		regionsMeshDisplay.GetComponent<MeshRenderer>().material.mainTexture = mapOut;
-	}*/
+		return mapOut;
+	}
 }
