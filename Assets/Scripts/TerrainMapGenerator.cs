@@ -25,7 +25,7 @@ public class TerrainMapGenerator
 		FillInLandTextures();
 
 		List<Color> pixels = new List<Color>();
-		foreach(var tile in map.GetMapValues())
+		foreach(var tile in map.GetMapValuesFlipped())
 		{
 			pixels.Add(tile.GetTileColor());
 		}

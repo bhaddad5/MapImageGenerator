@@ -13,9 +13,9 @@ public class CameraControls : MonoBehaviour
 			Camera.main.transform.eulerAngles += new Vector3(0, 1f, 0);
 
 		if (Input.GetKey(KeyCode.Alpha1))
-			Camera.main.transform.eulerAngles += new Vector3(-1f, 0, 0);
-		if (Input.GetKey(KeyCode.Alpha2))
 			Camera.main.transform.eulerAngles += new Vector3(1f, 0, 0);
+		if (Input.GetKey(KeyCode.Alpha2))
+			Camera.main.transform.eulerAngles += new Vector3(-1f, 0, 0);
 
 		Vector3 camFlatForward = Camera.main.transform.forward;
 		camFlatForward.y = 0;
