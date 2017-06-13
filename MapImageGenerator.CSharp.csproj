@@ -76,6 +76,9 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Base">
+      <HintPath>Assets\Scripts\NickCode\Base.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Globals.cs" />
@@ -86,6 +89,7 @@
     <Compile Include="Assets\Scripts\MapTextureGenerator.cs" />
     <Compile Include="Assets\Scripts\MapTextureLookup.cs" />
     <Compile Include="Assets\Scripts\MeshBuilder.cs" />
+    <Compile Include="Assets\Scripts\NickCode\MeshSplitter.cs" />
     <Compile Include="Assets\Scripts\Region.cs" />
     <Compile Include="Assets\Scripts\RegionTile.cs" />
     <Compile Include="Assets\Scripts\RegionsMapGenerator.cs" />
@@ -93,7 +97,11 @@
     <Compile Include="Assets\Scripts\TerrainMapGenerator.cs" />
     <Compile Include="Assets\Scripts\TerrainTile.cs" />
     <Compile Include="Assets\Scripts\UserInteractions\CameraControls.cs" />
+    <Compile Include="Assets\Scripts\UserInteractions\LightController.cs" />
     <Compile Include="Assets\Scripts\UserInteractions\RegionsTransparencyController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Scripts\GroundShader.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

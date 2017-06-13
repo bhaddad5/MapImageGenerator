@@ -35,6 +35,12 @@ public class MapBuilder : MonoBehaviour
 
 	public IEnumerator BuildMap(int width, int height)
 	{
+		terrainMeshDisplay.transform.localPosition = Vector3.zero;
+		for (int i = 0; i < terrainMeshDisplay.transform.childCount; i++)
+		{
+			Destroy(terrainMeshDisplay.transform.GetChild(i).gameObject);
+		}
+
 		displayText.enabled = true;
 
 		displayText.text = "Generating Height Map";
@@ -71,20 +77,27 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Displaying Map";
 		yield return null;
 
-		terrainMeshDisplay.GetComponent<MeshFilter>().mesh = meshBuilder.GetBuiltMesh();
-		terrainMeshDisplay.transform.localScale = new Vector3(.3f, .06f, .3f);
-		terrainMeshDisplay.transform.localPosition = new Vector3(5f, 1f, 5f);
-		terrainMeshDisplay.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
-		terrainMeshDisplay.GetComponent<MeshRenderer>().material.mainTexture = textureGenerator.GetMapTexture();
+		int meshNum = 0;
+		foreach(Mesh m in meshBuilder.GetBuiltMeshes())
+		{
+			GameObject g = new GameObject("Mesh"+meshNum);
+			g.transform.SetParent(terrainMeshDisplay.transform);
+			g.AddComponent<MeshFilter>().mesh = m;
+			g.AddComponent<MeshRenderer>().material = terrainMeshDisplay.GetComponent<MeshRenderer>().material;
+			g.GetComponent<MeshRenderer>().material.mainTexture = textureGenerator.GetMapTexture();
+			meshNum++;
+		}
 
-		WriteRegionsMap(regionsMap, meshBuilder);
+
+		terrainMeshDisplay.transform.localPosition -= new Vector3(width/10, 0f, height/10);
+		//WriteRegionsMap(regionsMap, meshBuilder);
 
 		displayText.enabled = false;
 
 		Debug.Log("Done");
 	}
 
-	private void WriteRegionsMap(RegionsMapGenerator map, MeshBuilder meshBuilder)
+	/*private void WriteRegionsMap(RegionsMapGenerator map, MeshBuilder meshBuilder)
 	{
 		Texture2D mapOut = new Texture2D(map.Width, map.Height);
 		mapOut.anisoLevel = 0;
@@ -106,5 +119,5 @@ public class MapBuilder : MonoBehaviour
 		regionsMeshDisplay.transform.localPosition = new Vector3(5f, 1.01f, 5f);
 		regionsMeshDisplay.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
 		regionsMeshDisplay.GetComponent<MeshRenderer>().material.mainTexture = mapOut;
-	}
+	}*/
 }
