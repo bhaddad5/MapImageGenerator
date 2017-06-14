@@ -79,6 +79,12 @@
     <Reference Include="Base">
       <HintPath>Assets\Scripts\NickCode\Base.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>Assets\Scripts\NickCode\System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="MimeTypeMap">
+      <HintPath>Assets\Scripts\NickCode\MimeTypeMap.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Globals.cs" />

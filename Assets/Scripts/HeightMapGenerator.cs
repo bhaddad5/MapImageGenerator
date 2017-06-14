@@ -11,7 +11,7 @@ public class HeightMapGenerator
 	{
 		map = new Map2D<float>(width, height);
 
-		int pixelsPerRange = 320;
+		int pixelsPerRange = 1000;
 		int avgNumOfRanges = (width * height) / pixelsPerRange;
 
 		GenerateMountainRanges(Random.Range(avgNumOfRanges/2, avgNumOfRanges + avgNumOfRanges/2));
@@ -41,16 +41,16 @@ public class HeightMapGenerator
 	private void GenerateMountainRange()
 	{
 		Int2 startingPixel = new Int2(Random.Range(0, map.Width - 1), Random.Range(0, map.Height - 1));
-		float startingStrength = Random.Range(.5f, .9f);
+		float startingStrength = Random.Range(.7f, 1f);
 		Int2 mountainDirection = new Int2(Random.Range(-1, 1), Random.Range(-1, 1));
 		int mountainsLength = Random.Range(4, 50);
-		int distToCoast = Random.Range(2, 20);
+		int distToCoast = Random.Range(5, 40);
 
 		Int2 currPixel = startingPixel;
 		for (int k = 0; k < mountainsLength; k++)
 		{
 			float strength = startingStrength + Random.Range(-.2f, .2f);
-			TrySetPixel(currPixel, strength, distToCoast);
+			TryMountainCenterPixel(currPixel, strength, distToCoast);
 			currPixel = TryGetNextMountainPixel(currPixel, mountainDirection); ;
 		}
 	}
@@ -58,16 +58,16 @@ public class HeightMapGenerator
 	private Int2 TryGetNextMountainPixel(Int2 currPoint, Int2 direction)
 	{
 		Int2[] potentials = new Int2[10];
-		potentials[0] = currPoint + nextDirection(direction, 0);
-		potentials[1] = currPoint + nextDirection(direction, 0);
-		potentials[2] = currPoint + nextDirection(direction, 0);
-		potentials[3] = currPoint + nextDirection(direction, 0);
-		potentials[4] = currPoint + nextDirection(direction, 1);
-		potentials[5] = currPoint + nextDirection(direction, 1);
-		potentials[6] = currPoint + nextDirection(direction, 2);
-		potentials[7] = currPoint + nextDirection(direction, -1);
-		potentials[8] = currPoint + nextDirection(direction, -1);
-		potentials[9] = currPoint + nextDirection(direction, -2);
+		potentials[0] = currPoint + nextDirection(direction, 0)*3;
+		potentials[1] = currPoint + nextDirection(direction, 0) * 3;
+		potentials[2] = currPoint + nextDirection(direction, 0) * 3;
+		potentials[3] = currPoint + nextDirection(direction, 0) * 3;
+		potentials[4] = currPoint + nextDirection(direction, 1) * 3;
+		potentials[5] = currPoint + nextDirection(direction, 1) * 3;
+		potentials[6] = currPoint + nextDirection(direction, 2) * 3;
+		potentials[7] = currPoint + nextDirection(direction, -1) * 3;
+		potentials[8] = currPoint + nextDirection(direction, -1) * 3;
+		potentials[9] = currPoint + nextDirection(direction, -2) * 3;
 
 		return potentials[Random.Range(0, 9)];
 	}
@@ -83,13 +83,23 @@ public class HeightMapGenerator
 		return dirs[index];
 	}
 
-	private bool TrySetPixel(Int2 pixel, float height, int distanceToCoast)
+	private bool TryMountainCenterPixel(Int2 pixel, float height, int distanceToCoast)
+	{
+		if (!TrySetPixel(pixel, height))
+			return false;
+
+		TrySpreadLandArea(pixel, distanceToCoast);
+		foreach(Int2 point in map.GetAllNeighboringPoints(pixel))
+			TrySetPixel(point, height * .75f);
+		return true;
+	}
+
+	private bool TrySetPixel(Int2 pixel, float height)
 	{
 		if (!pixelInBounds(pixel))
 			return false;
 
 		map.SetPoint(pixel, height);
-		TrySpreadLandArea(pixel, distanceToCoast);
 		return true;
 	}
 

@@ -30,24 +30,8 @@ class StoredTerrainMap
 
 		foreach (TerrainTile t in map.GetAdjacentValues(pos))
 			value += t.GetValue();
-		foreach (TerrainTile t in GetTwoLayersAdjacentTiles(pos))
-			value += t.GetValue();
 
 		return value;
-	}
-	
-	private List<TerrainTile> GetTwoLayersAdjacentTiles(Int2 pos)
-	{
-		List<TerrainTile> tiles = new List<TerrainTile>();
-		for(int x = pos.X - 2; x <= pos.X + 2; x++)
-		{
-			for(int y = pos.Y - 2; y <= pos.Y + 2; y++)
-			{
-				if (TileInBounds(new Int2(x, y)))
-					tiles.Add(TileAt(new Int2(x, y)));
-			}
-		}
-		return tiles;
 	}
 
 	public bool TileInBounds(Int2 pos)

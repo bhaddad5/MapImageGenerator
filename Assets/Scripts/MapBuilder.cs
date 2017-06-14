@@ -46,7 +46,7 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Generating Height Map";
 		yield return null;
 
-		int averagePixelsPerRegion = 40;
+		int averagePixelsPerRegion = 120;
 
 		HeightMapGenerator heightGenerator = new HeightMapGenerator(width, height);
 		generatedMapInputDisplay.GetComponent<MeshRenderer>().material.mainTexture = heightGenerator.GetHeightMapTexture();

@@ -20,7 +20,7 @@ class RegionsMapGenerator
 		for(int i = settlementLocations.Count - 1; i >= 0; i--)
 		{
 			Region r = new Region("Region" + i, settlementLocations.KeyAt(i));
-			ExpandRegionFromSettlement(2, r, settlementLocations.ValueAt(i), terrainMap);
+			ExpandRegionFromSettlement(5, r, settlementLocations.ValueAt(i), terrainMap);
 		}
 
 		EndFillMap(terrainMap);
@@ -56,7 +56,7 @@ class RegionsMapGenerator
 	{
 		SortedDupList<Int2> regions = new SortedDupList<Int2>();
 
-		for(int i = 0; i < numberOfSettlements * 40; i++)
+		for(int i = 0; i < numberOfSettlements * 120; i++)
 		{
 			Int2 testPos = new Int2(UnityEngine.Random.Range(0, terrainMap.Width), UnityEngine.Random.Range(0, terrainMap.Height));
 			if (!terrainMap.TileIsType(testPos, TerrainTile.TileType.Ocean) &&
