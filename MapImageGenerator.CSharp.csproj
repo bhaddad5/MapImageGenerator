@@ -86,7 +86,6 @@
     <Compile Include="Assets\Scripts\Helpers.cs" />
     <Compile Include="Assets\Scripts\Map2D.cs" />
     <Compile Include="Assets\Scripts\MapBuilder.cs" />
-    <Compile Include="Assets\Scripts\MapTextureGenerator.cs" />
     <Compile Include="Assets\Scripts\MapTextureLookup.cs" />
     <Compile Include="Assets\Scripts\MeshBuilder.cs" />
     <Compile Include="Assets\Scripts\Region.cs" />
@@ -101,7 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\MapDisplay\GroundShader.shader" />
-    <None Include="Assets\MapDisplay\mapBlend1.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

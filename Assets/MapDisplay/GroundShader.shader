@@ -1,7 +1,6 @@
 ﻿Shader "Custom/GroundShader" {
 	Properties {
-		_LookupSize("Texture Size", Float) = 56
-		_TexSize("Texture Size", Float) = 512
+		_LookupWidth("Texture Size", Float) = 56
 		_LookupTex("Lookup (RGB)", 2D) = "white" {}
 		_GrassTex ("Grass (RGB)", 2D) = "white" {}
 		_SandTex("Sand (RGB)", 2D) = "white" {}
@@ -28,8 +27,7 @@
 		sampler2D _SwampTex;
 		sampler2D _FertileTex;
 		sampler2D _ForestTex;
-		float _LookupSize;
-		float _TexSize;
+		float _LookupWidth;
 
 		struct Input {
 			float2 uv_LookupTex;
@@ -48,7 +46,7 @@
 		}
 
 		fixed4 LookupColor(float2 uv, float2 lookupUv) {
-			float textureScale = 10;
+			float textureScale = 5;
 
 			fixed4 c = tex2D(_LookupTex, lookupUv);
 			if (c.r == 1 && c.g == 1 && c.b == 0)
@@ -78,7 +76,7 @@
 
 		void surf (Input IN, inout SurfaceOutputStandard o)
 		{
-			float LookupPixelWidth = (1 / _LookupSize);
+			float LookupPixelWidth = (1 / _LookupWidth);
 			
 			fixed4 c1 = GetAdjustedColor(IN.uv_LookupTex, float2(0, 0), LookupPixelWidth);
 			fixed4 c2 = GetAdjustedColor(IN.uv_LookupTex, float2(LookupPixelWidth, 0), LookupPixelWidth);

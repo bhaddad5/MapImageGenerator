@@ -69,15 +69,12 @@ public class MapBuilder : MonoBehaviour
 
 		MeshBuilder meshBuilder = new MeshBuilder(terrainMap, heightGenerator.GetHeightMap());
 
-		/*displayText.text = "BuildingTextures";
-		yield return null;
-
-		MapTextureGenerator generator = new MapTextureGenerator(terrainMap, lookup);
-		*/
 		displayText.text = "Displaying Map";
 		yield return null;
 
 		terrainMeshDisplay.GetComponent<MeshRenderer>().material.SetTexture("_LookupTex", terrainMapGenerator.GetTerrainTexture());
+		terrainMeshDisplay.GetComponent<MeshRenderer>().material.SetFloat("_LookupWidth", terrainMapGenerator.GetTerrainTexture().width);
+		terrainMeshDisplay.GetComponent<MeshRenderer>().material.SetFloat("_TexSize", lookup.Fertile.width);
 
 		int meshNum = 0;
 		foreach(Mesh m in meshBuilder.GetBuiltMeshes())
