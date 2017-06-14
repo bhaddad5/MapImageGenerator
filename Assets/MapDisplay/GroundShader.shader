@@ -66,22 +66,39 @@
 			return c;
 		}
 
+		fixed4 GetAdjustedColor(float2 uvIn, float2 lookupOffset, float LookupPixelWidth)
+		{
+			float2 offsetFromLookupPos = float2(fmod(uvIn.x, LookupPixelWidth), fmod(uvIn.y, LookupPixelWidth));
+			float2 center = uvIn - offsetFromLookupPos + float2(LookupPixelWidth / 2, LookupPixelWidth / 2) + lookupOffset;
+			float distFromCenter = length(uvIn - center);
+			float cStrength = max(0, (1 - (distFromCenter / LookupPixelWidth)));
+			fixed4 c = LookupColor(uvIn, uvIn + lookupOffset) * cStrength;
+			return c;
+		}
+
 		void surf (Input IN, inout SurfaceOutputStandard o)
 		{
-			float2 f = float2(IN.uv_LookupTex.x + 5/ _LookupSize, IN.uv_LookupTex.y);
+			float LookupPixelWidth = (1 / _LookupSize);
+			
+			fixed4 c1 = GetAdjustedColor(IN.uv_LookupTex, float2(0, 0), LookupPixelWidth);
+			fixed4 c2 = GetAdjustedColor(IN.uv_LookupTex, float2(LookupPixelWidth, 0), LookupPixelWidth);
+			fixed4 c3 = GetAdjustedColor(IN.uv_LookupTex, float2(-LookupPixelWidth, 0), LookupPixelWidth);
+			fixed4 c4 = GetAdjustedColor(IN.uv_LookupTex, float2(0, LookupPixelWidth), LookupPixelWidth);
+			fixed4 c5 = GetAdjustedColor(IN.uv_LookupTex, float2(0, -LookupPixelWidth), LookupPixelWidth);
+			fixed4 c6 = GetAdjustedColor(IN.uv_LookupTex, float2(LookupPixelWidth, LookupPixelWidth), LookupPixelWidth);
+			fixed4 c7 = GetAdjustedColor(IN.uv_LookupTex, float2(-LookupPixelWidth, LookupPixelWidth), LookupPixelWidth);
+			fixed4 c8 = GetAdjustedColor(IN.uv_LookupTex, float2(LookupPixelWidth, -LookupPixelWidth), LookupPixelWidth);
+			fixed4 c9 = GetAdjustedColor(IN.uv_LookupTex, float2(-LookupPixelWidth, -LookupPixelWidth), LookupPixelWidth);
 
-			// Albedo comes from a texture tinted by color
-			fixed4 c = LookupColor(IN.uv_LookupTex, f);
+			float combinedAlpha = c1.a + c2.a + c3.a + c4.a + c5.a + c6.a + c7.a + c8.a + c9.a;
 
-			float2 shrunkenPos = float2(fmod(IN.uv_LookupTex.x, (1 / _LookupSize)), fmod(IN.uv_LookupTex.y, (1 / _LookupSize)));
-			if (shrunkenPos.x > (1 / _LookupSize) / 2 && shrunkenPos.y > (1 / _LookupSize) / 2)
-				c = fixed4(1, 0, 0, 1);
+			fixed4 c = c1/ combinedAlpha + c2/ combinedAlpha + c3/ combinedAlpha + c4/ combinedAlpha + c5/ combinedAlpha + c6 / combinedAlpha + c7 / combinedAlpha + c8 / combinedAlpha + c9 / combinedAlpha;
 
 			o.Albedo = c.rgb;
 			// Metallic and smoothness come from slider variables
 			o.Metallic = 0;
 			o.Smoothness = 0;
-			o.Alpha = 1;
+			o.Alpha = c.a;
 		}
 		
 		ENDCG
