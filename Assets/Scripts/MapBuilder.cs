@@ -24,10 +24,10 @@ public class MapBuilder : MonoBehaviour
 
 	public void RebuildMap()
 	{
-		int width = 36;
+		int width = 100;
 		if(sizeX.text != "")
 			width = int.Parse(sizeX.text);
-		int height = 36;
+		int height = 100;
 		if(sizeY.text != "")
 			height = int.Parse(sizeY.text);
 		StartCoroutine(BuildMap(width, height));
@@ -100,7 +100,7 @@ public class MapBuilder : MonoBehaviour
 			meshNum2++;
 		}
 
-		terrainMeshDisplay.transform.localPosition -= new Vector3(width / 10, 0f, height / 10);
+		terrainMeshDisplay.transform.localPosition -= new Vector3(width / 25, 0f, height / 25);
 
 		displayText.enabled = false;
 
