@@ -100,7 +100,8 @@
     <Compile Include="Assets\Scripts\UserInteractions\RegionsTransparencyController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Scripts\GroundShader.shader" />
+    <None Include="Assets\MapDisplay\GroundShader.shader" />
+    <None Include="Assets\MapDisplay\mapBlend1.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

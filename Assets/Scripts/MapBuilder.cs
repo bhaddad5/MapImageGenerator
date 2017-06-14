@@ -69,6 +69,11 @@ public class MapBuilder : MonoBehaviour
 
 		MeshBuilder meshBuilder = new MeshBuilder(terrainMap, heightGenerator.GetHeightMap());
 
+		/*displayText.text = "BuildingTextures";
+		yield return null;
+
+		MapTextureGenerator generator = new MapTextureGenerator(terrainMap, lookup);
+		*/
 		displayText.text = "Displaying Map";
 		yield return null;
 
@@ -93,6 +98,7 @@ public class MapBuilder : MonoBehaviour
 			g.transform.SetParent(terrainMeshDisplay.transform);
 			g.AddComponent<MeshFilter>().mesh = m;
 			g.AddComponent<MeshRenderer>().sharedMaterial = regionsMeshDisplay.GetComponent<MeshRenderer>().material;
+			g.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = regions;
 			g.transform.localPosition += new Vector3(0f, 0.01f, 0f);
 			meshNum2++;
 		}
