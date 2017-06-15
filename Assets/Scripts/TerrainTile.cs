@@ -22,7 +22,7 @@ public class TerrainTile
 	{
 		{ TileType.Ocean, .1f },
 		{ TileType.Swamp, .35f },
-		{ TileType.Mountain, .35f },
+		{ TileType.Mountain, .6f },
 		{ TileType.Forest, .25f },
 		{ TileType.Grass, .2f },
 		{ TileType.Fertile, .1f },

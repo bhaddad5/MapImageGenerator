@@ -36,11 +36,18 @@
 		{
 			fixed4 cNeighbor = tex2D(_MainTex, uvIn + lookupOffset);
 			if ((c.r != cNeighbor.r || c.g != cNeighbor.g || c.b != cNeighbor.b) &&
-				!(cNeighbor.r == 0 && cNeighbor.g == 0 && cNeighbor.b == 0) &&
 				!(cNeighbor.r == 0 && cNeighbor.g == 0 && cNeighbor.b == 1) &&
-				!(c.r == 0 && c.g == 0 && c.b == 1))
+				!(c.r == 0 && c.g == 0 && c.b == 1) &&
+				!(c.r == 0 && c.g == 0 && c.b == 0))
 				return max(0, relevantAxis / (LookupPixelWidth / 2));
 			return 0;
+		}
+
+		float GetCornerAlpha(float2 center, float2 cornerOffset, float2 lookupTexturePos, float LookupPixelWidth, float2 uvIn, fixed4 c)
+		{
+			float2 corner = center + cornerOffset;
+			float distFromCorner = length(uvIn - corner);
+			return GetAlpha(LookupPixelWidth / 2 - distFromCorner, lookupTexturePos, LookupPixelWidth, uvIn, c);
 		}
 
 		void surf (Input IN, inout SurfaceOutputStandard o) {
@@ -55,11 +62,30 @@
 
 			float alpha = 0;
 
-			alpha += GetAlpha(offsetFromCenter.x, float2(LookupPixelWidth, 0), LookupPixelWidth, IN.uv_MainTex, c);
-			alpha += GetAlpha(-offsetFromCenter.x, float2(-LookupPixelWidth, 0), LookupPixelWidth, IN.uv_MainTex, c);
-			alpha += GetAlpha(offsetFromCenter.y, float2(0, LookupPixelWidth), LookupPixelWidth, IN.uv_MainTex, c);
-			alpha += GetAlpha(-offsetFromCenter.y, float2(0, -LookupPixelWidth), LookupPixelWidth, IN.uv_MainTex, c);
-			//alpha += GetAlpha(offsetFromCenter.y, float2(LookupPixelWidth, LookupPixelWidth), LookupPixelWidth, IN.uv_MainTex, c);
+			float rightAlpha = GetAlpha(offsetFromCenter.x, float2(LookupPixelWidth, 0), LookupPixelWidth, IN.uv_MainTex, c);
+			float leftAlpha = GetAlpha(-offsetFromCenter.x, float2(-LookupPixelWidth, 0), LookupPixelWidth, IN.uv_MainTex, c);
+			float topAlpha = GetAlpha(offsetFromCenter.y, float2(0, LookupPixelWidth), LookupPixelWidth, IN.uv_MainTex, c);
+			float bottomAlpha = GetAlpha(-offsetFromCenter.y, float2(0, -LookupPixelWidth), LookupPixelWidth, IN.uv_MainTex, c);
+
+			alpha = max(max(max(rightAlpha, leftAlpha), topAlpha), bottomAlpha);
+
+			if (offsetFromCenter.x > 0 && offsetFromCenter.y > 0 && topAlpha == 0 && rightAlpha == 0)
+			{
+				alpha += GetCornerAlpha(center, float2(LookupPixelWidth / 2, LookupPixelWidth / 2), float2(LookupPixelWidth, LookupPixelWidth), LookupPixelWidth, IN.uv_MainTex, c);
+			}
+			if (offsetFromCenter.x > 0 && offsetFromCenter.y < 0 && bottomAlpha == 0 && rightAlpha == 0)
+			{
+				alpha += GetCornerAlpha(center, float2(LookupPixelWidth / 2, -LookupPixelWidth / 2), float2(LookupPixelWidth, -LookupPixelWidth), LookupPixelWidth, IN.uv_MainTex, c);
+			}
+			if (offsetFromCenter.x < 0 && offsetFromCenter.y > 0 && topAlpha == 0 && leftAlpha == 0)
+			{
+				alpha += GetCornerAlpha(center, float2(-LookupPixelWidth / 2, LookupPixelWidth / 2), float2(-LookupPixelWidth, LookupPixelWidth), LookupPixelWidth, IN.uv_MainTex, c);
+			}
+			if (offsetFromCenter.x < 0 && offsetFromCenter.y < 0 && bottomAlpha == 0 && leftAlpha == 0)
+			{
+				alpha += GetCornerAlpha(center, float2(-LookupPixelWidth / 2, -LookupPixelWidth / 2), float2(-LookupPixelWidth, -LookupPixelWidth), LookupPixelWidth, IN.uv_MainTex, c);
+			}
+			
 			
 			o.Albedo = c.rgb;
 			// Metallic and smoothness come from slider variables
