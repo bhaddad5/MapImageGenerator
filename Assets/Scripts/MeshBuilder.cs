@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using Collab.Base.Graphics;
-using Collab.Base.Math;
 
 class MeshBuilder
 {
@@ -30,69 +28,7 @@ class MeshBuilder
 		SetVerticesFromHeights(vertices, vertsPerTileAcross);		
 		SetUVsAndTriangles(vertHeights.Width, vertHeights.Height);
 
-		Collab.Base.Graphics.Mesh meshIn = new Collab.Base.Graphics.Mesh();
-		meshIn.CreateVertexList();
-		meshIn.CreateFacesList();
-		meshIn.CreateTextureCoordinateList();
-		List<Float3> verts = new List<Float3>();
-		foreach(var vert in vertices)
-		{
-			verts.Add(new Float3(vert.x, vert.y, vert.z));
-		}
-		meshIn.AddVertices(verts);
-
-		List<Float2> uvs = new List<Float2>();
-		foreach (var uv in uvCoords)
-		{
-			uvs.Add(new Float2(uv.x, uv.y));
-		}
-		meshIn.AddTextureCoordinates(uvs);
-
-		List<Int3> tries = new List<Int3>();
-		for(int i = 0; i < indices.Count; i+= 3)
-		{
-			tries.Add(new Int3(indices[i], indices[i + 1], indices[i + 2]));
-		}
-
-		meshIn.AddTriangles(tries);
-
-		var meshesOut = MeshSplitter.Split(meshIn, 64000, 64000);
-		
-		foreach(var meshOut in meshesOut)
-		{
-			UnityEngine.Mesh m = new UnityEngine.Mesh();
-			List<Vector3> vs = new List<Vector3>();
-			foreach (Float3 vert in meshOut.Vertices)
-			{
-				vs.Add(new Vector3(vert.X, vert.Y, vert.Z));
-			}
-			m.vertices = vs.ToArray();
-
-			List<Vector2> u = new List<Vector2>();
-			foreach (Float2 uv in meshOut.TextureCoordinates)
-			{
-				u.Add(new Vector2(uv.X, uv.Y));
-			}
-			m.uv = u.ToArray();
-
-			List<int> ind = new List<int>();
-			foreach (Int3 index in meshOut.Faces)
-			{
-				ind.Add(index.X);
-				ind.Add(index.Y);
-				ind.Add(index.Z);
-			}
-			m.triangles = ind.ToArray();
-
-			List<Vector3> norms = new List<Vector3>();
-			foreach(var vert in m.vertices)
-			{
-				norms.Add(new Vector3(0f, 1f, 0f));
-			}
-			m.normals = norms.ToArray();
-
-			builtMeshes.Add(m);
-		}
+		builtMeshes = MeshSplitter.Split(vertices, uvCoords, indices, 64000, 64000);
 	}
 
 	private void populateVertHeights(TerrainMapGenerator map, int vertsPerTileAcross, Map2D<float> pixelHeights)
