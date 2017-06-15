@@ -100,7 +100,6 @@
     <Compile Include="Assets\Scripts\TerrainTile.cs" />
     <Compile Include="Assets\Scripts\UserInteractions\CameraControls.cs" />
     <Compile Include="Assets\Scripts\UserInteractions\LightController.cs" />
-    <Compile Include="Assets\Scripts\UserInteractions\RegionsTransparencyController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\MapDisplay\BordersShader.shader" />
