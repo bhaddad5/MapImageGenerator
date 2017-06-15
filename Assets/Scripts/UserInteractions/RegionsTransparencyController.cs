@@ -8,8 +8,8 @@ public class RegionsTransparencyController : MonoBehaviour
 
 	public void SetRegionsTransparency(float f)
 	{
-		var c = regionsMat.material.color;
-		c.a = f;
-		regionsMat.material.color = c;
+		//var c = regionsMat.material.color;
+		//c.a = f;
+		//regionsMat.material.color = c;
 	}
 }

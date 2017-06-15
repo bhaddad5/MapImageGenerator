@@ -181,7 +181,7 @@ class RegionsMapGenerator
 		foreach(var reg in regions)
 		{
 			if(reg.settlement != null)
-				reg.settlement.ExpandSettlement(reg.value, terrainMap);
+				reg.settlement.ExpandSettlement(reg.value, terrainMap, map, reg);
 		}
 	}
 

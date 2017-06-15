@@ -10,10 +10,12 @@ public class MapBuilder : MonoBehaviour
 	public InputField sizeY;
 	public Text displayText;
 
-	public GameObject generatedMapInputDisplay;
 	public GameObject terrainMeshDisplay;
-	public GameObject regionsMeshDisplay;
+	public GameObject generatedMapInputDisplay;
 	public GameObject generatedTerrainMapInputDisplay;
+
+	public Material terrainMaterial;
+	public Material regionsMaterial;
 
 	// Use this for initialization
 	void Start ()
@@ -23,10 +25,10 @@ public class MapBuilder : MonoBehaviour
 
 	public void RebuildMap()
 	{
-		int width = 200;
+		int width = 100;
 		if(sizeX.text != "")
 			width = int.Parse(sizeX.text);
-		int height = 200;
+		int height = 100;
 		if(sizeY.text != "")
 			height = int.Parse(sizeY.text);
 		StartCoroutine(BuildMap(width, height));
@@ -67,12 +69,17 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Displaying Map";
 		yield return null;
 
-		terrainMeshDisplay.GetComponent<MeshRenderer>().material.SetTexture("_LookupTex", terrainMapGenerator.GetTerrainTexture());
-		terrainMeshDisplay.GetComponent<MeshRenderer>().material.SetFloat("_LookupWidth", terrainMapGenerator.GetTerrainTexture().width);
-		terrainMeshDisplay.GetComponent<MeshRenderer>().material.SetFloat("_TexSize", 512);
+		generatedMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = heightGenerator.GetHeightMapTexture();
+		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = terrainMapGenerator.GetTerrainTexture();
 
-		generatedMapInputDisplay.GetComponent<MeshRenderer>().material.mainTexture = heightGenerator.GetHeightMapTexture();
-		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().material.mainTexture = terrainMapGenerator.GetTerrainTexture();
+
+		terrainMaterial.SetTexture("_LookupTex", terrainMapGenerator.GetTerrainTexture());
+		terrainMaterial.SetFloat("_LookupWidth", terrainMapGenerator.GetTerrainTexture().width);
+		terrainMaterial.SetFloat("_TexSize", 512);
+		
+		Texture2D regions = WriteRegionsMap(regionsMap, meshBuilder);
+		regionsMaterial.mainTexture = regions;
+		regionsMaterial.SetFloat("_LookupWidth", terrainMapGenerator.GetTerrainTexture().width);
 
 		int meshNum = 0;
 		foreach(Mesh m in meshBuilder.GetBuiltMeshes())
@@ -80,22 +87,9 @@ public class MapBuilder : MonoBehaviour
 			GameObject g = new GameObject("Mesh"+meshNum);
 			g.transform.SetParent(terrainMeshDisplay.transform);
 			g.AddComponent<MeshFilter>().mesh = m;
-			g.AddComponent<MeshRenderer>().material = terrainMeshDisplay.GetComponent<MeshRenderer>().material;
+			g.AddComponent<MeshRenderer>();
+			g.GetComponent<MeshRenderer>().materials = new Material[2] { terrainMaterial, regionsMaterial };
 			meshNum++;
-		}
-
-		Texture2D regions = WriteRegionsMap(regionsMap, meshBuilder);
-
-		int meshNum2 = 0;
-		foreach (Mesh m in meshBuilder.GetBuiltMeshes())
-		{
-			GameObject g = new GameObject("Mesh" + meshNum2);
-			g.transform.SetParent(terrainMeshDisplay.transform);
-			g.AddComponent<MeshFilter>().mesh = m;
-			g.AddComponent<MeshRenderer>().sharedMaterial = regionsMeshDisplay.GetComponent<MeshRenderer>().material;
-			g.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = regions;
-			g.transform.localPosition += new Vector3(0f, 0.01f, 0f);
-			meshNum2++;
 		}
 
 		terrainMeshDisplay.transform.localPosition -= new Vector3(width / 25, 0f, height / 25);
