@@ -23,9 +23,12 @@ public class TerrainMapGenerator
 		}
 
 		FillInLandTextures();
+	}
 
+	public void RebuildTerrainTexture()
+	{
 		List<Color> pixels = new List<Color>();
-		foreach(var tile in map.GetMapValuesFlipped())
+		foreach (var tile in map.GetMapValuesFlipped())
 		{
 			pixels.Add(tile.GetTileColor());
 		}
@@ -33,6 +36,7 @@ public class TerrainMapGenerator
 		terrainMapImage.filterMode = FilterMode.Point;
 		terrainMapImage.anisoLevel = 0;
 		terrainMapImage.SetPixels(pixels.ToArray());
+		terrainMapImage.Apply();
 	}
 
 	public void FillInLandTextures()
@@ -122,7 +126,70 @@ public class TerrainMapGenerator
 
 	public Texture2D GetTerrainTexture()
 	{
-		terrainMapImage.Apply();
+		RebuildTerrainTexture();
 		return terrainMapImage;
+	}
+
+	public float TileAreaValue(Int2 pos)
+	{
+		float value = TileAt(pos).GetValue();
+
+		foreach (TerrainTile t in map.GetAdjacentValues(pos))
+			value += t.GetValue();
+
+		return value;
+	}
+
+	public float TileAreaFullValue(Int2 pos)
+	{
+		float value = TileAt(pos).GetValue() * 2;
+
+		foreach (TerrainTile t in map.GetAdjacentValues(pos))
+			value += t.GetValue();
+		foreach (TerrainTile t in map.GetDiagonalValues(pos))
+			value += t.GetValue() * .8f;
+
+		return value;
+	}
+
+	public bool TileInBounds(Int2 pos)
+	{
+		return pos.X >= 0 && pos.X < map.Width && pos.Y >= 0 && pos.Y < map.Height;
+	}
+
+	public bool TileIsType(Int2 pos, TerrainTile.TileType t)
+	{
+		return TileInBounds(pos) && TileAt(pos).tileType == t;
+	}
+
+	public float TileDifficulty(Int2 pos)
+	{
+		return TileAt(pos).GetDifficulty();
+	}
+
+	public TerrainTile TileAt(Int2 pos)
+	{
+		return map.GetValueAt(pos);
+	}
+
+	public int LandPixelCount()
+	{
+		int numTiles = 0;
+		foreach (var tile in map.GetMapValues())
+		{
+			if (tile.tileType != TerrainTile.TileType.Ocean)
+				numTiles++;
+		}
+		return numTiles;
+	}
+
+	public List<Int2> MapPixels()
+	{
+		return map.GetMapPoints();
+	}
+
+	public void SetValue(Int2 pos, TerrainTile value)
+	{
+		map.SetPoint(pos, value);
 	}
 }

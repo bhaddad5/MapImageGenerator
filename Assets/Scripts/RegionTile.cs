@@ -8,16 +8,10 @@ class RegionTile
 {
 	public Region region;
 	public float holdingStrength;
-	public bool isSettlement = false;
 
 	public RegionTile(Region r)
 	{
 		region = r;
-	}
-
-	public void SetIsSettlement(bool settlement)
-	{
-		isSettlement = settlement;
 	}
 
 	public bool TrySetRegion(Region r, float strength)
@@ -33,9 +27,7 @@ class RegionTile
 
 	public Color GetColor()
 	{
-		if (isSettlement)
-			return Color.white;
-		else return region.color;
+		return region.color;
 	}
 }
 

@@ -8,7 +8,7 @@ using Collab.Base.Math;
 class MeshBuilder
 {
 	private List<UnityEngine.Mesh> builtMeshes = new List<UnityEngine.Mesh>();
-	public MeshBuilder(StoredTerrainMap map, Map2D<float> heights)
+	public MeshBuilder(TerrainMapGenerator map, Map2D<float> heights)
 	{
 		BuildMeshes(map, heights);
 	}
@@ -19,7 +19,7 @@ class MeshBuilder
 	private List<Vector2> uvCoords;
 	private List<int> indices;
 
-	private void BuildMeshes(StoredTerrainMap map, Map2D<float> pixelHeights)
+	private void BuildMeshes(TerrainMapGenerator map, Map2D<float> pixelHeights)
 	{
 		float heightScaler = 1f;
 		int vertsPerTileAcross = 5;
@@ -95,13 +95,13 @@ class MeshBuilder
 		}
 	}
 
-	private void populateVertHeights(StoredTerrainMap map, int vertsPerTileAcross, Map2D<float> pixelHeights)
+	private void populateVertHeights(TerrainMapGenerator map, int vertsPerTileAcross, Map2D<float> pixelHeights)
 	{
-		vertHeights = new Map2D<float>(map.Width * (vertsPerTileAcross - 1) + 1, map.Height * (vertsPerTileAcross - 1) + 1);
+		vertHeights = new Map2D<float>(map.GetTerrainMap().Width * (vertsPerTileAcross - 1) + 1, map.GetTerrainMap().Height * (vertsPerTileAcross - 1) + 1);
 
 		foreach(var pixle in map.MapPixels())
 		{
-			fillHeightsForTile(pixle, vertsPerTileAcross, pixelHeights.GetValueAt(pixle), map.Width, map.Height);
+			fillHeightsForTile(pixle, vertsPerTileAcross, pixelHeights.GetValueAt(pixle), map.GetTerrainMap().Width, map.GetTerrainMap().Height);
 		}
 	}
 

@@ -6,7 +6,6 @@ using System.IO;
 
 public class MapBuilder : MonoBehaviour
 {
-	public MapTextureLookup lookup;
 	public InputField sizeX;
 	public InputField sizeY;
 	public Text displayText;
@@ -24,10 +23,10 @@ public class MapBuilder : MonoBehaviour
 
 	public void RebuildMap()
 	{
-		int width = 100;
+		int width = 200;
 		if(sizeX.text != "")
 			width = int.Parse(sizeX.text);
-		int height = 100;
+		int height = 200;
 		if(sizeY.text != "")
 			height = int.Parse(sizeY.text);
 		StartCoroutine(BuildMap(width, height));
@@ -49,32 +48,31 @@ public class MapBuilder : MonoBehaviour
 		int averagePixelsPerRegion = 120;
 
 		HeightMapGenerator heightGenerator = new HeightMapGenerator(width, height);
-		generatedMapInputDisplay.GetComponent<MeshRenderer>().material.mainTexture = heightGenerator.GetHeightMapTexture();
-
+		
 		displayText.text = "Generating Ground Types";
 		yield return null;
 
 		TerrainMapGenerator terrainMapGenerator = new TerrainMapGenerator(heightGenerator.GetHeightMap());
-		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().material.mainTexture = terrainMapGenerator.GetTerrainTexture();
-
-		StoredTerrainMap terrainMap = new StoredTerrainMap(terrainMapGenerator.GetTerrainMap());
-
+		
 		displayText.text = "Generating Regions";
 		yield return null;
 
-		RegionsMapGenerator regionsMap = new RegionsMapGenerator(terrainMap, terrainMap.LandPixelCount() / averagePixelsPerRegion);
+		RegionsMapGenerator regionsMap = new RegionsMapGenerator(terrainMapGenerator, terrainMapGenerator.LandPixelCount() / averagePixelsPerRegion);
 
 		displayText.text = "Building Terrain Mesh";
 		yield return null;
 
-		MeshBuilder meshBuilder = new MeshBuilder(terrainMap, heightGenerator.GetHeightMap());
+		MeshBuilder meshBuilder = new MeshBuilder(terrainMapGenerator, heightGenerator.GetHeightMap());
 
 		displayText.text = "Displaying Map";
 		yield return null;
 
 		terrainMeshDisplay.GetComponent<MeshRenderer>().material.SetTexture("_LookupTex", terrainMapGenerator.GetTerrainTexture());
 		terrainMeshDisplay.GetComponent<MeshRenderer>().material.SetFloat("_LookupWidth", terrainMapGenerator.GetTerrainTexture().width);
-		terrainMeshDisplay.GetComponent<MeshRenderer>().material.SetFloat("_TexSize", lookup.Fertile.width);
+		terrainMeshDisplay.GetComponent<MeshRenderer>().material.SetFloat("_TexSize", 512);
+
+		generatedMapInputDisplay.GetComponent<MeshRenderer>().material.mainTexture = heightGenerator.GetHeightMapTexture();
+		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().material.mainTexture = terrainMapGenerator.GetTerrainTexture();
 
 		int meshNum = 0;
 		foreach(Mesh m in meshBuilder.GetBuiltMeshes())

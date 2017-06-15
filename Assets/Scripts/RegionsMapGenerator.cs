@@ -11,7 +11,7 @@ class RegionsMapGenerator
 	public int Width { get { return map.Width; } }
 	public int Height { get { return map.Height; } }
 
-	public RegionsMapGenerator(StoredTerrainMap terrainMap, int numberOfSettlements)
+	public RegionsMapGenerator(TerrainMapGenerator terrainMap, int numberOfSettlements)
 	{
 		StartFillMap(terrainMap);
 
@@ -19,29 +19,34 @@ class RegionsMapGenerator
 
 		for(int i = settlementLocations.Count - 1; i >= 0; i--)
 		{
-			Region r = new Region("Region" + i, settlementLocations.KeyAt(i));
+			Region r = new Region("Region" + i, settlementLocations.ValueAt(i));
+			regions.Add(r);
 			ExpandRegionFromSettlement(5, r, settlementLocations.ValueAt(i), terrainMap);
 		}
 
 		EndFillMap(terrainMap);
+
+		CalculateRegionValues(terrainMap);
+
+		ExpandSettlements(terrainMap);
 	}
 
-	private void StartFillMap(StoredTerrainMap terrainMap)
+	private void StartFillMap(TerrainMapGenerator terrainMap)
 	{
-		Region NoMansLand = new Region("NoMansLand", 0f);
+		Region NoMansLand = new Region("NoMansLand", null);
 		NoMansLand.color = Color.black;
 		regions.Add(NoMansLand);
 
-		map = new Map2D<RegionTile>(terrainMap.Width, terrainMap.Height);
+		map = new Map2D<RegionTile>(terrainMap.GetTerrainMap().Width, terrainMap.GetTerrainMap().Height);
 		foreach(var pixel in map.GetMapPoints())
 		{
 			map.SetPoint(pixel, new RegionTile(NoMansLand));
 		}
 	}
 
-	private void EndFillMap(StoredTerrainMap terrainMap)
+	private void EndFillMap(TerrainMapGenerator terrainMap)
 	{
-		Region OceanRegion = new Region("Ocean", 0f);
+		Region OceanRegion = new Region("Ocean", null);
 		OceanRegion.color = Color.blue;
 		regions.Add(OceanRegion);
 
@@ -52,17 +57,17 @@ class RegionsMapGenerator
 		}
 	}
 
-	private SortedDupList<Int2> GetSettlementLocations(StoredTerrainMap terrainMap, int numberOfSettlements)
+	private SortedDupList<Int2> GetSettlementLocations(TerrainMapGenerator terrainMap, int numberOfSettlements)
 	{
 		SortedDupList<Int2> regions = new SortedDupList<Int2>();
 
 		for(int i = 0; i < numberOfSettlements * 120; i++)
 		{
-			Int2 testPos = new Int2(UnityEngine.Random.Range(0, terrainMap.Width), UnityEngine.Random.Range(0, terrainMap.Height));
+			Int2 testPos = new Int2(UnityEngine.Random.Range(0, terrainMap.GetTerrainMap().Width), UnityEngine.Random.Range(0, terrainMap.GetTerrainMap().Height));
 			if (!terrainMap.TileIsType(testPos, TerrainTile.TileType.Ocean) &&
 				!terrainMap.TileIsType(testPos, TerrainTile.TileType.Mountain) &&
 				!TooCloseToExistingSettlement(testPos, regions) &&
-				!TooCloseToBorder(testPos, new Int2(terrainMap.Width, terrainMap.Height)))
+				!TooCloseToBorder(testPos, new Int2(terrainMap.GetTerrainMap().Width, terrainMap.GetTerrainMap().Height)))
 			{
 				regions.Insert(terrainMap.TileAreaValue(testPos), testPos);
 			}
@@ -118,9 +123,8 @@ class RegionsMapGenerator
 			pos.Y < minDist || pos.Y > mapDimensions.Y - minDist;
 	}
 
-	private void ExpandRegionFromSettlement(float startingValue, Region region, Int2 pos, StoredTerrainMap terrainMap)
+	private void ExpandRegionFromSettlement(float startingValue, Region region, Int2 pos, TerrainMapGenerator terrainMap)
 	{
-		TileAt(pos).SetIsSettlement(true);
 		TileAt(pos).TrySetRegion(region, startingValue - terrainMap.TileDifficulty(pos));
 
 		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
@@ -145,7 +149,7 @@ class RegionsMapGenerator
 		}
 	}
 
-	private List<Int2> GetPossibleNeighborTiles(Int2 pos, Region region, StoredTerrainMap terrainMap)
+	private List<Int2> GetPossibleNeighborTiles(Int2 pos, Region region, TerrainMapGenerator terrainMap)
 	{
 		List<Int2> neighbors = new List<Int2>();
 		neighbors.Add(pos + new Int2(1, 0));
@@ -161,9 +165,24 @@ class RegionsMapGenerator
 		return neighbors;
 	}
 
-	private bool IsPossibleNeighbor(Int2 neighbor, Region region, StoredTerrainMap terrainMap)
+	private bool IsPossibleNeighbor(Int2 neighbor, Region region, TerrainMapGenerator terrainMap)
 	{
 		return terrainMap.TileInBounds(neighbor) && TileAt(neighbor).region != region;
+	}
+
+	private void CalculateRegionValues(TerrainMapGenerator terrainMap)
+	{
+		foreach(Int2 tile in map.GetMapPoints())
+			map.GetValueAt(tile).region.value += terrainMap.TileAt(tile).GetValue();
+	}
+
+	private void ExpandSettlements(TerrainMapGenerator terrainMap)
+	{
+		foreach(var reg in regions)
+		{
+			if(reg.settlement != null)
+				reg.settlement.ExpandSettlement(reg.value, terrainMap);
+		}
 	}
 
 	private RegionTile TileAt(Int2 pos)

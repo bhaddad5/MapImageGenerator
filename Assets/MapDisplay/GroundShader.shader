@@ -8,6 +8,7 @@
 		_SwampTex("Swamp (RGB)", 2D) = "white" {}
 		_FertileTex("Fertile (RGB)", 2D) = "white" {}
 		_ForestTex("Forest (RGB)", 2D) = "white" {}
+		_CityTex("City (RGB)", 2D) = "white" {}
 	}
 	SubShader {
 		Tags { "RenderType"="Opaque" }
@@ -27,6 +28,7 @@
 		sampler2D _SwampTex;
 		sampler2D _FertileTex;
 		sampler2D _ForestTex;
+		sampler2D _CityTex;
 		float _LookupWidth;
 
 		struct Input {
@@ -61,6 +63,8 @@
 				c = tex2D(_MountainsTex, uv * textureScale);
 			if (c.r == 0 && Equals(c.g, 0.737) && Equals(c.b, .415))
 				c = tex2D(_SwampTex, uv * textureScale);
+			if (c.r == 1 && c.g == 1 && c.b == 1)
+				c = tex2D(_CityTex, uv * 10);
 			return c;
 		}
 
