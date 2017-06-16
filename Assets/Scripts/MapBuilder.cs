@@ -17,6 +17,8 @@ public class MapBuilder : MonoBehaviour
 	public Material terrainMaterial;
 	public Material regionsMaterial;
 
+	public GameObject SettlementInfoPrefab;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -92,11 +94,17 @@ public class MapBuilder : MonoBehaviour
 			meshNum++;
 		}
 
-		terrainMeshDisplay.transform.localPosition -= new Vector3(width / 25, 0f, height / 25);
+		displayText.text = "Setting Up Settlements";
+		yield return null;
+
+		AddSettlementInfoPanels(regionsMap);
+
+		displayText.text = "Done";
+		yield return null;
+
+		terrainMeshDisplay.transform.localPosition -= new Vector3(width / 2.5f, 0f, height / 2.5f);
 
 		displayText.enabled = false;
-
-		Debug.Log("Done");
 	}
 
 	private Texture2D WriteRegionsMap(RegionsMapGenerator map, MeshBuilder meshBuilder)
@@ -117,5 +125,20 @@ public class MapBuilder : MonoBehaviour
 		mapOut.Apply();
 
 		return mapOut;
+	}
+
+	private void AddSettlementInfoPanels(RegionsMapGenerator regionsMap)
+	{
+		float tileWidth = .8f;
+		foreach(Region r in regionsMap.GetRegions())
+		{
+			if (r.settlement == null)
+				continue;
+			GameObject tag = GameObject.Instantiate(SettlementInfoPrefab);
+			tag.transform.SetParent(terrainMeshDisplay.transform);
+			Int2 placementPos = r.settlement.cityTiles[0];
+			tag.transform.localPosition = new Vector3(placementPos.X * tileWidth, .5f, placementPos.Y * tileWidth);
+			tag.GetComponent<SettlementInfoController>().settlement = r.settlement;
+		}
 	}
 }

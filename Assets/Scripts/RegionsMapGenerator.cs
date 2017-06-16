@@ -203,4 +203,9 @@ class RegionsMapGenerator
 	{
 		return TileAt(pos).GetColor();
 	}
+
+	public List<Region> GetRegions()
+	{
+		return regions;
+	}
 }
