@@ -29,6 +29,15 @@ class RegionsMapGenerator
 		CalculateRegionValues(terrainMap);
 
 		ExpandSettlements(terrainMap);
+
+		foreach(var region in regions)
+		{
+			if (region.settlement != null)
+			{
+				region.settlement.name = SettlementNameGenerator.GetSettlementName(SettlementNameGenerator.Anglo, region.settlement.GetCityTraits(terrainMap.GetTerrainMap()));
+				Debug.Log(region.settlement.name + ": " + region.value);
+			}
+		}
 	}
 
 	private void StartFillMap(TerrainMapGenerator terrainMap)

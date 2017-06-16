@@ -88,6 +88,7 @@
     <Compile Include="Assets\Scripts\Region.cs" />
     <Compile Include="Assets\Scripts\RegionTile.cs" />
     <Compile Include="Assets\Scripts\RegionsMapGenerator.cs" />
+    <Compile Include="Assets\Scripts\SettlementNameGenerator.cs" />
     <Compile Include="Assets\Scripts\TerrainMapGenerator.cs" />
     <Compile Include="Assets\Scripts\TerrainTile.cs" />
     <Compile Include="Assets\Scripts\UserInteractions\CameraControls.cs" />

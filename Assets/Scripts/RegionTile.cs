@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-class RegionTile
+public class RegionTile
 {
 	public Region region;
 	public float holdingStrength;

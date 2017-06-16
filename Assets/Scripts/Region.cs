@@ -3,8 +3,20 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-class Settlement
+public class Settlement
 {
+	public enum CityTrait
+	{
+		Mountains,
+		Port,
+		Small,
+		Medium,
+		Large,
+		Forest,
+		Fertile,
+		River
+	}
+
 	public string name;
 	public List<Int2> cityTiles = new List<Int2>();
 	public Settlement(string n, Int2 cityTile)
@@ -48,9 +60,39 @@ class Settlement
 		}
 		return possibleExpansions;
 	}
+
+	public List<Settlement.CityTrait> GetCityTraits(Map2D<TerrainTile> regionsMap)
+	{
+		List<TerrainTile.TileType> neighboringTerrainTypes = new List<TerrainTile.TileType>();
+		foreach(Int2 tile in cityTiles)
+		{
+			foreach(var neighbor in regionsMap.GetAdjacentValues(tile))
+			{
+				neighboringTerrainTypes.Add(neighbor.tileType);
+			}
+		}
+
+		List<Settlement.CityTrait> traits = new List<CityTrait>();
+		if (neighboringTerrainTypes.Contains(TerrainTile.TileType.Mountain))
+			traits.Add(CityTrait.Mountains);
+		if (neighboringTerrainTypes.Contains(TerrainTile.TileType.Ocean))
+			traits.Add(CityTrait.Port);
+		if (neighboringTerrainTypes.Contains(TerrainTile.TileType.Forest))
+			traits.Add(CityTrait.Forest);
+		if (neighboringTerrainTypes.Contains(TerrainTile.TileType.Fertile))
+			traits.Add(CityTrait.Fertile);
+
+		if (cityTiles.Count < 3)
+			traits.Add(CityTrait.Small);
+		else if (cityTiles.Count < 7)
+			traits.Add(CityTrait.Medium);
+		else traits.Add(CityTrait.Large);
+
+		return traits;
+	}
 }
 
-class Region
+public class Region
 {
 	public Settlement settlement;
 	public Color color;
