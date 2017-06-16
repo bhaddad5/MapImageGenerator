@@ -78,9 +78,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Culture.cs" />
+    <Compile Include="Assets\Scripts\CultureDefinitions.cs" />
     <Compile Include="Assets\Scripts\Globals.cs" />
     <Compile Include="Assets\Scripts\HeightMapGenerator.cs" />
     <Compile Include="Assets\Scripts\Helpers.cs" />
+    <Compile Include="Assets\Scripts\HeraldryGenerator.cs" />
     <Compile Include="Assets\Scripts\Map2D.cs" />
     <Compile Include="Assets\Scripts\MapBuilder.cs" />
     <Compile Include="Assets\Scripts\MeshBuilder.cs" />

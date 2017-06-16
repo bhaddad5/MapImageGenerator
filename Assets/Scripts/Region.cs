@@ -18,6 +18,7 @@ public class Settlement
 	}
 
 	public string name;
+	public Texture2D heraldry;
 	public List<Int2> cityTiles = new List<Int2>();
 	public Settlement(string n, Int2 cityTile)
 	{
@@ -95,14 +96,18 @@ public class Settlement
 public class Region
 {
 	public Settlement settlement;
-	public Color color;
+	public Color mainColor;
+	public Color secondaryColor;
+	public Color tertiaryColor;
 	public float value;
 
 	public Region(string name, Int2 cityTile)
 	{
 		if(cityTile != null)
 			settlement = new Settlement(name, cityTile);
-		color = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
+		mainColor = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
+		secondaryColor = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
+		tertiaryColor = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
 	}
 }
 

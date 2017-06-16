@@ -34,8 +34,9 @@ class RegionsMapGenerator
 		{
 			if (region.settlement != null)
 			{
-				region.settlement.name = SettlementNameGenerator.GetSettlementName(SettlementNameGenerator.Anglo, region.settlement.GetCityTraits(terrainMap.GetTerrainMap()));
-				Debug.Log(region.settlement.name + ": " + region.value);
+				var cityTraits = region.settlement.GetCityTraits(terrainMap.GetTerrainMap());
+				region.settlement.name = SettlementNameGenerator.GetSettlementName(CultureDefinitions.Anglo, cityTraits);
+				region.settlement.heraldry = HeraldryGenerator.GetHeraldry(CultureDefinitions.Anglo, cityTraits, region);
 			}
 		}
 	}
@@ -43,7 +44,7 @@ class RegionsMapGenerator
 	private void StartFillMap(TerrainMapGenerator terrainMap)
 	{
 		Region NoMansLand = new Region("NoMansLand", null);
-		NoMansLand.color = Color.black;
+		NoMansLand.mainColor = Color.black;
 		regions.Add(NoMansLand);
 
 		map = new Map2D<RegionTile>(terrainMap.GetTerrainMap().Width, terrainMap.GetTerrainMap().Height);
@@ -56,7 +57,7 @@ class RegionsMapGenerator
 	private void EndFillMap(TerrainMapGenerator terrainMap)
 	{
 		Region OceanRegion = new Region("Ocean", null);
-		OceanRegion.color = Color.blue;
+		OceanRegion.mainColor = Color.blue;
 		regions.Add(OceanRegion);
 
 		foreach (var pixel in map.GetMapPoints())

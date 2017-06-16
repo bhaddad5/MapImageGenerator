@@ -27,7 +27,7 @@ public class RegionTile
 
 	public Color GetColor()
 	{
-		return region.color;
+		return region.mainColor;
 	}
 }
 
