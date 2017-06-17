@@ -6,25 +6,25 @@ public static class HeraldryGenerator
 {
 	public static Texture2D GetHeraldry(Culture culture, List<Settlement.CityTrait> constraints, Region region)
 	{
-		var background = GetHeraldryTexture(CultureDefinitions.GetFullCulture(culture).heraldryBackground, region);
+		var background = GetHeraldryTexture(new Color[256*256], CultureDefinitions.GetFullCulture(culture).heraldryBackground, region);
+		var finalHeraldry = GetHeraldryTexture(background, CultureDefinitions.GetFullCulture(culture).heraldryForeground, region);
 
-		return background;
+		Texture2D final = new Texture2D(256, 256);
+		final.SetPixels(finalHeraldry);
+		final.Apply();
+		return final;
 	}
 
-	private static Texture2D GetHeraldryTexture(List<HeraldryOption> options, Region region)
+	private static Color[] GetHeraldryTexture(Color[] baseTex, List<HeraldryOption> options, Region region)
 	{
-		var tex = options[Random.Range(0, options.Count)].image;
+		var newTex = options[Random.Range(0, options.Count)].image.GetPixels();
 
-		Texture2D copy = new Texture2D(tex.width, tex.height);
-		var copyPixels = new List<Color>();
-		foreach(var pixel in tex.GetPixels())
+		for(int i = 0; i < baseTex.Length; i++)
 		{
-			copyPixels.Add(GetActualColor(pixel, region));
+			if (newTex[i].a > 0)
+				baseTex[i] = (GetActualColor(newTex[i], region));
 		}
-		copy.SetPixels(copyPixels.ToArray());
-		copy.Apply();
-
-		return copy;
+		return baseTex;
 	}
 
 	private static Color GetActualColor(Color inColor, Region region)
@@ -35,7 +35,7 @@ public static class HeraldryGenerator
 			return region.secondaryColor;
 		if (inColor == Color.green)
 			return region.tertiaryColor;
-		else return new Color(0, 0, 0, 0);
+		else return inColor;
 	}
 	
 }
