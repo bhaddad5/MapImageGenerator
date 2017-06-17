@@ -57,18 +57,32 @@ public static class CultureDefinitions
 			new NameOption("Castle %n", new List<Settlement.CityTrait> { Settlement.CityTrait.Medium }),
 			new NameOption("%n Hold", new List<Settlement.CityTrait> { Settlement.CityTrait.Small }),
 			new NameOption("%n Hall", new List<Settlement.CityTrait> { Settlement.CityTrait.Small }),
+			new NameOption("%n Ford", new List<Settlement.CityTrait> { Settlement.CityTrait.River }),
+			new NameOption("%n Bridge", new List<Settlement.CityTrait> { Settlement.CityTrait.River }),
+			new NameOption("%n Bend", new List<Settlement.CityTrait> { Settlement.CityTrait.Small, Settlement.CityTrait.River }),
 		};
 
 		Anglo.heraldryBackground = new List<HeraldryOption>()
 		{
+			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_0"),
 			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_1"),
 			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_2"),
 			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_3"),
+			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_4"),
+			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_5"),
+			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_5"),
+			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_Ocean"),
 		};
 
 		Anglo.heraldryForeground = new List<HeraldryOption>()
 		{
 			new HeraldryOption("Heraldry/Symbols/Lion"),
+			new HeraldryOption("Heraldry/Symbols/Blank"),
+			new HeraldryOption("Heraldry/Symbols/Dragon"),
+			new HeraldryOption("Heraldry/Symbols/EagleHead"),
+			new HeraldryOption("Heraldry/Symbols/Feather"),
+			new HeraldryOption("Heraldry/Symbols/Gryphon"),
+			new HeraldryOption("Heraldry/Symbols/Horse"),
 		};
 
 		culturesPopulated = true;
