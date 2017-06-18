@@ -230,11 +230,10 @@ public class HeightMapGenerator
 				if (river != null)
 				{
 					foreach (var px in river)
-						map.SetPoint(px, -1);
+						map.SetPoint(px, 0);
 					numOfRivers--;
 				}
 			}
-
 			k++;
 		}
 	}
@@ -281,17 +280,18 @@ public class HeightMapGenerator
 				}
 				else
 				{
-					checkedTiles.SetPoint(neighbor, checkedTiles.GetValueAt(shortestTile)-1);
-					nextRiverTiles.Insert(checkedTiles.GetValueAt(shortestTile) - 1, neighbor);
+					int distMod = Random.Range(1, 3);
+					checkedTiles.SetPoint(neighbor, checkedTiles.GetValueAt(shortestTile)- distMod);
+					nextRiverTiles.Insert(checkedTiles.GetValueAt(shortestTile) - distMod, neighbor);
 				}
 			}
 			
 		}
 
 		List<Int2> riverPath = new List<Int2>();
-		riverPath.Add(pos);
 		if (endTile != null)
 		{
+			riverPath.Add(pos);
 			riverPath.Add(endTile);
 			BuildRiverBack(checkedTiles, riverPath);
 		}
@@ -301,7 +301,7 @@ public class HeightMapGenerator
 	private void BuildRiverBack(Map2D<int> riverDistField, List<Int2> riverPath)
 	{
 		Int2 maxNeighbor = riverPath[riverPath.Count - 1];
-		foreach(Int2 tile in riverDistField.GetAdjacentPoints(maxNeighbor))
+		foreach(Int2 tile in riverDistField.GetAdjacentPoints(maxNeighbor).RandomEnumerate())
 		{
 			if (!riverPath.Contains(tile) && riverDistField.GetValueAt(tile) > riverDistField.GetValueAt(maxNeighbor))
 				maxNeighbor = tile;

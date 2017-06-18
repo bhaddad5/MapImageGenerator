@@ -12,6 +12,23 @@ public static class Helpers
 		sphere.transform.position = point;
 		sphere.transform.localScale = new Vector3(scale, scale, scale);
 	}
+
+	public static List<T> RandomEnumerate<T>(this List<T> list)
+	{
+		List<T> finalList = new List<T>();
+		if(list.Count > 0)
+		{
+			int startEnumerate = UnityEngine.Random.Range(0, finalList.Count - 1);
+			for (int i = 0; i < list.Count; i++)
+			{
+				int index = i + startEnumerate;
+				if (index > list.Count - 1)
+					index = index - list.Count;
+				finalList.Add(list[index]);
+			}
+		}
+		return finalList;
+	}
 }
 
 public class Int2

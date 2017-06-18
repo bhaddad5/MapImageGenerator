@@ -56,7 +56,7 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Generating Ground Types";
 		yield return null;
 
-		/*TerrainMapGenerator terrainMapGenerator = new TerrainMapGenerator(heightGenerator.GetHeightMap());
+		TerrainMapGenerator terrainMapGenerator = new TerrainMapGenerator(heightGenerator.GetHeightMap());
 		
 		displayText.text = "Generating Regions";
 		yield return null;
@@ -69,10 +69,10 @@ public class MapBuilder : MonoBehaviour
 		MeshBuilder meshBuilder = new MeshBuilder(terrainMapGenerator, heightGenerator.GetHeightMap());
 
 		displayText.text = "Displaying Map";
-		yield return null;*/
+		yield return null;
 
 		generatedMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = heightGenerator.GetHeightMapTexture();
-		/*generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = terrainMapGenerator.GetTerrainTexture();
+		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = terrainMapGenerator.GetTerrainTexture();
 
 
 		terrainMaterial.SetTexture("_LookupTex", terrainMapGenerator.GetTerrainTexture());
@@ -102,7 +102,7 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Done";
 		yield return null;
 
-		terrainMeshDisplay.transform.localPosition -= new Vector3(width / 2.5f, 0f, height / 2.5f);*/
+		terrainMeshDisplay.transform.localPosition -= new Vector3(width / 2.5f, 0f, height / 2.5f);
 
 		displayText.enabled = false;
 	}
