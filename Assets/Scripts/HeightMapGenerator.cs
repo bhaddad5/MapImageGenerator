@@ -17,11 +17,14 @@ public class HeightMapGenerator
 		GenerateMountainRanges(Random.Range(avgNumOfRanges/2, avgNumOfRanges + avgNumOfRanges/2));
 		RandomizeCoastline();
 		BlendHeightMap();
+		CreateRivers();
 
 		List<Color> pixels = new List<Color>();
 		foreach (float h in map.GetMapValues())
 		{
-			pixels.Add(new Color(h, h, h));
+			if (h.Equals(-1))
+				pixels.Add(Color.red);
+			else pixels.Add(new Color(h, h, h));
 		}
 
 		heightMapImage = new Texture2D(width, height);
@@ -85,27 +88,20 @@ public class HeightMapGenerator
 
 	private bool TryMountainCenterPixel(Int2 pixel, float height, int distanceToCoast)
 	{
-		if (!TrySetPixel(pixel, height))
+		if (!map.PosInBounds(pixel))
+		{
 			return false;
+		}
+		else map.SetPoint(pixel, height);
 
 		TrySpreadLandArea(pixel, distanceToCoast);
-		foreach(Int2 point in map.GetAllNeighboringPoints(pixel))
-			TrySetPixel(point, height * .75f);
+		foreach (Int2 point in map.GetAllNeighboringPoints(pixel))
+		{
+			if(map.PosInBounds(point))
+			map.SetPoint(point, height * .75f);
+		}
+
 		return true;
-	}
-
-	private bool TrySetPixel(Int2 pixel, float height)
-	{
-		if (!pixelInBounds(pixel))
-			return false;
-
-		map.SetPoint(pixel, height);
-		return true;
-	}
-
-	private bool pixelInBounds(Int2 pixel)
-	{
-		return !(pixel.X < 0 || pixel.X >= map.Width || pixel.Y < 0 || pixel.Y >= map.Height);
 	}
 
 	private void TrySpreadLandArea(Int2 startPixel, int distanceToCoast)
@@ -207,10 +203,103 @@ public class HeightMapGenerator
 		return sum / points.Count;
 	}
 
-	private void TryAddPoint(List<float> points, int x, int y)
+	private void CreateRivers()
 	{
-		if (x >= 0 && x < map.Width - 1 && y >= 0 && y < map.Height - 1)
-			points.Add(map.GetValueAt(new Int2(x, y)));
+		int mapPixelsPerRiver = 500;
+		int numOfRivers = (map.Width * map.Height) / mapPixelsPerRiver;
+
+		List<Int2> possibleRiverStarts = new List<Int2>();
+		for(int i = 0; i < numOfRivers * 500; i++)
+		{
+			Int2 randPos = new Int2(Random.Range(0, map.Width), Random.Range(0, map.Height));
+
+			if(HeightAt(randPos) < Globals.MountainHeight && HeightAt(randPos) >= Globals.MinGroundHeight)
+			{
+				possibleRiverStarts.Add(randPos);
+			}
+		}
+
+		//numOfRivers = 2;
+		int k = 0;
+		while(numOfRivers > 0 && k < possibleRiverStarts.Count)
+		{
+			if (possibleRiverStarts.Count > k && 
+				RiverStartValue(possibleRiverStarts[k]) > 0)
+			{
+				if (TryExpandRiver(possibleRiverStarts[k]))
+				{
+					numOfRivers--;
+				}
+			}
+
+			k++;
+		}
+	}
+
+	private float RiverStartValue(Int2 startPos)
+	{
+		int numMountains = 0;
+		int numOceans = 0;
+		int numOthers = 0;
+		foreach(float h in map.GetAdjacentValues(startPos))
+		{
+			if (h >= Globals.MountainHeight)
+				numMountains++;
+			else if (h == 0)
+				numOceans++;
+			else numOthers++;
+		}
+
+		if (numOceans == 0 && numMountains > 0 && numMountains < 4)
+			return 1f;
+		else return 0f;
+	}
+
+	private bool TryExpandRiver(Int2 pos)
+	{
+		float savedPoint = HeightAt(pos);
+
+		if (savedPoint >= Globals.MountainHeight || savedPoint.Equals(-1) || bordersInProgressRiver(pos))
+			return false;
+
+		map.SetPoint(pos, -1f);
+
+		if (bordersOcean(pos))
+			return true;
+
+		foreach(Int2 nextPos in map.GetAdjacentPoints(pos))
+		{
+			if (TryExpandRiver(nextPos))
+			{
+				//map.SetPoint(pos, -1);
+				//Debug.Log("River success!");
+				return true;
+			}
+		}
+
+		map.SetPoint(pos, savedPoint);
+		return false;
+	}
+
+	private bool bordersInProgressRiver(Int2 pos)
+	{
+		float numBorders = 0;
+		foreach(float height in map.GetAllNeighboringValues(pos))
+		{
+			if (height.Equals(-1))
+				numBorders++;
+		}
+		return numBorders > 1;
+	}
+
+	private bool bordersOcean(Int2 pos)
+	{
+		foreach(float height in map.GetAdjacentValues(pos))
+		{
+			if (height.Equals(0))
+				return true;
+		}
+		return false;
 	}
 
 	private float HeightAt(Int2 px)

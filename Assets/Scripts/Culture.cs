@@ -26,13 +26,20 @@ public class NameOption
 public class HeraldryOption
 {
 	public Texture2D image;
+	public List<Settlement.CityTrait> constraints;
 	public int prevelance;
 
 	public HeraldryOption(string imageName, int odds = 1)
 	{
 		image = (Texture2D)Resources.Load(imageName, typeof(Texture2D));
-		var tmp = Resources.Load(imageName);
 		prevelance = odds;
+	}
+
+	public HeraldryOption(string imageName, List<Settlement.CityTrait> constr, int odds = 1)
+	{
+		image = (Texture2D)Resources.Load(imageName, typeof(Texture2D));
+		prevelance = odds;
+		constraints = constr;
 	}
 }
 

@@ -7,8 +7,6 @@ public class TerrainMapGenerator
 	Map2D<TerrainTile> map;
 	Texture2D terrainMapImage;
 
-	public float mountainHeight = 0.25f;
-
 	public TerrainMapGenerator(Map2D<float> heightMap)
 	{
 		map = new Map2D<TerrainTile>(heightMap.Width, heightMap.Height);
@@ -17,7 +15,7 @@ public class TerrainMapGenerator
 		{
 			if (heightMap.GetValueAt(point) < Globals.MinGroundHeight)
 				map.SetPoint(point, new TerrainTile(TerrainTile.TileType.Ocean));
-			else if (heightMap.GetValueAt(point) >= mountainHeight)
+			else if (heightMap.GetValueAt(point) >= Globals.MountainHeight)
 				map.SetPoint(point, new TerrainTile(TerrainTile.TileType.Mountain));
 			else map.SetPoint(point, new TerrainTile(TerrainTile.TileType.Grass));
 		}

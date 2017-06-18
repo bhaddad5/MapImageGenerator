@@ -71,7 +71,7 @@ public static class CultureDefinitions
 			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_4"),
 			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_5"),
 			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_5"),
-			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_Ocean"),
+			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_Ocean", new List<Settlement.CityTrait> { Settlement.CityTrait.Port }),
 		};
 
 		Anglo.heraldryForeground = new List<HeraldryOption>()
