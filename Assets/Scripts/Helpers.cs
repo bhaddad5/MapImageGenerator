@@ -116,6 +116,23 @@ public class SortedDupList<T>
 		return entries[0].value;
 	}
 
+	public float MinKey()
+	{
+		return entries[entries.Count-1].comparator;
+	}
+
+	public T MinValue()
+	{
+		return entries[entries.Count - 1].value;
+	}
+
+	public T PopMin()
+	{
+		T val = entries[entries.Count - 1].value;
+		entries.RemoveAt(entries.Count - 1);
+		return val;
+	}
+
 	public T Pop()
 	{
 		T val = entries[0].value;

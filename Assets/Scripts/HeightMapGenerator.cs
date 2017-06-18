@@ -219,15 +219,18 @@ public class HeightMapGenerator
 			}
 		}
 
-		//numOfRivers = 2;
 		int k = 0;
-		while(numOfRivers > 0 && k < possibleRiverStarts.Count)
+		while (numOfRivers > 0 && k < possibleRiverStarts.Count)
 		{
 			if (possibleRiverStarts.Count > k && 
 				RiverStartValue(possibleRiverStarts[k]) > 0)
 			{
-				if (TryExpandRiver(possibleRiverStarts[k]))
+				var river = TryExpandRiver(possibleRiverStarts[k], new List<Int2>());
+
+				if (river != null)
 				{
+					foreach (var px in river)
+						map.SetPoint(px, -1);
 					numOfRivers--;
 				}
 			}
@@ -255,40 +258,84 @@ public class HeightMapGenerator
 		else return 0f;
 	}
 
-	private bool TryExpandRiver(Int2 pos)
+	private List<Int2> TryExpandRiver(Int2 pos, List<Int2> currPath)
 	{
-		float savedPoint = HeightAt(pos);
+		Map2D<int> checkedTiles = new Map2D<int>(map.Width, map.Height);
+		SortedDupList<Int2> nextRiverTiles = new SortedDupList<Int2>();
+		int maxRiverLength = int.MaxValue;
 
-		if (savedPoint >= Globals.MountainHeight || savedPoint.Equals(-1) || bordersInProgressRiver(pos))
-			return false;
+		nextRiverTiles.Insert(0, pos);
+		checkedTiles.SetPoint(pos, maxRiverLength);
+		Int2 endTile = null;
 
-		map.SetPoint(pos, -1f);
-
-		if (bordersOcean(pos))
-			return true;
-
-		foreach(Int2 nextPos in map.GetAdjacentPoints(pos))
+		while (nextRiverTiles.Count > 0 && endTile == null)
 		{
-			if (TryExpandRiver(nextPos))
+			var shortestTile = nextRiverTiles.MinValue();
+			nextRiverTiles.PopMin();
+			foreach (var neighbor in GetAdjacentRiverExpansions(shortestTile, checkedTiles))
 			{
-				//map.SetPoint(pos, -1);
-				//Debug.Log("River success!");
-				return true;
+				if (map.GetValueAt(neighbor) < Globals.MinGroundHeight)
+				{
+					endTile = shortestTile;
+					break;
+				}
+				else
+				{
+					checkedTiles.SetPoint(neighbor, checkedTiles.GetValueAt(shortestTile)-1);
+					nextRiverTiles.Insert(checkedTiles.GetValueAt(shortestTile) - 1, neighbor);
+				}
 			}
+			
 		}
 
-		map.SetPoint(pos, savedPoint);
-		return false;
+		List<Int2> riverPath = new List<Int2>();
+		riverPath.Add(pos);
+		if (endTile != null)
+		{
+			riverPath.Add(endTile);
+			BuildRiverBack(checkedTiles, riverPath);
+		}
+		return riverPath;
 	}
 
-	private bool bordersInProgressRiver(Int2 pos)
+	private void BuildRiverBack(Map2D<int> riverDistField, List<Int2> riverPath)
+	{
+		Int2 maxNeighbor = riverPath[riverPath.Count - 1];
+		foreach(Int2 tile in riverDistField.GetAdjacentPoints(maxNeighbor))
+		{
+			if (!riverPath.Contains(tile) && riverDistField.GetValueAt(tile) > riverDistField.GetValueAt(maxNeighbor))
+				maxNeighbor = tile;
+		}
+
+		if (maxNeighbor == riverPath[riverPath.Count - 1])
+			return;
+		else
+		{
+			riverPath.Add(maxNeighbor);
+			BuildRiverBack(riverDistField, riverPath);
+		}
+	}
+
+	private List<Int2> GetAdjacentRiverExpansions(Int2 pos, Map2D<int> checkedTiles)
+	{
+		List<Int2> expansionTiles = new List<Int2>();
+		foreach (Int2 neighbor in map.GetAdjacentPoints(pos))
+		{
+			if (checkedTiles.GetValueAt(neighbor) == 0 && map.GetValueAt(neighbor) < Globals.MountainHeight)
+				expansionTiles.Add(neighbor);
+		}
+		return expansionTiles;
+	}
+
+	private bool bordersInProgressRiver(Int2 pos, List<Int2> currPath)
 	{
 		float numBorders = 0;
-		foreach(float height in map.GetAllNeighboringValues(pos))
+		foreach(Int2 px in map.GetAdjacentPoints(pos))
 		{
-			if (height.Equals(-1))
+			if (currPath.Contains(pos))
 				numBorders++;
 		}
+
 		return numBorders > 1;
 	}
 
