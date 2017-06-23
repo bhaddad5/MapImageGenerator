@@ -9,6 +9,7 @@ public class Settlement
 	{
 		Mountains,
 		Port,
+		Landlocked,
 		Small,
 		Medium,
 		Large,
@@ -76,12 +77,13 @@ public class Settlement
 		List<Settlement.CityTrait> traits = new List<CityTrait>();
 		if (neighboringTerrainTypes.Contains(TerrainTile.TileType.Mountain))
 			traits.Add(CityTrait.Mountains);
-		if (neighboringTerrainTypes.Contains(TerrainTile.TileType.Ocean))
-			traits.Add(CityTrait.Port);
 		if (neighboringTerrainTypes.Contains(TerrainTile.TileType.Forest))
 			traits.Add(CityTrait.Forest);
 		if (neighboringTerrainTypes.Contains(TerrainTile.TileType.Fertile))
 			traits.Add(CityTrait.Fertile);
+		if (neighboringTerrainTypes.Contains(TerrainTile.TileType.Ocean))
+			traits.Add(CityTrait.Port);
+		else traits.Add(CityTrait.Landlocked);
 
 		if (cityTiles.Count < 3)
 			traits.Add(CityTrait.Small);

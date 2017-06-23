@@ -17,7 +17,7 @@ public class HeightMapGenerator
 		GenerateMountainRanges(Random.Range(avgNumOfRanges/2, avgNumOfRanges + avgNumOfRanges/2));
 		RandomizeCoastline();
 		BlendHeightMap();
-		CreateRivers();
+		//CreateRivers();
 
 		List<Color> pixels = new List<Color>();
 		foreach (float h in map.GetMapValues())
@@ -280,7 +280,7 @@ public class HeightMapGenerator
 				}
 				else
 				{
-					int distMod = Random.Range(1, 3);
+					int distMod = 1;
 					checkedTiles.SetPoint(neighbor, checkedTiles.GetValueAt(shortestTile)- distMod);
 					nextRiverTiles.Insert(checkedTiles.GetValueAt(shortestTile) - distMod, neighbor);
 				}
@@ -298,24 +298,6 @@ public class HeightMapGenerator
 		return riverPath;
 	}
 
-	private void BuildRiverBack(Map2D<int> riverDistField, List<Int2> riverPath)
-	{
-		Int2 maxNeighbor = riverPath[riverPath.Count - 1];
-		foreach(Int2 tile in riverDistField.GetAdjacentPoints(maxNeighbor).RandomEnumerate())
-		{
-			if (!riverPath.Contains(tile) && riverDistField.GetValueAt(tile) > riverDistField.GetValueAt(maxNeighbor))
-				maxNeighbor = tile;
-		}
-
-		if (maxNeighbor == riverPath[riverPath.Count - 1])
-			return;
-		else
-		{
-			riverPath.Add(maxNeighbor);
-			BuildRiverBack(riverDistField, riverPath);
-		}
-	}
-
 	private List<Int2> GetAdjacentRiverExpansions(Int2 pos, Map2D<int> checkedTiles)
 	{
 		List<Int2> expansionTiles = new List<Int2>();
@@ -327,26 +309,28 @@ public class HeightMapGenerator
 		return expansionTiles;
 	}
 
-	private bool bordersInProgressRiver(Int2 pos, List<Int2> currPath)
+	private void BuildRiverBack(Map2D<int> riverDistField, List<Int2> riverPath)
 	{
-		float numBorders = 0;
-		foreach(Int2 px in map.GetAdjacentPoints(pos))
+		Int2 maxNeighbor = riverPath[riverPath.Count - 1];
+		foreach (Int2 tile in riverDistField.GetAdjacentPoints(maxNeighbor).RandomEnumerate())
 		{
-			if (currPath.Contains(pos))
-				numBorders++;
+			if (!riverPath.Contains(tile) && riverDistField.GetValueAt(tile) > riverDistField.GetValueAt(maxNeighbor))
+			{
+				if (maxNeighbor == riverPath[riverPath.Count - 1])
+					maxNeighbor = tile;
+				else if (Random.Range(0, 1f) > .5f)
+					maxNeighbor = tile;
+			}
+				
 		}
 
-		return numBorders > 1;
-	}
-
-	private bool bordersOcean(Int2 pos)
-	{
-		foreach(float height in map.GetAdjacentValues(pos))
+		if (maxNeighbor == riverPath[riverPath.Count - 1])
+			return;
+		else
 		{
-			if (height.Equals(0))
-				return true;
+			riverPath.Add(maxNeighbor);
+			BuildRiverBack(riverDistField, riverPath);
 		}
-		return false;
 	}
 
 	private float HeightAt(Int2 px)

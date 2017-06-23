@@ -132,8 +132,24 @@ public class TerrainMapGenerator
 	{
 		float value = TileAt(pos).GetValue();
 
+		float oneWaterBorderValue = 3f;
+		float someWaterValue = 2f;
+		float allWaterValue = -1f;
+
+		int numWaterBorders = 0;
 		foreach (TerrainTile t in map.GetAdjacentValues(pos))
+		{
+			if (t.tileType == TerrainTile.TileType.Ocean)
+				numWaterBorders++;
 			value += t.GetValue();
+		}
+
+		if (numWaterBorders == 1)
+			value += oneWaterBorderValue;
+		else if (numWaterBorders > 1 && numWaterBorders < 4)
+			value += someWaterValue;
+		else if (numWaterBorders == 4)
+			value += allWaterValue;
 
 		return value;
 	}
