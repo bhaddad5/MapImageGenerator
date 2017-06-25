@@ -14,7 +14,11 @@ public class HeightMapGenerator
 		int pixelsPerRange = 1000;
 		int avgNumOfRanges = (width * height) / pixelsPerRange;
 
+		int pixelsPerHill = 25;
+		int avgNumHills = (width * height) / pixelsPerHill;
+
 		GenerateMountainRanges(Random.Range(avgNumOfRanges/2, avgNumOfRanges + avgNumOfRanges/2));
+		GenerateHills(Random.Range(avgNumHills / 2, avgNumHills + avgNumHills / 2));
 		RandomizeCoastline();
 		BlendHeightMap();
 		//CreateRivers();
@@ -44,7 +48,7 @@ public class HeightMapGenerator
 	private void GenerateMountainRange()
 	{
 		Int2 startingPixel = new Int2(Random.Range(0, map.Width - 1), Random.Range(0, map.Height - 1));
-		float startingStrength = Random.Range(.5f, .6f);
+		float startingStrength = Random.Range(.6f, .75f);
 		Int2 mountainDirection = new Int2(Random.Range(-1, 1), Random.Range(-1, 1));
 		int mountainsLength = Random.Range(4, 50);
 		int distToCoast = Random.Range(5, 40);
@@ -101,7 +105,7 @@ public class HeightMapGenerator
 		foreach (Int2 point in map.GetAllNeighboringPoints(pixel))
 		{
 			if(map.PosInBounds(point))
-				map.SetPoint(point, height * .75f);
+				map.SetPoint(point, height * .6f);
 		}
 
 		return true;
@@ -171,6 +175,40 @@ public class HeightMapGenerator
 		foreach (float neighbor in map.GetAllNeighboringValues(tile))
 		{
 			if (neighbor > Globals.MinGroundHeight)
+				return true;
+		}
+		return false;
+	}
+
+	private void GenerateHills(int numOfHills)
+	{
+		List<Int2> possibleHillSites = new List<Int2>();
+		for(int i = 0; i < numOfHills * 100; i++)
+		{
+			Int2 pos = new Int2(Random.Range(0, map.Width - 1), Random.Range(0, map.Height - 1));
+			if (map.GetValueAt(pos) == Globals.MinGroundHeight && !BordersWater(pos))
+				possibleHillSites.Add(pos);
+		}
+
+		for(int i = 0; i < numOfHills && i < possibleHillSites.Count; i++)
+		{
+			float hillHeight = Random.Range(.25f, .3f);
+			map.SetPoint(possibleHillSites[i], hillHeight);
+
+			foreach (Int2 point in map.GetAllNeighboringPoints(possibleHillSites[i]))
+			{
+				if (map.PosInBounds(point) && map.GetValueAt(point) == Globals.MinGroundHeight)
+					map.SetPoint(point, hillHeight * .85f);
+			}
+
+		}
+	}
+
+	private bool BordersWater(Int2 tile)
+	{
+		foreach (float neighbor in map.GetAllNeighboringValues(tile))
+		{
+			if (neighbor < Globals.MinGroundHeight)
 				return true;
 		}
 		return false;

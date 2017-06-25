@@ -91,7 +91,7 @@ class MeshBuilder
 		{
 			if (vertHeights.GetValueAt(pos) >= Globals.MinGroundHeight)
 			{
-				float newHeight = Mathf.Max(Globals.MinGroundHeight, (vertHeights.GetValueAt(pos) + NeighborAverageHeight(pos)) / 2 * Random.Range(1f, 1.3f));
+				float newHeight = Mathf.Max(Globals.MinGroundHeight, (vertHeights.GetValueAt(pos) + NeighborAverageHeight(pos)) / 2 * Random.Range(1f, 1.1f));
 				vertHeights.SetPoint(pos, newHeight);
 			}
 			else vertHeights.SetPoint(pos, Globals.MinGroundHeight - 0.05f);
