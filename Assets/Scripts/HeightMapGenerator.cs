@@ -44,7 +44,7 @@ public class HeightMapGenerator
 	private void GenerateMountainRange()
 	{
 		Int2 startingPixel = new Int2(Random.Range(0, map.Width - 1), Random.Range(0, map.Height - 1));
-		float startingStrength = Random.Range(.7f, 1f);
+		float startingStrength = Random.Range(.5f, .6f);
 		Int2 mountainDirection = new Int2(Random.Range(-1, 1), Random.Range(-1, 1));
 		int mountainsLength = Random.Range(4, 50);
 		int distToCoast = Random.Range(5, 40);
@@ -61,7 +61,7 @@ public class HeightMapGenerator
 	private Int2 TryGetNextMountainPixel(Int2 currPoint, Int2 direction)
 	{
 		Int2[] potentials = new Int2[10];
-		potentials[0] = currPoint + nextDirection(direction, 0)*3;
+		potentials[0] = currPoint + nextDirection(direction, 0) * 3;
 		potentials[1] = currPoint + nextDirection(direction, 0) * 3;
 		potentials[2] = currPoint + nextDirection(direction, 0) * 3;
 		potentials[3] = currPoint + nextDirection(direction, 0) * 3;
@@ -89,16 +89,19 @@ public class HeightMapGenerator
 	private bool TryMountainCenterPixel(Int2 pixel, float height, int distanceToCoast)
 	{
 		if (!map.PosInBounds(pixel))
-		{
 			return false;
-		}
-		else map.SetPoint(pixel, height);
+
+		//Random mountain passes
+		if (Random.Range(0, 1f) < 0.2f)
+			return true;
+
+		map.SetPoint(pixel, height);
 
 		TrySpreadLandArea(pixel, distanceToCoast);
 		foreach (Int2 point in map.GetAllNeighboringPoints(pixel))
 		{
 			if(map.PosInBounds(point))
-			map.SetPoint(point, height * .75f);
+				map.SetPoint(point, height * .75f);
 		}
 
 		return true;
