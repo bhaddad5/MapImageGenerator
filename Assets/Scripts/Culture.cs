@@ -32,6 +32,7 @@ public class HeraldryOption
 	public HeraldryOption(string imageName, int odds = 1)
 	{
 		image = (Texture2D)Resources.Load(imageName, typeof(Texture2D));
+		Debug.Log(image);
 		prevelance = odds;
 	}
 

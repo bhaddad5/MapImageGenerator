@@ -11,7 +11,7 @@ public static class CultureDefinitions
 	{
 		Anglo.prefixes = new List<NameOption>()
 		{
-			new NameOption("Lun"),
+			new NameOption("Lunn"),
 			new NameOption("Berry"),
 			new NameOption("Mannin"),
 			new NameOption("Hetten"),
@@ -64,25 +64,25 @@ public static class CultureDefinitions
 
 		Anglo.heraldryBackground = new List<HeraldryOption>()
 		{
-			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_0"),
-			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_1"),
-			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_2"),
-			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_3"),
-			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_4"),
-			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_5"),
-			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_5"),
-			new HeraldryOption("Heraldry/Backgrounds/Anglo_Back_Ocean", new List<Settlement.CityTrait> { Settlement.CityTrait.Port }),
+			new HeraldryOption("Anglo/Heraldry/Backgrounds/Anglo_Back_0"),
+			new HeraldryOption("Anglo/Heraldry/Backgrounds/Anglo_Back_1"),
+			new HeraldryOption("Anglo/Heraldry/Backgrounds/Anglo_Back_2"),
+			new HeraldryOption("Anglo/Heraldry/Backgrounds/Anglo_Back_3"),
+			new HeraldryOption("Anglo/Heraldry/Backgrounds/Anglo_Back_4"),
+			new HeraldryOption("Anglo/Heraldry/Backgrounds/Anglo_Back_5"),
+			new HeraldryOption("Anglo/Heraldry/Backgrounds/Anglo_Back_5"),
+			new HeraldryOption("Anglo/Heraldry/Backgrounds/Anglo_Back_Ocean", new List<Settlement.CityTrait> { Settlement.CityTrait.Port }),
 		};
 
 		Anglo.heraldryForeground = new List<HeraldryOption>()
 		{
-			new HeraldryOption("Heraldry/Symbols/Lion"),
-			new HeraldryOption("Heraldry/Symbols/Blank"),
-			new HeraldryOption("Heraldry/Symbols/Dragon"),
-			new HeraldryOption("Heraldry/Symbols/EagleHead"),
-			new HeraldryOption("Heraldry/Symbols/Feather"),
-			new HeraldryOption("Heraldry/Symbols/Gryphon"),
-			new HeraldryOption("Heraldry/Symbols/Horse"),
+			new HeraldryOption("Anglo/Heraldry/Symbols/Lion"),
+			new HeraldryOption("Anglo/Heraldry/Symbols/Blank"),
+			new HeraldryOption("Anglo/Heraldry/Symbols/Dragon"),
+			new HeraldryOption("Anglo/Heraldry/Symbols/EagleHead"),
+			new HeraldryOption("Anglo/Heraldry/Symbols/Feather"),
+			new HeraldryOption("Anglo/Heraldry/Symbols/Gryphon"),
+			new HeraldryOption("Anglo/Heraldry/Symbols/Horse"),
 		};
 
 		culturesPopulated = true;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class HeraldryGenerator
 {
-	public static Texture2D GetHeraldry(Culture culture, List<Settlement.CityTrait> constraints, Region region)
+	public static Texture2D GetHeraldry(Culture culture, List<Settlement.CityTrait> constraints, Kingdom region)
 	{
 		int imageSize = 256;
 		var background = GetHeraldryTexture(new Color[imageSize * imageSize], CultureDefinitions.GetFullCulture(culture).heraldryBackground, region);
@@ -16,7 +16,7 @@ public static class HeraldryGenerator
 		return final;
 	}
 
-	private static Color[] GetHeraldryTexture(Color[] baseTex, List<HeraldryOption> options, Region region)
+	private static Color[] GetHeraldryTexture(Color[] baseTex, List<HeraldryOption> options, Kingdom region)
 	{
 		var newTex = options[Random.Range(0, options.Count)].image.GetPixels();
 
@@ -28,7 +28,7 @@ public static class HeraldryGenerator
 		return baseTex;
 	}
 
-	private static Color GetActualColor(Color inColor, Region region)
+	private static Color GetActualColor(Color inColor, Kingdom region)
 	{
 		if (inColor == Color.red)
 			return region.mainColor;

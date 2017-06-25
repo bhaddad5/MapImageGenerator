@@ -6,15 +6,15 @@ using UnityEngine;
 
 public class RegionTile
 {
-	public Region region;
+	public Kingdom region;
 	public float holdingStrength;
 
-	public RegionTile(Region r)
+	public RegionTile(Kingdom r)
 	{
 		region = r;
 	}
 
-	public bool TrySetRegion(Region r, float strength)
+	public bool TrySetRegion(Kingdom r, float strength)
 	{
 		if(strength >= holdingStrength)
 		{

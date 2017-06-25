@@ -78,17 +78,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Models\ModelLookup.cs" />
     <Compile Include="Assets\Scripts\Culture.cs" />
     <Compile Include="Assets\Scripts\CultureDefinitions.cs" />
     <Compile Include="Assets\Scripts\Globals.cs" />
     <Compile Include="Assets\Scripts\HeightMapGenerator.cs" />
     <Compile Include="Assets\Scripts\Helpers.cs" />
     <Compile Include="Assets\Scripts\HeraldryGenerator.cs" />
+    <Compile Include="Assets\Scripts\Kingdom.cs" />
     <Compile Include="Assets\Scripts\Map2D.cs" />
     <Compile Include="Assets\Scripts\MapBuilder.cs" />
     <Compile Include="Assets\Scripts\MeshBuilder.cs" />
     <Compile Include="Assets\Scripts\MeshSplitter.cs" />
-    <Compile Include="Assets\Scripts\Region.cs" />
     <Compile Include="Assets\Scripts\RegionTile.cs" />
     <Compile Include="Assets\Scripts\RegionsMapGenerator.cs" />
     <Compile Include="Assets\Scripts\SettlementNameGenerator.cs" />

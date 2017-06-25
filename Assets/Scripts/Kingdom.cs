@@ -27,7 +27,7 @@ public class Settlement
 		name = n;
 	}
 
-	public void ExpandSettlement(float regionValue, TerrainMapGenerator terrainTiles, Map2D<RegionTile> regionsMap, Region myRegion)
+	public void ExpandSettlement(float regionValue, TerrainMapGenerator terrainTiles, Map2D<RegionTile> regionsMap, Kingdom myRegion)
 	{
 		terrainTiles.SetValue(cityTiles[0], new TerrainTile(TerrainTile.TileType.City));
 
@@ -42,7 +42,7 @@ public class Settlement
 		}
 	}
 
-	private SortedDupList<Int2> GetPossibleExpnasionTiles(TerrainMapGenerator terrainTiles, Map2D<RegionTile> regionsMap, Region myRegion)
+	private SortedDupList<Int2> GetPossibleExpnasionTiles(TerrainMapGenerator terrainTiles, Map2D<RegionTile> regionsMap, Kingdom myRegion)
 	{
 		SortedDupList<Int2> possibleExpansions = new SortedDupList<Int2>();
 		foreach(Int2 cityTile in cityTiles)
@@ -95,7 +95,7 @@ public class Settlement
 	}
 }
 
-public class Region
+public class Kingdom
 {
 	public Settlement settlement;
 	public Color mainColor;
@@ -103,7 +103,7 @@ public class Region
 	public Color tertiaryColor;
 	public float value;
 
-	public Region(string name, Int2 cityTile)
+	public Kingdom(string name, Int2 cityTile)
 	{
 		if(cityTile != null)
 			settlement = new Settlement(name, cityTile);
