@@ -62,6 +62,11 @@ public class Int2
 		return new Int2(a.X + b.X, a.Y + b.Y);
 	}
 
+	public static Int2 operator -(Int2 a, Int2 b)
+	{
+		return new Int2(a.X - b.X, a.Y - b.Y);
+	}
+
 	public static Int2 operator *(Int2 a, int b)
 	{
 		return new Int2(a.X * b, a.Y * b);

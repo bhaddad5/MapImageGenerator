@@ -29,10 +29,10 @@ public class MapBuilder : MonoBehaviour
 
 	public void RebuildMap()
 	{
-		int width = 100;
+		int width = 80;
 		if(sizeX.text != "")
 			width = int.Parse(sizeX.text);
-		int height = 100;
+		int height = 80;
 		if(sizeY.text != "")
 			height = int.Parse(sizeY.text);
 		StartCoroutine(BuildMap(width, height));

@@ -8,4 +8,7 @@ public class ModelLookup : MonoBehaviour
 	public GameObject Hovel;
 
 	public GameObject WheatField;
+
+	public GameObject Wall;
+	public GameObject Turret;
 }

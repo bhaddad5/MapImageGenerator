@@ -21,20 +21,14 @@ public class ModelPlacer
 
 	private void PlaceModelsOnPoint(Int2 tile)
 	{
-		if(map.GetValueAt(tile).tileType == TerrainTile.TileType.Forest)
-		{
+		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Forest)
 			PlaceForestOnTile(tile);
-		}
-
-		if(map.GetValueAt(tile).tileType == TerrainTile.TileType.Grass)
-		{
+		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Grass)
 			PlaceWildernessOnTile(tile);
-		}
-
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Fertile)
-		{
 			PlaceFarmsOnTile(tile);
-		}
+		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.City)
+			PlaceCityOnTile(tile);
 	}
 
 	private void PlaceForestOnTile(Int2 tile)
@@ -101,6 +95,64 @@ public class ModelPlacer
 			GameObject hovel = GameObject.Instantiate(lookup.Hovel, objectParent);
 			hovel.transform.position = pos.Value;
 			hovel.transform.eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
+		}
+	}
+
+	private void PlaceCityOnTile(Int2 tile)
+	{
+		foreach(Int2 pt in map.GetAdjacentPoints(tile))
+		{
+			if(map.GetValueAt(pt).tileType != TerrainTile.TileType.City && map.GetValueAt(pt).tileType != TerrainTile.TileType.Ocean)
+			{
+				PlaceWallOnEdge(tile, pt);
+			}
+		}
+		PlaceTurretsOnCorners(tile);
+	}
+
+	private void PlaceWallOnEdge(Int2 cityTile, Int2 nonCityTile)
+	{
+		if((nonCityTile - cityTile).Equals(new Int2(0, -1)))
+			SpawnWall(new Vector3(cityTile.X + 0.5f, 2f, cityTile.Y), 90f);
+		if ((nonCityTile - cityTile).Equals(new Int2(0, 1)))
+			SpawnWall(new Vector3(cityTile.X + 0.5f, 2f, cityTile.Y+1), 90f);
+		if ((nonCityTile - cityTile).Equals(new Int2(1, 0)))
+			SpawnWall(new Vector3(cityTile.X+1, 2f, cityTile.Y + .5f), 0);
+		if ((nonCityTile - cityTile).Equals(new Int2(-1, 0)))
+			SpawnWall(new Vector3(cityTile.X, 2f, cityTile.Y + .5f), 0);
+	}
+
+	private void SpawnWall(Vector3 pos, float yRot)
+	{
+		RaycastHit hit;
+		if(Physics.Raycast(new Ray(pos, Vector3.down), out hit))
+		{
+			GameObject wall = GameObject.Instantiate(lookup.Wall, objectParent);
+			wall.transform.position = hit.point;
+			wall.transform.eulerAngles = new Vector3(0, yRot, 0);
+		}
+	}
+
+	private void PlaceTurretsOnCorners(Int2 tile)
+	{
+		TryPlaceTurret(new Vector3(tile.X, 2f, tile.Y), tile + new Int2(-1, -1), tile + new Int2(0, -1), tile + new Int2(-1, 0));
+		TryPlaceTurret(new Vector3(tile.X+1, 2f, tile.Y), new Int2(1, -1), new Int2(0, -1), new Int2(1, 0));
+		TryPlaceTurret(new Vector3(tile.X, 2f, tile.Y+1), new Int2(-1, 1), new Int2(0, 1), new Int2(-1, 0));
+		TryPlaceTurret(new Vector3(tile.X+1, 2f, tile.Y+1), new Int2(1, 1), new Int2(0, 1), new Int2(1, 0));
+	}
+
+	private void TryPlaceTurret(Vector3 pos, Int2 check1, Int2 check2, Int2 check3)
+	{
+		if((map.PosInBounds(check1) && map.GetValueAt(check1).tileType != TerrainTile.TileType.City) ||
+			(map.PosInBounds(check2) && map.GetValueAt(check2).tileType != TerrainTile.TileType.City) ||
+			(map.PosInBounds(check3) && map.GetValueAt(check3).tileType != TerrainTile.TileType.City))
+		{
+			RaycastHit hit;
+			if(Physics.Raycast(new Ray(pos, Vector3.down), out hit))
+			{
+				GameObject turret = GameObject.Instantiate(lookup.Turret, objectParent);
+				turret.transform.position = hit.point;
+			}
 		}
 	}
 
