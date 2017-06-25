@@ -34,7 +34,7 @@ class MeshBuilder
 
 	private void populateVertHeights(TerrainMapGenerator map, Map2D<float> pixelHeights)
 	{
-		vertHeights = new Map2D<float>(map.GetTerrainMap().Width * (vertsPerTileAcross - 1) + 1, map.GetTerrainMap().Height * (vertsPerTileAcross - 1) + 1);
+		vertHeights = new Map2D<float>(map.GetTerrainMap().Width * vertsPerTileAcross + 1, map.GetTerrainMap().Height * vertsPerTileAcross + 1);
 
 		foreach(var pixle in map.MapPixels())
 		{
@@ -44,11 +44,11 @@ class MeshBuilder
 
 	private void fillHeightsForTile(Int2 pixle, float tileHeight, int mapWidth, int mapHeight)
 	{
-		int baseI = pixle.X * (vertsPerTileAcross - 1);
-		int baseJ = pixle.Y * (vertsPerTileAcross - 1);
-		for (int x = 0; x < vertsPerTileAcross-1; x++)
+		int baseI = pixle.X * (vertsPerTileAcross);
+		int baseJ = pixle.Y * (vertsPerTileAcross);
+		for (int x = 0; x < vertsPerTileAcross; x++)
 		{
-			for (int y = 0; y < vertsPerTileAcross-1; y++)
+			for (int y = 0; y < vertsPerTileAcross; y++)
 			{
 				vertHeights.SetPoint(new Int2(baseI + x, baseJ + y), tileHeight);
 			}
@@ -56,17 +56,17 @@ class MeshBuilder
 
 		if (pixle.X == mapWidth - 1)
 		{
-			for(int y = 0; y < vertsPerTileAcross - 1; y++)
-				vertHeights.SetPoint(new Int2(baseI + vertsPerTileAcross - 1, baseJ + y), tileHeight);
+			for(int y = 0; y < vertsPerTileAcross; y++)
+				vertHeights.SetPoint(new Int2(baseI + vertsPerTileAcross, baseJ + y), tileHeight);
 		}
 		if (pixle.Y == mapHeight - 1)
 		{
-			for (int x = 0; x < vertsPerTileAcross - 1; x++)
-				vertHeights.SetPoint(new Int2(baseI + x, baseJ + vertsPerTileAcross - 1), tileHeight);
+			for (int x = 0; x < vertsPerTileAcross; x++)
+				vertHeights.SetPoint(new Int2(baseI + x, baseJ + vertsPerTileAcross), tileHeight);
 		}
 		if (pixle.X == mapWidth - 1 && pixle.Y == mapHeight - 1)
 		{
-			vertHeights.SetPoint(new Int2(baseI + vertsPerTileAcross - 1, baseJ + vertsPerTileAcross - 1), tileHeight);
+			vertHeights.SetPoint(new Int2(baseI + vertsPerTileAcross, baseJ + vertsPerTileAcross), tileHeight);
 		}
 	}
 
@@ -149,13 +149,7 @@ class MeshBuilder
 	{
 		foreach(Int2 pos in vertHeights.GetMapPointsFlipped())
 		{
-			vertices.Add(new Vector3(pos.X / (float)vertsPerTileAcross, vertHeights.GetValueAt(pos) * 2f, pos.Y / (float)vertsPerTileAcross));
-
-			if (pos.Equals(new Int2(0, 0)) || pos.Equals(new Int2(vertsPerTileAcross - 1, vertsPerTileAcross - 1)))
-			{
-				Helpers.DEBUGSphereAtPoint(new Vector3(pos.X / (float)vertsPerTileAcross, vertHeights.GetValueAt(pos) * 2f, pos.Y / (float)vertsPerTileAcross), .5f);
-				Debug.Log(new Vector3(pos.X / (float)vertsPerTileAcross, vertHeights.GetValueAt(pos) * 2f, pos.Y / (float)vertsPerTileAcross));
-			}
+			vertices.Add(new Vector3(pos.X / ((float)vertsPerTileAcross), vertHeights.GetValueAt(pos) * 2f, pos.Y / ((float)vertsPerTileAcross)));
 		}
 	}
 

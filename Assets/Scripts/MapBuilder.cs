@@ -133,7 +133,7 @@ public class MapBuilder : MonoBehaviour
 
 	private void AddSettlementInfoPanels(RegionsMapGenerator regionsMap)
 	{
-		float tileWidth = .8f;
+		float tileWidth = 1f;
 		foreach(Kingdom r in regionsMap.GetRegions())
 		{
 			if (r.settlement == null)
