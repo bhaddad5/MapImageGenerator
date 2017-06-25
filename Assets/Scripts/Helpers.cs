@@ -29,6 +29,11 @@ public static class Helpers
 		}
 		return finalList;
 	}
+
+	public static bool Odds(float percentChance)
+	{
+		return UnityEngine.Random.Range(0, 1f) < percentChance;
+	}
 }
 
 public class Int2

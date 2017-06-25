@@ -102,7 +102,7 @@ public class MapBuilder : MonoBehaviour
 		yield return null;
 
 		ModelPlacer mp = new ModelPlacer();
-		mp.PlaceModels(terrainMapGenerator.GetTerrainMap(), ModelLookup);
+		mp.PlaceModels(terrainMapGenerator.GetTerrainMap(), ModelLookup, transform);
 
 		displayText.text = "Setting Up Settlements";
 		yield return null;
@@ -112,7 +112,7 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Done";
 		yield return null;
 
-		//terrainMeshDisplay.transform.localPosition -= new Vector3(width / 2.5f, 0f, height / 2.5f);
+		transform.localPosition -= new Vector3(width / 2f, 0f, height / 2f);
 
 		displayText.enabled = false;
 	}

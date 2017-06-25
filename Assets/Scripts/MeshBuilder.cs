@@ -30,6 +30,9 @@ class MeshBuilder
 		SetUVsAndTriangles(vertHeights.Width, vertHeights.Height);
 
 		builtMeshes = MeshSplitter.Split(vertices, uvCoords, indices, 64000, 64000);
+
+		foreach(Mesh m in builtMeshes)
+			m.RecalculateNormals();
 	}
 
 	private void populateVertHeights(TerrainMapGenerator map, Map2D<float> pixelHeights)

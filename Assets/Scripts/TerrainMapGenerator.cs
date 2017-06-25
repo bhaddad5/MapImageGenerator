@@ -71,11 +71,11 @@ public class TerrainMapGenerator
 		if (GetTile(tile).tileType == TerrainTile.TileType.Grass)
 		{
 			float f = Random.Range(0, 1f);
-			if (f <= oddsOfFertile)
+			if (Helpers.Odds(oddsOfFertile))
 				map.SetPoint(tile, new TerrainTile(TerrainTile.TileType.Fertile));
-			else if(f - oddsOfFertile <= oddsOfForest)
+			else if(Helpers.Odds(oddsOfForest))
 				map.SetPoint(tile, new TerrainTile(TerrainTile.TileType.Forest));
-			else if (f - (oddsOfFertile + oddsOfForest) <= oddsOfSwamp)
+			else if (Helpers.Odds(oddsOfSwamp))
 				map.SetPoint(tile, new TerrainTile(TerrainTile.TileType.Swamp));
 		}
 	}

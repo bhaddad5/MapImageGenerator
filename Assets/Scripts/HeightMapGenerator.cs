@@ -96,7 +96,7 @@ public class HeightMapGenerator
 			return false;
 
 		//Random mountain passes
-		if (Random.Range(0, 1f) < 0.2f)
+		if (Helpers.Odds(0.2f))
 			return true;
 
 		map.SetPoint(pixel, height);
@@ -359,7 +359,7 @@ public class HeightMapGenerator
 			{
 				if (maxNeighbor == riverPath[riverPath.Count - 1])
 					maxNeighbor = tile;
-				else if (Random.Range(0, 1f) > .5f)
+				else if (Helpers.Odds(.5f))
 					maxNeighbor = tile;
 			}
 				
