@@ -90,6 +90,7 @@
     <Compile Include="Assets\Scripts\MapBuilder.cs" />
     <Compile Include="Assets\Scripts\MeshBuilder.cs" />
     <Compile Include="Assets\Scripts\MeshSplitter.cs" />
+    <Compile Include="Assets\Scripts\ModelPlacer.cs" />
     <Compile Include="Assets\Scripts\RegionTile.cs" />
     <Compile Include="Assets\Scripts\RegionsMapGenerator.cs" />
     <Compile Include="Assets\Scripts\SettlementNameGenerator.cs" />

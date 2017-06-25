@@ -19,6 +19,8 @@ public class MapBuilder : MonoBehaviour
 
 	public GameObject SettlementInfoPrefab;
 
+	public ModelLookup ModelLookup;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -91,6 +93,8 @@ public class MapBuilder : MonoBehaviour
 			g.AddComponent<MeshFilter>().mesh = m;
 			g.AddComponent<MeshRenderer>();
 			g.GetComponent<MeshRenderer>().materials = new Material[2] { terrainMaterial, regionsMaterial };
+			if(m.vertices.Length > 1)
+				g.AddComponent<MeshCollider>();
 			meshNum++;
 		}
 
@@ -102,7 +106,7 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Done";
 		yield return null;
 
-		terrainMeshDisplay.transform.localPosition -= new Vector3(width / 2.5f, 0f, height / 2.5f);
+		//terrainMeshDisplay.transform.localPosition -= new Vector3(width / 2.5f, 0f, height / 2.5f);
 
 		displayText.enabled = false;
 	}

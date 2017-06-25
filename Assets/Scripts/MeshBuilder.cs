@@ -17,31 +17,32 @@ class MeshBuilder
 	private List<Vector2> uvCoords;
 	private List<int> indices;
 
+	private const int vertsPerTileAcross = 5;
+
 	private void BuildMeshes(TerrainMapGenerator map, Map2D<float> pixelHeights)
 	{
 		float heightScaler = 1f;
-		int vertsPerTileAcross = 5;
 		List<Vector3> vertices = new List<Vector3>();
-		populateVertHeights(map, vertsPerTileAcross, pixelHeights);
+		populateVertHeights(map, pixelHeights);
 		RandomizeVertHeights();
 		ScaleVertHeights(heightScaler);
-		SetVerticesFromHeights(vertices, vertsPerTileAcross);		
+		SetVerticesFromHeights(vertices);		
 		SetUVsAndTriangles(vertHeights.Width, vertHeights.Height);
 
 		builtMeshes = MeshSplitter.Split(vertices, uvCoords, indices, 64000, 64000);
 	}
 
-	private void populateVertHeights(TerrainMapGenerator map, int vertsPerTileAcross, Map2D<float> pixelHeights)
+	private void populateVertHeights(TerrainMapGenerator map, Map2D<float> pixelHeights)
 	{
 		vertHeights = new Map2D<float>(map.GetTerrainMap().Width * (vertsPerTileAcross - 1) + 1, map.GetTerrainMap().Height * (vertsPerTileAcross - 1) + 1);
 
 		foreach(var pixle in map.MapPixels())
 		{
-			fillHeightsForTile(pixle, vertsPerTileAcross, pixelHeights.GetValueAt(pixle), map.GetTerrainMap().Width, map.GetTerrainMap().Height);
+			fillHeightsForTile(pixle, pixelHeights.GetValueAt(pixle), map.GetTerrainMap().Width, map.GetTerrainMap().Height);
 		}
 	}
 
-	private void fillHeightsForTile(Int2 pixle, int vertsPerTileAcross, float tileHeight, int mapWidth, int mapHeight)
+	private void fillHeightsForTile(Int2 pixle, float tileHeight, int mapWidth, int mapHeight)
 	{
 		int baseI = pixle.X * (vertsPerTileAcross - 1);
 		int baseJ = pixle.Y * (vertsPerTileAcross - 1);
@@ -144,11 +145,17 @@ class MeshBuilder
 		}
 	}
 
-	private void SetVerticesFromHeights(List<Vector3> vertices, float vertsPerTileAcross)
+	private void SetVerticesFromHeights(List<Vector3> vertices)
 	{
 		foreach(Int2 pos in vertHeights.GetMapPointsFlipped())
 		{
-			vertices.Add(new Vector3(pos.X / vertsPerTileAcross, vertHeights.GetValueAt(pos) * 2f, pos.Y / vertsPerTileAcross));
+			vertices.Add(new Vector3(pos.X / (float)vertsPerTileAcross, vertHeights.GetValueAt(pos) * 2f, pos.Y / (float)vertsPerTileAcross));
+
+			if (pos.Equals(new Int2(0, 0)) || pos.Equals(new Int2(vertsPerTileAcross - 1, vertsPerTileAcross - 1)))
+			{
+				Helpers.DEBUGSphereAtPoint(new Vector3(pos.X / (float)vertsPerTileAcross, vertHeights.GetValueAt(pos) * 2f, pos.Y / (float)vertsPerTileAcross), .5f);
+				Debug.Log(new Vector3(pos.X / (float)vertsPerTileAcross, vertHeights.GetValueAt(pos) * 2f, pos.Y / (float)vertsPerTileAcross));
+			}
 		}
 	}
 
