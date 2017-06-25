@@ -98,6 +98,12 @@ public class MapBuilder : MonoBehaviour
 			meshNum++;
 		}
 
+		displayText.text = "PlacingModels";
+		yield return null;
+
+		ModelPlacer mp = new ModelPlacer();
+		mp.PlaceModels(terrainMapGenerator.GetTerrainMap(), ModelLookup);
+
 		displayText.text = "Setting Up Settlements";
 		yield return null;
 
