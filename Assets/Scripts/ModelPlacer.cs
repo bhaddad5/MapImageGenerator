@@ -21,14 +21,14 @@ public class ModelPlacer
 
 	private void PlaceModelsOnPoint(Int2 tile)
 	{
+		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.City)
+			PlaceCityOnTile(tile);
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Forest)
 			PlaceForestOnTile(tile);
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Grass)
 			PlaceWildernessOnTile(tile);
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Fertile)
 			PlaceFarmsOnTile(tile);
-		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.City)
-			PlaceCityOnTile(tile);
 	}
 
 	private void PlaceForestOnTile(Int2 tile)
@@ -87,6 +87,12 @@ public class ModelPlacer
 		}
 	}
 
+	private void PlaceHovelsOnTile(Int2 tile, int numHovels)
+	{
+		for (int i = 0; i < numHovels; i++)
+			PlaceHovelOnTile(tile);
+	}
+
 	private void PlaceHovelOnTile(Int2 tile)
 	{
 		var pos = GetModelPlacementPos(tile);
@@ -108,6 +114,8 @@ public class ModelPlacer
 			}
 		}
 		PlaceTurretsOnCorners(tile);
+
+		PlaceHovelsOnTile(tile, Random.Range(20, 25));
 	}
 
 	private void PlaceWallOnEdge(Int2 cityTile, Int2 nonCityTile)
@@ -136,16 +144,14 @@ public class ModelPlacer
 	private void PlaceTurretsOnCorners(Int2 tile)
 	{
 		TryPlaceTurret(new Vector3(tile.X, 2f, tile.Y), tile + new Int2(-1, -1), tile + new Int2(0, -1), tile + new Int2(-1, 0));
-		TryPlaceTurret(new Vector3(tile.X+1, 2f, tile.Y), new Int2(1, -1), new Int2(0, -1), new Int2(1, 0));
-		TryPlaceTurret(new Vector3(tile.X, 2f, tile.Y+1), new Int2(-1, 1), new Int2(0, 1), new Int2(-1, 0));
-		TryPlaceTurret(new Vector3(tile.X+1, 2f, tile.Y+1), new Int2(1, 1), new Int2(0, 1), new Int2(1, 0));
+		TryPlaceTurret(new Vector3(tile.X+1, 2f, tile.Y), tile + new Int2(1, -1), tile + new Int2(0, -1), tile + new Int2(1, 0));
+		TryPlaceTurret(new Vector3(tile.X, 2f, tile.Y+1), tile + new Int2(-1, 1), tile + new Int2(0, 1), tile + new Int2(-1, 0));
+		TryPlaceTurret(new Vector3(tile.X+1, 2f, tile.Y+1), tile + new Int2(1, 1), tile + new Int2(0, 1), tile + new Int2(1, 0));
 	}
 
 	private void TryPlaceTurret(Vector3 pos, Int2 check1, Int2 check2, Int2 check3)
 	{
-		if((map.PosInBounds(check1) && map.GetValueAt(check1).tileType != TerrainTile.TileType.City) ||
-			(map.PosInBounds(check2) && map.GetValueAt(check2).tileType != TerrainTile.TileType.City) ||
-			(map.PosInBounds(check3) && map.GetValueAt(check3).tileType != TerrainTile.TileType.City))
+		if(TileIsCityBorder(check1) || TileIsCityBorder(check2) || TileIsCityBorder(check3))
 		{
 			RaycastHit hit;
 			if(Physics.Raycast(new Ray(pos, Vector3.down), out hit))
@@ -156,13 +162,20 @@ public class ModelPlacer
 		}
 	}
 
+	private bool TileIsCityBorder(Int2 tile)
+	{
+		return map.PosInBounds(tile) &&
+			map.GetValueAt(tile).tileType != TerrainTile.TileType.City &&
+			map.GetValueAt(tile).tileType != TerrainTile.TileType.Ocean;
+	}
+
 	private Vector3? GetModelPlacementPos(Int2 tile)
 	{
 		Vector3 raycastPos = new Vector3(Random.Range(tile.X, tile.X + 1f), 3f, Random.Range(tile.Y, tile.Y + 1f));
 		RaycastHit hit;
 		if (Physics.Raycast(new Ray(raycastPos, Vector3.down), out hit))
 		{
-			if (hit.collider.gameObject.layer != LayerMask.NameToLayer("PlacedModel") && hit.collider.gameObject.layer != LayerMask.NameToLayer("Water"))
+			if (hit.collider.gameObject.layer != LayerMask.NameToLayer("PlacedModel") && hit.collider.gameObject.layer != LayerMask.NameToLayer("Ocean"))
 			{
 				return hit.point;
 			}
