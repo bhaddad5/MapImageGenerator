@@ -128,9 +128,9 @@ public class TerrainMapGenerator
 		return terrainMapImage;
 	}
 
-	public float TileAreaValue(Int2 pos)
+	public float TileAreaValue(Int2 pos, bool includeDiag = false)
 	{
-		float value = TileAt(pos).GetValue();
+		float value = TileAt(pos).GetValue() * 2;
 
 		float oneWaterBorderValue = 3f;
 		float someWaterValue = 2f;
@@ -144,24 +144,18 @@ public class TerrainMapGenerator
 			value += t.GetValue();
 		}
 
+		if (includeDiag)
+		{
+			foreach (TerrainTile t in map.GetDiagonalValues(pos))
+				value += t.GetValue() * .8f;
+		}
+
 		if (numWaterBorders == 1)
 			value += oneWaterBorderValue;
 		else if (numWaterBorders > 1 && numWaterBorders < 4)
 			value += someWaterValue;
 		else if (numWaterBorders == 4)
 			value += allWaterValue;
-
-		return value;
-	}
-
-	public float TileAreaFullValue(Int2 pos)
-	{
-		float value = TileAt(pos).GetValue() * 2;
-
-		foreach (TerrainTile t in map.GetAdjacentValues(pos))
-			value += t.GetValue();
-		foreach (TerrainTile t in map.GetDiagonalValues(pos))
-			value += t.GetValue() * .8f;
 
 		return value;
 	}

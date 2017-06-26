@@ -56,7 +56,7 @@ public class HeightMapGenerator
 		Int2 currPixel = startingPixel;
 		for (int k = 0; k < mountainsLength; k++)
 		{
-			float strength = startingStrength + Random.Range(-.2f, .2f);
+			float strength = startingStrength + Random.Range(-.4f, .4f);
 			TryMountainCenterPixel(currPixel, strength, distToCoast);
 			currPixel = TryGetNextMountainPixel(currPixel, mountainDirection); ;
 		}
@@ -104,7 +104,7 @@ public class HeightMapGenerator
 		TrySpreadLandArea(pixel, distanceToCoast);
 		foreach (Int2 point in map.GetAllNeighboringPoints(pixel))
 		{
-			if(map.PosInBounds(point))
+			if(map.PosInBounds(point) && Helpers.Odds(0.7f))
 				map.SetPoint(point, height * .6f);
 		}
 
@@ -216,7 +216,7 @@ public class HeightMapGenerator
 
 	private void BlendHeightMap()
 	{
-		int passes = 2;
+		int passes = 1;
 		for (int i = 0; i < passes; i++)
 		{
 			BlendHeightMapPass();
