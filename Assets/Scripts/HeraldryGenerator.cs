@@ -7,8 +7,8 @@ public static class HeraldryGenerator
 	public static Texture2D GetHeraldry(Culture culture, List<Settlement.CityTrait> constraints, Kingdom region)
 	{
 		int imageSize = 256;
-		var background = GetHeraldryTexture(new Color[imageSize * imageSize], CultureDefinitions.GetFullCulture(culture).heraldryBackground, region);
-		var finalHeraldry = GetHeraldryTexture(background, CultureDefinitions.GetFullCulture(culture).heraldryForeground, region);
+		var background = GetHeraldryTexture(new Color[imageSize * imageSize], culture.heraldryBackground, region);
+		var finalHeraldry = GetHeraldryTexture(background, culture.heraldryForeground, region);
 
 		Texture2D final = new Texture2D(imageSize, imageSize);
 		final.SetPixels(finalHeraldry);

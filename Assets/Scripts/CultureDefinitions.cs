@@ -4,12 +4,9 @@ using UnityEngine;
 
 public static class CultureDefinitions
 {
-	public static Culture Anglo = new Culture();
-	static bool culturesPopulated = false;
-
-	public static void PopulateCultures()
+	public static Culture Anglo = new Culture()
 	{
-		Anglo.prefixes = new List<NameOption>()
+		prefixes = new List<NameOption>()
 		{
 			new NameOption("Lunn"),
 			new NameOption("Berry"),
@@ -22,9 +19,9 @@ public static class CultureDefinitions
 			new NameOption("How"),
 			new NameOption("Setter"),
 			new NameOption("Somer"),
-		};
+		},
 
-		Anglo.suffixes = new List<NameOption>()
+		suffixes = new List<NameOption>()
 		{
 			new NameOption("", 3),
 			new NameOption("ton"),
@@ -40,9 +37,9 @@ public static class CultureDefinitions
 			new NameOption("wick"),
 			new NameOption("well"),
 			new NameOption("light"),
-		};
+		},
 
-		Anglo.areaInfo = new List<NameOption>()
+		areaInfo = new List<NameOption>()
 		{
 			new NameOption("%n", new List<Settlement.CityTrait>(), 2),
 			new NameOption("Port %n", new List<Settlement.CityTrait> { Settlement.CityTrait.Port }, 3),
@@ -50,9 +47,9 @@ public static class CultureDefinitions
 			new NameOption("%n Anchorage", new List<Settlement.CityTrait> { Settlement.CityTrait.Port, Settlement.CityTrait.Small }, 3),
 			new NameOption("%n Mountain", new List<Settlement.CityTrait> { Settlement.CityTrait.Mountains }),
 			new NameOption("Mount %n", new List<Settlement.CityTrait> { Settlement.CityTrait.Mountains }),
-			new NameOption("%nshire", new List<Settlement.CityTrait> { Settlement.CityTrait.Fertile, Settlement.CityTrait.Landlocked }),
-			new NameOption("%n Vale", new List<Settlement.CityTrait> { Settlement.CityTrait.Fertile, Settlement.CityTrait.Landlocked }),
-			new NameOption("Vale %n", new List<Settlement.CityTrait> { Settlement.CityTrait.Fertile, Settlement.CityTrait.Landlocked }),
+			new NameOption("%nshire", new List<Settlement.CityTrait> { Settlement.CityTrait.Fertile, Settlement.CityTrait.Landlocked, Settlement.CityTrait.Small }),
+			new NameOption("%n Vale", new List<Settlement.CityTrait> { Settlement.CityTrait.Fertile, Settlement.CityTrait.Landlocked, Settlement.CityTrait.Small }),
+			new NameOption("Vale %n", new List<Settlement.CityTrait> { Settlement.CityTrait.Fertile, Settlement.CityTrait.Landlocked, Settlement.CityTrait.Small }),
 			new NameOption("%n Castle", new List<Settlement.CityTrait> { Settlement.CityTrait.Medium }),
 			new NameOption("Castle %n", new List<Settlement.CityTrait> { Settlement.CityTrait.Medium }),
 			new NameOption("%n Hold", new List<Settlement.CityTrait> { Settlement.CityTrait.Small }),
@@ -60,9 +57,9 @@ public static class CultureDefinitions
 			new NameOption("%n Ford", new List<Settlement.CityTrait> { Settlement.CityTrait.River }),
 			new NameOption("%n Bridge", new List<Settlement.CityTrait> { Settlement.CityTrait.River }),
 			new NameOption("%n Bend", new List<Settlement.CityTrait> { Settlement.CityTrait.Small, Settlement.CityTrait.River }),
-		};
+		},
 
-		Anglo.heraldryBackground = new List<HeraldryOption>()
+		heraldryBackground = new List<HeraldryOption>()
 		{
 			new HeraldryOption("Anglo/Heraldry/Backgrounds/Anglo_Back_0"),
 			new HeraldryOption("Anglo/Heraldry/Backgrounds/Anglo_Back_1"),
@@ -72,9 +69,9 @@ public static class CultureDefinitions
 			new HeraldryOption("Anglo/Heraldry/Backgrounds/Anglo_Back_5"),
 			new HeraldryOption("Anglo/Heraldry/Backgrounds/Anglo_Back_5"),
 			new HeraldryOption("Anglo/Heraldry/Backgrounds/Anglo_Back_Ocean", new List<Settlement.CityTrait> { Settlement.CityTrait.Port }),
-		};
+		},
 
-		Anglo.heraldryForeground = new List<HeraldryOption>()
+		heraldryForeground = new List<HeraldryOption>()
 		{
 			new HeraldryOption("Anglo/Heraldry/Symbols/Lion"),
 			new HeraldryOption("Anglo/Heraldry/Symbols/Blank"),
@@ -83,15 +80,6 @@ public static class CultureDefinitions
 			new HeraldryOption("Anglo/Heraldry/Symbols/Feather"),
 			new HeraldryOption("Anglo/Heraldry/Symbols/Gryphon"),
 			new HeraldryOption("Anglo/Heraldry/Symbols/Horse"),
-		};
-
-		culturesPopulated = true;
-	}
-
-	public static Culture GetFullCulture(Culture c)
-	{
-		if (!culturesPopulated)
-			PopulateCultures();
-		return c;
-	}
+		},
+	};
 }

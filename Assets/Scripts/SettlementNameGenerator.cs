@@ -6,7 +6,6 @@ public static class SettlementNameGenerator
 {
 	public static string GetSettlementName(Culture culture, List<Settlement.CityTrait> constraints)
 	{
-		CultureDefinitions.GetFullCulture(culture);
 		string name = GetNameChunk(culture.prefixes, constraints) + GetNameChunk(culture.suffixes, constraints);
 		string area = GetNameChunk(culture.areaInfo, constraints);
 

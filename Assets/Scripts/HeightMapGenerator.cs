@@ -11,7 +11,7 @@ public class HeightMapGenerator
 	{
 		map = new Map2D<float>(width, height);
 
-		int pixelsPerRange = 1000;
+		int pixelsPerRange = 700;
 		int avgNumOfRanges = (width * height) / pixelsPerRange;
 
 		int pixelsPerHill = 25;
@@ -51,7 +51,7 @@ public class HeightMapGenerator
 		float startingStrength = Random.Range(.6f, .75f);
 		Int2 mountainDirection = new Int2(Random.Range(-1, 1), Random.Range(-1, 1));
 		int mountainsLength = Random.Range(4, 50);
-		int distToCoast = Random.Range(5, 40);
+		int distToCoast = Random.Range(5, 30);
 
 		Int2 currPixel = startingPixel;
 		for (int k = 0; k < mountainsLength; k++)
