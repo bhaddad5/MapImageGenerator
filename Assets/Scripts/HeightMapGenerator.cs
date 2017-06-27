@@ -21,7 +21,7 @@ public class HeightMapGenerator
 		GenerateHills(Random.Range(avgNumHills / 2, avgNumHills + avgNumHills / 2));
 		RandomizeCoastline();
 		BlendHeightMap();
-		//CreateRivers();
+		CreateRivers();
 
 		List<Color> pixels = new List<Color>();
 		foreach (float h in map.GetMapValues())
@@ -197,7 +197,7 @@ public class HeightMapGenerator
 
 			foreach (Int2 point in map.GetAllNeighboringPoints(possibleHillSites[i]))
 			{
-				if (map.PosInBounds(point) && map.GetValueAt(point) == Globals.MinGroundHeight)
+				if (map.PosInBounds(point) && map.GetValueAt(point) == Globals.MinGroundHeight && Helpers.Odds(0.8f))
 					map.SetPoint(point, hillHeight * .85f);
 			}
 
@@ -319,11 +319,10 @@ public class HeightMapGenerator
 					endTile = shortestTile;
 					break;
 				}
-				else
+				else if(map.GetValueAt(neighbor) <= map.GetValueAt(shortestTile) + 0.03f)
 				{
-					int distMod = 1;
-					checkedTiles.SetPoint(neighbor, checkedTiles.GetValueAt(shortestTile)- distMod);
-					nextRiverTiles.Insert(checkedTiles.GetValueAt(shortestTile) - distMod, neighbor);
+					checkedTiles.SetPoint(neighbor, checkedTiles.GetValueAt(shortestTile)- 1);
+					nextRiverTiles.Insert(checkedTiles.GetValueAt(shortestTile) - 1, neighbor);
 				}
 			}
 			
