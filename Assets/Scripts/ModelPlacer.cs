@@ -108,7 +108,7 @@ public class ModelPlacer
 	{
 		foreach(Int2 pt in map.GetAdjacentPoints(tile))
 		{
-			if(map.GetValueAt(pt).tileType != TerrainTile.TileType.City && map.GetValueAt(pt).tileType != TerrainTile.TileType.Ocean)
+			if(TileIsCityBorder(pt))
 			{
 				PlaceWallOnEdge(tile, pt);
 			}
@@ -166,7 +166,8 @@ public class ModelPlacer
 	{
 		return map.PosInBounds(tile) &&
 			map.GetValueAt(tile).tileType != TerrainTile.TileType.City &&
-			map.GetValueAt(tile).tileType != TerrainTile.TileType.Ocean;
+			map.GetValueAt(tile).tileType != TerrainTile.TileType.Ocean &&
+			map.GetValueAt(tile).tileType != TerrainTile.TileType.River;
 	}
 
 	private Vector3? GetModelPlacementPos(Int2 tile)

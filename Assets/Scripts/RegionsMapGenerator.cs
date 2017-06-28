@@ -64,7 +64,8 @@ class RegionsMapGenerator
 
 		foreach (var pixel in map.GetMapPoints())
 		{
-			if(terrainMap.TileIsType(pixel, TerrainTile.TileType.Ocean))
+			if(terrainMap.TileIsType(pixel, TerrainTile.TileType.Ocean) ||
+				terrainMap.TileIsType(pixel, TerrainTile.TileType.River))
 				map.SetPoint(pixel, new RegionTile(OceanRegion));
 		}
 	}
@@ -77,6 +78,7 @@ class RegionsMapGenerator
 		{
 			Int2 testPos = new Int2(UnityEngine.Random.Range(0, terrainMap.GetTerrainMap().Width), UnityEngine.Random.Range(0, terrainMap.GetTerrainMap().Height));
 			if (!terrainMap.TileIsType(testPos, TerrainTile.TileType.Ocean) &&
+				!terrainMap.TileIsType(testPos, TerrainTile.TileType.River) &&
 				!terrainMap.TileIsType(testPos, TerrainTile.TileType.Mountain) &&
 				!TooCloseToExistingSettlement(testPos, regions) &&
 				!TooCloseToBorder(testPos, new Int2(terrainMap.GetTerrainMap().Width, terrainMap.GetTerrainMap().Height)))

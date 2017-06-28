@@ -53,6 +53,7 @@ public class Settlement
 				if (!possibleExpansions.ContainsValue(neighbor) &&
 					neighborType != TerrainTile.TileType.City &&
 					neighborType != TerrainTile.TileType.Ocean &&
+					neighborType != TerrainTile.TileType.River &&
 					neighborType != TerrainTile.TileType.Mountain &&
 					regionsMap.GetValueAt(neighbor).region == myRegion)
 				{
@@ -81,8 +82,12 @@ public class Settlement
 			traits.Add(CityTrait.Forest);
 		if (neighboringTerrainTypes.Contains(TerrainTile.TileType.Fertile))
 			traits.Add(CityTrait.Fertile);
+
+
 		if (neighboringTerrainTypes.Contains(TerrainTile.TileType.Ocean))
 			traits.Add(CityTrait.Port);
+		else if (neighboringTerrainTypes.Contains(TerrainTile.TileType.River))
+			traits.Add(CityTrait.River);
 		else traits.Add(CityTrait.Landlocked);
 
 		if (cityTiles.Count < 3)

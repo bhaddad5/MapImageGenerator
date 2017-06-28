@@ -14,13 +14,29 @@ public class TerrainMapGenerator
 		foreach(var point in map.GetMapPoints())
 		{
 			if (heightMap.GetValueAt(point) < Globals.MinGroundHeight)
-				map.SetPoint(point, new TerrainTile(TerrainTile.TileType.Ocean));
+			{
+				int numLandBorders = NumLandBorders(point, heightMap);
+				if(numLandBorders >= 3)
+					map.SetPoint(point, new TerrainTile(TerrainTile.TileType.River));
+				else map.SetPoint(point, new TerrainTile(TerrainTile.TileType.Ocean));
+			}
 			else if (heightMap.GetValueAt(point) >= Globals.MountainHeight)
 				map.SetPoint(point, new TerrainTile(TerrainTile.TileType.Mountain));
 			else map.SetPoint(point, new TerrainTile(TerrainTile.TileType.Grass));
 		}
 
 		FillInLandTextures();
+	}
+
+	private int NumLandBorders(Int2 point, Map2D<float> heightMap)
+	{
+		int landBorders = 0;
+		foreach(var tile in heightMap.GetAllNeighboringValues(point))
+		{
+			if (tile >= Globals.MinGroundHeight)
+				landBorders++;
+		}
+		return landBorders;
 	}
 
 	public void RebuildTerrainTexture()
@@ -60,17 +76,18 @@ public class TerrainMapGenerator
 			0.01f * NextToNumOfType(tile, TerrainTile.TileType.Mountain) + 
 			0.3f * NextToNumOfType(tile, TerrainTile.TileType.Forest);
 		float oddsOfFertile = 0.01f +
-			0.1f * NextToNumOfType(tile, TerrainTile.TileType.Ocean) -
+			0.07f * NextToNumOfType(tile, TerrainTile.TileType.Ocean)+
+			0.15f * NextToNumOfType(tile, TerrainTile.TileType.River) -
 			0.01f * NextToNumOfType(tile, TerrainTile.TileType.Mountain) +
 			0.3f * NextToNumOfType(tile, TerrainTile.TileType.Fertile);
 		float oddsOfSwamp = 0.001f +
-			0.01f * NextToNumOfType(tile, TerrainTile.TileType.Ocean) -
+			0.01f * NextToNumOfType(tile, TerrainTile.TileType.Ocean) +
+			0.01f * NextToNumOfType(tile, TerrainTile.TileType.River) -
 			1f * NextToNumOfType(tile, TerrainTile.TileType.Mountain) +
 			0.3f * NextToNumOfType(tile, TerrainTile.TileType.Swamp);
 
 		if (GetTile(tile).tileType == TerrainTile.TileType.Grass)
 		{
-			float f = Random.Range(0, 1f);
 			if (Helpers.Odds(oddsOfFertile))
 				map.SetPoint(tile, new TerrainTile(TerrainTile.TileType.Fertile));
 			else if(Helpers.Odds(oddsOfForest))
@@ -139,7 +156,7 @@ public class TerrainMapGenerator
 		int numWaterBorders = 0;
 		foreach (TerrainTile t in map.GetAdjacentValues(pos))
 		{
-			if (t.tileType == TerrainTile.TileType.Ocean)
+			if (t.tileType == TerrainTile.TileType.Ocean || t.tileType == TerrainTile.TileType.River)
 				numWaterBorders++;
 			value += t.GetValue();
 		}
@@ -185,7 +202,8 @@ public class TerrainMapGenerator
 		int numTiles = 0;
 		foreach (var tile in map.GetMapValues())
 		{
-			if (tile.tileType != TerrainTile.TileType.Ocean)
+			if (tile.tileType != TerrainTile.TileType.Ocean &&
+				tile.tileType != TerrainTile.TileType.River)
 				numTiles++;
 		}
 		return numTiles;

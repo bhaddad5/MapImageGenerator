@@ -33,7 +33,7 @@ public static class CultureDefinitions
 			new NameOption("nall"),
 			new NameOption("ford", new List<Settlement.CityTrait> { Settlement.CityTrait.River }),
 			new NameOption("ham"),
-			new NameOption("don"),
+			new NameOption("dun"),
 			new NameOption("wick"),
 			new NameOption("well"),
 			new NameOption("light"),

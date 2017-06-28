@@ -17,6 +17,8 @@ public class MapBuilder : MonoBehaviour
 	public Material terrainMaterial;
 	public Material regionsMaterial;
 
+	public GameObject waterPlane;
+
 	public GameObject SettlementInfoPrefab;
 
 	public ModelLookup ModelLookup;
@@ -45,6 +47,11 @@ public class MapBuilder : MonoBehaviour
 		{
 			Destroy(terrainMeshDisplay.transform.GetChild(i).gameObject);
 		}
+
+		waterPlane.SetActive(true);
+		waterPlane.transform.localScale = new Vector3(width / 10, 1, height / 10);
+		waterPlane.transform.parent = transform;
+		waterPlane.transform.localPosition = new Vector3(width / 2, Globals.MinGroundHeight * 2f + 0.01f, height / 2);
 
 		displayText.enabled = true;
 

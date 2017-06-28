@@ -53,6 +53,8 @@
 			fixed4 c = tex2D(_LookupTex, lookupUv);
 			if (c.r == 1 && c.g == 1 && c.b == 0)
 				c = tex2D(_FertileTex, uv * textureScale);
+			if (c.r == 0 && c.g == 0 && Equals(c.b, .588))
+				c = tex2D(_FertileTex, uv * textureScale);
 			if (c.r == 0 && c.g == 0 && c.b == 0)
 				c = tex2D(_GrassTex, uv * textureScale);
 			if (c.r == 0 && c.g == 0 && c.b == 1)

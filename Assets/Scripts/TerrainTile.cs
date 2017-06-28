@@ -9,6 +9,7 @@ public class TerrainTile
 	public enum TileType
 	{
 		Ocean,
+		River,
 		Swamp,
 		Mountain,
 		Forest,
@@ -21,6 +22,7 @@ public class TerrainTile
 	public static Dictionary<TileType, float> tileDifficulties = new Dictionary<TileType, float>()
 	{
 		{ TileType.Ocean, .1f },
+		{ TileType.River, .5f },
 		{ TileType.Swamp, .35f },
 		{ TileType.Mountain, .6f },
 		{ TileType.Forest, .25f },
@@ -32,28 +34,19 @@ public class TerrainTile
 	public static Dictionary<TileType, float> tileValues = new Dictionary<TileType, float>()
 	{
 		{ TileType.Ocean, 0f },
+		{ TileType.River, 0f },
 		{ TileType.Swamp, .1f },
 		{ TileType.Mountain, .1f },
 		{ TileType.Forest, .2f },
 		{ TileType.Grass, .2f },
 		{ TileType.Fertile, .4f },
-		{ TileType.City, 2f },
-	};
-
-	public static Dictionary<TileType, float> tileHeights = new Dictionary<TileType, float>()
-	{
-		{ TileType.Ocean, -.3f },
-		{ TileType.Swamp, .1f },
-		{ TileType.Mountain, .6f },
-		{ TileType.Forest, .15f },
-		{ TileType.Grass, .1f },
-		{ TileType.Fertile, .1f },
-		{ TileType.City, .1f },
+		{ TileType.City, 5f },
 	};
 
 	public static Dictionary<Color, TileType> tileColors = new Dictionary<Color, TileType>()
 	{
 		{ new Color(0, 0, 255/255f), TileType.Ocean },
+		{ new Color(0, 0, 150/255f), TileType.River },
 		{ new Color(0, 188/255f, 106/255f), TileType.Swamp },
 		{ new Color(144/255f, 92/255f, 0), TileType.Mountain },
 		{ new Color(0, 130/255f, 0), TileType.Forest },
@@ -73,11 +66,6 @@ public class TerrainTile
 	}
 
 	public TileType tileType = TileType.Grass;
-
-	public TerrainTile(Color c)
-	{
-		tileType = tileColors[c];
-	}
 
 	public TerrainTile(TileType t)
 	{

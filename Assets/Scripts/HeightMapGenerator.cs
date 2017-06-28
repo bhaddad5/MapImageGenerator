@@ -271,7 +271,7 @@ public class HeightMapGenerator
 				if (river != null)
 				{
 					foreach (var px in river)
-						map.SetPoint(px, 0);
+						map.SetPoint(px, Globals.MinGroundHeight - 0.05f);
 					numOfRivers--;
 				}
 			}
