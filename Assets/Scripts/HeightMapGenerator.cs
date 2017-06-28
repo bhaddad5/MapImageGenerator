@@ -155,7 +155,7 @@ public class HeightMapGenerator
 		float probOfWaterfy = 0.4f;
 		if (IsCoastline(tile) && !BordersMountain(tile))
 		{
-			if (Random.Range(0f, 1f) <= probOfWaterfy)
+			if (Helpers.Odds(probOfWaterfy))
 				map.SetPoint(tile, 0f);
 		}
 	}

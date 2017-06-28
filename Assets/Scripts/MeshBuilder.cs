@@ -107,8 +107,7 @@ class MeshBuilder
 		foreach(Int2 point in vertHeights.GetMapPoints())
 		{
 			newHeights.SetPoint(point, vertHeights.GetValueAt(point));
-			float rand = Random.Range(0f, 1f);
-			if (IsOceanCoastVert(point) && rand < 0.5f)
+			if (IsOceanCoastVert(point) && Helpers.Odds(0.5f))
 				newHeights.SetPoint(point, Globals.MinGroundHeight);
 		}
 		vertHeights = newHeights;
@@ -116,12 +115,12 @@ class MeshBuilder
 
 	private bool IsOceanCoastVert(Int2 pos)
 	{
-		if (vertHeights.GetValueAt(pos) > Globals.MinGroundHeight - 0.05f)
+		if (vertHeights.GetValueAt(pos) >= Globals.MinGroundHeight)
 			return false;
 
 		foreach(var neighbor in vertHeights.GetAdjacentValues(pos))
 		{
-			if (neighbor > Globals.MinGroundHeight - 0.05f)
+			if (neighbor >= Globals.MinGroundHeight)
 				return true;
 		}
 
