@@ -5,10 +5,13 @@ using UnityEngine;
 public class ModelLookup : MonoBehaviour
 {
 	public GameObject PineTree;
+
 	public GameObject Hovel;
 
 	public GameObject WheatField;
 
 	public GameObject Wall;
 	public GameObject Turret;
+
+	public GameObject Bridge;
 }

@@ -99,7 +99,7 @@ public class MapBuilder : MonoBehaviour
 			g.transform.SetParent(terrainMeshDisplay.transform);
 			g.AddComponent<MeshFilter>().mesh = m;
 			g.AddComponent<MeshRenderer>();
-			g.GetComponent<MeshRenderer>().materials = new Material[2] { terrainMaterial, regionsMaterial };
+			g.GetComponent<MeshRenderer>().materials = new Material[1] { terrainMaterial };
 			if(m.vertices.Length > 1)
 				g.AddComponent<MeshCollider>();
 			meshNum++;
@@ -109,7 +109,7 @@ public class MapBuilder : MonoBehaviour
 		yield return null;
 
 		ModelPlacer mp = new ModelPlacer();
-		mp.PlaceModels(terrainMapGenerator.GetTerrainMap(), ModelLookup, transform);
+		mp.PlaceModels(terrainMapGenerator.GetTerrainMap(), heightGenerator.GetHeightMap(),ModelLookup, transform);
 
 		displayText.text = "Setting Up Settlements";
 		yield return null;

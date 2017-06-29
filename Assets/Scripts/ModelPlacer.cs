@@ -5,12 +5,14 @@ using UnityEngine;
 public class ModelPlacer
 {
 	Map2D<TerrainTile> map;
+	Map2D<float> heights;
 	ModelLookup lookup;
 	Transform objectParent;
 
-	public void PlaceModels(Map2D<TerrainTile> terrainMap, ModelLookup lu, Transform par)
+	public void PlaceModels(Map2D<TerrainTile> terrainMap, Map2D<float> heightsMap, ModelLookup lu, Transform par)
 	{
 		map = terrainMap;
+		heights = heightsMap;
 		lookup = lu;
 		objectParent = par;
 		foreach (Int2 tile in map.GetMapPoints())
@@ -29,6 +31,8 @@ public class ModelPlacer
 			PlaceWildernessOnTile(tile);
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Fertile)
 			PlaceFarmsOnTile(tile);
+		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Road)
+			PlaceBridgesOnTile(tile);
 	}
 
 	private void PlaceForestOnTile(Int2 tile)
@@ -101,6 +105,31 @@ public class ModelPlacer
 			GameObject hovel = GameObject.Instantiate(lookup.Hovel, objectParent);
 			hovel.transform.position = pos.Value;
 			hovel.transform.eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
+		}
+	}
+
+	private void PlaceBridgesOnTile(Int2 tile)
+	{
+		if(heights.GetValueAt(tile) < Globals.MinGroundHeight)
+		{
+			var bridge = GameObject.Instantiate(lookup.Bridge, objectParent);
+			bridge.transform.position = new Vector3(tile.X + 0.5f, Globals.MinGroundHeight*2f, tile.Y + 0.5f);
+
+			if ((map.GetValueAt(tile + new Int2(-1, 0)).tileType == TerrainTile.TileType.Road ||
+				map.GetValueAt(tile + new Int2(-1, 0)).tileType == TerrainTile.TileType.City) &&
+				(map.GetValueAt(tile + new Int2(1, 0)).tileType == TerrainTile.TileType.Road ||
+				map.GetValueAt(tile + new Int2(1, 0)).tileType == TerrainTile.TileType.City))
+			{
+				bridge.transform.eulerAngles = new Vector3(0f, 0f, 0f);
+			}
+			else if ((map.GetValueAt(tile + new Int2(0, -1)).tileType == TerrainTile.TileType.Road ||
+				map.GetValueAt(tile + new Int2(0, -1)).tileType == TerrainTile.TileType.City) &&
+				(map.GetValueAt(tile + new Int2(0, 1)).tileType == TerrainTile.TileType.Road ||
+				map.GetValueAt(tile + new Int2(0, 1)).tileType == TerrainTile.TileType.City))
+			{
+				bridge.transform.eulerAngles = new Vector3(0f, 90f, 0f);
+			}
+			else GameObject.Destroy(bridge);
 		}
 	}
 
