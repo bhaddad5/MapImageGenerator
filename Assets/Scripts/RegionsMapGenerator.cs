@@ -8,27 +8,32 @@ class RegionsMapGenerator
 {
 	List<Kingdom> regions = new List<Kingdom>();
 	Map2D<RegionTile> map;
+	TerrainMapGenerator terrainMap;
 	public int Width { get { return map.Width; } }
 	public int Height { get { return map.Height; } }
 
-	public RegionsMapGenerator(TerrainMapGenerator terrainMap, int numberOfSettlements)
+	public RegionsMapGenerator(TerrainMapGenerator tm, int numberOfSettlements)
 	{
-		StartFillMap(terrainMap);
+		terrainMap = tm;
 
-		var settlementLocations = GetSettlementLocations(terrainMap, numberOfSettlements);
+		StartFillMap();
+
+		var settlementLocations = GetSettlementLocations(numberOfSettlements);
 
 		for(int i = settlementLocations.Count - 1; i >= 0; i--)
 		{
 			Kingdom r = new Kingdom("Region" + i, settlementLocations.ValueAt(i));
 			regions.Add(r);
-			ExpandRegionFromSettlement(5, r, settlementLocations.ValueAt(i), terrainMap);
+			ExpandRegionFromSettlement(5, r, settlementLocations.ValueAt(i));
 		}
 
-		EndFillMap(terrainMap);
+		EndFillMap();
 
-		CalculateRegionValues(terrainMap);
+		CalculateRegionValues();
 
-		ExpandSettlements(terrainMap);
+		ExpandSettlements();
+
+		BuildRoads();
 
 		foreach(var region in regions)
 		{
@@ -39,11 +44,9 @@ class RegionsMapGenerator
 				region.settlement.heraldry = HeraldryGenerator.GetHeraldry(CultureDefinitions.Anglo, cityTraits, region);
 			}
 		}
-
-		War();
 	}
 
-	private void StartFillMap(TerrainMapGenerator terrainMap)
+	private void StartFillMap()
 	{
 		Kingdom NoMansLand = new Kingdom("NoMansLand", null);
 		NoMansLand.mainColor = Color.black;
@@ -56,7 +59,7 @@ class RegionsMapGenerator
 		}
 	}
 
-	private void EndFillMap(TerrainMapGenerator terrainMap)
+	private void EndFillMap()
 	{
 		Kingdom OceanRegion = new Kingdom("Ocean", null);
 		OceanRegion.mainColor = Color.blue;
@@ -70,7 +73,7 @@ class RegionsMapGenerator
 		}
 	}
 
-	private SortedDupList<Int2> GetSettlementLocations(TerrainMapGenerator terrainMap, int numberOfSettlements)
+	private SortedDupList<Int2> GetSettlementLocations(int numberOfSettlements)
 	{
 		SortedDupList<Int2> regions = new SortedDupList<Int2>();
 
@@ -137,7 +140,7 @@ class RegionsMapGenerator
 			pos.Y < minDist || pos.Y > mapDimensions.Y - minDist;
 	}
 
-	private void ExpandRegionFromSettlement(float startingValue, Kingdom region, Int2 pos, TerrainMapGenerator terrainMap)
+	private void ExpandRegionFromSettlement(float startingValue, Kingdom region, Int2 pos)
 	{
 		TileAt(pos).TrySetRegion(region, startingValue - terrainMap.TileDifficulty(pos));
 
@@ -145,7 +148,7 @@ class RegionsMapGenerator
 		frontierTiles.Insert(TileAt(pos).holdingStrength, pos);
 		while(frontierTiles.Count > 0)
 		{
-			foreach(var neighbor in GetPossibleNeighborTiles(frontierTiles.TopValue(), region, terrainMap))
+			foreach(var neighbor in GetPossibleNeighborTiles(frontierTiles.TopValue(), region))
 			{
 				float strength = frontierTiles.TopKey() - terrainMap.TileDifficulty(neighbor);
 				if(terrainMap.TileIsType(neighbor, TerrainTile.TileType.Ocean) &&
@@ -163,29 +166,29 @@ class RegionsMapGenerator
 		}
 	}
 
-	private List<Int2> GetPossibleNeighborTiles(Int2 pos, Kingdom region, TerrainMapGenerator terrainMap)
+	private List<Int2> GetPossibleNeighborTiles(Int2 pos, Kingdom region)
 	{
 		List<Int2> goodNeighbors = new List<Int2>();
 		foreach (Int2 adjacent in terrainMap.GetTerrainMap().GetAdjacentPoints(pos))
 		{
-			if (IsPossibleNeighbor(adjacent, region, terrainMap))
+			if (IsPossibleNeighbor(adjacent, region))
 				goodNeighbors.Add(adjacent);
 		}
 		return goodNeighbors;
 	}
 
-	private bool IsPossibleNeighbor(Int2 neighbor, Kingdom region, TerrainMapGenerator terrainMap)
+	private bool IsPossibleNeighbor(Int2 neighbor, Kingdom region)
 	{
 		return terrainMap.TileInBounds(neighbor) && TileAt(neighbor).region != region;
 	}
 
-	private void CalculateRegionValues(TerrainMapGenerator terrainMap)
+	private void CalculateRegionValues()
 	{
 		foreach(Int2 tile in map.GetMapPoints())
 			map.GetValueAt(tile).region.value += terrainMap.TileAt(tile).GetValue();
 	}
 
-	private void ExpandSettlements(TerrainMapGenerator terrainMap)
+	private void ExpandSettlements()
 	{
 		foreach(var reg in regions)
 		{
@@ -194,9 +197,22 @@ class RegionsMapGenerator
 		}
 	}
 
-	private void War()
+	private void BuildRoads()
 	{
+		foreach(var region in regions)
+		{
+			if(region.settlement != null)
+			{
+				BuildRoadsFromSettlement(region.settlement);
+			}
+		}
+	}
 
+	private void BuildRoadsFromSettlement(Settlement settlement)
+	{
+		Int2 startTile = settlement.cityTiles[0];
+
+		
 	}
 
 	private RegionTile TileAt(Int2 pos)
