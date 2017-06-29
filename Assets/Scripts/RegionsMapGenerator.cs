@@ -212,7 +212,75 @@ class RegionsMapGenerator
 	{
 		Int2 startTile = settlement.cityTiles[0];
 
-		
+		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
+		frontierTiles.Insert(5f, startTile);
+
+		Map2D<float> distMap = new Map2D<float>(map.Width, map.Height);
+
+		HashSet<Settlement> settlementsHit = new HashSet<Settlement>();
+		settlementsHit.Add(settlement);
+
+		while(frontierTiles.Count > 0)
+		{
+			distMap.SetPoint(frontierTiles.TopValue(), frontierTiles.TopKey());
+			float currDifficulty = frontierTiles.TopKey();
+			Int2 currTile = frontierTiles.Pop();
+			foreach(var tile in terrainMap.GetTerrainMap().GetAdjacentPoints(currTile))
+			{
+				if (distMap.GetValueAt(tile) != 0 ||
+					terrainMap.GetTerrainMap().GetValueAt(tile).tileType == TerrainTile.TileType.Ocean)
+					continue;
+
+				if(terrainMap.GetTerrainMap().GetValueAt(tile).tileType == TerrainTile.TileType.City)
+				{
+					var sett = GetSettlementFromTile(tile);
+					if (!settlementsHit.Contains(sett))
+					{
+						settlementsHit.Add(GetSettlementFromTile(tile));
+						//BUILD ROAD!!!
+						BuildRoadBackFromTile(currTile, distMap);
+						terrainMap.SetValue(currTile, new TerrainTile(TerrainTile.TileType.Road));
+					}
+				}
+
+				float difficulty = terrainMap.TileDifficulty(tile);
+				if(currDifficulty - difficulty > 0)
+				{
+					frontierTiles.Insert(currDifficulty - difficulty, tile);
+					distMap.SetPoint(tile, currDifficulty - difficulty);
+				}
+			}
+		}
+	}
+
+	private void BuildRoadBackFromTile(Int2 tile, Map2D<float> distMap)
+	{
+		if(terrainMap.GetTerrainMap().GetValueAt(tile).tileType != TerrainTile.TileType.City)
+			terrainMap.SetValue(tile, new TerrainTile(TerrainTile.TileType.Road));
+		Int2 maxTile = tile;
+		foreach(var t in distMap.GetAdjacentPoints(tile))
+		{
+			if (distMap.GetValueAt(t) > distMap.GetValueAt(maxTile))
+				maxTile = t;
+		}
+
+		if (maxTile != tile)
+			BuildRoadBackFromTile(maxTile, distMap);
+	}
+
+	private Settlement GetSettlementFromTile(Int2 tile)
+	{
+		foreach(var region in regions)
+		{
+			if (region.settlement == null)
+				continue;
+			foreach(var cityTile in region.settlement.cityTiles)
+			{
+				if (tile.Equals(cityTile))
+					return region.settlement;
+			}
+		}
+		return null;
 	}
 
 	private RegionTile TileAt(Int2 pos)

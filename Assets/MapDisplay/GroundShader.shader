@@ -9,6 +9,7 @@
 		_FertileTex("Fertile (RGB)", 2D) = "white" {}
 		_ForestTex("Forest (RGB)", 2D) = "white" {}
 		_CityTex("City (RGB)", 2D) = "white" {}
+		_RoadTex("Road (RGB)", 2D) = "white" {}
 	}
 	SubShader {
 		Tags { "RenderType"="Opaque" }
@@ -29,6 +30,7 @@
 		sampler2D _FertileTex;
 		sampler2D _ForestTex;
 		sampler2D _CityTex;
+		sampler2D _RoadTex;
 		float _LookupWidth;
 
 		struct Input {
@@ -66,7 +68,9 @@
 			if (c.r == 0 && Equals(c.g, 0.737) && Equals(c.b, .415))
 				c = tex2D(_SwampTex, uv * textureScale);
 			if (c.r == 1 && c.g == 1 && c.b == 1)
-				c = tex2D(_CityTex, uv * 10);
+				c = tex2D(_CityTex, uv * textureScale);
+			if (Equals(c.r, .756) && Equals(c.g, .380) && Equals(c.b, .125))
+				c = tex2D(_RoadTex, uv * textureScale);
 			return c;
 		}
 

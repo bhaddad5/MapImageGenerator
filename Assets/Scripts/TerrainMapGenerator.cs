@@ -46,7 +46,7 @@ public class TerrainMapGenerator
 		{
 			pixels.Add(tile.GetTileColor());
 		}
-		terrainMapImage = new Texture2D(map.Width, map.Height);
+		terrainMapImage = new Texture2D(map.Width, map.Height, TextureFormat.ARGB32, true, true);
 		terrainMapImage.filterMode = FilterMode.Point;
 		terrainMapImage.anisoLevel = 0;
 		terrainMapImage.SetPixels(pixels.ToArray());
