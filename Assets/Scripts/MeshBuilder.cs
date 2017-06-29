@@ -75,17 +75,16 @@ class MeshBuilder
 
 	private void RandomizeVertHeights()
 	{
+		RandomizeCoastHeights();
+
+
 		int numPasses = 3;
 		for(int i = 0; i < numPasses; i++)
 		{
 			RandomizeVertHeightsPass();
 		}
 
-		int numCoastPasses = 2;
-		for(int i = 0; i < numCoastPasses; i++)
-		{
-			RandomizeCoastHeights();
-		}
+		RandomizeCoastBumps();
 	}
 
 	private void RandomizeVertHeightsPass()
@@ -107,10 +106,19 @@ class MeshBuilder
 		foreach(Int2 point in vertHeights.GetMapPoints())
 		{
 			newHeights.SetPoint(point, vertHeights.GetValueAt(point));
-			if (IsOceanCoastVert(point) && Helpers.Odds(0.5f))
+			if (IsOceanCoastVert(point) && Helpers.Odds(0.9f))
 				newHeights.SetPoint(point, Globals.MinGroundHeight);
 		}
 		vertHeights = newHeights;
+	}
+
+	private void RandomizeCoastBumps()
+	{
+		foreach (Int2 point in vertHeights.GetMapPoints())
+		{
+			if (IsOceanCoastVert(point))
+				vertHeights.SetPoint(point, Random.Range(0, Globals.MinGroundHeight-0.02f));
+		}
 	}
 
 	private bool IsOceanCoastVert(Int2 pos)

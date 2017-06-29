@@ -51,7 +51,7 @@ public class MapBuilder : MonoBehaviour
 		waterPlane.SetActive(true);
 		waterPlane.transform.localScale = new Vector3(width / 10, 1, height / 10);
 		waterPlane.transform.parent = transform;
-		waterPlane.transform.localPosition = new Vector3(width / 2, Globals.MinGroundHeight * 2f + 0.01f, height / 2);
+		waterPlane.transform.localPosition = new Vector3(width / 2, Globals.MinGroundHeight * 2f - 0.01f, height / 2);
 
 		displayText.enabled = true;
 
