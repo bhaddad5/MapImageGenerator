@@ -203,12 +203,14 @@ class RegionsMapGenerator
 		{
 			if(region.settlement != null)
 			{
-				BuildRoadsFromSettlement(region.settlement);
+				HashSet<Settlement> settlementsHit = new HashSet<Settlement>();
+				settlementsHit.Add(region.settlement);
+				BuildRoadsFromSettlement(region.settlement, settlementsHit);
 			}
 		}
 	}
 
-	private void BuildRoadsFromSettlement(Settlement settlement)
+	private void BuildRoadsFromSettlement(Settlement settlement, HashSet<Settlement> settlementsHit)
 	{
 		Int2 startTile = settlement.cityTiles[0];
 
@@ -216,9 +218,6 @@ class RegionsMapGenerator
 		frontierTiles.Insert(5f, startTile);
 
 		Map2D<float> distMap = new Map2D<float>(map.Width, map.Height);
-
-		HashSet<Settlement> settlementsHit = new HashSet<Settlement>();
-		settlementsHit.Add(settlement);
 
 		while(frontierTiles.Count > 0)
 		{
@@ -237,9 +236,9 @@ class RegionsMapGenerator
 					if (!settlementsHit.Contains(sett))
 					{
 						settlementsHit.Add(GetSettlementFromTile(tile));
-						//BUILD ROAD!!!
 						BuildRoadBackFromTile(currTile, distMap);
-						terrainMap.SetValue(currTile, new TerrainTile(TerrainTile.TileType.Road));
+						BuildRoadsFromSettlement(settlement, settlementsHit);
+						return;
 					}
 				}
 
@@ -255,7 +254,9 @@ class RegionsMapGenerator
 
 	private void BuildRoadBackFromTile(Int2 tile, Map2D<float> distMap)
 	{
-		if(terrainMap.GetTerrainMap().GetValueAt(tile).tileType != TerrainTile.TileType.City)
+		if (terrainMap.GetTerrainMap().GetValueAt(tile).tileType == TerrainTile.TileType.Road)
+			return;
+		if (terrainMap.GetTerrainMap().GetValueAt(tile).tileType != TerrainTile.TileType.City)
 			terrainMap.SetValue(tile, new TerrainTile(TerrainTile.TileType.Road));
 		Int2 maxTile = tile;
 		foreach(var t in distMap.GetAdjacentPoints(tile))

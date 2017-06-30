@@ -16,7 +16,7 @@ public class TerrainMapGenerator
 			if (heightMap.GetValueAt(point) < Globals.MinGroundHeight)
 			{
 				int numLandBorders = NumLandBorders(point, heightMap);
-				if(numLandBorders >= 4)
+				if(numLandBorders >= 6)
 					map.SetPoint(point, new TerrainTile(TerrainTile.TileType.River));
 				else map.SetPoint(point, new TerrainTile(TerrainTile.TileType.Ocean));
 			}
