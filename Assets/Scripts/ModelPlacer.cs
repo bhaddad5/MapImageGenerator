@@ -134,8 +134,10 @@ public class ModelPlacer
 		{
 			RaycastHit hit;
 
-			//int layerMask = ~(1 << LayerMask.NameToLayer("Ocean") | (1 << LayerMask.NameToLayer("PlacedModel")));
-			if (Physics.Raycast(new Ray(p, Vector3.down), out hit))
+			int layerMask = ~(1 << 40);
+			if(forcePlacement)
+				layerMask = ~(1 << LayerMask.NameToLayer("Ocean") | (1 << LayerMask.NameToLayer("PlacedModel")));
+			if (Physics.Raycast(new Ray(p, Vector3.down), out hit, 10f, layerMask))
 			{
 				if (forcePlacement ||
 					(hit.collider.gameObject.layer != LayerMask.NameToLayer("Ocean") &&
