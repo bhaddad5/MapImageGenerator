@@ -42,8 +42,8 @@ public static class CultureDefinitions
 		areaInfo = new List<NameOption>()
 		{
 			new NameOption("%n", new List<Settlement.CityTrait>(), 2),
-			new NameOption("Port %n", new List<Settlement.CityTrait> { Settlement.CityTrait.Port }, 3),
-			new NameOption("%n Harbor", new List<Settlement.CityTrait> { Settlement.CityTrait.Port }, 3),
+			new NameOption("Port %n", new List<Settlement.CityTrait> { Settlement.CityTrait.Port, Settlement.CityTrait.Large }, 3),
+			new NameOption("%n Harbor", new List<Settlement.CityTrait> { Settlement.CityTrait.Port, Settlement.CityTrait.Medium }, 3),
 			new NameOption("%n Anchorage", new List<Settlement.CityTrait> { Settlement.CityTrait.Port, Settlement.CityTrait.Small }, 3),
 			new NameOption("%n Mountain", new List<Settlement.CityTrait> { Settlement.CityTrait.Mountains }),
 			new NameOption("Mount %n", new List<Settlement.CityTrait> { Settlement.CityTrait.Mountains }),
@@ -57,6 +57,7 @@ public static class CultureDefinitions
 			new NameOption("%n Ford", new List<Settlement.CityTrait> { Settlement.CityTrait.River }),
 			new NameOption("%n Bridge", new List<Settlement.CityTrait> { Settlement.CityTrait.River }),
 			new NameOption("%n Bend", new List<Settlement.CityTrait> { Settlement.CityTrait.Small, Settlement.CityTrait.River }),
+			new NameOption("New %n", new List<Settlement.CityTrait>()),
 		},
 
 		heraldryBackground = new List<HeraldryOption>()

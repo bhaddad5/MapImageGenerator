@@ -90,9 +90,9 @@ public class Settlement
 			traits.Add(CityTrait.River);
 		else traits.Add(CityTrait.Landlocked);
 
-		if (cityTiles.Count < 3)
+		if (cityTiles.Count <= 2)
 			traits.Add(CityTrait.Small);
-		else if (cityTiles.Count < 7)
+		else if (cityTiles.Count <= 4)
 			traits.Add(CityTrait.Medium);
 		else traits.Add(CityTrait.Large);
 

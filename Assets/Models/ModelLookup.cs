@@ -5,6 +5,7 @@ using UnityEngine;
 public class ModelLookup : MonoBehaviour
 {
 	public GameObject PineTree;
+	public GameObject Willow;
 
 	public GameObject Hovel;
 
@@ -12,6 +13,7 @@ public class ModelLookup : MonoBehaviour
 
 	public GameObject Wall;
 	public GameObject Turret;
+	public GameObject Gates;
 
 	public GameObject Bridge;
 }

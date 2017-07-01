@@ -27,6 +27,8 @@ public class ModelPlacer
 			PlaceCityOnTile(tile);
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Forest)
 			PlaceForestOnTile(tile);
+		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Swamp)
+			PlaceSwampOnTile(tile);
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Grass)
 			PlaceWildernessOnTile(tile);
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Fertile)
@@ -37,75 +39,30 @@ public class ModelPlacer
 
 	private void PlaceForestOnTile(Int2 tile)
 	{
+		PlaceObjectsOnTile(tile, Random.Range(7, 10), lookup.PineTree, true);
 		if (Helpers.Odds(0.05f))
-			PlaceHovelOnTile(tile);
-		PlaceTreesOnTile(tile, Random.Range(7, 10));
+			PlaceObjectsOnTile(tile, 1, lookup.Hovel);
+	}
+
+	private void PlaceSwampOnTile(Int2 tile)
+	{
+		PlaceObjectsOnTile(tile, Random.Range(0, 4), lookup.Willow);
+		if (Helpers.Odds(0.03f))
+			PlaceObjectsOnTile(tile, 1, lookup.Hovel);
 	}
 
 	private void PlaceWildernessOnTile(Int2 tile)
 	{
-		PlaceTreesOnTile(tile, Random.Range(0, 3));
+		PlaceObjectsOnTile(tile, Random.Range(0, 3), lookup.PineTree);
 		if (Helpers.Odds(0.1f))
-			PlaceHovelOnTile(tile);
-	}
-
-	private void PlaceTreesOnTile(Int2 tile, int numOfTrees)
-	{
-		for (int i = 0; i < numOfTrees; i++)
-			PlaceTreeOnTile(tile);
-	}
-
-	private void PlaceTreeOnTile(Int2 tile)
-	{
-		var pos = GetModelPlacementPos(tile);
-		if (pos != null)
-		{
-			GameObject tree = GameObject.Instantiate(lookup.PineTree, objectParent);
-			tree.transform.position = pos.Value;
-			tree.transform.eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
-		}
+			PlaceObjectsOnTile(tile, 1, lookup.Hovel);
 	}
 
 	private void PlaceFarmsOnTile(Int2 tile)
 	{
 		if (Helpers.Odds(0.4f))
-			PlaceHovelOnTile(tile);
-		PlaceFieldsOnTile(tile, Random.Range(10, 15));
-	}
-
-	private void PlaceFieldsOnTile(Int2 tile, int numOfFarms)
-	{
-		for (int i = 0; i < numOfFarms; i++)
-			PlaceFieldOnTile(tile);
-	}
-
-	private void PlaceFieldOnTile(Int2 tile)
-	{
-		var pos = GetModelPlacementPos(tile);
-		if (pos != null)
-		{
-			GameObject field;
-			field = GameObject.Instantiate(lookup.WheatField, objectParent);
-			field.transform.position = pos.Value;
-			field.transform.eulerAngles = new Vector3(0, Random.Range(60, 120), 0);
-		}
-	}
-
-	private void PlaceHovelsOnTile(Int2 tile, int numHovels)
-	{
-		for (int i = 0; i < numHovels; i++)
-			PlaceHovelOnTile(tile);
-	}
-
-	private void PlaceHovelOnTile(Int2 tile)
-	{
-		var pos = GetModelPlacementPos(tile);
-		if (pos != null)
-		{
-			GameObject hovel = GameObject.Instantiate(lookup.Hovel, objectParent);
-			hovel.transform.position = pos.Value;
-			hovel.transform.eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
-		}
+			PlaceObjectsOnTile(tile, 1, lookup.Hovel);
+		PlaceObjectsOnTile(tile, Random.Range(10, 15), lookup.WheatField);
 	}
 
 	private void PlaceBridgesOnTile(Int2 tile)
@@ -137,36 +94,98 @@ public class ModelPlacer
 	{
 		foreach(Int2 pt in map.GetAdjacentPoints(tile))
 		{
-			if(TileIsCityBorder(pt))
+			if (TileIsRoad(pt))
 			{
-				PlaceWallOnEdge(tile, pt);
+				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, true), lookup.Gates);
+			}
+			else if(TileIsCityBorder(pt))
+			{
+				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, true), lookup.Wall);
 			}
 		}
 		PlaceTurretsOnCorners(tile);
 
-		PlaceHovelsOnTile(tile, Random.Range(20, 25));
+		PlaceObjectsOnTile(tile, Random.Range(10, 15), lookup.Hovel, true);
 	}
 
-	private void PlaceWallOnEdge(Int2 cityTile, Int2 nonCityTile)
+	private bool TileIsRoad(Int2 tile)
 	{
-		if((nonCityTile - cityTile).Equals(new Int2(0, -1)))
-			SpawnWall(new Vector3(cityTile.X + 0.5f, 2f, cityTile.Y), 90f);
-		if ((nonCityTile - cityTile).Equals(new Int2(0, 1)))
-			SpawnWall(new Vector3(cityTile.X + 0.5f, 2f, cityTile.Y+1), 90f);
-		if ((nonCityTile - cityTile).Equals(new Int2(1, 0)))
-			SpawnWall(new Vector3(cityTile.X+1, 2f, cityTile.Y + .5f), 0);
-		if ((nonCityTile - cityTile).Equals(new Int2(-1, 0)))
-			SpawnWall(new Vector3(cityTile.X, 2f, cityTile.Y + .5f), 0);
+		return map.PosInBounds(tile) && map.GetValueAt(tile).tileType == TerrainTile.TileType.Road;
 	}
 
-	private void SpawnWall(Vector3 pos, float yRot)
+	private bool TileIsCityBorder(Int2 tile)
 	{
-		RaycastHit hit;
-		if(Physics.Raycast(new Ray(pos, Vector3.down), out hit))
+		return map.PosInBounds(tile) &&
+			map.GetValueAt(tile).tileType != TerrainTile.TileType.City &&
+			map.GetValueAt(tile).tileType != TerrainTile.TileType.Ocean &&
+			map.GetValueAt(tile).tileType != TerrainTile.TileType.River;
+	}
+
+
+
+
+	public class PlacementTrans
+	{
+		public Vector3 pos;
+		public Vector3 rot;
+		public bool valid = false;
+
+		public PlacementTrans(Vector3 p, Vector3 r, bool forcePlacement = false)
 		{
-			GameObject wall = GameObject.Instantiate(lookup.Wall, objectParent);
-			wall.transform.position = hit.point;
-			wall.transform.eulerAngles = new Vector3(0, yRot, 0);
+			RaycastHit hit;
+
+			//int layerMask = ~(1 << LayerMask.NameToLayer("Ocean") | (1 << LayerMask.NameToLayer("PlacedModel")));
+			if (Physics.Raycast(new Ray(p, Vector3.down), out hit))
+			{
+				if (forcePlacement ||
+					(hit.collider.gameObject.layer != LayerMask.NameToLayer("Ocean") &&
+					hit.collider.gameObject.layer != LayerMask.NameToLayer("PlacedModel")))
+				{
+					pos = hit.point;
+					rot = r;
+					valid = true;
+				}
+			}
+		}
+	}
+
+	private void PlaceObjectsOnTile(Int2 tile, int num, GameObject objToPlace, bool forcePlacement = false)
+	{
+		for (int i = 0; i < num; i++)
+			SpawnObjectAtPos(GetRandomPlacementTrans(tile, forcePlacement), objToPlace);
+	}
+
+	private PlacementTrans GetEdgePlacementTrans(Int2 myTile, Int2 edgeTile, bool forcePlacement = false)
+	{
+		if ((edgeTile - myTile).Equals(new Int2(0, -1)))
+			return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y), new Vector3(0, 90f, 0), forcePlacement);
+		if ((edgeTile - myTile).Equals(new Int2(0, 1)))
+			return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y + 1), new Vector3(0, 90f, 0), forcePlacement);
+		if ((edgeTile - myTile).Equals(new Int2(1, 0)))
+			return new PlacementTrans(new Vector3(myTile.X + 1, 2f, myTile.Y + .5f), new Vector3(0, 0, 0), forcePlacement);
+		if ((edgeTile - myTile).Equals(new Int2(-1, 0)))
+			return new PlacementTrans(new Vector3(myTile.X, 2f, myTile.Y + .5f), new Vector3(0, 0, 0), forcePlacement);
+		return null;
+	}
+
+	private PlacementTrans GetRandomPlacementTrans(Int2 myTile, bool forcePlacement = false)
+	{
+		Vector3 rot = new Vector3(0, Random.Range(0, 360f), 0);
+		return GetRandomPlacementTrans(myTile, rot, forcePlacement);
+	}
+
+	private PlacementTrans GetRandomPlacementTrans(Int2 myTile, Vector3 rot, bool forcePlacement = false)
+	{
+		return new PlacementTrans(new Vector3(Random.Range(myTile.X, myTile.X + 1f), 3f, Random.Range(myTile.Y, myTile.Y + 1f)), rot, forcePlacement);
+	}
+
+	private void SpawnObjectAtPos(PlacementTrans trans, GameObject obj)
+	{
+		if (trans.valid)
+		{
+			GameObject newObj = GameObject.Instantiate(obj, objectParent);
+			newObj.transform.position = trans.pos;
+			newObj.transform.eulerAngles = trans.rot;
 		}
 	}
 
@@ -189,27 +208,5 @@ public class ModelPlacer
 				turret.transform.position = hit.point;
 			}
 		}
-	}
-
-	private bool TileIsCityBorder(Int2 tile)
-	{
-		return map.PosInBounds(tile) &&
-			map.GetValueAt(tile).tileType != TerrainTile.TileType.City &&
-			map.GetValueAt(tile).tileType != TerrainTile.TileType.Ocean &&
-			map.GetValueAt(tile).tileType != TerrainTile.TileType.River;
-	}
-
-	private Vector3? GetModelPlacementPos(Int2 tile)
-	{
-		Vector3 raycastPos = new Vector3(Random.Range(tile.X, tile.X + 1f), 3f, Random.Range(tile.Y, tile.Y + 1f));
-		RaycastHit hit;
-		if (Physics.Raycast(new Ray(raycastPos, Vector3.down), out hit))
-		{
-			if (hit.collider.gameObject.layer != LayerMask.NameToLayer("PlacedModel") && hit.collider.gameObject.layer != LayerMask.NameToLayer("Ocean"))
-			{
-				return hit.point;
-			}
-		}
-		return null;
 	}
 }
