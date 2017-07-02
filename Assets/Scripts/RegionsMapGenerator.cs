@@ -6,7 +6,7 @@ using UnityEngine;
 
 class RegionsMapGenerator
 {
-	List<Kingdom> regions = new List<Kingdom>();
+	List<Kingdom> Kingdoms = new List<Kingdom>();
 	Map2D<RegionTile> map;
 	TerrainMapGenerator terrainMap;
 	public int Width { get { return map.Width; } }
@@ -22,8 +22,8 @@ class RegionsMapGenerator
 
 		for(int i = settlementLocations.Count - 1; i >= 0; i--)
 		{
-			Kingdom r = new Kingdom("Region" + i, settlementLocations.ValueAt(i));
-			regions.Add(r);
+			Kingdom r = new Kingdom(CultureDefinitions.Anglo, settlementLocations.ValueAt(i));
+			Kingdoms.Add(r);
 			ExpandRegionFromSettlement(5, r, settlementLocations.ValueAt(i));
 		}
 
@@ -35,22 +35,17 @@ class RegionsMapGenerator
 
 		BuildRoads();
 
-		foreach(var region in regions)
+		foreach(var kingdom in Kingdoms)
 		{
-			if (region.settlement != null)
-			{
-				var cityTraits = region.settlement.GetCityTraits(terrainMap.GetTerrainMap());
-				region.settlement.name = SettlementNameGenerator.GetSettlementName(CultureDefinitions.Anglo, cityTraits);
-				region.settlement.heraldry = HeraldryGenerator.GetHeraldry(CultureDefinitions.Anglo, cityTraits, region);
-			}
+			kingdom.SetNamesAndHeraldry(terrainMap.GetTerrainMap());
 		}
 	}
 
 	private void StartFillMap()
 	{
-		Kingdom NoMansLand = new Kingdom("NoMansLand", null);
+		Kingdom NoMansLand = new Kingdom(CultureDefinitions.Anglo, null);
 		NoMansLand.mainColor = Color.black;
-		regions.Add(NoMansLand);
+		Kingdoms.Add(NoMansLand);
 
 		map = new Map2D<RegionTile>(terrainMap.GetTerrainMap().Width, terrainMap.GetTerrainMap().Height);
 		foreach(var pixel in map.GetMapPoints())
@@ -61,9 +56,9 @@ class RegionsMapGenerator
 
 	private void EndFillMap()
 	{
-		Kingdom OceanRegion = new Kingdom("Ocean", null);
+		Kingdom OceanRegion = new Kingdom(CultureDefinitions.Anglo, null);
 		OceanRegion.mainColor = Color.blue;
-		regions.Add(OceanRegion);
+		Kingdoms.Add(OceanRegion);
 
 		foreach (var pixel in map.GetMapPoints())
 		{
@@ -190,22 +185,22 @@ class RegionsMapGenerator
 
 	private void ExpandSettlements()
 	{
-		foreach(var reg in regions)
+		foreach(var reg in Kingdoms)
 		{
-			if(reg.settlement != null)
-				reg.settlement.ExpandSettlement(reg.value, terrainMap, map, reg);
+			foreach(var sett in reg.settlements)
+				sett.ExpandSettlement(reg.value, terrainMap, map, reg);
 		}
 	}
 
 	private void BuildRoads()
 	{
-		foreach(var region in regions)
+		foreach(var kingdom in Kingdoms)
 		{
-			if(region.settlement != null)
+			foreach (var sett in kingdom.settlements)
 			{
 				HashSet<Settlement> settlementsHit = new HashSet<Settlement>();
-				settlementsHit.Add(region.settlement);
-				BuildRoadsFromSettlement(region.settlement, settlementsHit);
+				settlementsHit.Add(sett);
+				BuildRoadsFromSettlement(sett, settlementsHit);
 			}
 		}
 	}
@@ -271,14 +266,15 @@ class RegionsMapGenerator
 
 	private Settlement GetSettlementFromTile(Int2 tile)
 	{
-		foreach(var region in regions)
+		foreach(var region in Kingdoms)
 		{
-			if (region.settlement == null)
-				continue;
-			foreach(var cityTile in region.settlement.cityTiles)
+			foreach(var sett in region.settlements)
 			{
-				if (tile.Equals(cityTile))
-					return region.settlement;
+				foreach (var cityTile in sett.cityTiles)
+				{
+					if (tile.Equals(cityTile))
+						return sett;
+				}
 			}
 		}
 		return null;
@@ -296,6 +292,6 @@ class RegionsMapGenerator
 
 	public List<Kingdom> GetRegions()
 	{
-		return regions;
+		return Kingdoms;
 	}
 }

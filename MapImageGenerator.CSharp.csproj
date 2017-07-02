@@ -86,7 +86,6 @@
     <Compile Include="Assets\Scripts\Globals.cs" />
     <Compile Include="Assets\Scripts\HeightMapGenerator.cs" />
     <Compile Include="Assets\Scripts\Helpers.cs" />
-    <Compile Include="Assets\Scripts\HeraldryGenerator.cs" />
     <Compile Include="Assets\Scripts\Kingdom.cs" />
     <Compile Include="Assets\Scripts\Map2D.cs" />
     <Compile Include="Assets\Scripts\MapBuilder.cs" />
@@ -96,7 +95,6 @@
     <Compile Include="Assets\Scripts\RegionTile.cs" />
     <Compile Include="Assets\Scripts\RegionsMapGenerator.cs" />
     <Compile Include="Assets\Scripts\Settlement.cs" />
-    <Compile Include="Assets\Scripts\SettlementNameGenerator.cs" />
     <Compile Include="Assets\Scripts\TerrainMapGenerator.cs" />
     <Compile Include="Assets\Scripts\TerrainTile.cs" />
     <Compile Include="Assets\Scripts\UserInteractions\CameraControls.cs" />

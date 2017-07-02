@@ -19,13 +19,13 @@ public class Settlement
 		River
 	}
 
-	public string name;
-	public Texture2D heraldry;
+	public string name = "PLACEHOLDER";
 	public List<Int2> cityTiles = new List<Int2>();
-	public Settlement(string n, Int2 cityTile)
+	public Kingdom kingdom;
+	public Settlement(Int2 cityTile, Kingdom k)
 	{
 		cityTiles.Add(cityTile);
-		name = n;
+		kingdom = k;
 	}
 
 	public void ExpandSettlement(float regionValue, TerrainMapGenerator terrainTiles, Map2D<RegionTile> regionsMap, Kingdom myRegion)

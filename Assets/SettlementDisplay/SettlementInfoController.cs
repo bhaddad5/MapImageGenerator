@@ -11,6 +11,6 @@ public class SettlementInfoController : MonoBehaviour
 	// Use this for initialization
 	void Start () {
 		settlementName.text = settlement.name;
-		settlementImage.sprite = Sprite.Create(settlement.heraldry, new Rect(0, 0, settlement.heraldry.width, settlement.heraldry.height), new Vector2(0.5f, 0.5f));
+		settlementImage.sprite = Sprite.Create(settlement.kingdom.heraldry, new Rect(0, 0, settlement.kingdom.heraldry.width, settlement.kingdom.heraldry.height), new Vector2(0.5f, 0.5f));
 	}
 }

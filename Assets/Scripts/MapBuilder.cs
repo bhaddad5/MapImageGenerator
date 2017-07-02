@@ -149,13 +149,14 @@ public class MapBuilder : MonoBehaviour
 		float tileWidth = 1f;
 		foreach(Kingdom r in regionsMap.GetRegions())
 		{
-			if (r.settlement == null)
-				continue;
-			GameObject tag = GameObject.Instantiate(SettlementInfoPrefab);
-			tag.transform.SetParent(terrainMeshDisplay.transform);
-			Int2 placementPos = r.settlement.cityTiles[0];
-			tag.transform.localPosition = new Vector3(placementPos.X * tileWidth, .5f, placementPos.Y * tileWidth);
-			tag.GetComponent<SettlementInfoController>().settlement = r.settlement;
+			foreach(var sett in r.settlements)
+			{
+				GameObject tag = GameObject.Instantiate(SettlementInfoPrefab);
+				tag.transform.SetParent(terrainMeshDisplay.transform);
+				Int2 placementPos = r.settlements[0].cityTiles[0];
+				tag.transform.localPosition = new Vector3(placementPos.X * tileWidth, .5f, placementPos.Y * tileWidth);
+				tag.GetComponent<SettlementInfoController>().settlement = r.settlements[0];
+			}
 		}
 	}
 }

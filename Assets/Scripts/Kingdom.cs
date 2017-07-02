@@ -5,26 +5,66 @@ using UnityEngine;
 
 public class Kingdom
 {
-	public Settlement settlement;
+	public Culture culture;
+	public List<Settlement> settlements = new List<Settlement>();
+
 	public Color mainColor;
 	public Color secondaryColor;
 	public Color tertiaryColor;
+	public Texture2D heraldry;
 	public float value;
 
-	public Kingdom(string name, Int2 cityTile)
+	public Kingdom(Culture c, Int2 startingCityTile)
 	{
-		if(cityTile != null)
-			settlement = new Settlement(name, cityTile);
-		mainColor = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
+		culture = c;
+		if (startingCityTile != null)
+			settlements.Add(new Settlement(startingCityTile, this));
 
-		secondaryColor = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
-		while(Vector3.Magnitude(new Vector3(mainColor.r, mainColor.g, mainColor.b) - new Vector3(secondaryColor.r, secondaryColor.g, secondaryColor.b)) < 0.2f)
-			secondaryColor = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
 
-		tertiaryColor = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
-		while (Vector3.Magnitude(new Vector3(mainColor.r, mainColor.g, mainColor.b) - new Vector3(tertiaryColor.r, tertiaryColor.g, tertiaryColor.b)) < 0.2f &&
-			Vector3.Magnitude(new Vector3(secondaryColor.r, secondaryColor.g, secondaryColor.b) - new Vector3(tertiaryColor.r, tertiaryColor.g, tertiaryColor.b)) < 0.2f)
-			tertiaryColor = new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
+		mainColor = GetHeraldryColor();
+		secondaryColor = GetHeraldryColor();
+		tertiaryColor = GetHeraldryColor();
+	}
+
+	public void SetNamesAndHeraldry(Map2D<TerrainTile> terrainMap)
+	{
+		foreach (var sett in settlements)
+		{
+			var subCityTraits = sett.GetCityTraits(terrainMap);
+			sett.name = culture.GetSettlementName(subCityTraits);
+		}
+		if(settlements.Count > 0)
+		{
+			var cityTraits = settlements[0].GetCityTraits(terrainMap);
+			heraldry = culture.GetHeraldry(cityTraits, this);
+		}
+	}
+
+	private Color GetHeraldryColor()
+	{
+		Color c = RandomColor();
+		int minDiff = 100;
+		int maxSanity = 20;
+		int sanity = 0;
+		while (sanity <= maxSanity && (ColorDiff(c, mainColor) < minDiff || ColorDiff(c, secondaryColor) < minDiff || ColorDiff(c, tertiaryColor) < minDiff))
+		{
+			sanity++;
+			c = RandomColor();
+		}
+		return c;
+	}
+
+	private Color RandomColor()
+	{
+		return new Color(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
+	}
+
+	// distance in RGB space.  From: https://stackoverflow.com/questions/27374550/how-to-compare-color-object-and-get-closest-color-in-an-color
+	private int ColorDiff(Color c1, Color c2)
+	{
+		return (int)Mathf.Sqrt((c1.r*255 - c2.r * 255) * (c1.r * 255 - c2.r * 255)
+							   + (c1.g * 255 - c2.g * 255) * (c1.g * 255 - c2.g * 255)
+							   + (c1.b * 255 - c2.b * 255) * (c1.b * 255 - c2.b * 255));
 	}
 }
 
