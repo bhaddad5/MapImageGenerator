@@ -52,12 +52,23 @@ public class Culture
 	public List<HeraldryOption> heraldryBackground;
 	public List<HeraldryOption> heraldryForeground;
 
+	private HashSet<string> namesCreated = new HashSet<string>() { "NoneFound" };
+
 	public string GetSettlementName(List<Settlement.CityTrait> constraints)
 	{
-		string name = GetNameChunk(prefixes, constraints) + GetNameChunk(suffixes, constraints);
-		string area = GetNameChunk(areaInfo, constraints);
+		string finalName = "NoneFound";
+		int sanity = 20;
+		int currSanity = 0;
 
-		return area.Replace("%n", name);
+		while(namesCreated.Contains(finalName) && currSanity <= sanity)
+		{
+			string name = GetNameChunk(prefixes, constraints) + GetNameChunk(suffixes, constraints);
+			string area = GetNameChunk(areaInfo, constraints);
+			finalName = area.Replace("%n", name);
+			currSanity++;
+		}
+
+		return finalName;
 	}
 
 	private string GetNameChunk(List<NameOption> options, List<Settlement.CityTrait> constraints)

@@ -39,10 +39,10 @@ class RegionsMapGenerator
 			kingdom.SetNamesAndHeraldry(terrainMap.GetTerrainMap());
 		}
 
-		foreach (var kingdom in Kingdoms)
+		/*foreach (var kingdom in Kingdoms)
 		{
 			kingdom.PrintKingdomInfo(terrainMap.GetTerrainMap());
-		}
+		}*/
 	}
 
 	private void StartFillMap()
