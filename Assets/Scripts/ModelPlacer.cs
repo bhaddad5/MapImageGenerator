@@ -103,7 +103,7 @@ public class ModelPlacer
 		}
 		PlaceTurretsOnCorners(tile);
 
-		PlaceObjectsOnTileWithBorder(tile, Random.Range(20, 25), lookup.CityHouse, true);
+		PlaceObjectsOnTileWithBorder(tile, Random.Range(20, 25), lookup.TownHouse, true);
 	}
 
 	private void PlaceTurretsOnCorners(Int2 tile)
