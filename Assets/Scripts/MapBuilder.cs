@@ -37,10 +37,17 @@ public class MapBuilder : MonoBehaviour
 		int height = 80;
 		if(sizeY.text != "")
 			height = int.Parse(sizeY.text);
-		StartCoroutine(BuildMap(width, height));
+
+		List<CulturePrevelance> cultures = new List<CulturePrevelance>()
+		{
+			new CulturePrevelance(CultureDefinitions.Anglo, CulturePrevelance.Prevelance.Dominant),
+			new CulturePrevelance(CultureDefinitions.Dwarf, CulturePrevelance.Prevelance.Occasional),
+		};
+
+		StartCoroutine(BuildMap(width, height, cultures));
 	}
 
-	public IEnumerator BuildMap(int width, int height)
+	public IEnumerator BuildMap(int width, int height, List<CulturePrevelance> cultures)
 	{
 		terrainMeshDisplay.transform.localPosition = Vector3.zero;
 		for (int i = 0; i < terrainMeshDisplay.transform.childCount; i++)
@@ -58,8 +65,6 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Raising Mountains";
 		yield return null;
 
-		int averagePixelsPerRegion = 120;
-
 		HeightMapGenerator heightGenerator = new HeightMapGenerator(width, height);
 		
 		displayText.text = "Seeding Forests";
@@ -70,7 +75,11 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Forging Kingdoms";
 		yield return null;
 
-		RegionsMapGenerator regionsMap = new RegionsMapGenerator(terrainMapGenerator, terrainMapGenerator.LandPixelCount() / averagePixelsPerRegion);
+		int landPixelCount = terrainMapGenerator.LandPixelCount();
+		foreach (var culture in cultures)
+			culture.SetNumSettlements(landPixelCount);
+
+		RegionsMapGenerator regionsMap = new RegionsMapGenerator(terrainMapGenerator, cultures);
 
 		displayText.text = "Artificing Lands";
 		yield return null;
@@ -156,6 +165,45 @@ public class MapBuilder : MonoBehaviour
 				Int2 placementPos = sett.GetInfoPlacementPos();
 				tag.transform.localPosition = new Vector3(placementPos.X * tileWidth, .5f, placementPos.Y * tileWidth);
 				tag.GetComponent<SettlementInfoController>().settlement = sett;
+			}
+		}
+	}
+
+	public class CulturePrevelance
+	{
+		public enum Prevelance
+		{
+			SingleColony,
+			Scattered,
+			Occasional,
+			Dominant
+		}
+
+		public Culture culture;
+		public int numSettlements;
+		Prevelance prevelance;
+
+		public CulturePrevelance(Culture c, Prevelance p)
+		{
+			culture = c;
+			prevelance = p;
+		}
+
+		public void SetNumSettlements(int landPixleCount)
+		{
+			if (prevelance == Prevelance.SingleColony)
+				numSettlements = 1;
+			if (prevelance == Prevelance.Scattered)
+			{
+				numSettlements = landPixleCount / 300;
+			}
+			if (prevelance == Prevelance.Occasional)
+			{
+				numSettlements = landPixleCount / 200;
+			}
+			if (prevelance == Prevelance.Dominant)
+			{
+				numSettlements = landPixleCount / 120;
 			}
 		}
 	}

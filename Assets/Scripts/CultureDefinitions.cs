@@ -107,4 +107,67 @@ public static class CultureDefinitions
 			new HeraldryOption("Anglo/Heraldry/Symbols/Horse"),
 		},
 	};
+
+	public static Culture Dwarf = new Culture()
+	{
+		prefixes = new List<SettlementNameOption>()
+		{
+			new SettlementNameOption("Daz"),
+			new SettlementNameOption("Kurz"),
+			new SettlementNameOption("Inuk"),
+			new SettlementNameOption("Tar"),
+			new SettlementNameOption("Prak"),
+			new SettlementNameOption("Wrokk"),
+		},
+
+		suffixes = new List<SettlementNameOption>()
+		{
+			new SettlementNameOption(""),
+			new SettlementNameOption("-kull", new List<Settlement.CityTrait> { Settlement.CityTrait.Mountains }, 4),
+			new SettlementNameOption("-kuzdal", new List<Settlement.CityTrait> { Settlement.CityTrait.Mountains }, 4),
+			new SettlementNameOption("-tazul"),
+			new SettlementNameOption("-mikdun"),			
+			new SettlementNameOption("-trokk"),
+			new SettlementNameOption("-pirok"),
+			new SettlementNameOption("-bendum"),
+			new SettlementNameOption("-silrak", new List<Settlement.CityTrait> { Settlement.CityTrait.Forest }, 4),
+		},
+
+		areaInfo = new List<SettlementNameOption>()
+		{
+			new SettlementNameOption("%n", new List<Settlement.CityTrait>(), 4),
+			new SettlementNameOption("%n Post", new List<Settlement.CityTrait> {Settlement.CityTrait.Small }),
+			new SettlementNameOption("%n Outpost", new List<Settlement.CityTrait> {Settlement.CityTrait.Small }),
+			new SettlementNameOption("Kadrul %n", new List<Settlement.CityTrait> {Settlement.CityTrait.Large }),
+			new SettlementNameOption("Nagut %n", new List<Settlement.CityTrait> {Settlement.CityTrait.Port }),
+			new SettlementNameOption("%n Nagut", new List<Settlement.CityTrait> {Settlement.CityTrait.Port }),
+			new SettlementNameOption("%n Mountain", new List<Settlement.CityTrait> { Settlement.CityTrait.Mountains }),
+			new SettlementNameOption("Halls of %n", new List<Settlement.CityTrait> { Settlement.CityTrait.Mountains }),
+			new SettlementNameOption("Mines of %n", new List<Settlement.CityTrait> { Settlement.CityTrait.Mountains }),
+		},
+
+		kingdomTitles = new List<KingdomNameOption>()
+		{
+			new KingdomNameOption("Kingdom of %n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Small }),
+			new KingdomNameOption("Kingdom of %n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Medium }),
+			new KingdomNameOption("Kingdom of %n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Large }),
+			new KingdomNameOption("%n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.OneCity}),
+			new KingdomNameOption("%n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Small }),
+			new KingdomNameOption("%n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Medium }),
+			new KingdomNameOption("Empire of %n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Large }),
+			new KingdomNameOption("The %n Empire", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Large }),
+			
+		},
+
+		heraldryBackground = new List<HeraldryOption>()
+		{
+			new HeraldryOption("Dwarf/Heraldry/Backgrounds/Dwarf_Back_0"),
+			new HeraldryOption("Dwarf/Heraldry/Backgrounds/Dwarf_Back_1"),
+		},
+
+		heraldryForeground = new List<HeraldryOption>()
+		{
+			new HeraldryOption("Dwarf/Heraldry/Symbols/Anvil"),
+		},
+	};
 }

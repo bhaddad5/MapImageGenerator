@@ -9,19 +9,22 @@ class RegionsMapGenerator
 	public int Width { get { return map.Width; } }
 	public int Height { get { return map.Height; } }
 
-	public RegionsMapGenerator(TerrainMapGenerator tm, int numberOfSettlements)
+	public RegionsMapGenerator(TerrainMapGenerator tm, List<MapBuilder.CulturePrevelance> cultures)
 	{
 		terrainMap = tm;
 
 		StartFillMap();
 
-		var settlementLocations = GetSettlementLocations(numberOfSettlements);
-
-		for(int i = settlementLocations.Count - 1; i >= 0; i--)
+		foreach(var culture in cultures)
 		{
-			Kingdom r = new Kingdom(CultureDefinitions.Anglo, settlementLocations.ValueAt(i));
-			Kingdoms.Add(r);
-			ExpandRegionFromSettlement(5, r, settlementLocations.ValueAt(i));
+			var settlementLocations = GetSettlementLocations(culture.numSettlements);
+
+			for (int i = settlementLocations.Count - 1; i >= 0; i--)
+			{
+				Kingdom r = new Kingdom(culture.culture, settlementLocations.ValueAt(i));
+				Kingdoms.Add(r);
+				ExpandRegionFromSettlement(5, r, settlementLocations.ValueAt(i));
+			}
 		}
 
 		EndFillMap();
