@@ -39,6 +39,11 @@ class RegionsMapGenerator
 		{
 			kingdom.SetNamesAndHeraldry(terrainMap.GetTerrainMap());
 		}
+
+		foreach (var kingdom in Kingdoms)
+		{
+			kingdom.PrintKingdomInfo(terrainMap.GetTerrainMap());
+		}
 	}
 
 	private void StartFillMap()
@@ -194,13 +199,20 @@ class RegionsMapGenerator
 
 	private void BuildRoads()
 	{
-		foreach(var kingdom in Kingdoms)
+		foreach (var kingdom in Kingdoms)
 		{
 			foreach (var sett in kingdom.settlements)
 			{
 				HashSet<Settlement> settlementsHit = new HashSet<Settlement>();
 				settlementsHit.Add(sett);
 				BuildRoadsFromSettlement(sett, settlementsHit);
+			}
+		}
+		foreach (var kingdom in Kingdoms)
+		{
+			foreach (var sett in kingdom.settlements)
+			{
+				sett.adjacentSettlements = GetAdjacentSettlements(sett);
 			}
 		}
 	}
@@ -210,7 +222,7 @@ class RegionsMapGenerator
 		Int2 startTile = settlement.cityTiles[0];
 
 		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
-		frontierTiles.Insert(5f, startTile);
+		frontierTiles.Insert(3f, startTile);
 
 		Map2D<float> distMap = new Map2D<float>(map.Width, map.Height);
 
@@ -262,6 +274,59 @@ class RegionsMapGenerator
 
 		if (maxTile != tile)
 			BuildRoadBackFromTile(maxTile, distMap);
+	}
+
+	private List<Settlement> GetAdjacentSettlements(Settlement settlement)
+	{
+		List<Settlement> hitSettlements = new List<Settlement>();
+		Int2 startTile = settlement.cityTiles[0];
+
+		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
+		frontierTiles.Insert(3f, startTile);
+
+		Map2D<float> distMap = new Map2D<float>(map.Width, map.Height);
+
+		while (frontierTiles.Count > 0)
+		{
+			distMap.SetPoint(frontierTiles.TopValue(), frontierTiles.TopKey());
+			float currDifficulty = frontierTiles.TopKey();
+			Int2 currTile = frontierTiles.Pop();
+			foreach (var tile in terrainMap.GetTerrainMap().GetAdjacentPoints(currTile))
+			{
+				if (distMap.GetValueAt(tile) != 0)
+					continue;
+
+				if (terrainMap.GetTerrainMap().GetValueAt(tile).tileType == TerrainTile.TileType.City)
+				{
+					var sett = GetSettlementFromTile(tile);
+					if (!hitSettlements.Contains(sett))
+					{
+						hitSettlements.Add(GetSettlementFromTile(tile));
+					}
+					else if (sett == settlement)
+					{
+						frontierTiles.Insert(currDifficulty, tile);
+						distMap.SetPoint(tile, currDifficulty);
+					}
+				}
+				else {
+					var type = terrainMap.GetTerrainMap().GetValueAt(tile).tileType;
+					var currType = terrainMap.GetTerrainMap().GetValueAt(currTile).tileType;
+					if ((type == TerrainTile.TileType.Ocean && (currType == TerrainTile.TileType.Ocean || currType == TerrainTile.TileType.City)) ||
+					(type == TerrainTile.TileType.River && (currType == TerrainTile.TileType.River || currType == TerrainTile.TileType.City)) ||
+					(type == TerrainTile.TileType.Road && (currType == TerrainTile.TileType.Road || currType == TerrainTile.TileType.City)))
+					{
+						float difficulty = terrainMap.TileDifficulty(tile);
+						if (currDifficulty - difficulty > 0)
+						{
+							frontierTiles.Insert(currDifficulty - difficulty, tile);
+							distMap.SetPoint(tile, currDifficulty - difficulty);
+						}
+					}
+				}
+			}
+		}
+		return hitSettlements;
 	}
 
 	private Settlement GetSettlementFromTile(Int2 tile)

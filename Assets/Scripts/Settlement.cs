@@ -20,6 +20,8 @@ public class Settlement
 	}
 
 	public string name = "PLACEHOLDER";
+	public List<Settlement> adjacentSettlements = new List<Settlement>();
+
 	public List<Int2> cityTiles = new List<Int2>();
 	public Kingdom kingdom;
 	public Settlement(Int2 cityTile, Kingdom k)
@@ -65,12 +67,12 @@ public class Settlement
 		return possibleExpansions;
 	}
 
-	public List<Settlement.CityTrait> GetCityTraits(Map2D<TerrainTile> regionsMap)
+	public List<Settlement.CityTrait> GetCityTraits(Map2D<TerrainTile> terrainMap)
 	{
 		List<TerrainTile.TileType> neighboringTerrainTypes = new List<TerrainTile.TileType>();
 		foreach (Int2 tile in cityTiles)
 		{
-			foreach (var neighbor in regionsMap.GetAdjacentValues(tile))
+			foreach (var neighbor in terrainMap.GetAdjacentValues(tile))
 			{
 				neighboringTerrainTypes.Add(neighbor.tileType);
 			}
@@ -91,12 +93,54 @@ public class Settlement
 			traits.Add(CityTrait.River);
 		else traits.Add(CityTrait.Landlocked);
 
-		if (cityTiles.Count <= 2)
-			traits.Add(CityTrait.Small);
-		else if (cityTiles.Count <= 4)
-			traits.Add(CityTrait.Medium);
-		else traits.Add(CityTrait.Large);
+		traits.Add(GetSettlementSize());
 
 		return traits;
+	}
+
+	public CityTrait GetSettlementSize()
+	{
+		if (cityTiles.Count <= 2)
+			return CityTrait.Small;
+		else if (cityTiles.Count <= 4)
+			return CityTrait.Medium;
+		else return CityTrait.Large;
+	}
+
+	public float GetSettlementValue(Map2D<TerrainTile> terrainMap)
+	{
+		float val = cityTiles.Count;
+		foreach(var tile in cityTiles)
+		{
+			foreach (var adj in terrainMap.GetAdjacentValues(tile))
+			{
+				if(adj.tileType == TerrainTile.TileType.Ocean || adj.tileType == TerrainTile.TileType.River || adj.tileType == TerrainTile.TileType.Road)
+					val += .5f;
+			}
+		}
+
+		return val;
+	}
+
+	public float GetSettlementDefensibility(Map2D<TerrainTile> terrainMap)
+	{
+		float defensibility = GetSettlementValue(terrainMap);
+		foreach (var tile in cityTiles)
+		{
+			foreach (var adj in terrainMap.GetAdjacentValues(tile))
+			{
+				if (adj.tileType == TerrainTile.TileType.Swamp || adj.tileType == TerrainTile.TileType.Mountain)
+					defensibility += .5f;
+				if (adj.tileType == TerrainTile.TileType.Ocean)
+					defensibility += .3f;
+				if (adj.tileType == TerrainTile.TileType.River)
+					defensibility += .2f;
+				if (adj.tileType == TerrainTile.TileType.Fertile || adj.tileType == TerrainTile.TileType.Grass)
+					defensibility -= .5f;
+				if (adj.tileType == TerrainTile.TileType.Road || adj.tileType == TerrainTile.TileType.Forest)
+					defensibility -= 1f;
+			}
+		}
+		return defensibility;
 	}
 }

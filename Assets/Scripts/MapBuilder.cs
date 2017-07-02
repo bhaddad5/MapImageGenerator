@@ -55,29 +55,29 @@ public class MapBuilder : MonoBehaviour
 
 		displayText.enabled = true;
 
-		displayText.text = "Generating Height Map";
+		displayText.text = "Raising Mountains";
 		yield return null;
 
 		int averagePixelsPerRegion = 120;
 
 		HeightMapGenerator heightGenerator = new HeightMapGenerator(width, height);
 		
-		displayText.text = "Generating Ground Types";
+		displayText.text = "Seeding Forests";
 		yield return null;
 
 		TerrainMapGenerator terrainMapGenerator = new TerrainMapGenerator(heightGenerator.GetHeightMap());
 		
-		displayText.text = "Generating Regions";
+		displayText.text = "Forging Kingdoms";
 		yield return null;
 
 		RegionsMapGenerator regionsMap = new RegionsMapGenerator(terrainMapGenerator, terrainMapGenerator.LandPixelCount() / averagePixelsPerRegion);
 
-		displayText.text = "Building Terrain Mesh";
+		displayText.text = "Artificing Lands";
 		yield return null;
 
 		MeshBuilder meshBuilder = new MeshBuilder(terrainMapGenerator, heightGenerator.GetHeightMap());
 
-		displayText.text = "Displaying Map";
+		displayText.text = "Presenting World";
 		yield return null;
 
 		generatedMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = heightGenerator.GetHeightMapTexture();
@@ -105,13 +105,13 @@ public class MapBuilder : MonoBehaviour
 			meshNum++;
 		}
 
-		displayText.text = "PlacingModels";
+		displayText.text = "Detailing Realms";
 		yield return null;
 
 		ModelPlacer mp = new ModelPlacer();
 		mp.PlaceModels(terrainMapGenerator.GetTerrainMap(), heightGenerator.GetHeightMap(),ModelLookup, transform);
 
-		displayText.text = "Setting Up Settlements";
+		displayText.text = "Displaying Heraldry";
 		yield return null;
 
 		AddSettlementInfoPanels(regionsMap);

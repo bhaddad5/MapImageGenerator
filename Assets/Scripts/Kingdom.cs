@@ -40,6 +40,31 @@ public class Kingdom
 		}
 	}
 
+	public void PrintKingdomInfo(Map2D<TerrainTile> terrainMap)
+	{
+		foreach (var sett in settlements)
+		{
+			string adj = "";
+			foreach (var se in sett.adjacentSettlements)
+			{
+				if (se != sett)
+					adj += se.name + ", ";
+			}
+
+			Debug.Log(sett.name + " value = " + sett.GetSettlementValue(terrainMap) + ", defense = " + sett.GetSettlementDefensibility(terrainMap) + ", Adjacent to: " + adj);
+		}
+	}
+
+	public float Strength(Map2D<TerrainTile> terrainMap)
+	{
+		float strength = 0;
+		foreach(var sett in settlements)
+		{
+			strength += sett.GetSettlementValue(terrainMap);
+		}
+		return strength;
+	}
+
 	private Color GetHeraldryColor()
 	{
 		Color c = RandomColor();
