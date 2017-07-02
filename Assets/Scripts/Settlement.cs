@@ -20,7 +20,7 @@ public class Settlement
 	}
 
 	public string name = "PLACEHOLDER";
-	public List<Settlement> adjacentSettlements = new List<Settlement>();
+	public SortedDupList<Settlement> adjacentSettlements = new SortedDupList<Settlement>();
 
 	public List<Int2> cityTiles = new List<Int2>();
 	public Kingdom kingdom;

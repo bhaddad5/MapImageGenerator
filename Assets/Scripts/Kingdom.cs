@@ -45,10 +45,10 @@ public class Kingdom
 		foreach (var sett in settlements)
 		{
 			string adj = "";
-			foreach (var se in sett.adjacentSettlements)
+			foreach (var se in sett.adjacentSettlements.GetList())
 			{
-				if (se != sett)
-					adj += se.name + ", ";
+				if (se.Value != sett)
+					adj += se.Value.name + ":" + se.Key + ", ";
 			}
 
 			Debug.Log(sett.name + " value = " + sett.GetSettlementValue(terrainMap) + ", defense = " + sett.GetSettlementDefensibility(terrainMap) + ", Adjacent to: " + adj);

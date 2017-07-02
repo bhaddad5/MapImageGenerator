@@ -128,6 +128,17 @@ public class SortedDupList<T>
 		return vals;
 	}
 
+	public List<KeyValuePair<float, T>> GetList()
+	{
+		List<KeyValuePair<float, T>> list = new List<KeyValuePair<float, T>>();
+		foreach(var entry in entries)
+		{
+			list.Add(new KeyValuePair<float, T>(entry.comparator, entry.value));
+		}
+
+		return list;
+	}
+
 	public bool ContainsValue(T val)
 	{
 		foreach(var e in entries)

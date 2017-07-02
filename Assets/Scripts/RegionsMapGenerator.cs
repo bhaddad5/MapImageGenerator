@@ -35,6 +35,8 @@ class RegionsMapGenerator
 
 		BuildRoads();
 
+		FightWars();
+
 		foreach(var kingdom in Kingdoms)
 		{
 			kingdom.SetNamesAndHeraldry(terrainMap.GetTerrainMap());
@@ -276,13 +278,14 @@ class RegionsMapGenerator
 			BuildRoadBackFromTile(maxTile, distMap);
 	}
 
-	private List<Settlement> GetAdjacentSettlements(Settlement settlement)
+	private SortedDupList<Settlement> GetAdjacentSettlements(Settlement settlement)
 	{
-		List<Settlement> hitSettlements = new List<Settlement>();
+		SortedDupList<Settlement> hitSettlements = new SortedDupList<Settlement>();
 		Int2 startTile = settlement.cityTiles[0];
 
 		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
-		frontierTiles.Insert(3f, startTile);
+		float startDifficulty = 3f;
+		frontierTiles.Insert(startDifficulty, startTile);
 
 		Map2D<float> distMap = new Map2D<float>(map.Width, map.Height);
 
@@ -299,9 +302,9 @@ class RegionsMapGenerator
 				if (terrainMap.GetTerrainMap().GetValueAt(tile).tileType == TerrainTile.TileType.City)
 				{
 					var sett = GetSettlementFromTile(tile);
-					if (!hitSettlements.Contains(sett))
+					if (!hitSettlements.ContainsValue(sett))
 					{
-						hitSettlements.Add(GetSettlementFromTile(tile));
+						hitSettlements.Insert(startDifficulty - currDifficulty, GetSettlementFromTile(tile));
 					}
 					else if (sett == settlement)
 					{
@@ -343,6 +346,23 @@ class RegionsMapGenerator
 			}
 		}
 		return null;
+	}
+
+	private void FightWars()
+	{
+		int numWars = 1;
+		for(int i = 0; i < numWars; i++)
+		{
+			FightWar();
+		}
+	}
+
+	private void FightWar()
+	{
+		for(int i = 0; i < Kingdoms.Count; i++)
+		{
+
+		}
 	}
 
 	private RegionTile TileAt(Int2 pos)
