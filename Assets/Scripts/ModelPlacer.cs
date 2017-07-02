@@ -17,11 +17,11 @@ public class ModelPlacer
 		objectParent = par;
 		foreach (Int2 tile in map.GetMapPoints())
 		{
-			PlaceModelsOnPoint(tile);
+			HandleTile(tile);
 		}
 	}
 
-	private void PlaceModelsOnPoint(Int2 tile)
+	private void HandleTile(Int2 tile)
 	{
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.City)
 			PlaceCityTile(tile);
@@ -47,6 +47,7 @@ public class ModelPlacer
 	private void PlaceSwampTile(Int2 tile)
 	{
 		PlaceObjectsOnTile(tile, Random.Range(0, 4), lookup.Willow);
+		PlaceObjectsOnTile(tile, Random.Range(5, 9), lookup.Rushes);
 		if (Helpers.Odds(0.03f))
 			PlaceObjectsOnTile(tile, 1, lookup.Hovel);
 	}
@@ -102,7 +103,7 @@ public class ModelPlacer
 		}
 		PlaceTurretsOnCorners(tile);
 
-		PlaceObjectsOnTile(tile, Random.Range(10, 15), lookup.Hovel, true);
+		PlaceObjectsOnTileWithBorder(tile, Random.Range(20, 25), lookup.CityHouse, true);
 	}
 
 	private void PlaceTurretsOnCorners(Int2 tile)
@@ -175,6 +176,35 @@ public class ModelPlacer
 			SpawnObjectAtPos(GetRandomPlacementTrans(tile, forcePlacement), objToPlace);
 	}
 
+	private PlacementTrans GetRandomPlacementTrans(Int2 myTile, bool forcePlacement = false)
+	{
+		Vector3 rot = new Vector3(0, Random.Range(0, 360f), 0);
+		return GetRandomPlacementTrans(myTile, rot, forcePlacement);
+	}
+
+	private PlacementTrans GetRandomPlacementTrans(Int2 myTile, Vector3 rot, bool forcePlacement = false)
+	{
+		return new PlacementTrans(new Vector3(Random.Range(myTile.X, myTile.X + 1f), 3f, Random.Range(myTile.Y, myTile.Y + 1f)), rot, forcePlacement);
+	}
+
+	private void PlaceObjectsOnTileWithBorder(Int2 tile, int num, GameObject objToPlace, bool forcePlacement = false)
+	{
+		for (int i = 0; i < num; i++)
+			SpawnObjectAtPos(GetRandomPlacementTransWithBorder(tile, forcePlacement), objToPlace);
+	}
+
+	private PlacementTrans GetRandomPlacementTransWithBorder(Int2 myTile, bool forcePlacement = false)
+	{
+		Vector3 rot = new Vector3(0, Random.Range(0, 360f), 0);
+		return GetRandomPlacementTransWithBorder(myTile, rot, forcePlacement);
+	}
+
+	private PlacementTrans GetRandomPlacementTransWithBorder(Int2 myTile, Vector3 rot, bool forcePlacement = false)
+	{
+		float border = 0.15f;
+		return new PlacementTrans(new Vector3(Random.Range(myTile.X + border, myTile.X + 1f - border), 3f, Random.Range(myTile.Y + border, myTile.Y + 1f - border)), rot, forcePlacement);
+	}
+
 	private PlacementTrans GetEdgePlacementTrans(Int2 myTile, Int2 edgeTile, bool forcePlacement = false)
 	{
 		if ((edgeTile - myTile).Equals(new Int2(0, -1)))
@@ -191,17 +221,6 @@ public class ModelPlacer
 	private PlacementTrans GetCenterPlacementTrans(Int2 myTile, Vector3 rot, bool forcePlacement = false)
 	{
 		return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y + 0.5f), rot);
-	}
-
-	private PlacementTrans GetRandomPlacementTrans(Int2 myTile, bool forcePlacement = false)
-	{
-		Vector3 rot = new Vector3(0, Random.Range(0, 360f), 0);
-		return GetRandomPlacementTrans(myTile, rot, forcePlacement);
-	}
-
-	private PlacementTrans GetRandomPlacementTrans(Int2 myTile, Vector3 rot, bool forcePlacement = false)
-	{
-		return new PlacementTrans(new Vector3(Random.Range(myTile.X, myTile.X + 1f), 3f, Random.Range(myTile.Y, myTile.Y + 1f)), rot, forcePlacement);
 	}
 
 	private void SpawnObjectAtPos(PlacementTrans trans, GameObject obj)
