@@ -143,4 +143,18 @@ public class Settlement
 		}
 		return defensibility;
 	}
+
+	public Int2 GetInfoPlacementPos()
+	{
+		Int2 minCityTile = cityTiles[0];
+		foreach(var tile in cityTiles)
+		{
+			if(tile.Y < minCityTile.Y)
+			{
+				minCityTile = tile;
+			}
+		}
+
+		return minCityTile - new Int2(0, 1);
+	}
 }

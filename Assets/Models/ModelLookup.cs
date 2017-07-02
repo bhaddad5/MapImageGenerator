@@ -18,4 +18,6 @@ public class ModelLookup : MonoBehaviour
 	public GameObject Turret;
 	public GameObject Gates;
 	public GameObject Bridge;
+	public GameObject WoodenWall;
+	public GameObject WoodenGate;
 }

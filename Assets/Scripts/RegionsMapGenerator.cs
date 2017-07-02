@@ -3,7 +3,7 @@ using UnityEngine;
 
 class RegionsMapGenerator
 {
-	List<Kingdom> Kingdoms = new List<Kingdom>();
+	public List<Kingdom> Kingdoms = new List<Kingdom>();
 	Map2D<RegionTile> map;
 	TerrainMapGenerator terrainMap;
 	public int Width { get { return map.Width; } }

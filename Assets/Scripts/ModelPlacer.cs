@@ -8,11 +8,13 @@ public class ModelPlacer
 	Map2D<float> heights;
 	ModelLookup lookup;
 	Transform objectParent;
+	List<Kingdom> kingdoms;
 
-	public void PlaceModels(Map2D<TerrainTile> terrainMap, Map2D<float> heightsMap, ModelLookup lu, Transform par)
+	public void PlaceModels(Map2D<TerrainTile> terrainMap, Map2D<float> heightsMap, List<Kingdom> ks, ModelLookup lu, Transform par)
 	{
 		map = terrainMap;
 		heights = heightsMap;
+		kingdoms = ks;
 		lookup = lu;
 		objectParent = par;
 		foreach (Int2 tile in map.GetMapPoints())
@@ -89,6 +91,60 @@ public class ModelPlacer
 	}
 
 	private void PlaceCityTile(Int2 tile)
+	{
+		Settlement sett = GetSettlementFromTile(tile);
+		List<Settlement.CityTrait> traits = sett.GetCityTraits(map);
+		if (sett.kingdom.culture == CultureDefinitions.Anglo)
+		{
+			if (traits.Contains(Settlement.CityTrait.Small))
+				PlaceSmallAngloCity(tile);
+			if (traits.Contains(Settlement.CityTrait.Medium))
+				PlaceMediumAngloCity(tile);
+			if (traits.Contains(Settlement.CityTrait.Large))
+				PlaceLargeAngloCity(tile);
+		}
+	}
+
+	private Settlement GetSettlementFromTile(Int2 tile)
+	{
+		foreach(var kingdom in kingdoms)
+		{
+			foreach(var sett in kingdom.settlements)
+			{
+				foreach(Int2 t in sett.cityTiles)
+				{
+					if (t.Equals(tile))
+						return sett;
+				}
+			}
+		}
+		return null;
+	}
+
+	private void PlaceSmallAngloCity(Int2 tile)
+	{
+		PlaceObjectsOnTile(tile, Random.Range(20, 25), lookup.Hovel, true);
+	}
+
+	private void PlaceMediumAngloCity(Int2 tile)
+	{
+		foreach (Int2 pt in map.GetAdjacentPoints(tile))
+		{
+			if (TileIsRoad(pt))
+			{
+				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, true), lookup.WoodenGate);
+			}
+			else if (TileIsCityBorder(pt))
+			{
+				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, true), lookup.WoodenWall);
+			}
+		}
+
+		PlaceObjectsOnTileWithBorder(tile, Random.Range(10, 13), lookup.Hovel, true);
+		PlaceObjectsOnTileWithBorder(tile, Random.Range(5, 8), lookup.TownHouse, true);
+	}
+
+	private void PlaceLargeAngloCity(Int2 tile)
 	{
 		foreach(Int2 pt in map.GetAdjacentPoints(tile))
 		{
@@ -208,11 +264,11 @@ public class ModelPlacer
 	private PlacementTrans GetEdgePlacementTrans(Int2 myTile, Int2 edgeTile, bool forcePlacement = false)
 	{
 		if ((edgeTile - myTile).Equals(new Int2(0, -1)))
-			return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y), new Vector3(0, 90f, 0), forcePlacement);
+			return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y), new Vector3(0, -90f, 0), forcePlacement);
 		if ((edgeTile - myTile).Equals(new Int2(0, 1)))
 			return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y + 1), new Vector3(0, 90f, 0), forcePlacement);
 		if ((edgeTile - myTile).Equals(new Int2(1, 0)))
-			return new PlacementTrans(new Vector3(myTile.X + 1, 2f, myTile.Y + .5f), new Vector3(0, 0, 0), forcePlacement);
+			return new PlacementTrans(new Vector3(myTile.X + 1, 2f, myTile.Y + .5f), new Vector3(0, 180, 0), forcePlacement);
 		if ((edgeTile - myTile).Equals(new Int2(-1, 0)))
 			return new PlacementTrans(new Vector3(myTile.X, 2f, myTile.Y + .5f), new Vector3(0, 0, 0), forcePlacement);
 		return null;

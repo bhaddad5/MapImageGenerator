@@ -109,7 +109,7 @@ public class MapBuilder : MonoBehaviour
 		yield return null;
 
 		ModelPlacer mp = new ModelPlacer();
-		mp.PlaceModels(terrainMapGenerator.GetTerrainMap(), heightGenerator.GetHeightMap(),ModelLookup, transform);
+		mp.PlaceModels(terrainMapGenerator.GetTerrainMap(), heightGenerator.GetHeightMap(), regionsMap.Kingdoms, ModelLookup, transform);
 
 		displayText.text = "Displaying Heraldry";
 		yield return null;
@@ -153,7 +153,7 @@ public class MapBuilder : MonoBehaviour
 			{
 				GameObject tag = GameObject.Instantiate(SettlementInfoPrefab);
 				tag.transform.SetParent(terrainMeshDisplay.transform);
-				Int2 placementPos = sett.cityTiles[0];
+				Int2 placementPos = sett.GetInfoPlacementPos();
 				tag.transform.localPosition = new Vector3(placementPos.X * tileWidth, .5f, placementPos.Y * tileWidth);
 				tag.GetComponent<SettlementInfoController>().settlement = sett;
 			}
