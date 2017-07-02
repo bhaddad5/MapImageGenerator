@@ -153,9 +153,9 @@ public class MapBuilder : MonoBehaviour
 			{
 				GameObject tag = GameObject.Instantiate(SettlementInfoPrefab);
 				tag.transform.SetParent(terrainMeshDisplay.transform);
-				Int2 placementPos = r.settlements[0].cityTiles[0];
+				Int2 placementPos = sett.cityTiles[0];
 				tag.transform.localPosition = new Vector3(placementPos.X * tileWidth, .5f, placementPos.Y * tileWidth);
-				tag.GetComponent<SettlementInfoController>().settlement = r.settlements[0];
+				tag.GetComponent<SettlementInfoController>().settlement = sett;
 			}
 		}
 	}

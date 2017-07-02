@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 class RegionsMapGenerator
@@ -103,7 +100,7 @@ class RegionsMapGenerator
 		{
 			if (regionsIndex >= regions.Count)
 			{
-				Console.WriteLine("We ran out of regions!");
+				Debug.Log("We ran out of regions!");
 				break;
 			}
 
@@ -350,7 +347,7 @@ class RegionsMapGenerator
 
 	private void FightWars()
 	{
-		int numWars = 1;
+		int numWars = 3;
 		for(int i = 0; i < numWars; i++)
 		{
 			FightWar();
@@ -359,9 +356,29 @@ class RegionsMapGenerator
 
 	private void FightWar()
 	{
+		foreach(var kingdom in Kingdoms)
+		{
+			Settlement closestSett = kingdom.ClosestEnemySettlement();
+			if (closestSett != null)
+			{
+				float attackPower = kingdom.Strength(terrainMap.GetTerrainMap()) * Random.Range(.75f, 1.25f);
+				float defenderPower = (closestSett.kingdom.Strength(terrainMap.GetTerrainMap()) + closestSett.GetSettlementDefensibility(terrainMap.GetTerrainMap())) * Random.Range(.75f, 1.25f);
+
+				if (attackPower > defenderPower)
+				{
+					kingdom.settlements.Add(closestSett);
+					closestSett.kingdom.settlements.Remove(closestSett);
+					closestSett.kingdom = kingdom;
+				}
+			}
+		}
+
 		for(int i = 0; i < Kingdoms.Count; i++)
 		{
-
+			if(Kingdoms[i].settlements.Count == 0)
+			{
+				Kingdoms.RemoveAt(i);
+			}
 		}
 	}
 

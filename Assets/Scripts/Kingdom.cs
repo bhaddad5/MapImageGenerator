@@ -65,6 +65,27 @@ public class Kingdom
 		return strength;
 	}
 
+	public Settlement ClosestEnemySettlement()
+	{
+		Settlement closest = null;
+		float closestDist = 10000f;
+		foreach(var sett in settlements)
+		{
+			foreach(var adj in sett.adjacentSettlements.GetList())
+			{
+				if (!settlements.Contains(adj.Value))
+				{
+					if(closest == null || adj.Key < closestDist)
+					{
+						closest = adj.Value;
+						closestDist = adj.Key;
+					}
+				}
+			}
+		}
+		return closest;
+	}
+
 	private Color GetHeraldryColor()
 	{
 		Color c = RandomColor();
