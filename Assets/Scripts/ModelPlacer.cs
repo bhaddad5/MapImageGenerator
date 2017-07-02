@@ -24,73 +24,70 @@ public class ModelPlacer
 	private void PlaceModelsOnPoint(Int2 tile)
 	{
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.City)
-			PlaceCityOnTile(tile);
+			PlaceCityTile(tile);
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Forest)
-			PlaceForestOnTile(tile);
+			PlaceForestTile(tile);
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Swamp)
-			PlaceSwampOnTile(tile);
+			PlaceSwampTile(tile);
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Grass)
-			PlaceWildernessOnTile(tile);
+			PlaceWildernessTile(tile);
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Fertile)
-			PlaceFarmsOnTile(tile);
+			PlaceFarmTile(tile);
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Road)
-			PlaceBridgesOnTile(tile);
+			PlaceRoadTile(tile);
 	}
 
-	private void PlaceForestOnTile(Int2 tile)
+	private void PlaceForestTile(Int2 tile)
 	{
-		PlaceObjectsOnTile(tile, Random.Range(7, 10), lookup.PineTree, true);
+		PlaceObjectsOnTile(tile, Random.Range(7, 10), lookup.PineTree);
 		if (Helpers.Odds(0.05f))
 			PlaceObjectsOnTile(tile, 1, lookup.Hovel);
 	}
 
-	private void PlaceSwampOnTile(Int2 tile)
+	private void PlaceSwampTile(Int2 tile)
 	{
 		PlaceObjectsOnTile(tile, Random.Range(0, 4), lookup.Willow);
 		if (Helpers.Odds(0.03f))
 			PlaceObjectsOnTile(tile, 1, lookup.Hovel);
 	}
 
-	private void PlaceWildernessOnTile(Int2 tile)
+	private void PlaceWildernessTile(Int2 tile)
 	{
 		PlaceObjectsOnTile(tile, Random.Range(0, 3), lookup.PineTree);
 		if (Helpers.Odds(0.1f))
 			PlaceObjectsOnTile(tile, 1, lookup.Hovel);
 	}
 
-	private void PlaceFarmsOnTile(Int2 tile)
+	private void PlaceFarmTile(Int2 tile)
 	{
 		if (Helpers.Odds(0.4f))
 			PlaceObjectsOnTile(tile, 1, lookup.Hovel);
 		PlaceObjectsOnTile(tile, Random.Range(10, 15), lookup.WheatField);
 	}
 
-	private void PlaceBridgesOnTile(Int2 tile)
+	private void PlaceRoadTile(Int2 tile)
 	{
 		if(heights.GetValueAt(tile) < Globals.MinGroundHeight)
 		{
-			var bridge = GameObject.Instantiate(lookup.Bridge, objectParent);
-			bridge.transform.position = new Vector3(tile.X + 0.5f, Globals.MinGroundHeight*2f, tile.Y + 0.5f);
-
-			if ((map.GetValueAt(tile + new Int2(-1, 0)).tileType == TerrainTile.TileType.Road ||
-				map.GetValueAt(tile + new Int2(-1, 0)).tileType == TerrainTile.TileType.City) &&
-				(map.GetValueAt(tile + new Int2(1, 0)).tileType == TerrainTile.TileType.Road ||
-				map.GetValueAt(tile + new Int2(1, 0)).tileType == TerrainTile.TileType.City))
+			foreach(var t in map.GetAdjacentPoints(tile))
 			{
-				bridge.transform.eulerAngles = new Vector3(0f, 0f, 0f);
+				if(map.GetValueAt(t).tileType == TerrainTile.TileType.Road ||
+					map.GetValueAt(t).tileType == TerrainTile.TileType.City)
+				{
+					if (heights.GetValueAt(t) >= Globals.MinGroundHeight)
+					{
+						Vector3 rot = new Vector3();
+						if (t.Y != tile.Y)
+							rot = new Vector3(0, 90f, 0);
+						SpawnObjectAtPos(GetCenterPlacementTrans(tile, rot, true), lookup.Bridge);
+						break;
+					}
+				}
 			}
-			else if ((map.GetValueAt(tile + new Int2(0, -1)).tileType == TerrainTile.TileType.Road ||
-				map.GetValueAt(tile + new Int2(0, -1)).tileType == TerrainTile.TileType.City) &&
-				(map.GetValueAt(tile + new Int2(0, 1)).tileType == TerrainTile.TileType.Road ||
-				map.GetValueAt(tile + new Int2(0, 1)).tileType == TerrainTile.TileType.City))
-			{
-				bridge.transform.eulerAngles = new Vector3(0f, 90f, 0f);
-			}
-			else GameObject.Destroy(bridge);
 		}
 	}
 
-	private void PlaceCityOnTile(Int2 tile)
+	private void PlaceCityTile(Int2 tile)
 	{
 		foreach(Int2 pt in map.GetAdjacentPoints(tile))
 		{
@@ -106,6 +103,22 @@ public class ModelPlacer
 		PlaceTurretsOnCorners(tile);
 
 		PlaceObjectsOnTile(tile, Random.Range(10, 15), lookup.Hovel, true);
+	}
+
+	private void PlaceTurretsOnCorners(Int2 tile)
+	{
+		foreach(var t in map.GetDiagonalPoints(tile))
+			TryPlaceTurret(tile, t);
+	}
+
+	private void TryPlaceTurret(Int2 tile, Int2 diagTile)
+	{
+		if (TileIsCityBorder(diagTile) || 
+			TileIsCityBorder(tile + new Int2(diagTile.X - tile.X, 0)) || 
+			TileIsCityBorder(tile + new Int2(0, diagTile.Y - tile.Y)))
+		{
+			SpawnObjectAtPos(GetPlacementBetweenTileCenters(tile, diagTile, true), lookup.Turret);
+		}
 	}
 
 	private bool TileIsRoad(Int2 tile)
@@ -151,6 +164,11 @@ public class ModelPlacer
 		}
 	}
 
+	private PlacementTrans GetPlacementBetweenTileCenters(Int2 tile1, Int2 tile2, bool forcePlacement = false)
+	{
+		return new PlacementTrans(new Vector3(tile1.X + ((tile2.X - tile1.X) / 2f) + .5f, 2f, tile1.Y + ((tile2.Y - tile1.Y) / 2f) + .5f), Vector3.zero, forcePlacement);
+	}
+
 	private void PlaceObjectsOnTile(Int2 tile, int num, GameObject objToPlace, bool forcePlacement = false)
 	{
 		for (int i = 0; i < num; i++)
@@ -168,6 +186,11 @@ public class ModelPlacer
 		if ((edgeTile - myTile).Equals(new Int2(-1, 0)))
 			return new PlacementTrans(new Vector3(myTile.X, 2f, myTile.Y + .5f), new Vector3(0, 0, 0), forcePlacement);
 		return null;
+	}
+
+	private PlacementTrans GetCenterPlacementTrans(Int2 myTile, Vector3 rot, bool forcePlacement = false)
+	{
+		return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y + 0.5f), rot);
 	}
 
 	private PlacementTrans GetRandomPlacementTrans(Int2 myTile, bool forcePlacement = false)
@@ -188,27 +211,6 @@ public class ModelPlacer
 			GameObject newObj = GameObject.Instantiate(obj, objectParent);
 			newObj.transform.position = trans.pos;
 			newObj.transform.eulerAngles = trans.rot;
-		}
-	}
-
-	private void PlaceTurretsOnCorners(Int2 tile)
-	{
-		TryPlaceTurret(new Vector3(tile.X, 2f, tile.Y), tile + new Int2(-1, -1), tile + new Int2(0, -1), tile + new Int2(-1, 0));
-		TryPlaceTurret(new Vector3(tile.X+1, 2f, tile.Y), tile + new Int2(1, -1), tile + new Int2(0, -1), tile + new Int2(1, 0));
-		TryPlaceTurret(new Vector3(tile.X, 2f, tile.Y+1), tile + new Int2(-1, 1), tile + new Int2(0, 1), tile + new Int2(-1, 0));
-		TryPlaceTurret(new Vector3(tile.X+1, 2f, tile.Y+1), tile + new Int2(1, 1), tile + new Int2(0, 1), tile + new Int2(1, 0));
-	}
-
-	private void TryPlaceTurret(Vector3 pos, Int2 check1, Int2 check2, Int2 check3)
-	{
-		if(TileIsCityBorder(check1) || TileIsCityBorder(check2) || TileIsCityBorder(check3))
-		{
-			RaycastHit hit;
-			if(Physics.Raycast(new Ray(pos, Vector3.down), out hit))
-			{
-				GameObject turret = GameObject.Instantiate(lookup.Turret, objectParent);
-				turret.transform.position = hit.point;
-			}
 		}
 	}
 }

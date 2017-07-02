@@ -71,6 +71,11 @@ public class Int2
 	{
 		return new Int2(a.X * b, a.Y * b);
 	}
+
+	public override string ToString()
+	{
+		return X + ", " + Y;
+	}
 }
 
 public class SortedDupList<T>
