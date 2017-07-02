@@ -5,6 +5,15 @@ using UnityEngine;
 
 public class Kingdom
 {
+	public enum KingdomTrait
+	{
+		OneCity,
+		Small,
+		Medium,
+		Large,
+		CapitolPort
+	}
+
 	public Culture culture;
 	public List<Settlement> settlements = new List<Settlement>();
 
@@ -36,7 +45,7 @@ public class Kingdom
 			sett.name = names.Value;
 			if(sett == settlements[0])
 			{
-				SetKingdomName(names.Key);
+				SetKingdomName(names.Key, terrainMap);
 			}
 		}
 		if(settlements.Count > 0)
@@ -46,9 +55,9 @@ public class Kingdom
 		}
 	}
 
-	private void SetKingdomName(string coreSettlementName)
+	private void SetKingdomName(string coreSettlementName, Map2D<TerrainTile> terrainMap)
 	{
-		name = coreSettlementName;
+		name = culture.GetKingdomName(coreSettlementName, GetKingdomTraits(terrainMap));
 	}
 
 	public void PrintKingdomInfo(Map2D<TerrainTile> terrainMap)
@@ -95,6 +104,29 @@ public class Kingdom
 			}
 		}
 		return closest;
+	}
+
+	public List<KingdomTrait> GetKingdomTraits(Map2D<TerrainTile> terrainMap)
+	{
+		List<KingdomTrait> traits = new List<KingdomTrait>();
+		if (settlements.Count == 1)
+			traits.Add(KingdomTrait.OneCity);
+		else if (settlements.Count <= 3)
+			traits.Add(KingdomTrait.Small);
+		else if (settlements.Count <= 5)
+			traits.Add(KingdomTrait.Medium);
+		else if (settlements.Count > 5)
+			traits.Add(KingdomTrait.Large);
+
+		if(settlements.Count > 0)
+		{
+			var capitolTraits = settlements[0].GetCityTraits(terrainMap);
+			if (capitolTraits.Contains(Settlement.CityTrait.Port))
+			{
+				traits.Add(KingdomTrait.CapitolPort);
+			}
+		}
+		return traits;
 	}
 
 	private Color GetHeraldryColor()

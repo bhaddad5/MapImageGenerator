@@ -2,26 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NameOption
+public class SettlementNameOption
 {
 	public List<Settlement.CityTrait> constraints;
 	public string nameChunk;
 	public int prevelance;
 
-	public NameOption(string str, List<Settlement.CityTrait> constr, int odds = 1)
+	public SettlementNameOption(string str, List<Settlement.CityTrait> constr, int odds = 1)
 	{
 		nameChunk = str;
 		constraints = constr;
 		prevelance = odds;
 	}
 
-	public NameOption(string str, int odds = 1)
+	public SettlementNameOption(string str, int odds = 1)
 	{
 		nameChunk = str;
 		constraints = new List<Settlement.CityTrait>();
 		prevelance = odds;
 	}
 }
+
+public class KingdomNameOption
+{
+	public List<Kingdom.KingdomTrait> constraints;
+	public string nameChunk;
+	public int prevelance;
+
+	public KingdomNameOption(string str, List<Kingdom.KingdomTrait> constr, int odds = 1)
+	{
+		nameChunk = str;
+		constraints = constr;
+		prevelance = odds;
+	}
+
+	public KingdomNameOption(string str, int odds = 1)
+	{
+		nameChunk = str;
+		constraints = new List<Kingdom.KingdomTrait>();
+		prevelance = odds;
+	}
+}
+
 
 public class HeraldryOption
 {
@@ -45,15 +67,48 @@ public class HeraldryOption
 
 public class Culture
 {
-	public List<NameOption> prefixes;
-	public List<NameOption> suffixes;
-	public List<NameOption> areaInfo;
+	public List<SettlementNameOption> prefixes;
+	public List<SettlementNameOption> suffixes;
+	public List<SettlementNameOption> areaInfo;
+
+	public List<KingdomNameOption> kingdomTitles;
 
 	public List<HeraldryOption> heraldryBackground;
 	public List<HeraldryOption> heraldryForeground;
 
-	private HashSet<string> namesCreated = new HashSet<string>() { "NoneFound" };
+	public string GetKingdomName(string coreName, List<Kingdom.KingdomTrait> traits)
+	{
+		var kingdomTitle = GetKingdomNameChunk(kingdomTitles, traits);
+		return kingdomTitle.Replace("%n", coreName);
+	}
 
+	private string GetKingdomNameChunk(List<KingdomNameOption> options, List<Kingdom.KingdomTrait> constraints)
+	{
+		List<KingdomNameOption> usableOptions = new List<KingdomNameOption>();
+		foreach (var option in options)
+		{
+			bool optionGood = true;
+			foreach (var constraint in option.constraints)
+			{
+				if (!constraints.Contains(constraint))
+				{
+					optionGood = false;
+					break;
+				}
+			}
+			if (optionGood)
+			{
+				for (int i = 0; i < option.prevelance; i++)
+					usableOptions.Add(option);
+			}
+		}
+
+		if (usableOptions.Count > 0)
+			return usableOptions[Random.Range(0, usableOptions.Count)].nameChunk;
+		else return "NO SUITABLE NAME FOUND!!!";
+	}
+
+	private HashSet<string> settlementNamesCreated = new HashSet<string>() { "NoneFound" };
 	public KeyValuePair<string, string> GetSettlementName(List<Settlement.CityTrait> constraints)
 	{
 		string coreName = "NoneFound";
@@ -61,7 +116,7 @@ public class Culture
 		int sanity = 20;
 		int currSanity = 0;
 
-		while(namesCreated.Contains(coreName) && currSanity <= sanity)
+		while(settlementNamesCreated.Contains(coreName) && currSanity <= sanity)
 		{
 			coreName = GetNameChunk(prefixes, constraints) + GetNameChunk(suffixes, constraints);
 			string area = GetNameChunk(areaInfo, constraints);
@@ -72,9 +127,9 @@ public class Culture
 		return new KeyValuePair<string, string>(coreName, finalName);
 	}
 
-	private string GetNameChunk(List<NameOption> options, List<Settlement.CityTrait> constraints)
+	private string GetNameChunk(List<SettlementNameOption> options, List<Settlement.CityTrait> constraints)
 	{
-		List<NameOption> usableOptions = new List<NameOption>();
+		List<SettlementNameOption> usableOptions = new List<SettlementNameOption>();
 		foreach (var option in options)
 		{
 			bool optionGood = true;
