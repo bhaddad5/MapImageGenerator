@@ -8,6 +8,7 @@ public class Kingdom
 	public Culture culture;
 	public List<Settlement> settlements = new List<Settlement>();
 
+	public string name;
 	public Color mainColor;
 	public Color secondaryColor;
 	public Color tertiaryColor;
@@ -31,13 +32,23 @@ public class Kingdom
 		foreach (var sett in settlements)
 		{
 			var subCityTraits = sett.GetCityTraits(terrainMap);
-			sett.name = culture.GetSettlementName(subCityTraits);
+			var names = culture.GetSettlementName(subCityTraits);
+			sett.name = names.Value;
+			if(sett == settlements[0])
+			{
+				SetKingdomName(names.Key);
+			}
 		}
 		if(settlements.Count > 0)
 		{
 			var cityTraits = settlements[0].GetCityTraits(terrainMap);
 			heraldry = culture.GetHeraldry(cityTraits, this);
 		}
+	}
+
+	private void SetKingdomName(string coreSettlementName)
+	{
+		name = coreSettlementName;
 	}
 
 	public void PrintKingdomInfo(Map2D<TerrainTile> terrainMap)

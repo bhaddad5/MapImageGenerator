@@ -347,7 +347,7 @@ class RegionsMapGenerator
 
 	private void FightWars()
 	{
-		int numWars = 3;
+		int numWars = 5;
 		for(int i = 0; i < numWars; i++)
 		{
 			FightWar();

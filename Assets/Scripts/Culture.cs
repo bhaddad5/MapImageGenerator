@@ -54,21 +54,22 @@ public class Culture
 
 	private HashSet<string> namesCreated = new HashSet<string>() { "NoneFound" };
 
-	public string GetSettlementName(List<Settlement.CityTrait> constraints)
+	public KeyValuePair<string, string> GetSettlementName(List<Settlement.CityTrait> constraints)
 	{
-		string finalName = "NoneFound";
+		string coreName = "NoneFound";
+		string finalName = "";
 		int sanity = 20;
 		int currSanity = 0;
 
-		while(namesCreated.Contains(finalName) && currSanity <= sanity)
+		while(namesCreated.Contains(coreName) && currSanity <= sanity)
 		{
-			string name = GetNameChunk(prefixes, constraints) + GetNameChunk(suffixes, constraints);
+			coreName = GetNameChunk(prefixes, constraints) + GetNameChunk(suffixes, constraints);
 			string area = GetNameChunk(areaInfo, constraints);
-			finalName = area.Replace("%n", name);
+			finalName = area.Replace("%n", coreName);
 			currSanity++;
 		}
 
-		return finalName;
+		return new KeyValuePair<string, string>(coreName, finalName);
 	}
 
 	private string GetNameChunk(List<NameOption> options, List<Settlement.CityTrait> constraints)
