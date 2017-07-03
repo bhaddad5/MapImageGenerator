@@ -6,19 +6,19 @@ using UnityEngine;
 
 public class RegionTile
 {
-	public Kingdom region;
+	public Settlement settlement;
 	public float holdingStrength;
 
-	public RegionTile(Kingdom r)
+	public RegionTile(Settlement s)
 	{
-		region = r;
+		settlement = s;
 	}
 
-	public bool TrySetRegion(Kingdom r, float strength)
+	public bool TrySetRegion(Settlement s, float strength)
 	{
 		if(strength >= holdingStrength)
 		{
-			region = r;
+			settlement = s;
 			holdingStrength = strength;
 			return true;
 		}
@@ -27,7 +27,7 @@ public class RegionTile
 
 	public Color GetColor()
 	{
-		return region.mainColor;
+		return settlement.kingdom.mainColor;
 	}
 }
 

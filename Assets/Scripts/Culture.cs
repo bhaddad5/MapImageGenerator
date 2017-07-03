@@ -182,11 +182,11 @@ public class Culture
 
 	private Color GetActualColor(Color inColor, Kingdom region)
 	{
-		if (inColor == Color.red)
+		if (inColor.r == 1f && inColor.g == 0f && inColor.b == 0f)
 			return region.mainColor;
-		if (inColor == Color.blue)
+		if (inColor.r == 0f && inColor.g == 1f && inColor.b == 0f)
 			return region.secondaryColor;
-		if (inColor == Color.green)
+		if (inColor.r == 0f && inColor.g == 0f && inColor.b == 1f)
 			return region.tertiaryColor;
 		else return inColor;
 	}

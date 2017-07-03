@@ -118,7 +118,7 @@ public class MapBuilder : MonoBehaviour
 		yield return null;
 
 		ModelPlacer mp = new ModelPlacer();
-		mp.PlaceModels(terrainMapGenerator.GetTerrainMap(), heightGenerator.GetHeightMap(), regionsMap.Kingdoms, ModelLookup, transform);
+		mp.PlaceModels(terrainMapGenerator.GetTerrainMap(), heightGenerator.GetHeightMap(), regionsMap.GetRegionsMap(), regionsMap.Kingdoms, ModelLookup, transform);
 
 		displayText.text = "Displaying Heraldry";
 		yield return null;
@@ -156,7 +156,7 @@ public class MapBuilder : MonoBehaviour
 	private void AddSettlementInfoPanels(RegionsMapGenerator regionsMap)
 	{
 		float tileWidth = 1f;
-		foreach(Kingdom r in regionsMap.GetRegions())
+		foreach(Kingdom r in regionsMap.GetKingdoms())
 		{
 			foreach(var sett in r.settlements)
 			{

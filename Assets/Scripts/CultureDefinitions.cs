@@ -189,11 +189,13 @@ public static class CultureDefinitions
 		{
 			new HeraldryOption("Dwarf/Heraldry/Backgrounds/Dwarf_Back_0"),
 			new HeraldryOption("Dwarf/Heraldry/Backgrounds/Dwarf_Back_1"),
+			new HeraldryOption("Dwarf/Heraldry/Backgrounds/Dwarf_Back_2"),
 		},
 
 		heraldryForeground = new List<HeraldryOption>()
 		{
 			new HeraldryOption("Dwarf/Heraldry/Symbols/Anvil"),
+			new HeraldryOption("Dwarf/Heraldry/Symbols/Dragon"),
 		},
 		tileDifficulties = new Dictionary<TerrainTile.TileType, float>()
 		{

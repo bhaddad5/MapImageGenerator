@@ -6,15 +6,17 @@ public class ModelPlacer
 {
 	Map2D<TerrainTile> map;
 	Map2D<float> heights;
+	Map2D<RegionTile> regions;
 	ModelLookup lookup;
 	Transform objectParent;
 	List<Kingdom> kingdoms;
 
-	public void PlaceModels(Map2D<TerrainTile> terrainMap, Map2D<float> heightsMap, List<Kingdom> ks, ModelLookup lu, Transform par)
+	public void PlaceModels(Map2D<TerrainTile> terrainMap, Map2D<float> heightsMap, Map2D<RegionTile> regionsMap, List<Kingdom> ks, ModelLookup lu, Transform par)
 	{
 		map = terrainMap;
 		heights = heightsMap;
 		kingdoms = ks;
+		regions = regionsMap;
 		lookup = lu;
 		objectParent = par;
 		foreach (Int2 tile in map.GetMapPoints())
@@ -25,50 +27,79 @@ public class ModelPlacer
 
 	private void HandleTile(Int2 tile)
 	{
+		Culture culture = regions.GetValueAt(tile).settlement.kingdom.culture;
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.City)
-			PlaceCityTile(tile);
+			PlaceCityTile(tile, culture);
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Forest)
-			PlaceForestTile(tile);
+			PlaceForestTile(tile, culture);
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Swamp)
-			PlaceSwampTile(tile);
+			PlaceSwampTile(tile, culture);
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Grass)
-			PlaceWildernessTile(tile);
+			PlaceWildernessTile(tile, culture);
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Fertile)
-			PlaceFarmTile(tile);
+			PlaceFarmTile(tile, culture);
 		if (map.GetValueAt(tile).tileType == TerrainTile.TileType.Road)
-			PlaceRoadTile(tile);
+			PlaceRoadTile(tile, culture);
 	}
 
-	private void PlaceForestTile(Int2 tile)
+	private void PlaceForestTile(Int2 tile, Culture culture)
 	{
 		PlaceObjectsOnTile(tile, Random.Range(7, 10), lookup.PineTree);
-		if (Helpers.Odds(0.05f))
-			PlaceObjectsOnTile(tile, 1, lookup.Hovel);
+		if (culture == CultureDefinitions.Anglo)
+		{
+			if (Helpers.Odds(0.05f))
+				PlaceObjectsOnTile(tile, 1, lookup.Hovel);
+		}
+		else if (culture == CultureDefinitions.Dwarf)
+		{
+
+		}
 	}
 
-	private void PlaceSwampTile(Int2 tile)
+	private void PlaceSwampTile(Int2 tile, Culture culture)
 	{
 		PlaceObjectsOnTile(tile, Random.Range(0, 4), lookup.Willow);
 		PlaceObjectsOnTile(tile, Random.Range(5, 9), lookup.Rushes);
-		if (Helpers.Odds(0.03f))
-			PlaceObjectsOnTile(tile, 1, lookup.Hovel);
+		if (culture == CultureDefinitions.Anglo)
+		{
+			if (Helpers.Odds(0.03f))
+				PlaceObjectsOnTile(tile, 1, lookup.Hovel);
+		}
+		else if (culture == CultureDefinitions.Dwarf)
+		{
+
+		}
 	}
 
-	private void PlaceWildernessTile(Int2 tile)
+	private void PlaceWildernessTile(Int2 tile, Culture culture)
 	{
 		PlaceObjectsOnTile(tile, Random.Range(0, 3), lookup.PineTree);
-		if (Helpers.Odds(0.1f))
-			PlaceObjectsOnTile(tile, 1, lookup.Hovel);
+		if (culture == CultureDefinitions.Anglo)
+		{
+			if (Helpers.Odds(0.1f))
+				PlaceObjectsOnTile(tile, 1, lookup.Hovel);
+		}
+		else if (culture == CultureDefinitions.Dwarf)
+		{
+
+		}
 	}
 
-	private void PlaceFarmTile(Int2 tile)
+	private void PlaceFarmTile(Int2 tile, Culture culture)
 	{
-		if (Helpers.Odds(0.4f))
-			PlaceObjectsOnTile(tile, 1, lookup.Hovel);
 		PlaceObjectsOnTile(tile, Random.Range(10, 15), lookup.WheatField);
+		if (culture == CultureDefinitions.Anglo)
+		{
+			if (Helpers.Odds(0.4f))
+				PlaceObjectsOnTile(tile, 1, lookup.Hovel);
+		}
+		else if(culture == CultureDefinitions.Dwarf)
+		{
+			
+		}
 	}
 
-	private void PlaceRoadTile(Int2 tile)
+	private void PlaceRoadTile(Int2 tile, Culture culture)
 	{
 		if(heights.GetValueAt(tile) < Globals.MinGroundHeight)
 		{
@@ -90,11 +121,11 @@ public class ModelPlacer
 		}
 	}
 
-	private void PlaceCityTile(Int2 tile)
+	private void PlaceCityTile(Int2 tile, Culture culture)
 	{
 		Settlement sett = GetSettlementFromTile(tile);
 		List<Settlement.CityTrait> traits = sett.GetCityTraits(map);
-		if (sett.kingdom.culture == CultureDefinitions.Anglo)
+		if (culture == CultureDefinitions.Anglo)
 		{
 			if (traits.Contains(Settlement.CityTrait.Small))
 				PlaceSmallAngloCity(tile);
@@ -102,6 +133,10 @@ public class ModelPlacer
 				PlaceMediumAngloCity(tile);
 			if (traits.Contains(Settlement.CityTrait.Large))
 				PlaceLargeAngloCity(tile);
+		}
+		else if (culture == CultureDefinitions.Dwarf)
+		{
+
 		}
 	}
 

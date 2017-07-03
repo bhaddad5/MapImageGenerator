@@ -30,14 +30,14 @@ public class Settlement
 		kingdom = k;
 	}
 
-	public void ExpandSettlement(float regionValue, TerrainMapGenerator terrainTiles, Map2D<RegionTile> regionsMap, Kingdom myRegion)
+	public void ExpandSettlement(float regionValue, TerrainMapGenerator terrainTiles, Map2D<RegionTile> regionsMap, Settlement mySettlement)
 	{
 		terrainTiles.SetValue(cityTiles[0], new TerrainTile(TerrainTile.TileType.City));
 
 		float valuePerNewTile = 10;
 		while (cityTiles.Count < regionValue / valuePerNewTile)
 		{
-			var expansionTiles = GetPossibleExpnasionTiles(terrainTiles, regionsMap, myRegion);
+			var expansionTiles = GetPossibleExpnasionTiles(terrainTiles, regionsMap, mySettlement);
 			if (expansionTiles.Count == 0)
 				break;
 			cityTiles.Add(expansionTiles.TopValue());
@@ -45,7 +45,7 @@ public class Settlement
 		}
 	}
 
-	private SortedDupList<Int2> GetPossibleExpnasionTiles(TerrainMapGenerator terrainTiles, Map2D<RegionTile> regionsMap, Kingdom myRegion)
+	private SortedDupList<Int2> GetPossibleExpnasionTiles(TerrainMapGenerator terrainTiles, Map2D<RegionTile> regionsMap, Settlement settlement)
 	{
 		SortedDupList<Int2> possibleExpansions = new SortedDupList<Int2>();
 		foreach (Int2 cityTile in cityTiles)
@@ -58,9 +58,9 @@ public class Settlement
 					neighborType != TerrainTile.TileType.Ocean &&
 					neighborType != TerrainTile.TileType.River &&
 					neighborType != TerrainTile.TileType.Mountain &&
-					regionsMap.GetValueAt(neighbor).region == myRegion)
+					regionsMap.GetValueAt(neighbor).settlement == settlement)
 				{
-					possibleExpansions.Insert(terrainTiles.TileAreaValue(myRegion.culture, neighbor, true), neighbor);
+					possibleExpansions.Insert(terrainTiles.TileAreaValue(settlement.kingdom.culture, neighbor, true), neighbor);
 				}
 			}
 		}
