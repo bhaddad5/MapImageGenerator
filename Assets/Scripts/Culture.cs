@@ -67,6 +67,9 @@ public class HeraldryOption
 
 public class Culture
 {
+	public float AttackMultiplier;
+	public float DefenseMultiplier;
+
 	public List<SettlementNameOption> prefixes;
 	public List<SettlementNameOption> suffixes;
 	public List<SettlementNameOption> areaInfo;

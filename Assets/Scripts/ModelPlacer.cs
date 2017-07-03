@@ -200,22 +200,9 @@ public class ModelPlacer
 				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, true), lookup.Wall);
 			}
 		}
-		PlaceTurretsOnCorners(tile);
+		PlaceTurretsOnCorners(tile, lookup.Turret);
 
 		PlaceObjectsOnTileWithBorder(tile, Random.Range(20, 25), lookup.TownHouse);
-	}
-
-	private void PlaceTurretsOnCorners(Int2 tile)
-	{
-		foreach (var t in map.GetDiagonalPoints(tile))
-		{
-			if (TileIsCityBorder(t) ||
-			TileIsCityBorder(tile + new Int2(t.X - tile.X, 0)) ||
-			TileIsCityBorder(tile + new Int2(0, t.Y - tile.Y)))
-			{
-				SpawnObjectAtPos(GetPlacementBetweenTileCenters(tile, t, true), lookup.Turret);
-			}
-		}
 	}
 
 	private void PlaceSmallDwarfCity(Int2 tile)
@@ -225,11 +212,24 @@ public class ModelPlacer
 
 	private void PlaceMediumDwarfCity(Int2 tile)
 	{
-		PlaceObjectsOnTileWithBorder(tile, Random.Range(20, 25), lookup.DwarfHouse);
+		PlaceLargeDwarfCity(tile);
 	}
 
 	private void PlaceLargeDwarfCity(Int2 tile)
 	{
+		foreach (Int2 pt in map.GetAdjacentPoints(tile))
+		{
+			if (TileIsRoad(pt))
+			{
+				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, true), lookup.DwarfGates);
+			}
+			else if (TileIsCityBorder(pt))
+			{
+				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, true), lookup.DwarfWall);
+			}
+		}
+		PlaceTurretsOnCorners(tile, lookup.DwarfTower);
+
 		PlaceObjectsOnTileWithBorder(tile, Random.Range(20, 25), lookup.DwarfHouse);
 	}
 
@@ -245,6 +245,20 @@ public class ModelPlacer
 			map.GetValueAt(tile).tileType != TerrainTile.TileType.Ocean &&
 			map.GetValueAt(tile).tileType != TerrainTile.TileType.River;
 	}
+
+	private void PlaceTurretsOnCorners(Int2 tile, GameObject turret)
+	{
+		foreach (var t in map.GetDiagonalPoints(tile))
+		{
+			if (TileIsCityBorder(t) ||
+			TileIsCityBorder(tile + new Int2(t.X - tile.X, 0)) ||
+			TileIsCityBorder(tile + new Int2(0, t.Y - tile.Y)))
+			{
+				SpawnObjectAtPos(GetPlacementBetweenTileCenters(tile, t, true), turret);
+			}
+		}
+	}
+
 
 
 

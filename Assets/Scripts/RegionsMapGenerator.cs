@@ -358,8 +358,8 @@ class RegionsMapGenerator
 			Settlement closestSett = kingdom.ClosestEnemySettlement();
 			if (closestSett != null)
 			{
-				float attackPower = kingdom.Strength(terrainMap.GetTerrainMap()) * Random.Range(.75f, 1.25f);
-				float defenderPower = (closestSett.kingdom.Strength(terrainMap.GetTerrainMap()) + closestSett.GetSettlementDefensibility(terrainMap.GetTerrainMap())) * Random.Range(.75f, 1.25f);
+				float attackPower = kingdom.Strength(terrainMap.GetTerrainMap()) * Random.Range(.75f, 1.25f) * kingdom.culture.AttackMultiplier;
+				float defenderPower = (closestSett.kingdom.Strength(terrainMap.GetTerrainMap()) + closestSett.GetSettlementDefensibility(terrainMap.GetTerrainMap())) * Random.Range(.75f, 1.25f) * closestSett.kingdom.culture.DefenseMultiplier;
 
 				if (attackPower > defenderPower)
 				{

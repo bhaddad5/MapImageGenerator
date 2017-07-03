@@ -23,4 +23,7 @@ public class ModelLookup : MonoBehaviour
 
 	[Header("Dwarf Settlements")]
 	public GameObject DwarfHouse;
+	public GameObject DwarfWall;
+	public GameObject DwarfGates;
+	public GameObject DwarfTower;
 }

@@ -22,7 +22,7 @@ Platform assembly: C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGen
 <RI> Input initialized.
 desktop: 3840x2160 60Hz; virtual: 3840x2160 at 0,0
 <RI> Initialized touch support.
-UnloadTime: 1.002854 ms
+UnloadTime: 0.954146 ms
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 1cf4 -> priority: 1 
-  Thread -> id: 28d0 -> priority: 1 
+  Thread -> id: c4 -> priority: 1 
+  Thread -> id: 8a0 -> priority: 1 
