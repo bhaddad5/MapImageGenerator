@@ -106,7 +106,33 @@ public static class CultureDefinitions
 			new HeraldryOption("Anglo/Heraldry/Symbols/Gryphon"),
 			new HeraldryOption("Anglo/Heraldry/Symbols/Horse"),
 		},
+		tileDifficulties = new Dictionary<TerrainTile.TileType, float>()
+		{
+			{ TerrainTile.TileType.Ocean, .1f },
+			{ TerrainTile.TileType.River, .5f },
+			{ TerrainTile.TileType.Swamp, .35f },
+			{ TerrainTile.TileType.Mountain, .6f },
+			{ TerrainTile.TileType.Forest, .25f },
+			{ TerrainTile.TileType.Grass, .2f },
+			{ TerrainTile.TileType.Fertile, .1f },
+			{ TerrainTile.TileType.City, .05f },
+			{ TerrainTile.TileType.Road, .05f },
+		},
+		tileValues = new Dictionary<TerrainTile.TileType, float>()
+		{
+			{ TerrainTile.TileType.Ocean, 0f },
+			{ TerrainTile.TileType.River, 0f },
+			{ TerrainTile.TileType.Swamp, .1f },
+			{ TerrainTile.TileType.Mountain, .1f },
+			{ TerrainTile.TileType.Forest, .2f },
+			{ TerrainTile.TileType.Grass, .2f },
+			{ TerrainTile.TileType.Fertile, .4f },
+			{ TerrainTile.TileType.City, 5f },
+			{ TerrainTile.TileType.Road, 3f },
+		}
 	};
+
+
 
 	public static Culture Dwarf = new Culture()
 	{
@@ -169,5 +195,29 @@ public static class CultureDefinitions
 		{
 			new HeraldryOption("Dwarf/Heraldry/Symbols/Anvil"),
 		},
+		tileDifficulties = new Dictionary<TerrainTile.TileType, float>()
+		{
+			{ TerrainTile.TileType.Ocean, .4f },
+			{ TerrainTile.TileType.River, .5f },
+			{ TerrainTile.TileType.Swamp, .45f },
+			{ TerrainTile.TileType.Mountain, .1f },
+			{ TerrainTile.TileType.Forest, .25f },
+			{ TerrainTile.TileType.Grass, .2f },
+			{ TerrainTile.TileType.Fertile, .2f },
+			{ TerrainTile.TileType.City, .05f },
+			{ TerrainTile.TileType.Road, .05f },
+		},
+		tileValues = new Dictionary<TerrainTile.TileType, float>()
+		{
+			{ TerrainTile.TileType.Ocean, 0f },
+			{ TerrainTile.TileType.River, 0f },
+			{ TerrainTile.TileType.Swamp, .1f },
+			{ TerrainTile.TileType.Mountain, .7f },
+			{ TerrainTile.TileType.Forest, .2f },
+			{ TerrainTile.TileType.Grass, .2f },
+			{ TerrainTile.TileType.Fertile, .2f },
+			{ TerrainTile.TileType.City, 5f },
+			{ TerrainTile.TileType.Road, 3f },
+		}
 	};
 }

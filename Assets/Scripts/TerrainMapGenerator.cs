@@ -145,26 +145,26 @@ public class TerrainMapGenerator
 		return terrainMapImage;
 	}
 
-	public float TileAreaValue(Int2 pos, bool includeDiag = false)
+	public float TileAreaValue(Culture culture, Int2 pos, bool includeDiag = false)
 	{
-		float value = TileAt(pos).GetValue() * 2;
+		float value = culture.GetTileValue(pos, map) * 2;
 
 		float oneWaterBorderValue = 3f;
 		float someWaterValue = 2f;
 		float allWaterValue = -1f;
 
 		int numWaterBorders = 0;
-		foreach (TerrainTile t in map.GetAdjacentValues(pos))
+		foreach (Int2 t in map.GetAdjacentPoints(pos))
 		{
-			if (t.tileType == TerrainTile.TileType.Ocean || t.tileType == TerrainTile.TileType.River)
+			if (map.GetValueAt(t).tileType == TerrainTile.TileType.Ocean || map.GetValueAt(t).tileType == TerrainTile.TileType.River)
 				numWaterBorders++;
-			value += t.GetValue();
+			value += culture.GetTileValue(t, map);
 		}
 
 		if (includeDiag)
 		{
-			foreach (TerrainTile t in map.GetDiagonalValues(pos))
-				value += t.GetValue() * .8f;
+			foreach (Int2 t in map.GetDiagonalPoints(pos))
+				value += culture.GetTileValue(t, map) * .8f;
 		}
 
 		if (numWaterBorders == 1)
@@ -185,11 +185,6 @@ public class TerrainMapGenerator
 	public bool TileIsType(Int2 pos, TerrainTile.TileType t)
 	{
 		return TileInBounds(pos) && TileAt(pos).tileType == t;
-	}
-
-	public float TileDifficulty(Int2 pos)
-	{
-		return TileAt(pos).GetDifficulty();
 	}
 
 	public TerrainTile TileAt(Int2 pos)

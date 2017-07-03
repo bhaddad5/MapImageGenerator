@@ -76,6 +76,9 @@ public class Culture
 	public List<HeraldryOption> heraldryBackground;
 	public List<HeraldryOption> heraldryForeground;
 
+	public Dictionary<TerrainTile.TileType, float> tileDifficulties;
+	public Dictionary<TerrainTile.TileType, float> tileValues;
+
 	public string GetKingdomName(string coreName, List<Kingdom.KingdomTrait> traits)
 	{
 		var kingdomTitle = GetKingdomNameChunk(kingdomTitles, traits);
@@ -186,5 +189,15 @@ public class Culture
 		if (inColor == Color.green)
 			return region.tertiaryColor;
 		else return inColor;
+	}
+
+	public float GetTileValue(Int2 tile, Map2D<TerrainTile> map)
+	{
+		return tileValues[map.GetValueAt(tile).tileType];
+	}
+
+	public float GetTileDifficulty(Int2 tile, Map2D<TerrainTile> map)
+	{
+		return tileDifficulties[map.GetValueAt(tile).tileType];
 	}
 }

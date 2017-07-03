@@ -60,7 +60,7 @@ public class Settlement
 					neighborType != TerrainTile.TileType.Mountain &&
 					regionsMap.GetValueAt(neighbor).region == myRegion)
 				{
-					possibleExpansions.Insert(terrainTiles.TileAreaValue(neighbor, true), neighbor);
+					possibleExpansions.Insert(terrainTiles.TileAreaValue(myRegion.culture, neighbor, true), neighbor);
 				}
 			}
 		}

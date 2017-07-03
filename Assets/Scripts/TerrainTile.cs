@@ -20,32 +20,6 @@ public class TerrainTile
 	}
 
 	public static float startOceanDifficulty = 0.35f;
-	public static Dictionary<TileType, float> tileDifficulties = new Dictionary<TileType, float>()
-	{
-		{ TileType.Ocean, .1f },
-		{ TileType.River, .5f },
-		{ TileType.Swamp, .35f },
-		{ TileType.Mountain, .6f },
-		{ TileType.Forest, .25f },
-		{ TileType.Grass, .2f },
-		{ TileType.Fertile, .1f },
-		{ TileType.City, .05f },
-		{ TileType.Road, .05f },
-	};
-
-	public static Dictionary<TileType, float> tileValues = new Dictionary<TileType, float>()
-	{
-		{ TileType.Ocean, 0f },
-		{ TileType.River, 0f },
-		{ TileType.Swamp, .1f },
-		{ TileType.Mountain, .1f },
-		{ TileType.Forest, .2f },
-		{ TileType.Grass, .2f },
-		{ TileType.Fertile, .4f },
-		{ TileType.City, 5f },
-		{ TileType.Road, 3f },
-	};
-
 	public static Dictionary<Color, TileType> tileColors = new Dictionary<Color, TileType>()
 	{
 		{ new Color(0, 0, 255/255f), TileType.Ocean },
@@ -75,16 +49,5 @@ public class TerrainTile
 	{
 		tileType = t;
 	}
-
-	public float GetValue()
-	{
-		return tileValues[tileType];
-	}
-
-	public float GetDifficulty()
-	{
-		return tileDifficulties[tileType];
-	}
-
 }
 

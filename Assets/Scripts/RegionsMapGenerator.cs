@@ -17,7 +17,7 @@ class RegionsMapGenerator
 
 		foreach(var culture in cultures)
 		{
-			var settlementLocations = GetSettlementLocations(culture.numSettlements);
+			var settlementLocations = GetSettlementLocations(culture.culture, culture.numSettlements);
 
 			for (int i = settlementLocations.Count - 1; i >= 0; i--)
 			{
@@ -75,11 +75,11 @@ class RegionsMapGenerator
 		}
 	}
 
-	private SortedDupList<Int2> GetSettlementLocations(int numberOfSettlements)
+	private SortedDupList<Int2> GetSettlementLocations(Culture culture, int numberOfSettlements)
 	{
 		SortedDupList<Int2> regions = new SortedDupList<Int2>();
 
-		for(int i = 0; i < numberOfSettlements * 120; i++)
+		for(int i = 0; i < numberOfSettlements * 200; i++)
 		{
 			Int2 testPos = new Int2(UnityEngine.Random.Range(0, terrainMap.GetTerrainMap().Width), UnityEngine.Random.Range(0, terrainMap.GetTerrainMap().Height));
 			if (!terrainMap.TileIsType(testPos, TerrainTile.TileType.Ocean) &&
@@ -88,7 +88,7 @@ class RegionsMapGenerator
 				!TooCloseToExistingSettlement(testPos, regions) &&
 				!TooCloseToBorder(testPos, new Int2(terrainMap.GetTerrainMap().Width, terrainMap.GetTerrainMap().Height)))
 			{
-				regions.Insert(terrainMap.TileAreaValue(testPos), testPos);
+				regions.Insert(terrainMap.TileAreaValue(culture, testPos), testPos);
 			}
 		}
 
@@ -142,24 +142,24 @@ class RegionsMapGenerator
 			pos.Y < minDist || pos.Y > mapDimensions.Y - minDist;
 	}
 
-	private void ExpandRegionFromSettlement(float startingValue, Kingdom region, Int2 pos)
+	private void ExpandRegionFromSettlement(float startingValue, Kingdom kingdom, Int2 pos)
 	{
-		TileAt(pos).TrySetRegion(region, startingValue - terrainMap.TileDifficulty(pos));
+		TileAt(pos).TrySetRegion(kingdom, startingValue - kingdom.culture.GetTileDifficulty(pos, terrainMap.GetTerrainMap()));
 
 		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
 		frontierTiles.Insert(TileAt(pos).holdingStrength, pos);
 		while(frontierTiles.Count > 0)
 		{
-			foreach(var neighbor in GetPossibleNeighborTiles(frontierTiles.TopValue(), region))
+			foreach(var neighbor in GetPossibleNeighborTiles(frontierTiles.TopValue(), kingdom))
 			{
-				float strength = frontierTiles.TopKey() - terrainMap.TileDifficulty(neighbor);
+				float strength = frontierTiles.TopKey() - kingdom.culture.GetTileDifficulty(neighbor, terrainMap.GetTerrainMap());
 				if(terrainMap.TileIsType(neighbor, TerrainTile.TileType.Ocean) &&
 					!terrainMap.TileIsType(frontierTiles.TopValue(), TerrainTile.TileType.Ocean))
 				{
 					strength = strength - TerrainTile.startOceanDifficulty;
 				}
 
-				if (TileAt(neighbor).TrySetRegion(region, strength))
+				if (TileAt(neighbor).TrySetRegion(kingdom, strength))
 				{
 					frontierTiles.Insert(strength, neighbor);
 				}
@@ -187,7 +187,7 @@ class RegionsMapGenerator
 	private void CalculateRegionValues()
 	{
 		foreach(Int2 tile in map.GetMapPoints())
-			map.GetValueAt(tile).region.value += terrainMap.TileAt(tile).GetValue();
+			map.GetValueAt(tile).region.value += map.GetValueAt(tile).region.culture.GetTileValue(tile, terrainMap.GetTerrainMap());
 	}
 
 	private void ExpandSettlements()
@@ -251,7 +251,7 @@ class RegionsMapGenerator
 					}
 				}
 
-				float difficulty = terrainMap.TileDifficulty(tile);
+				float difficulty = settlement.kingdom.culture.GetTileDifficulty(tile, terrainMap.GetTerrainMap());
 				if(currDifficulty - difficulty > 0)
 				{
 					frontierTiles.Insert(currDifficulty - difficulty, tile);
@@ -319,7 +319,7 @@ class RegionsMapGenerator
 					(type == TerrainTile.TileType.River && (currType == TerrainTile.TileType.River || currType == TerrainTile.TileType.City)) ||
 					(type == TerrainTile.TileType.Road && (currType == TerrainTile.TileType.Road || currType == TerrainTile.TileType.City)))
 					{
-						float difficulty = terrainMap.TileDifficulty(tile);
+						float difficulty = settlement.kingdom.culture.GetTileDifficulty(tile, terrainMap.GetTerrainMap());
 						if (currDifficulty - difficulty > 0)
 						{
 							frontierTiles.Insert(currDifficulty - difficulty, tile);
