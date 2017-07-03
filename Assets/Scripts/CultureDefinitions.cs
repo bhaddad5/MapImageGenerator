@@ -148,6 +148,14 @@ public static class CultureDefinitions
 			new SettlementNameOption("Tar"),
 			new SettlementNameOption("Prak"),
 			new SettlementNameOption("Wrokk"),
+			new SettlementNameOption("Mentung"),
+			new SettlementNameOption("Jekrat"),
+			new SettlementNameOption("Kazdul"),
+			new SettlementNameOption("Kazan"),
+			new SettlementNameOption("Kazren"),
+			new SettlementNameOption("Azorn"),
+			new SettlementNameOption("Azdal"),
+			new SettlementNameOption("Azlaak"),
 		},
 
 		suffixes = new List<SettlementNameOption>()
@@ -159,8 +167,15 @@ public static class CultureDefinitions
 			new SettlementNameOption("-mikdun"),			
 			new SettlementNameOption("-trokk"),
 			new SettlementNameOption("-pirok"),
+			new SettlementNameOption("-tarmuk"),
+			new SettlementNameOption("-ostrok"),
+			new SettlementNameOption("-restrok"),
+			new SettlementNameOption("-clarrok"),
+			new SettlementNameOption("-sorrok"),
 			new SettlementNameOption("-bendum"),
 			new SettlementNameOption("-silrak", new List<Settlement.CityTrait> { Settlement.CityTrait.Forest }, 4),
+			new SettlementNameOption("-revvrok", new List<Settlement.CityTrait> { Settlement.CityTrait.River }, 4),
+			new SettlementNameOption("-serok", new List<Settlement.CityTrait> { Settlement.CityTrait.Port }, 4),
 		},
 
 		areaInfo = new List<SettlementNameOption>()
@@ -181,11 +196,15 @@ public static class CultureDefinitions
 			new KingdomNameOption("Kingdom of %n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Small }),
 			new KingdomNameOption("Kingdom of %n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Medium }),
 			new KingdomNameOption("Kingdom of %n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Large }),
+			new KingdomNameOption("%n Expidition", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.OneCity}),
+			new KingdomNameOption("Freehalls of %n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.OneCity}),
+			new KingdomNameOption("Guilds of %n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.OneCity}),
+			new KingdomNameOption("League of %n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Small }),
+			new KingdomNameOption("League of %n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Medium }),
 			new KingdomNameOption("%n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.OneCity}),
 			new KingdomNameOption("%n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Small }),
 			new KingdomNameOption("%n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Medium }),
-			new KingdomNameOption("Empire of %n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Large }),
-			new KingdomNameOption("The %n Empire", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Large }),
+			new KingdomNameOption("The Empire of %n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Large }),
 			
 		},
 

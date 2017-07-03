@@ -138,8 +138,8 @@ public class Kingdom
 	private Color GetHeraldryColor()
 	{
 		Color c = RandomColor();
-		int minDiff = 100;
-		int maxSanity = 20;
+		int minDiff = 200;
+		int maxSanity = 30;
 		int sanity = 0;
 		while (sanity <= maxSanity && (ColorDiff(c, mainColor) < minDiff || ColorDiff(c, secondaryColor) < minDiff || ColorDiff(c, tertiaryColor) < minDiff))
 		{
