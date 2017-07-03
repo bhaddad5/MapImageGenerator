@@ -95,10 +95,16 @@ public class Kingdom
 			{
 				if (!settlements.Contains(adj.Value))
 				{
-					if(closest == null || adj.Key < closestDist)
+					var dist = adj.Key;
+					if (settlements[0].adjacentSettlements.ContainsValue(adj.Value))
+					{
+						dist -= 3f;
+					}
+
+					if(closest == null || dist < closestDist)
 					{
 						closest = adj.Value;
-						closestDist = adj.Key;
+						closestDist = dist;
 					}
 				}
 			}
