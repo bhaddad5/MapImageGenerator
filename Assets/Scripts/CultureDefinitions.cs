@@ -21,11 +21,20 @@ public static class CultureDefinitions
 			new SettlementNameOption("How"),
 			new SettlementNameOption("Setter"),
 			new SettlementNameOption("Somer"),
+			new SettlementNameOption("Wend"),
+			new SettlementNameOption("Torrent"),
+			new SettlementNameOption("Comb"),
+			new SettlementNameOption("Slak"),
+			new SettlementNameOption("Brix"),
+			new SettlementNameOption("Bux"),
+			new SettlementNameOption("Win"),
+			new SettlementNameOption("Fur"),
+			new SettlementNameOption("Hather"),
 		},
 
 		suffixes = new List<SettlementNameOption>()
 		{
-			new SettlementNameOption("", 3),
+			new SettlementNameOption(""),
 			new SettlementNameOption("ton"),
 			new SettlementNameOption("moor"),
 			new SettlementNameOption("mont", new List<Settlement.CityTrait> { Settlement.CityTrait.Mountains }),
@@ -34,11 +43,16 @@ public static class CultureDefinitions
 			new SettlementNameOption("by"),
 			new SettlementNameOption("nall"),
 			new SettlementNameOption("ford", new List<Settlement.CityTrait> { Settlement.CityTrait.River }),
+			new SettlementNameOption("brook", new List<Settlement.CityTrait> { Settlement.CityTrait.River }),
+			new SettlementNameOption("field", new List<Settlement.CityTrait> { Settlement.CityTrait.Fertile }),
 			new SettlementNameOption("ham"),
 			new SettlementNameOption("dun"),
 			new SettlementNameOption("wick"),
 			new SettlementNameOption("well"),
 			new SettlementNameOption("light"),
+			new SettlementNameOption("sor"),
+			new SettlementNameOption("ley"),
+			new SettlementNameOption("end"),
 		},
 
 		areaInfo = new List<SettlementNameOption>()
@@ -60,6 +74,8 @@ public static class CultureDefinitions
 			new SettlementNameOption("%n Ford", new List<Settlement.CityTrait> { Settlement.CityTrait.River }),
 			new SettlementNameOption("%n Bridge", new List<Settlement.CityTrait> { Settlement.CityTrait.River }),
 			new SettlementNameOption("%n Bend", new List<Settlement.CityTrait> { Settlement.CityTrait.Small, Settlement.CityTrait.River }),
+			new SettlementNameOption("%n Mill", new List<Settlement.CityTrait> { Settlement.CityTrait.Small, Settlement.CityTrait.Fertile }),
+			new SettlementNameOption("%n Heath", new List<Settlement.CityTrait> { Settlement.CityTrait.Small }),
 			new SettlementNameOption("New %n", new List<Settlement.CityTrait>()),
 		},
 
@@ -156,6 +172,7 @@ public static class CultureDefinitions
 			new SettlementNameOption("Azorn"),
 			new SettlementNameOption("Azdal"),
 			new SettlementNameOption("Azlaak"),
+			new SettlementNameOption("Draken"),
 		},
 
 		suffixes = new List<SettlementNameOption>()
@@ -164,7 +181,7 @@ public static class CultureDefinitions
 			new SettlementNameOption("-kull", new List<Settlement.CityTrait> { Settlement.CityTrait.Mountains }, 4),
 			new SettlementNameOption("-kuzdal", new List<Settlement.CityTrait> { Settlement.CityTrait.Mountains }, 4),
 			new SettlementNameOption("-tazul"),
-			new SettlementNameOption("-mikdun"),			
+			new SettlementNameOption("-mikdun"),
 			new SettlementNameOption("-trokk"),
 			new SettlementNameOption("-pirok"),
 			new SettlementNameOption("-tarmuk"),
@@ -205,21 +222,25 @@ public static class CultureDefinitions
 			new KingdomNameOption("%n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Small }),
 			new KingdomNameOption("%n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Medium }),
 			new KingdomNameOption("The Empire of %n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Large }),
-			
+
 		},
 
 		heraldryBackground = new List<HeraldryOption>()
 		{
 			new HeraldryOption("Dwarf/Heraldry/Backgrounds/Dwarf_Back_0"),
-			new HeraldryOption("Dwarf/Heraldry/Backgrounds/Dwarf_Back_1"),
-			new HeraldryOption("Dwarf/Heraldry/Backgrounds/Dwarf_Back_2"),
+			new HeraldryOption("Dwarf/Heraldry/Backgrounds/Dwarf_Back_1", 3),
+			new HeraldryOption("Dwarf/Heraldry/Backgrounds/Dwarf_Back_2", 3),
 		},
 
 		heraldryForeground = new List<HeraldryOption>()
 		{
 			new HeraldryOption("Dwarf/Heraldry/Symbols/Anvil"),
 			new HeraldryOption("Dwarf/Heraldry/Symbols/Dragon"),
+			new HeraldryOption("Dwarf/Heraldry/Symbols/DragonSkull"),
+			new HeraldryOption("Dwarf/Heraldry/Symbols/AleHorn"),
+			new HeraldryOption("Dwarf/Heraldry/Symbols/Helmet"),
 		},
+
 		tileDifficulties = new Dictionary<TerrainTile.TileType, float>()
 		{
 			{ TerrainTile.TileType.Ocean, .4f },
@@ -232,6 +253,7 @@ public static class CultureDefinitions
 			{ TerrainTile.TileType.City, .05f },
 			{ TerrainTile.TileType.Road, .05f },
 		},
+
 		tileValues = new Dictionary<TerrainTile.TileType, float>()
 		{
 			{ TerrainTile.TileType.Ocean, 0f },

@@ -118,7 +118,7 @@ public class MapBuilder : MonoBehaviour
 		yield return null;
 
 		ModelPlacer mp = new ModelPlacer();
-		mp.PlaceModels(terrainMapGenerator.GetTerrainMap(), heightGenerator.GetHeightMap(), regionsMap.GetRegionsMap(), regionsMap.Kingdoms, ModelLookup, transform);
+		mp.PlaceModels(terrainMapGenerator.GetTerrainMap(), heightGenerator.GetHeightMap(), regionsMap.GetRegionsMap(), regionsMap.Kingdoms, ModelLookup, terrainMeshDisplay.transform);
 
 		displayText.text = "Displaying Heraldry";
 		yield return null;
