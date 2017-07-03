@@ -52,7 +52,8 @@ public class ModelPlacer
 		}
 		else if (culture == CultureDefinitions.Dwarf)
 		{
-
+			if (Helpers.Odds(0.05f))
+				PlaceObjectsOnTile(tile, 1, lookup.DwarfHouse);
 		}
 	}
 
@@ -81,7 +82,8 @@ public class ModelPlacer
 		}
 		else if (culture == CultureDefinitions.Dwarf)
 		{
-
+			if (Helpers.Odds(0.15f))
+				PlaceObjectsOnTile(tile, 1, lookup.DwarfHouse);
 		}
 	}
 
@@ -95,7 +97,8 @@ public class ModelPlacer
 		}
 		else if(culture == CultureDefinitions.Dwarf)
 		{
-			
+			if (Helpers.Odds(0.15f))
+				PlaceObjectsOnTile(tile, 1, lookup.DwarfHouse);
 		}
 	}
 
@@ -136,7 +139,12 @@ public class ModelPlacer
 		}
 		else if (culture == CultureDefinitions.Dwarf)
 		{
-
+			if (traits.Contains(Settlement.CityTrait.Small))
+				PlaceSmallDwarfCity(tile);
+			if (traits.Contains(Settlement.CityTrait.Medium))
+				PlaceMediumDwarfCity(tile);
+			if (traits.Contains(Settlement.CityTrait.Large))
+				PlaceLargeDwarfCity(tile);
 		}
 	}
 
@@ -158,7 +166,7 @@ public class ModelPlacer
 
 	private void PlaceSmallAngloCity(Int2 tile)
 	{
-		PlaceObjectsOnTile(tile, Random.Range(20, 25), lookup.Hovel, true);
+		PlaceObjectsOnTile(tile, Random.Range(20, 25), lookup.Hovel);
 	}
 
 	private void PlaceMediumAngloCity(Int2 tile)
@@ -175,8 +183,8 @@ public class ModelPlacer
 			}
 		}
 
-		PlaceObjectsOnTileWithBorder(tile, Random.Range(10, 13), lookup.Hovel, true);
-		PlaceObjectsOnTileWithBorder(tile, Random.Range(5, 8), lookup.TownHouse, true);
+		PlaceObjectsOnTileWithBorder(tile, Random.Range(10, 13), lookup.Hovel);
+		PlaceObjectsOnTileWithBorder(tile, Random.Range(5, 8), lookup.TownHouse);
 	}
 
 	private void PlaceLargeAngloCity(Int2 tile)
@@ -194,23 +202,35 @@ public class ModelPlacer
 		}
 		PlaceTurretsOnCorners(tile);
 
-		PlaceObjectsOnTileWithBorder(tile, Random.Range(20, 25), lookup.TownHouse, true);
+		PlaceObjectsOnTileWithBorder(tile, Random.Range(20, 25), lookup.TownHouse);
 	}
 
 	private void PlaceTurretsOnCorners(Int2 tile)
 	{
-		foreach(var t in map.GetDiagonalPoints(tile))
-			TryPlaceTurret(tile, t);
+		foreach (var t in map.GetDiagonalPoints(tile))
+		{
+			if (TileIsCityBorder(t) ||
+			TileIsCityBorder(tile + new Int2(t.X - tile.X, 0)) ||
+			TileIsCityBorder(tile + new Int2(0, t.Y - tile.Y)))
+			{
+				SpawnObjectAtPos(GetPlacementBetweenTileCenters(tile, t, true), lookup.Turret);
+			}
+		}
 	}
 
-	private void TryPlaceTurret(Int2 tile, Int2 diagTile)
+	private void PlaceSmallDwarfCity(Int2 tile)
 	{
-		if (TileIsCityBorder(diagTile) || 
-			TileIsCityBorder(tile + new Int2(diagTile.X - tile.X, 0)) || 
-			TileIsCityBorder(tile + new Int2(0, diagTile.Y - tile.Y)))
-		{
-			SpawnObjectAtPos(GetPlacementBetweenTileCenters(tile, diagTile, true), lookup.Turret);
-		}
+		PlaceObjectsOnTileWithBorder(tile, Random.Range(20, 25), lookup.DwarfHouse);
+	}
+
+	private void PlaceMediumDwarfCity(Int2 tile)
+	{
+		PlaceObjectsOnTileWithBorder(tile, Random.Range(20, 25), lookup.DwarfHouse);
+	}
+
+	private void PlaceLargeDwarfCity(Int2 tile)
+	{
+		PlaceObjectsOnTileWithBorder(tile, Random.Range(20, 25), lookup.DwarfHouse);
 	}
 
 	private bool TileIsRoad(Int2 tile)

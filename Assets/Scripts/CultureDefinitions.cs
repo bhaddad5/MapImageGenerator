@@ -215,9 +215,9 @@ public static class CultureDefinitions
 			{ TerrainTile.TileType.River, 0f },
 			{ TerrainTile.TileType.Swamp, .1f },
 			{ TerrainTile.TileType.Mountain, .7f },
-			{ TerrainTile.TileType.Forest, .2f },
-			{ TerrainTile.TileType.Grass, .2f },
-			{ TerrainTile.TileType.Fertile, .2f },
+			{ TerrainTile.TileType.Forest, .25f },
+			{ TerrainTile.TileType.Grass, .25f },
+			{ TerrainTile.TileType.Fertile, .25f },
 			{ TerrainTile.TileType.City, 5f },
 			{ TerrainTile.TileType.Road, 3f },
 		}

@@ -20,4 +20,7 @@ public class ModelLookup : MonoBehaviour
 	public GameObject Bridge;
 	public GameObject WoodenWall;
 	public GameObject WoodenGate;
+
+	[Header("Dwarf Settlements")]
+	public GameObject DwarfHouse;
 }
