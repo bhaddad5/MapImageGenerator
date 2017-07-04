@@ -102,6 +102,8 @@ public static class CultureDefinitions
 			new KingdomNameOption("%n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.OneCity}),
 		},
 
+		heraldryOverlay = "Anglo/Heraldry/Overlay",
+
 		heraldryBackground = new List<HeraldryOption>()
 		{
 			new HeraldryOption("Anglo/Heraldry/Backgrounds/Anglo_Back_0"),
@@ -225,11 +227,14 @@ public static class CultureDefinitions
 
 		},
 
+		heraldryOverlay = "Dwarf/Heraldry/Overlay",
+
 		heraldryBackground = new List<HeraldryOption>()
 		{
 			new HeraldryOption("Dwarf/Heraldry/Backgrounds/Dwarf_Back_0"),
-			new HeraldryOption("Dwarf/Heraldry/Backgrounds/Dwarf_Back_1", 3),
-			new HeraldryOption("Dwarf/Heraldry/Backgrounds/Dwarf_Back_2", 3),
+			new HeraldryOption("Dwarf/Heraldry/Backgrounds/Dwarf_Back_1"),
+			new HeraldryOption("Dwarf/Heraldry/Backgrounds/Dwarf_Back_2"),
+			new HeraldryOption("Dwarf/Heraldry/Backgrounds/Dwarf_Back_3"),
 		},
 
 		heraldryForeground = new List<HeraldryOption>()
