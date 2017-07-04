@@ -189,9 +189,15 @@ public class Culture
 			return region.mainColor;
 		if (inColor.r == 0f && inColor.g == 1f && inColor.b == 0f)
 			return region.secondaryColor;
-		if (inColor.r == 0f && inColor.g == 0f && inColor.b == 1f)
-			return region.tertiaryColor;
-		else return inColor;
+		else
+		{
+			Vector4 newColor = new Vector4();
+			newColor.x = inColor.r + (1 - inColor.r) * region.tertiaryColor.r;
+			newColor.y = inColor.g + (1 - inColor.g) * region.tertiaryColor.g;
+			newColor.z = inColor.b + (1 - inColor.b) * region.tertiaryColor.b;
+			newColor.w = inColor.a;
+			return newColor;
+		}
 	}
 
 	public float GetTileValue(Int2 tile, Map2D<TerrainTile> map)
