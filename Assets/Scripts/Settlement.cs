@@ -71,7 +71,7 @@ public class Settlement
 	private bool BordersUnfriendlyCity(Int2 tile, TerrainMapGenerator terrainTiles, Settlement settlement)
 	{
 		bool bordersUnfriendlyCity = false;
-		foreach(var border in terrainTiles.GetTerrainMap().GetAdjacentPoints(tile))
+		foreach(var border in terrainTiles.GetTerrainMap().GetAllNeighboringPoints(tile))
 		{
 			if(terrainTiles.GetTerrainMap().GetValueAt(border).tileType == TerrainTile.TileType.City)
 			{
