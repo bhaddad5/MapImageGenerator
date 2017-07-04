@@ -174,6 +174,7 @@ public static class CultureDefinitions
 			new SettlementNameOption("Azorn"),
 			new SettlementNameOption("Azdal"),
 			new SettlementNameOption("Azlaak"),
+			new SettlementNameOption("Kajar"),
 			new SettlementNameOption("Draken"),
 		},
 
@@ -244,6 +245,116 @@ public static class CultureDefinitions
 			new HeraldryOption("Dwarf/Heraldry/Symbols/DragonSkull"),
 			new HeraldryOption("Dwarf/Heraldry/Symbols/AleHorn"),
 			new HeraldryOption("Dwarf/Heraldry/Symbols/Helmet"),
+		},
+
+		tileDifficulties = new Dictionary<TerrainTile.TileType, float>()
+		{
+			{ TerrainTile.TileType.Ocean, .4f },
+			{ TerrainTile.TileType.River, .5f },
+			{ TerrainTile.TileType.Swamp, .45f },
+			{ TerrainTile.TileType.Mountain, .1f },
+			{ TerrainTile.TileType.Forest, .25f },
+			{ TerrainTile.TileType.Grass, .2f },
+			{ TerrainTile.TileType.Fertile, .2f },
+			{ TerrainTile.TileType.City, .05f },
+			{ TerrainTile.TileType.Road, .05f },
+		},
+
+		tileValues = new Dictionary<TerrainTile.TileType, float>()
+		{
+			{ TerrainTile.TileType.Ocean, 0f },
+			{ TerrainTile.TileType.River, 0f },
+			{ TerrainTile.TileType.Swamp, .1f },
+			{ TerrainTile.TileType.Mountain, .7f },
+			{ TerrainTile.TileType.Forest, .25f },
+			{ TerrainTile.TileType.Grass, .25f },
+			{ TerrainTile.TileType.Fertile, .25f },
+			{ TerrainTile.TileType.City, 5f },
+			{ TerrainTile.TileType.Road, 3f },
+		}
+	};
+
+
+
+	public static Culture Orc = new Culture()
+	{
+		AttackMultiplier = 1.2f,
+		DefenseMultiplier = 0.9f,
+		prefixes = new List<SettlementNameOption>()
+		{
+			new SettlementNameOption("Org"),
+			new SettlementNameOption("Trog"),
+			new SettlementNameOption("Kolog"),
+			new SettlementNameOption("Dolg"),
+			new SettlementNameOption("Riek"),
+			new SettlementNameOption("Warg"),
+			new SettlementNameOption("Urg"),
+			new SettlementNameOption("Pjar"),
+			new SettlementNameOption("Olgon"),
+			new SettlementNameOption("Drak"),
+		},
+
+		suffixes = new List<SettlementNameOption>()
+		{
+			new SettlementNameOption(""),
+			new SettlementNameOption("uz", new List<Settlement.CityTrait> { Settlement.CityTrait.Mountains }, 4),
+			new SettlementNameOption("az", new List<Settlement.CityTrait> { Settlement.CityTrait.Mountains }, 4),
+			new SettlementNameOption("as"),
+			new SettlementNameOption("isdun"),
+			new SettlementNameOption("is"),
+			new SettlementNameOption("lok"),
+			new SettlementNameOption("dol"),
+			new SettlementNameOption("tol"),
+			new SettlementNameOption("sil", new List<Settlement.CityTrait> { Settlement.CityTrait.Forest }, 4),
+		},
+
+		areaInfo = new List<SettlementNameOption>()
+		{
+			new SettlementNameOption("%n", new List<Settlement.CityTrait>(), 4),
+			new SettlementNameOption("%n Camp", new List<Settlement.CityTrait> {Settlement.CityTrait.Small }),
+			new SettlementNameOption("Camp %n", new List<Settlement.CityTrait> {Settlement.CityTrait.Small }),
+			new SettlementNameOption("%n Warcamp", new List<Settlement.CityTrait> {Settlement.CityTrait.Medium }),
+			new SettlementNameOption("%n Hold", new List<Settlement.CityTrait> {Settlement.CityTrait.Medium }),
+			new SettlementNameOption("%n Hold", new List<Settlement.CityTrait> {Settlement.CityTrait.Large }),
+			new SettlementNameOption("%n Docks", new List<Settlement.CityTrait> {Settlement.CityTrait.Port }),
+			new SettlementNameOption("%n Mountain", new List<Settlement.CityTrait> { Settlement.CityTrait.Mountains }),
+			new SettlementNameOption("%n Peak", new List<Settlement.CityTrait> { Settlement.CityTrait.Mountains }),
+			new SettlementNameOption("%n Pit", new List<Settlement.CityTrait> { Settlement.CityTrait.Mountains }),
+		},
+
+		kingdomTitles = new List<KingdomNameOption>()
+		{
+			new KingdomNameOption("Despot of %n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Small }),
+			new KingdomNameOption("%n Clan", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Small }),
+			new KingdomNameOption("%n Clan", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Medium }),
+			new KingdomNameOption("%n Clans", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Medium }),
+			new KingdomNameOption("%n Tribe", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.OneCity}),
+			new KingdomNameOption("%n Tribe", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Medium }),
+			new KingdomNameOption("Clans of %n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Large }),
+			new KingdomNameOption("%n Warband", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.OneCity}),
+			new KingdomNameOption("%n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.OneCity}),
+			new KingdomNameOption("%n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Small }),
+			new KingdomNameOption("%n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Medium }),
+			new KingdomNameOption("Shamans of %n", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.OneCity}),
+			new KingdomNameOption("%n Empire", new List<Kingdom.KingdomTrait> { Kingdom.KingdomTrait.Large }),
+
+		},
+
+		heraldryOverlay = "Orc/Heraldry/Overlay",
+
+		heraldryBackground = new List<HeraldryOption>()
+		{
+			new HeraldryOption("Orc/Heraldry/Backgrounds/Orc_Background_0"),
+			new HeraldryOption("Orc/Heraldry/Backgrounds/Orc_Background_1"),
+			new HeraldryOption("Orc/Heraldry/Backgrounds/Orc_Background_2"),
+			new HeraldryOption("Orc/Heraldry/Backgrounds/Orc_Background_3"),
+		},
+
+		heraldryForeground = new List<HeraldryOption>()
+		{
+			new HeraldryOption("Orc/Heraldry/Symbols/DragonFace"),
+			new HeraldryOption("Orc/Heraldry/Symbols/Dragon"),
+			new HeraldryOption("Orc/Heraldry/Symbols/Skull"),
 		},
 
 		tileDifficulties = new Dictionary<TerrainTile.TileType, float>()

@@ -40,8 +40,9 @@ public class MapBuilder : MonoBehaviour
 
 		List<CulturePrevelance> cultures = new List<CulturePrevelance>()
 		{
-			new CulturePrevelance(CultureDefinitions.Anglo, CulturePrevelance.Prevelance.Dominant),
+			new CulturePrevelance(CultureDefinitions.Anglo, CulturePrevelance.Prevelance.Dominant),			
 			new CulturePrevelance(CultureDefinitions.Dwarf, CulturePrevelance.Prevelance.Occasional),
+			new CulturePrevelance(CultureDefinitions.Orc, CulturePrevelance.Prevelance.Occasional),
 		};
 
 		StartCoroutine(BuildMap(width, height, cultures));
@@ -195,15 +196,15 @@ public class MapBuilder : MonoBehaviour
 				numSettlements = 1;
 			if (prevelance == Prevelance.Scattered)
 			{
-				numSettlements = landPixleCount / 300;
+				numSettlements = landPixleCount / 380;
 			}
 			if (prevelance == Prevelance.Occasional)
 			{
-				numSettlements = landPixleCount / 200;
+				numSettlements = landPixleCount / 240;
 			}
 			if (prevelance == Prevelance.Dominant)
 			{
-				numSettlements = landPixleCount / 120;
+				numSettlements = landPixleCount / 180;
 			}
 		}
 	}
