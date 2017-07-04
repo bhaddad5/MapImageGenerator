@@ -6,9 +6,9 @@ using System.Linq;
 class MeshBuilder
 {
 	private List<UnityEngine.Mesh> builtMeshes = new List<UnityEngine.Mesh>();
-	public MeshBuilder(TerrainMapGenerator map, Map2D<float> heights)
+	public MeshBuilder()
 	{
-		BuildMeshes(map, heights);
+		BuildMeshes();
 	}
 
 	private Map2D<float> vertHeights;
@@ -19,11 +19,11 @@ class MeshBuilder
 
 	private const int vertsPerTileAcross = 5;
 
-	private void BuildMeshes(TerrainMapGenerator map, Map2D<float> pixelHeights)
+	private void BuildMeshes()
 	{
 		float heightScaler = 1f;
 		List<Vector3> vertices = new List<Vector3>();
-		populateVertHeights(map, pixelHeights);
+		populateVertHeights();
 		RandomizeVertHeights();
 		ScaleVertHeights(heightScaler);
 		SetVerticesFromHeights(vertices);		
@@ -35,13 +35,13 @@ class MeshBuilder
 			m.RecalculateNormals();
 	}
 
-	private void populateVertHeights(TerrainMapGenerator map, Map2D<float> pixelHeights)
+	private void populateVertHeights()
 	{
-		vertHeights = new Map2D<float>(map.GetTerrainMap().Width * vertsPerTileAcross + 1, map.GetTerrainMap().Height * vertsPerTileAcross + 1);
+		vertHeights = new Map2D<float>(TerrainMapGenerator.TerrainMap.Width * vertsPerTileAcross + 1, TerrainMapGenerator.TerrainMap.Height * vertsPerTileAcross + 1);
 
-		foreach(var pixle in map.MapPixels())
+		foreach(var pixle in TerrainMapGenerator.TerrainMap.GetMapPoints())
 		{
-			fillHeightsForTile(pixle, pixelHeights.GetValueAt(pixle), map.GetTerrainMap().Width, map.GetTerrainMap().Height);
+			fillHeightsForTile(pixle, HeightMapGenerator.HeightMap.GetValueAt(pixle), TerrainMapGenerator.TerrainMap.Width, TerrainMapGenerator.TerrainMap.Height);
 		}
 	}
 

@@ -30,18 +30,18 @@ public class Settlement
 		kingdom = k;
 	}
 
-	public void ExpandSettlement(float regionValue, TerrainMapGenerator terrainTiles, Map2D<RegionTile> regionsMap, Settlement mySettlement)
+	public void ExpandSettlement(float regionValue, TerrainMapGenerator TerrainMap, Map2D<RegionTile> regionsMap, Settlement mySettlement)
 	{
-		terrainTiles.SetValue(cityTiles[0], new TerrainTile(TerrainTile.TileType.City));
+		TerrainMapGenerator.TerrainMap.SetPoint(cityTiles[0], new TerrainTile(TerrainTile.TileType.City));
 
 		float valuePerNewTile = 10;
 		while (cityTiles.Count < regionValue / valuePerNewTile)
 		{
-			var expansionTiles = GetPossibleExpnasionTiles(terrainTiles, regionsMap, mySettlement);
+			var expansionTiles = GetPossibleExpnasionTiles(TerrainMap, regionsMap, mySettlement);
 			if (expansionTiles.Count == 0)
 				break;
 			cityTiles.Add(expansionTiles.TopValue());
-			terrainTiles.SetValue(expansionTiles.TopValue(), new TerrainTile(TerrainTile.TileType.City));
+			TerrainMapGenerator.TerrainMap.SetPoint(expansionTiles.TopValue(), new TerrainTile(TerrainTile.TileType.City));
 		}
 	}
 

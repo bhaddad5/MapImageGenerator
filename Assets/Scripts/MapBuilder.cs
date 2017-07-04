@@ -72,7 +72,7 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Seeding Forests";
 		yield return null;
 
-		TerrainMapGenerator terrainMapGenerator = new TerrainMapGenerator(heightGenerator.GetHeightMap());
+		TerrainMapGenerator terrainMapGenerator = new TerrainMapGenerator();
 		
 		displayText.text = "Forging Kingdoms";
 		yield return null;
@@ -86,7 +86,7 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Artificing Lands";
 		yield return null;
 
-		MeshBuilder meshBuilder = new MeshBuilder(terrainMapGenerator, heightGenerator.GetHeightMap());
+		MeshBuilder meshBuilder = new MeshBuilder();
 
 		displayText.text = "Presenting World";
 		yield return null;
@@ -120,7 +120,7 @@ public class MapBuilder : MonoBehaviour
 		yield return null;
 
 		ModelPlacer mp = new ModelPlacer();
-		mp.PlaceModels(terrainMapGenerator.GetTerrainMap(), heightGenerator.GetHeightMap(), regionsMap.GetRegionsMap(), regionsMap.Kingdoms, ModelLookup, terrainMeshDisplay.transform);
+		mp.PlaceModels(ModelLookup, terrainMeshDisplay.transform);
 
 		displayText.text = "Displaying Heraldry";
 		yield return null;

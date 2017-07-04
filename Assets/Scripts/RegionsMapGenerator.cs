@@ -4,11 +4,11 @@ using System.Linq;
 
 class RegionsMapGenerator
 {
-	public List<Kingdom> Kingdoms = new List<Kingdom>();
-	Map2D<RegionTile> map;
+	public static Map2D<RegionTile> RegionsMap;
+	public static List<Kingdom> Kingdoms = new List<Kingdom>();
 	TerrainMapGenerator terrainMap;
-	public int Width { get { return map.Width; } }
-	public int Height { get { return map.Height; } }
+	public int Width { get { return RegionsMap.Width; } }
+	public int Height { get { return RegionsMap.Height; } }
 
 	public RegionsMapGenerator(TerrainMapGenerator tm, List<MapBuilder.CulturePrevelance> cultures)
 	{
@@ -22,7 +22,7 @@ class RegionsMapGenerator
 
 			for (int i = settlementLocations.Count - 1; i >= 0; i--)
 			{
-				terrainMap.SetValue(settlementLocations.ValueAt(i), new TerrainTile(TerrainTile.TileType.City));
+				TerrainMapGenerator.TerrainMap.SetPoint(settlementLocations.ValueAt(i), new TerrainTile(TerrainTile.TileType.City));
 				Kingdom r = new Kingdom(culture.culture, settlementLocations.ValueAt(i));
 				Kingdoms.Add(r);
 				ExpandRegionFromSettlement(5, r.settlements[0], settlementLocations.ValueAt(i));
@@ -43,8 +43,6 @@ class RegionsMapGenerator
 		}
 
 		Debug.Log(humanTotal + ", " + DwarfTotal + " , " + orcTotal);
-
-		//.OrderBy(a => Random.Range(0, 1f)).ToList()
 
 		EndFillMap();
 
@@ -85,21 +83,21 @@ class RegionsMapGenerator
 	private void StartFillMap()
 	{
 		Kingdom noMansLand = new Kingdom(CultureDefinitions.Anglo, new Int2(0, 0));
-		map = new Map2D<RegionTile>(terrainMap.GetTerrainMap().Width, terrainMap.GetTerrainMap().Height);
-		foreach(var pixel in map.GetMapPoints())
+		RegionsMap = new Map2D<RegionTile>(terrainMap.GetTerrainMap().Width, terrainMap.GetTerrainMap().Height);
+		foreach(var pixel in RegionsMap.GetMapPoints())
 		{
-			map.SetPoint(pixel, new RegionTile(noMansLand.settlements[0]));
+			RegionsMap.SetPoint(pixel, new RegionTile(noMansLand.settlements[0]));
 		}
 	}
 
 	private void EndFillMap()
 	{
 		Kingdom Ocean = new Kingdom(CultureDefinitions.Anglo, new Int2(0, 0));
-		foreach (var pixel in map.GetMapPoints())
+		foreach (var pixel in RegionsMap.GetMapPoints())
 		{
 			if(terrainMap.TileIsType(pixel, TerrainTile.TileType.Ocean) ||
 				terrainMap.TileIsType(pixel, TerrainTile.TileType.River))
-				map.SetPoint(pixel, new RegionTile(Ocean.settlements[0]));
+				RegionsMap.SetPoint(pixel, new RegionTile(Ocean.settlements[0]));
 		}
 	}
 
@@ -234,8 +232,8 @@ class RegionsMapGenerator
 
 	private void CalculateRegionValues()
 	{
-		foreach(Int2 tile in map.GetMapPoints())
-			map.GetValueAt(tile).settlement.kingdom.value += map.GetValueAt(tile).settlement.kingdom.culture.GetTileValue(tile, terrainMap.GetTerrainMap());
+		foreach(Int2 tile in RegionsMap.GetMapPoints())
+			RegionsMap.GetValueAt(tile).settlement.kingdom.value += RegionsMap.GetValueAt(tile).settlement.kingdom.culture.GetTileValue(tile, terrainMap.GetTerrainMap());
 	}
 
 	private void ExpandSettlements()
@@ -243,7 +241,7 @@ class RegionsMapGenerator
 		foreach(var reg in Kingdoms)
 		{
 			foreach(var sett in reg.settlements)
-				sett.ExpandSettlement(reg.value, terrainMap, map, sett);
+				sett.ExpandSettlement(reg.value, terrainMap, RegionsMap, sett);
 		}
 	}
 
@@ -274,7 +272,7 @@ class RegionsMapGenerator
 		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
 		frontierTiles.Insert(3f, startTile);
 
-		Map2D<float> distMap = new Map2D<float>(map.Width, map.Height);
+		Map2D<float> distMap = new Map2D<float>(RegionsMap.Width, RegionsMap.Height);
 
 		while(frontierTiles.Count > 0)
 		{
@@ -314,7 +312,7 @@ class RegionsMapGenerator
 		if (terrainMap.GetTerrainMap().GetValueAt(tile).tileType == TerrainTile.TileType.Road)
 			return;
 		if (terrainMap.GetTerrainMap().GetValueAt(tile).tileType != TerrainTile.TileType.City)
-			terrainMap.SetValue(tile, new TerrainTile(TerrainTile.TileType.Road));
+			TerrainMapGenerator.TerrainMap.SetPoint(tile, new TerrainTile(TerrainTile.TileType.Road));
 		Int2 maxTile = tile;
 		foreach(var t in distMap.GetAdjacentPoints(tile))
 		{
@@ -335,7 +333,7 @@ class RegionsMapGenerator
 		float startDifficulty = 3f;
 		frontierTiles.Insert(startDifficulty, startTile);
 
-		Map2D<float> distMap = new Map2D<float>(map.Width, map.Height);
+		Map2D<float> distMap = new Map2D<float>(RegionsMap.Width, RegionsMap.Height);
 
 		while (frontierTiles.Count > 0)
 		{
@@ -435,7 +433,7 @@ class RegionsMapGenerator
 
 	private RegionTile TileAt(Int2 pos)
 	{
-		return map.GetValueAt(pos);
+		return RegionsMap.GetValueAt(pos);
 	}
 
 	public Color GetTileColor(Int2 pos)
@@ -450,6 +448,6 @@ class RegionsMapGenerator
 
 	public Map2D<RegionTile> GetRegionsMap()
 	{
-		return map;
+		return RegionsMap;
 	}
 }
