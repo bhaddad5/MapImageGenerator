@@ -55,6 +55,7 @@ public class MapBuilder : MonoBehaviour
 		{
 			Destroy(terrainMeshDisplay.transform.GetChild(i).gameObject);
 		}
+		transform.localPosition = Vector3.zero;
 
 		waterPlane.SetActive(true);
 		waterPlane.transform.localScale = new Vector3(width / 10, 1, height / 10);
