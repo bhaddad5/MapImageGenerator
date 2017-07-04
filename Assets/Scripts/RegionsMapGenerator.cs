@@ -29,6 +29,23 @@ class RegionsMapGenerator
 			}
 		}
 
+		float humanTotal = 0;
+		float orcTotal = 0;
+		float DwarfTotal = 0;
+		foreach(var Kingdom in Kingdoms)
+		{
+			if (Kingdom.culture == CultureDefinitions.Anglo)
+				humanTotal += Kingdom.Strength(terrainMap.GetTerrainMap());
+			if (Kingdom.culture == CultureDefinitions.Dwarf)
+				DwarfTotal += Kingdom.Strength(terrainMap.GetTerrainMap());
+			if (Kingdom.culture == CultureDefinitions.Orc)
+				orcTotal += Kingdom.Strength(terrainMap.GetTerrainMap());
+		}
+
+		Debug.Log(humanTotal + ", " + DwarfTotal + " , " + orcTotal);
+
+		//.OrderBy(a => Random.Range(0, 1f)).ToList()
+
 		EndFillMap();
 
 		CalculateRegionValues();
@@ -48,6 +65,21 @@ class RegionsMapGenerator
 		{
 			kingdom.PrintKingdomInfo(terrainMap.GetTerrainMap());
 		}*/
+
+		humanTotal = 0;
+		orcTotal = 0;
+		DwarfTotal = 0;
+		foreach (var Kingdom in Kingdoms)
+		{
+			if (Kingdom.culture == CultureDefinitions.Anglo)
+				humanTotal += Kingdom.Strength(terrainMap.GetTerrainMap());
+			if (Kingdom.culture == CultureDefinitions.Dwarf)
+				DwarfTotal += Kingdom.Strength(terrainMap.GetTerrainMap());
+			if (Kingdom.culture == CultureDefinitions.Orc)
+				orcTotal += Kingdom.Strength(terrainMap.GetTerrainMap());
+		}
+
+		Debug.Log(humanTotal + ", " + DwarfTotal + " , " + orcTotal);
 	}
 
 	private void StartFillMap()
@@ -375,8 +407,7 @@ class RegionsMapGenerator
 
 	private void FightWar()
 	{
-		var ShuffledKingdoms = Kingdoms.OrderBy(a => Random.Range(0, 1f)).ToList();
-		foreach (var kingdom in ShuffledKingdoms)
+		foreach (var kingdom in Kingdoms)
 		{
 			Settlement closestSett = kingdom.ClosestEnemySettlement();
 			if (closestSett != null)
