@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 class RegionsMapGenerator
 {
@@ -374,7 +375,8 @@ class RegionsMapGenerator
 
 	private void FightWar()
 	{
-		foreach(var kingdom in Kingdoms)
+		var ShuffledKingdoms = Kingdoms.OrderBy(a => Random.Range(0, 1f)).ToList();
+		foreach (var kingdom in ShuffledKingdoms)
 		{
 			Settlement closestSett = kingdom.ClosestEnemySettlement();
 			if (closestSett != null)

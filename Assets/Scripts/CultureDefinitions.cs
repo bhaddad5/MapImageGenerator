@@ -282,7 +282,7 @@ public static class CultureDefinitions
 	{
 		CultureName = "Orcs",
 		AttackMultiplier = 1.2f,
-		DefenseMultiplier = 0.9f,
+		DefenseMultiplier = 1f,
 		prefixes = new List<SettlementNameOption>()
 		{
 			new SettlementNameOption("Org"),
@@ -377,10 +377,10 @@ public static class CultureDefinitions
 		{
 			{ TerrainTile.TileType.Ocean, 0f },
 			{ TerrainTile.TileType.River, 0f },
-			{ TerrainTile.TileType.Swamp, .3f },
-			{ TerrainTile.TileType.Mountain, .4f },
-			{ TerrainTile.TileType.Forest, .25f },
-			{ TerrainTile.TileType.Grass, .25f },
+			{ TerrainTile.TileType.Swamp, .4f },
+			{ TerrainTile.TileType.Mountain, .5f },
+			{ TerrainTile.TileType.Forest, .5f },
+			{ TerrainTile.TileType.Grass, .3f },
 			{ TerrainTile.TileType.Fertile, .1f },
 			{ TerrainTile.TileType.City, 5f },
 			{ TerrainTile.TileType.Road, 3f },
