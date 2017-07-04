@@ -55,6 +55,11 @@ public class ModelPlacer
 			if (Helpers.Odds(0.05f))
 				PlaceObjectsOnTile(tile, 1, lookup.DwarfHouse);
 		}
+		else if (culture == CultureDefinitions.Orc)
+		{
+			if (Helpers.Odds(0.1f))
+				PlaceObjectsOnTile(tile, 1, lookup.OrcHut);
+		}
 	}
 
 	private void PlaceSwampTile(Int2 tile, Culture culture)
@@ -69,6 +74,11 @@ public class ModelPlacer
 		else if (culture == CultureDefinitions.Dwarf)
 		{
 
+		}
+		if (culture == CultureDefinitions.Orc)
+		{
+			if (Helpers.Odds(0.1f))
+				PlaceObjectsOnTile(tile, 1, lookup.OrcHut);
 		}
 	}
 
@@ -85,20 +95,31 @@ public class ModelPlacer
 			if (Helpers.Odds(0.15f))
 				PlaceObjectsOnTile(tile, 1, lookup.DwarfHouse);
 		}
+		else if (culture == CultureDefinitions.Orc)
+		{
+			if (Helpers.Odds(0.1f))
+				PlaceObjectsOnTile(tile, 1, lookup.OrcHut);
+		}
 	}
 
 	private void PlaceFarmTile(Int2 tile, Culture culture)
 	{
-		PlaceObjectsOnTile(tile, Random.Range(10, 15), lookup.WheatField);
 		if (culture == CultureDefinitions.Anglo)
 		{
+			PlaceObjectsOnTile(tile, Random.Range(10, 15), lookup.WheatField);
 			if (Helpers.Odds(0.4f))
 				PlaceObjectsOnTile(tile, 1, lookup.Hovel);
 		}
 		else if(culture == CultureDefinitions.Dwarf)
 		{
+			PlaceObjectsOnTile(tile, Random.Range(10, 15), lookup.WheatField);
 			if (Helpers.Odds(0.15f))
 				PlaceObjectsOnTile(tile, 1, lookup.DwarfHouse);
+		}
+		else if (culture == CultureDefinitions.Orc)
+		{
+			if (Helpers.Odds(0.1f))
+				PlaceObjectsOnTile(tile, 1, lookup.OrcHut);
 		}
 	}
 
@@ -249,7 +270,7 @@ public class ModelPlacer
 
 	private void PlaceMediumOrcCity(Int2 tile)
 	{
-		//PlaceObjectsOnTile(tile, Random.Range(20, 25), lookup.Hovel);
+		PlaceObjectsOnTile(tile, Random.Range(20, 25), lookup.OrcHut);
 
 		foreach (Int2 pt in map.GetAdjacentPoints(tile))
 		{
@@ -262,6 +283,8 @@ public class ModelPlacer
 				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, true), lookup.OrcWall);
 			}
 		}
+
+		PlaceTurretsOnCorners(tile, lookup.OrcTower);
 	}
 
 	private void PlaceLargeOrcCity(Int2 tile)

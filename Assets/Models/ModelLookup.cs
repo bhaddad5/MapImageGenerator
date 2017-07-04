@@ -30,4 +30,6 @@ public class ModelLookup : MonoBehaviour
 	[Header("Orc Settlements")]
 	public GameObject OrcWall;
 	public GameObject OrcGate;
+	public GameObject OrcTower;
+	public GameObject OrcHut;
 }
