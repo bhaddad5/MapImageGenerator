@@ -145,7 +145,7 @@ public class TerrainMapGenerator
 		return terrainMapImage;
 	}
 
-	public float TileAreaValue(Culture culture, Int2 pos, bool includeDiag = false)
+	public static float TileAreaValue(Culture culture, Int2 pos, bool includeDiag = false)
 	{
 		float value = culture.GetTileValue(pos, TerrainMap) * 2;
 
@@ -175,21 +175,6 @@ public class TerrainMapGenerator
 			value += allWaterValue;
 
 		return value;
-	}
-
-	public bool TileInBounds(Int2 pos)
-	{
-		return pos.X >= 0 && pos.X < TerrainMap.Width && pos.Y >= 0 && pos.Y < TerrainMap.Height;
-	}
-
-	public bool TileIsType(Int2 pos, TerrainTile.TileType t)
-	{
-		return TileInBounds(pos) && TileAt(pos).tileType == t;
-	}
-
-	public TerrainTile TileAt(Int2 pos)
-	{
-		return TerrainMap.GetValueAt(pos);
 	}
 
 	public int LandPixelCount()

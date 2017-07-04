@@ -30,14 +30,14 @@ public class Settlement
 		kingdom = k;
 	}
 
-	public void ExpandSettlement(float regionValue, TerrainMapGenerator TerrainMap, Map2D<RegionTile> regionsMap, Settlement mySettlement)
+	public void ExpandSettlement(float regionValue, Map2D<RegionTile> regionsMap)
 	{
 		TerrainMapGenerator.TerrainMap.SetPoint(cityTiles[0], new TerrainTile(TerrainTile.TileType.City));
 
 		float valuePerNewTile = 10;
 		while (cityTiles.Count < regionValue / valuePerNewTile)
 		{
-			var expansionTiles = GetPossibleExpnasionTiles(TerrainMap, regionsMap, mySettlement);
+			var expansionTiles = GetPossibleExpnasionTiles(regionsMap);
 			if (expansionTiles.Count == 0)
 				break;
 			cityTiles.Add(expansionTiles.TopValue());
@@ -45,35 +45,35 @@ public class Settlement
 		}
 	}
 
-	private SortedDupList<Int2> GetPossibleExpnasionTiles(TerrainMapGenerator terrainTiles, Map2D<RegionTile> regionsMap, Settlement settlement)
+	private SortedDupList<Int2> GetPossibleExpnasionTiles(Map2D<RegionTile> regionsMap)
 	{
 		SortedDupList<Int2> possibleExpansions = new SortedDupList<Int2>();
 		foreach (Int2 cityTile in cityTiles)
 		{
-			foreach (Int2 neighbor in terrainTiles.GetTerrainMap().GetAdjacentPoints(cityTile))
+			foreach (Int2 neighbor in TerrainMapGenerator.TerrainMap.GetAdjacentPoints(cityTile))
 			{
-				var neighborType = terrainTiles.GetTerrainMap().GetValueAt(neighbor).tileType;
+				var neighborType = TerrainMapGenerator.TerrainMap.GetValueAt(neighbor).tileType;
 				if (!possibleExpansions.ContainsValue(neighbor) &&
 					neighborType != TerrainTile.TileType.City &&
 					neighborType != TerrainTile.TileType.Ocean &&
 					neighborType != TerrainTile.TileType.River &&
 					neighborType != TerrainTile.TileType.Mountain &&
-					regionsMap.GetValueAt(neighbor).settlement == settlement &&
-					!BordersUnfriendlyCity(neighbor, terrainTiles, settlement))
+					regionsMap.GetValueAt(neighbor).settlement == this &&
+					!BordersUnfriendlyCity(neighbor))
 				{
-					possibleExpansions.Insert(terrainTiles.TileAreaValue(settlement.kingdom.culture, neighbor, true), neighbor);
+					possibleExpansions.Insert(TerrainMapGenerator.TileAreaValue(kingdom.culture, neighbor, true), neighbor);
 				}
 			}
 		}
 		return possibleExpansions;
 	}
 
-	private bool BordersUnfriendlyCity(Int2 tile, TerrainMapGenerator terrainTiles, Settlement settlement)
+	private bool BordersUnfriendlyCity(Int2 tile)
 	{
 		bool bordersUnfriendlyCity = false;
-		foreach(var border in terrainTiles.GetTerrainMap().GetAllNeighboringPoints(tile))
+		foreach(var border in TerrainMapGenerator.TerrainMap.GetAllNeighboringPoints(tile))
 		{
-			if(terrainTiles.GetTerrainMap().GetValueAt(border).tileType == TerrainTile.TileType.City)
+			if(TerrainMapGenerator.TerrainMap.GetValueAt(border).tileType == TerrainTile.TileType.City)
 			{
 				if(!cityTiles.Contains(border))
 					bordersUnfriendlyCity = true;

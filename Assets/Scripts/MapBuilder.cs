@@ -81,7 +81,7 @@ public class MapBuilder : MonoBehaviour
 		foreach (var culture in cultures)
 			culture.SetNumSettlements(landPixelCount);
 
-		RegionsMapGenerator regionsMap = new RegionsMapGenerator(terrainMapGenerator, cultures);
+		RegionsMapGenerator regionsMap = new RegionsMapGenerator(cultures);
 
 		displayText.text = "Artificing Lands";
 		yield return null;
