@@ -26,4 +26,8 @@ public class ModelLookup : MonoBehaviour
 	public GameObject DwarfWall;
 	public GameObject DwarfGates;
 	public GameObject DwarfTower;
+
+	[Header("Orc Settlements")]
+	public GameObject OrcWall;
+	public GameObject OrcGate;
 }

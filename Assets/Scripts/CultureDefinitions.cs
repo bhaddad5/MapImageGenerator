@@ -158,8 +158,8 @@ public static class CultureDefinitions
 	public static Culture Dwarf = new Culture()
 	{
 		CultureName = "Dwarves",
-		AttackMultiplier = 0.9f,
-		DefenseMultiplier = 1.1f,
+		AttackMultiplier = 1f,
+		DefenseMultiplier = 1f,
 		prefixes = new List<SettlementNameOption>()
 		{
 			new SettlementNameOption("Daz"),
@@ -267,7 +267,7 @@ public static class CultureDefinitions
 			{ TerrainTile.TileType.Ocean, 0f },
 			{ TerrainTile.TileType.River, 0f },
 			{ TerrainTile.TileType.Swamp, .1f },
-			{ TerrainTile.TileType.Mountain, .7f },
+			{ TerrainTile.TileType.Mountain, .6f },
 			{ TerrainTile.TileType.Forest, .25f },
 			{ TerrainTile.TileType.Grass, .25f },
 			{ TerrainTile.TileType.Fertile, .25f },
@@ -281,7 +281,7 @@ public static class CultureDefinitions
 	public static Culture Orc = new Culture()
 	{
 		CultureName = "Orcs",
-		AttackMultiplier = 1.2f,
+		AttackMultiplier = 1f,
 		DefenseMultiplier = 1f,
 		prefixes = new List<SettlementNameOption>()
 		{

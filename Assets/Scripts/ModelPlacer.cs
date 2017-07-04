@@ -146,6 +146,15 @@ public class ModelPlacer
 			if (traits.Contains(Settlement.CityTrait.Large))
 				PlaceLargeDwarfCity(tile);
 		}
+		else if (culture == CultureDefinitions.Orc)
+		{
+			if (traits.Contains(Settlement.CityTrait.Small))
+				PlaceSmallOrcCity(tile);
+			if (traits.Contains(Settlement.CityTrait.Medium))
+				PlaceMediumOrcCity(tile);
+			if (traits.Contains(Settlement.CityTrait.Large))
+				PlaceLargeOrcCity(tile);
+		}
 	}
 
 	private Settlement GetSettlementFromTile(Int2 tile)
@@ -231,6 +240,33 @@ public class ModelPlacer
 		PlaceTurretsOnCorners(tile, lookup.DwarfTower);
 
 		PlaceObjectsOnTileWithBorder(tile, Random.Range(20, 25), lookup.DwarfHouse);
+	}
+
+	private void PlaceSmallOrcCity(Int2 tile)
+	{
+		PlaceMediumOrcCity(tile);
+	}
+
+	private void PlaceMediumOrcCity(Int2 tile)
+	{
+		//PlaceObjectsOnTile(tile, Random.Range(20, 25), lookup.Hovel);
+
+		foreach (Int2 pt in map.GetAdjacentPoints(tile))
+		{
+			if (TileIsRoad(pt))
+			{
+				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, true), lookup.OrcGate);
+			}
+			else if (TileIsCityBorder(pt))
+			{
+				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, true), lookup.OrcWall);
+			}
+		}
+	}
+
+	private void PlaceLargeOrcCity(Int2 tile)
+	{
+		PlaceMediumOrcCity(tile);
 	}
 
 	private bool TileIsRoad(Int2 tile)
