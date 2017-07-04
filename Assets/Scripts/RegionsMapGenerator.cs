@@ -21,6 +21,7 @@ class RegionsMapGenerator
 
 			for (int i = settlementLocations.Count - 1; i >= 0; i--)
 			{
+				terrainMap.SetValue(settlementLocations.ValueAt(i), new TerrainTile(TerrainTile.TileType.City));
 				Kingdom r = new Kingdom(culture.culture, settlementLocations.ValueAt(i));
 				Kingdoms.Add(r);
 				ExpandRegionFromSettlement(5, r.settlements[0], settlementLocations.ValueAt(i));
@@ -101,9 +102,16 @@ class RegionsMapGenerator
 				break;
 			}
 
+			if (terrainMap.GetTerrainMap().GetValueAt(regions.ValueAt(regionsIndex)).tileType == TerrainTile.TileType.City ||
+				BordersCity(regions.ValueAt(regionsIndex)))
+			{
+				regionsIndex++;
+				continue;
+			}
+
 			usedSettlements.Insert(regions.KeyAt(regionsIndex), regions.ValueAt(regionsIndex));
 			if (i == (int)(numOfSettlements * .75f))
-				regionsIndex = (int)(regions.Count * .75f);
+				regionsIndex = (int)(regions.Count * .6f);
 			if (i == (int)(numOfSettlements * .5f))
 				regionsIndex = (int)(regions.Count * .5f);
 			else if (i == (int)(numOfSettlements * .25f))
@@ -114,6 +122,19 @@ class RegionsMapGenerator
 			regionsIndex++;
 		}
 		return usedSettlements;
+	}
+
+	private bool BordersCity(Int2 tile)
+	{
+		bool bordersCity = false;
+		foreach (var border in terrainMap.GetTerrainMap().GetAdjacentPoints(tile))
+		{
+			if (terrainMap.GetTerrainMap().GetValueAt(border).tileType == TerrainTile.TileType.City)
+			{
+				bordersCity = true;
+			}
+		}
+		return bordersCity;
 	}
 
 	private bool TooCloseToExistingSettlement(Int2 pos, SortedDupList<Int2> existingSettlements)
@@ -363,7 +384,7 @@ class RegionsMapGenerator
 
 				if (attackPower > defenderPower)
 				{
-					kingdom.settlements.Add(closestSett);
+					kingdom.AddSettlement(closestSett);
 					closestSett.kingdom.settlements.Remove(closestSett);
 					closestSett.kingdom = kingdom;
 				}

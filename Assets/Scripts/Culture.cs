@@ -67,6 +67,8 @@ public class HeraldryOption
 
 public class Culture
 {
+	public string CultureName;
+
 	public float AttackMultiplier;
 	public float DefenseMultiplier;
 

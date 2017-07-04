@@ -6,6 +6,7 @@ public static class CultureDefinitions
 {
 	public static Culture Anglo = new Culture()
 	{
+		CultureName = "Humans",
 		AttackMultiplier = 1f,
 		DefenseMultiplier = 1f,
 		prefixes = new List<SettlementNameOption>()
@@ -156,6 +157,7 @@ public static class CultureDefinitions
 
 	public static Culture Dwarf = new Culture()
 	{
+		CultureName = "Dwarves",
 		AttackMultiplier = 0.9f,
 		DefenseMultiplier = 1.1f,
 		prefixes = new List<SettlementNameOption>()
@@ -278,6 +280,7 @@ public static class CultureDefinitions
 
 	public static Culture Orc = new Culture()
 	{
+		CultureName = "Orcs",
 		AttackMultiplier = 1.2f,
 		DefenseMultiplier = 0.9f,
 		prefixes = new List<SettlementNameOption>()
@@ -289,7 +292,7 @@ public static class CultureDefinitions
 			new SettlementNameOption("Riek"),
 			new SettlementNameOption("Warg"),
 			new SettlementNameOption("Urg"),
-			new SettlementNameOption("Pjar"),
+			new SettlementNameOption("Prak"),
 			new SettlementNameOption("Olgon"),
 			new SettlementNameOption("Drak"),
 		},
@@ -361,11 +364,11 @@ public static class CultureDefinitions
 		{
 			{ TerrainTile.TileType.Ocean, .4f },
 			{ TerrainTile.TileType.River, .5f },
-			{ TerrainTile.TileType.Swamp, .45f },
+			{ TerrainTile.TileType.Swamp, .2f },
 			{ TerrainTile.TileType.Mountain, .1f },
-			{ TerrainTile.TileType.Forest, .25f },
+			{ TerrainTile.TileType.Forest, .2f },
 			{ TerrainTile.TileType.Grass, .2f },
-			{ TerrainTile.TileType.Fertile, .2f },
+			{ TerrainTile.TileType.Fertile, .3f },
 			{ TerrainTile.TileType.City, .05f },
 			{ TerrainTile.TileType.Road, .05f },
 		},
@@ -374,11 +377,11 @@ public static class CultureDefinitions
 		{
 			{ TerrainTile.TileType.Ocean, 0f },
 			{ TerrainTile.TileType.River, 0f },
-			{ TerrainTile.TileType.Swamp, .1f },
-			{ TerrainTile.TileType.Mountain, .7f },
+			{ TerrainTile.TileType.Swamp, .3f },
+			{ TerrainTile.TileType.Mountain, .4f },
 			{ TerrainTile.TileType.Forest, .25f },
 			{ TerrainTile.TileType.Grass, .25f },
-			{ TerrainTile.TileType.Fertile, .25f },
+			{ TerrainTile.TileType.Fertile, .1f },
 			{ TerrainTile.TileType.City, 5f },
 			{ TerrainTile.TileType.Road, 3f },
 		}

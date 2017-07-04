@@ -112,6 +112,13 @@ public class Kingdom
 		return closest;
 	}
 
+	public void AddSettlement(Settlement sett)
+	{
+		if (sett.cityTiles.Count > settlements[0].cityTiles.Count + 1)
+			settlements.Insert(0, sett);
+		else settlements.Add(sett);
+	}
+
 	public List<KingdomTrait> GetKingdomTraits(Map2D<TerrainTile> terrainMap)
 	{
 		List<KingdomTrait> traits = new List<KingdomTrait>();

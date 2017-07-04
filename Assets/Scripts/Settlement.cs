@@ -58,13 +58,28 @@ public class Settlement
 					neighborType != TerrainTile.TileType.Ocean &&
 					neighborType != TerrainTile.TileType.River &&
 					neighborType != TerrainTile.TileType.Mountain &&
-					regionsMap.GetValueAt(neighbor).settlement == settlement)
+					regionsMap.GetValueAt(neighbor).settlement == settlement &&
+					!BordersUnfriendlyCity(neighbor, terrainTiles, settlement))
 				{
 					possibleExpansions.Insert(terrainTiles.TileAreaValue(settlement.kingdom.culture, neighbor, true), neighbor);
 				}
 			}
 		}
 		return possibleExpansions;
+	}
+
+	private bool BordersUnfriendlyCity(Int2 tile, TerrainMapGenerator terrainTiles, Settlement settlement)
+	{
+		bool bordersUnfriendlyCity = false;
+		foreach(var border in terrainTiles.GetTerrainMap().GetAdjacentPoints(tile))
+		{
+			if(terrainTiles.GetTerrainMap().GetValueAt(border).tileType == TerrainTile.TileType.City)
+			{
+				if(!cityTiles.Contains(border))
+					bordersUnfriendlyCity = true;
+			}
+		}
+		return bordersUnfriendlyCity;
 	}
 
 	public List<Settlement.CityTrait> GetCityTraits(Map2D<TerrainTile> terrainMap)

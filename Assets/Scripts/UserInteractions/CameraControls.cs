@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class CameraControls : MonoBehaviour
 {
+	void Start()
+	{
+		float[] distances = new float[32];
+		distances[8] = 30;
+		GetComponent<Camera>().layerCullDistances = distances;
+	}
+
 	// Update is called once per frame
 	void Update ()
 	{
