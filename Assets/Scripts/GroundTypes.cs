@@ -15,6 +15,10 @@ public class GroundTypes : MonoBehaviour
 		Fertile,
 		City,
 		Road,
+		//Underground
+		SolidRock,
+		MushroomForest,
+		CaveFloor,
 	}
 
 	[System.Serializable]
@@ -35,5 +39,10 @@ public class GroundTypes : MonoBehaviour
 				return displayInfo;
 		}
 		return new GroundDisplayInfo();
+	}
+
+	public static bool ViableCityTerrain(Type t)
+	{
+		return t != Type.SolidRock && t != Type.River && t != Type.Mountain && t != Type.Ocean;
 	}
 }

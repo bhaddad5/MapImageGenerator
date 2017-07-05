@@ -26,7 +26,7 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 		GenerateMountainRanges(Random.Range(avgNumOfRanges / 2, avgNumOfRanges + avgNumOfRanges / 2));
 		GenerateHills(Random.Range(avgNumHills / 2, avgNumHills + avgNumHills / 2));
 		ZeroOutEdges();
-		RandomizeCoastline();
+		RandomizeCoastline(3, false);
 		BlendHeightMap();
 		CreateRivers();
 	}
@@ -127,7 +127,7 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 	private void TrySpreadLandArea(Int2 startPixel, int distanceToCoast)
 	{
 		SortedDupList<Int2> pixelsToSpreadTo = new SortedDupList<Int2>();
-		pixelsToSpreadTo.Insert(distanceToCoast, startPixel);
+		pixelsToSpreadTo.Insert(startPixel, distanceToCoast);
 
 		while (pixelsToSpreadTo.Count > 0)
 		{
@@ -138,20 +138,11 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 					if (Heights.Get(neighbor) == 0)
 					{
 						Heights.Set(neighbor, Globals.MinGroundHeight);
-						pixelsToSpreadTo.Insert(pixelsToSpreadTo.TopKey() - 1, neighbor);
+						pixelsToSpreadTo.Insert(neighbor, pixelsToSpreadTo.TopKey() - 1);
 					}
 				}
 			}
 			pixelsToSpreadTo.Pop();
-		}
-	}
-
-	private void RandomizeCoastline()
-	{
-		int numPasses = 3;
-		for (int i = 0; i < numPasses; i++)
-		{
-			RandomizeCoastlinePass();
 		}
 	}
 
@@ -172,44 +163,7 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 			Heights.Set(new Int2(Heights.Width - 1, i), 0);
 		}
 	}
-
-	private void RandomizeCoastlinePass()
-	{
-		foreach (Int2 point in Heights.GetMapPoints())
-		{
-			TryRandomizeCoastTile(point);
-		}
-	}
-
-	private void TryRandomizeCoastTile(Int2 tile)
-	{
-		if (IsCoastline(tile) && !BordersMountain(tile))
-		{
-			if (Helpers.Odds(0.4f))
-				Heights.Set(tile, 0f);
-		}
-	}
-
-	private bool IsCoastline(Int2 tile)
-	{
-		foreach (Int2 neighbor in Heights.GetAdjacentPoints(tile))
-		{
-			if (Heights.Get(neighbor).Equals(0))
-				return true;
-		}
-		return false;
-	}
-
-	private bool BordersMountain(Int2 tile)
-	{
-		foreach (float neighbor in Heights.GetAllNeighboringValues(tile))
-		{
-			if (neighbor >= Globals.MountainHeight)
-				return true;
-		}
-		return false;
-	}
-
+	
 	private void GenerateHills(int numOfHills)
 	{
 		List<Int2> possibleHillSites = new List<Int2>();
@@ -334,7 +288,7 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 		SortedDupList<Int2> nextRiverTiles = new SortedDupList<Int2>();
 		int maxRiverLength = int.MaxValue;
 
-		nextRiverTiles.Insert(0, pos);
+		nextRiverTiles.Insert(pos, 0);
 		checkedTiles.Set(pos, maxRiverLength);
 		Int2 endTile = null;
 
@@ -352,7 +306,7 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 				else if (Heights.Get(neighbor) <= Heights.Get(shortestTile) + 0.03f)
 				{
 					checkedTiles.Set(neighbor, checkedTiles.Get(shortestTile) - 1);
-					nextRiverTiles.Insert(checkedTiles.Get(shortestTile) - 1, neighbor);
+					nextRiverTiles.Insert(neighbor, checkedTiles.Get(shortestTile) - 1);
 				}
 			}
 

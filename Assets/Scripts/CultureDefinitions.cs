@@ -138,6 +138,9 @@ public static class CultureDefinitions
 			{ GroundTypes.Type.Fertile, .1f },
 			{ GroundTypes.Type.City, .05f },
 			{ GroundTypes.Type.Road, .05f },
+			{ GroundTypes.Type.SolidRock, 100f },
+			{ GroundTypes.Type.CaveFloor, .3f },
+			{ GroundTypes.Type.MushroomForest, .3f },
 		},
 		tileValues = new Dictionary<GroundTypes.Type, float>()
 		{
@@ -150,6 +153,9 @@ public static class CultureDefinitions
 			{ GroundTypes.Type.Fertile, .4f },
 			{ GroundTypes.Type.City, 5f },
 			{ GroundTypes.Type.Road, 3f },
+			{ GroundTypes.Type.SolidRock, 0f },
+			{ GroundTypes.Type.CaveFloor, .1f },
+			{ GroundTypes.Type.MushroomForest, .2f },
 		}
 	};
 
@@ -260,6 +266,9 @@ public static class CultureDefinitions
 			{ GroundTypes.Type.Fertile, .2f },
 			{ GroundTypes.Type.City, .05f },
 			{ GroundTypes.Type.Road, .05f },
+			{ GroundTypes.Type.SolidRock, 100f },
+			{ GroundTypes.Type.CaveFloor, .2f },
+			{ GroundTypes.Type.MushroomForest, .2f },
 		},
 
 		tileValues = new Dictionary<GroundTypes.Type, float>()
@@ -273,6 +282,9 @@ public static class CultureDefinitions
 			{ GroundTypes.Type.Fertile, .25f },
 			{ GroundTypes.Type.City, 5f },
 			{ GroundTypes.Type.Road, 3f },
+			{ GroundTypes.Type.SolidRock, 0f },
+			{ GroundTypes.Type.CaveFloor, .3f },
+			{ GroundTypes.Type.MushroomForest, .2f },
 		}
 	};
 
@@ -371,6 +383,9 @@ public static class CultureDefinitions
 			{ GroundTypes.Type.Fertile, .3f },
 			{ GroundTypes.Type.City, .05f },
 			{ GroundTypes.Type.Road, .05f },
+			{ GroundTypes.Type.SolidRock, 100f },
+			{ GroundTypes.Type.CaveFloor, .2f },
+			{ GroundTypes.Type.MushroomForest, .2f },
 		},
 
 		tileValues = new Dictionary<GroundTypes.Type, float>()
@@ -384,6 +399,9 @@ public static class CultureDefinitions
 			{ GroundTypes.Type.Fertile, .1f },
 			{ GroundTypes.Type.City, 5f },
 			{ GroundTypes.Type.Road, 3f },
+			{ GroundTypes.Type.SolidRock, 0f },
+			{ GroundTypes.Type.CaveFloor, .2f },
+			{ GroundTypes.Type.MushroomForest, .2f },
 		}
 	};
 }

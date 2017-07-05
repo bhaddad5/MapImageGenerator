@@ -95,7 +95,7 @@ public class SortedDupList<T>
 	private List<DupEntry> entries = new List<DupEntry>();
 	public int Count { get { return entries.Count; } }
 
-	public void Insert(float cmp, T value)
+	public void Insert(T value, float cmp)
 	{
 		DupEntry newEntry = new DupEntry(cmp, value);
 		for(int i = 0; i <=entries.Count; i++)

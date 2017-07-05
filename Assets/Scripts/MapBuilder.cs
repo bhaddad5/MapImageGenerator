@@ -37,9 +37,9 @@ public class MapBuilder : MonoBehaviour
 
 		List<CulturePrevelance> cultures = new List<CulturePrevelance>()
 		{
-			new CulturePrevelance(CultureDefinitions.Anglo, CulturePrevelance.Prevelance.Dominant),
+			//new CulturePrevelance(CultureDefinitions.Anglo, CulturePrevelance.Prevelance.Dominant),
 			new CulturePrevelance(CultureDefinitions.Orc, CulturePrevelance.Prevelance.Occasional),
-			new CulturePrevelance(CultureDefinitions.Dwarf, CulturePrevelance.Prevelance.Occasional),
+			new CulturePrevelance(CultureDefinitions.Dwarf, CulturePrevelance.Prevelance.Dominant),
 		};
 
 		List<Environment> environments = new List<Environment>()
@@ -48,7 +48,7 @@ public class MapBuilder : MonoBehaviour
 			new Environment("The Under Realms", new UndergroundGenerator()),
 		};
 
-		StartCoroutine(BuildMap(width, height, cultures, environments[0]));
+		StartCoroutine(BuildMap(width, height, cultures, environments[1]));
 	}
 
 	public IEnumerator BuildMap(int width, int height, List<CulturePrevelance> cultures, Environment environment)

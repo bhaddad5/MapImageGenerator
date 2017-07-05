@@ -55,13 +55,11 @@ public class Settlement
 				var neighborType = MapGenerator.Terrain.Get(neighbor);
 				if (!possibleExpansions.ContainsValue(neighbor) &&
 					neighborType != GroundTypes.Type.City &&
-					neighborType != GroundTypes.Type.Ocean &&
-					neighborType != GroundTypes.Type.River &&
-					neighborType != GroundTypes.Type.Mountain &&
+					GroundTypes.ViableCityTerrain(neighborType) &&
 					RegionsGen.Map.Get(neighbor).settlement == this &&
 					!BordersUnfriendlyCity(neighbor))
 				{
-					possibleExpansions.Insert(kingdom.culture.TileAreaValue(neighbor, true), neighbor);
+					possibleExpansions.Insert(neighbor, kingdom.culture.TileAreaValue(neighbor, true));
 				}
 			}
 		}

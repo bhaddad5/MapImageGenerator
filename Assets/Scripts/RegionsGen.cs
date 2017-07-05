@@ -87,13 +87,11 @@ class RegionsGen
 		for(int i = 0; i < numberOfSettlements * 200; i++)
 		{
 			Int2 testPos = new Int2(UnityEngine.Random.Range(0, MapGenerator.Terrain.Width), UnityEngine.Random.Range(0, MapGenerator.Terrain.Height));
-			if (MapGenerator.Terrain.Get(testPos) != GroundTypes.Type.Ocean &&
-				MapGenerator.Terrain.Get(testPos) != GroundTypes.Type.River &&
-				MapGenerator.Terrain.Get(testPos) != GroundTypes.Type.Mountain &&
+			if (GroundTypes.ViableCityTerrain(MapGenerator.Terrain.Get(testPos)) &&
 				!TooCloseToExistingSettlement(testPos, regions) &&
 				!TooCloseToBorder(testPos, new Int2(MapGenerator.Terrain.Width, MapGenerator.Terrain.Height)))
 			{
-				regions.Insert(culture.TileAreaValue(testPos), testPos);
+				regions.Insert(testPos, culture.TileAreaValue(testPos));
 			}
 		}
 
@@ -119,7 +117,7 @@ class RegionsGen
 				continue;
 			}
 
-			usedSettlements.Insert(regions.KeyAt(regionsIndex), regions.ValueAt(regionsIndex));
+			usedSettlements.Insert(regions.ValueAt(regionsIndex), regions.KeyAt(regionsIndex));
 			if (i == (int)(numOfSettlements * .75f))
 				regionsIndex = (int)(regions.Count * .6f);
 			if (i == (int)(numOfSettlements * .5f))
@@ -172,7 +170,7 @@ class RegionsGen
 		TileAt(pos).TrySetRegion(settlement, startingValue - settlement.kingdom.culture.GetTileDifficulty(pos));
 
 		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
-		frontierTiles.Insert(TileAt(pos).holdingStrength, pos);
+		frontierTiles.Insert(pos, TileAt(pos).holdingStrength);
 		while(frontierTiles.Count > 0)
 		{
 			foreach(var neighbor in GetPossibleNeighborTiles(frontierTiles.TopValue(), settlement))
@@ -187,7 +185,7 @@ class RegionsGen
 
 				if (TileAt(neighbor).TrySetRegion(settlement, strength))
 				{
-					frontierTiles.Insert(strength, neighbor);
+					frontierTiles.Insert(neighbor, strength);
 				}
 			}
 			frontierTiles.Pop();
@@ -250,7 +248,7 @@ class RegionsGen
 		Int2 startTile = settlement.cityTiles[0];
 
 		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
-		frontierTiles.Insert(3f, startTile);
+		frontierTiles.Insert(startTile, 3f);
 
 		Map2D<float> distMap = new Map2D<float>(Map.Width, Map.Height);
 
@@ -280,7 +278,7 @@ class RegionsGen
 				float difficulty = settlement.kingdom.culture.GetTileDifficulty(tile);
 				if(currDifficulty - difficulty > 0)
 				{
-					frontierTiles.Insert(currDifficulty - difficulty, tile);
+					frontierTiles.Insert(tile, currDifficulty - difficulty);
 					distMap.Set(tile, currDifficulty - difficulty);
 				}
 			}
@@ -311,7 +309,7 @@ class RegionsGen
 
 		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
 		float startDifficulty = 3f;
-		frontierTiles.Insert(startDifficulty, startTile);
+		frontierTiles.Insert(startTile, startDifficulty);
 
 		Map2D<float> distMap = new Map2D<float>(Map.Width, Map.Height);
 
@@ -330,11 +328,11 @@ class RegionsGen
 					var sett = GetSettlementFromTile(tile);
 					if (!hitSettlements.ContainsValue(sett))
 					{
-						hitSettlements.Insert(startDifficulty - currDifficulty, GetSettlementFromTile(tile));
+						hitSettlements.Insert(GetSettlementFromTile(tile), startDifficulty - currDifficulty);
 					}
 					else if (sett == settlement)
 					{
-						frontierTiles.Insert(currDifficulty, tile);
+						frontierTiles.Insert(tile, currDifficulty);
 						distMap.Set(tile, currDifficulty);
 					}
 				}
@@ -348,7 +346,7 @@ class RegionsGen
 						float difficulty = settlement.kingdom.culture.GetTileDifficulty(tile);
 						if (currDifficulty - difficulty > 0)
 						{
-							frontierTiles.Insert(currDifficulty - difficulty, tile);
+							frontierTiles.Insert(tile, currDifficulty - difficulty);
 							distMap.Set(tile, currDifficulty - difficulty);
 						}
 					}

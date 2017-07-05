@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 public class Map2D<T>
@@ -15,6 +16,19 @@ public class Map2D<T>
 		for(int i = 0; i < width; i++)
 		{
 			map[i] = new T[height];
+		}
+	}
+
+	public Map2D(Map2D<T> mapToCopy)
+	{
+		map = new T[mapToCopy.Width][];
+		for (int i = 0; i < mapToCopy.Width; i++)
+		{
+			map[i] = new T[mapToCopy.Height];
+		}
+		foreach (Int2 point in mapToCopy.GetMapPoints())
+		{
+			map[point.X][point.Y] = mapToCopy.Get(point);
 		}
 	}
 
@@ -131,5 +145,16 @@ public class Map2D<T>
 	public void Set(Int2 point, T val)
 	{
 		map[point.X][point.Y] = val;
+	}
+
+	public void FillMap(T val)
+	{
+		for (int i = 0; i < map.Length; i++)
+		{
+			for (int j = 0; j < map[0].Length; j++)
+			{
+				Set(new Int2(i, j), val);
+			}
+		}
 	}
 }
