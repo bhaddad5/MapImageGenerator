@@ -2,17 +2,29 @@
 	Properties {
 		_LookupWidth("Texture Size", Float) = 56
 		_LookupTex("Lookup (RGB)", 2D) = "white" {}
-		_GrassTex ("Grass (RGB)", 2D) = "white" {}
-		_SandTex("Sand (RGB)", 2D) = "white" {}
-		_MountainsTex("Mountains (RGB)", 2D) = "white" {}
-		_SwampTex("Swamp (RGB)", 2D) = "white" {}
-		_FertileTex("Fertile (RGB)", 2D) = "white" {}
-		_ForestTex("Forest (RGB)", 2D) = "white" {}
-		_CityTex("City (RGB)", 2D) = "white" {}
-		_RoadTex("Road (RGB)", 2D) = "white" {}
+		_Color0 ("Color0", Vector) = (1,1,1)
+		_Tex0 ("Texture0 (RGB)", 2D) = "white" {}
+		_Color1("Color1", Vector) = (1,1,1)
+		_Tex1("Texture1 (RGB)", 2D) = "white" {}
+		_Color2("Color2", Vector) = (1,1,1)
+		_Tex2("Texture2 (RGB)", 2D) = "white" {}
+		_Color3("Color3", Vector) = (1,1,1)
+		_Tex3("Texture3 (RGB)", 2D) = "white" {}
+		_Color4("Color4", Vector) = (1,1,1)
+		_Tex4("Texture4 (RGB)", 2D) = "white" {}
+		_Color5("Color0", Vector) = (1,1,1)
+		_Tex5("Texture0 (RGB)", 2D) = "white" {}
+		_Color6("Color1", Vector) = (1,1,1)
+		_Tex6("Texture1 (RGB)", 2D) = "white" {}
+		_Color7("Color2", Vector) = (1,1,1)
+		_Tex7("Texture2 (RGB)", 2D) = "white" {}
+		_Color8("Color3", Vector) = (1,1,1)
+		_Tex8("Texture3 (RGB)", 2D) = "white" {}
+		_Color9("Color4", Vector) = (1,1,1)
+		_Tex9("Texture4 (RGB)", 2D) = "white" {}
 	}
 	SubShader {
-		Tags { "RenderType"="Opaque" }
+		Tags { "RenderType" = "Opaque" }
 		LOD 200
 		
 		CGPROGRAM
@@ -22,16 +34,28 @@
 		// Use shader model 3.0 target, to get nicer looking lighting
 		#pragma target 3.0
 
-		sampler2D _LookupTex;
-		sampler2D _GrassTex;
-		sampler2D _SandTex;
-		sampler2D _MountainsTex;
-		sampler2D _SwampTex;
-		sampler2D _FertileTex;
-		sampler2D _ForestTex;
-		sampler2D _CityTex;
-		sampler2D _RoadTex;
 		float _LookupWidth;
+		sampler2D _LookupTex;
+		float3 _Color0;
+		sampler2D _Tex0;
+		float3 _Color1;
+		sampler2D _Tex1;
+		float3 _Color2;
+		sampler2D _Tex2;
+		float3 _Color3;
+		sampler2D _Tex3;
+		float3 _Color4;
+		sampler2D _Tex4;
+		float3 _Color5;
+		sampler2D _Tex5;
+		float3 _Color6;
+		sampler2D _Tex6;
+		float3 _Color7;
+		sampler2D _Tex7;
+		float3 _Color8;
+		sampler2D _Tex8;
+		float3 _Color9;
+		sampler2D _Tex9;
 
 		struct Input {
 			float2 uv_LookupTex;
@@ -44,33 +68,39 @@
 			// put more per-instance properties here
 		UNITY_INSTANCING_CBUFFER_END
 
-		bool Equals (float f1, float f2) {
-			float maxDiff = 0.001f;
+		bool Equals(float f1, float f2) {
+			float maxDiff = 0.01f;
 			return (f1 + maxDiff > f2) && (f1 - maxDiff < f2);
+		}
+
+		bool ColorEquals(fixed4 colorToCheck, float3 lookupColor) {
+			return Equals(colorToCheck.r, lookupColor.r) && Equals(colorToCheck.g, lookupColor.g) && Equals(colorToCheck.b, lookupColor.b);
 		}
 
 		fixed4 LookupColor(float2 uv, float2 lookupUv) {
 			float textureScale = 30;
-
-			fixed4 c = tex2D(_LookupTex, lookupUv);
-			if (c.r == 1 && c.g == 1 && c.b == 0)
-				c = tex2D(_FertileTex, uv * textureScale);
-			if (c.r == 0 && c.g == 0 && Equals(c.b, .588))
-				c = tex2D(_FertileTex, uv * textureScale);
-			if (c.r == 0 && c.g == 0 && c.b == 0)
-				c = tex2D(_GrassTex, uv * textureScale);
-			if (c.r == 0 && c.g == 0 && c.b == 1)
-				c = tex2D(_SandTex, uv * textureScale);
-			if (c.r == 0 && Equals(c.g, 0.5098) && c.b == 0)
-				c = tex2D(_ForestTex, uv * textureScale);
-			if (Equals(c.r, .564) && Equals(c.g, .360) && c.b == 0)
-				c = tex2D(_MountainsTex, uv * textureScale);
-			if (c.r == 0 && Equals(c.g, 0.737) && Equals(c.b, .415))
-				c = tex2D(_SwampTex, uv * textureScale);
-			if (c.r == 1 && c.g == 1 && c.b == 1)
-				c = tex2D(_CityTex, uv * textureScale);
-			if (Equals(c.r, .756) && Equals(c.g, .380) && Equals(c.b, .125))
-				c = tex2D(_RoadTex, uv * textureScale);
+			fixed4 lookup = tex2D(_LookupTex, lookupUv);
+			fixed4 c = fixed4(0, 0, 0, 1);
+			if (ColorEquals(lookup, _Color0))
+				c = tex2D(_Tex0, uv * textureScale);
+			if (ColorEquals(lookup, _Color1))
+				c = tex2D(_Tex1, uv * textureScale);
+			if (ColorEquals(lookup, _Color2))
+				c = tex2D(_Tex2, uv * textureScale);
+			if (ColorEquals(lookup, _Color3))
+				c = tex2D(_Tex3, uv * textureScale);
+			if (ColorEquals(lookup, _Color4))
+				c = tex2D(_Tex4, uv * textureScale);
+			if (ColorEquals(lookup, _Color5))
+				c = tex2D(_Tex5, uv * textureScale);
+			if (ColorEquals(lookup, _Color6))
+				c = tex2D(_Tex6, uv * textureScale);
+			if (ColorEquals(lookup, _Color7))
+				c = tex2D(_Tex7, uv * textureScale);
+			if (ColorEquals(lookup, _Color8))
+				c = tex2D(_Tex8, uv * textureScale);
+			if (ColorEquals(lookup, _Color9))
+				c = tex2D(_Tex9, uv * textureScale);
 			return c;
 		}
 
@@ -81,6 +111,12 @@
 			float distFromCenter = length(uvIn - center);
 			float cStrength = max(0, (1 - (distFromCenter / LookupPixelWidth)));
 			fixed4 c = LookupColor(uvIn, uvIn + lookupOffset) * cStrength;
+			return c;
+		}
+
+		fixed4 ZeroOutColor(fixed4 c) {
+			if (c.r == 0 && c.g == 0 && c.b == 0)
+				return fixed4(0, 0, 0, 0);
 			return c;
 		}
 
@@ -99,6 +135,16 @@
 			fixed4 c9 = GetAdjustedColor(IN.uv_LookupTex, float2(-LookupPixelWidth, -LookupPixelWidth), LookupPixelWidth);
 
 			float combinedAlpha = c1.a + c2.a + c3.a + c4.a + c5.a + c6.a + c7.a + c8.a + c9.a;
+
+			c1 = ZeroOutColor(c1);
+			c2 = ZeroOutColor(c2);
+			c3 = ZeroOutColor(c3);
+			c4 = ZeroOutColor(c4);
+			c5 = ZeroOutColor(c5);
+			c6 = ZeroOutColor(c6);
+			c7 = ZeroOutColor(c7);
+			c8 = ZeroOutColor(c8);
+			c9 = ZeroOutColor(c9);
 
 			fixed4 c = c1/ combinedAlpha + c2/ combinedAlpha + c3/ combinedAlpha + c4/ combinedAlpha + c5/ combinedAlpha + c6 / combinedAlpha + c7 / combinedAlpha + c8 / combinedAlpha + c9 / combinedAlpha;
 

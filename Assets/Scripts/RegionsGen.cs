@@ -181,7 +181,8 @@ class RegionsGen
 				if(MapGenerator.Terrain.GetValueAt(neighbor) == GroundTypes.Type.Ocean &&
 					MapGenerator.Terrain.GetValueAt(frontierTiles.TopValue()) != GroundTypes.Type.Ocean)
 				{
-					strength = strength - GroundTypes.startOceanDifficulty;
+					float startOceanDifficulty = 0.35f;
+					strength = strength - startOceanDifficulty;
 				}
 
 				if (TileAt(neighbor).TrySetRegion(settlement, strength))

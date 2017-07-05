@@ -11,17 +11,14 @@ public class MapBuilder : MonoBehaviour
 	public Text displayText;
 
 	public GameObject terrainMeshDisplay;
+	public GameObject waterPlane;
 	public GameObject generatedMapInputDisplay;
 	public GameObject generatedTerrainMapInputDisplay;
-
-	public Material terrainMaterial;
-	public Material regionsMaterial;
-
-	public GameObject waterPlane;
 
 	public GameObject SettlementInfoPrefab;
 
 	public ModelLookup ModelLookup;
+	public GroundTypes GroundTypes;
 
 	// Use this for initialization
 	void Start ()
@@ -92,17 +89,10 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Presenting World";
 		yield return null;
 
-		generatedMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = mapGenerator.GetHeightMapTexture();
-		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = mapGenerator.GetTerrainTexture();
+		generatedMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapGenerator.GetHeightMapTexture();
+		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapGenerator.GetTerrainTexture(GroundTypes);
 
-
-		terrainMaterial.SetTexture("_LookupTex", mapGenerator.GetTerrainTexture());
-		terrainMaterial.SetFloat("_LookupWidth", mapGenerator.GetTerrainTexture().width);
-		terrainMaterial.SetFloat("_TexSize", 512);
-		
-		Texture2D regions = WriteRegionsMap(regionsMap, meshBuilder);
-		regionsMaterial.mainTexture = regions;
-		regionsMaterial.SetFloat("_LookupWidth", mapGenerator.GetTerrainTexture().width);
+		List<Material> mapMats = GetMapMaterials();
 
 		int meshNum = 0;
 		foreach(Mesh m in meshBuilder.GetBuiltMeshes())
@@ -111,7 +101,7 @@ public class MapBuilder : MonoBehaviour
 			g.transform.SetParent(terrainMeshDisplay.transform);
 			g.AddComponent<MeshFilter>().mesh = m;
 			g.AddComponent<MeshRenderer>();
-			g.GetComponent<MeshRenderer>().materials = new Material[1] { terrainMaterial };
+			g.GetComponent<MeshRenderer>().materials = mapMats.ToArray();
 			if(m.vertices.Length > 1)
 				g.AddComponent<MeshCollider>();
 			meshNum++;
@@ -136,26 +126,6 @@ public class MapBuilder : MonoBehaviour
 		displayText.enabled = false;
 	}
 
-	private Texture2D WriteRegionsMap(RegionsGen map, MeshBuilder meshBuilder)
-	{
-		Texture2D mapOut = new Texture2D(map.Width, map.Height);
-		mapOut.anisoLevel = 0;
-		mapOut.filterMode = FilterMode.Point;
-		mapOut.wrapMode = TextureWrapMode.Clamp;
-		
-		for (int i = 0; i < mapOut.width; i++)
-		{
-			for (int j = 0; j < mapOut.height; j++)
-			{
-				mapOut.SetPixel(i, j, map.GetTileColor(new Int2(i, j)));
-			}
-		}
-
-		mapOut.Apply();
-
-		return mapOut;
-	}
-
 	private void AddSettlementInfoPanels(RegionsGen regionsMap)
 	{
 		float tileWidth = 1f;
@@ -170,6 +140,45 @@ public class MapBuilder : MonoBehaviour
 				tag.GetComponent<SettlementInfoController>().settlement = sett;
 			}
 		}
+	}
+
+	private List<Material> GetMapMaterials()
+	{
+		List<GroundTypes.Type> groundTypesUsed = new List<GroundTypes.Type>();
+		foreach (GroundTypes.Type type in MapGenerator.Terrain.GetMapValues())
+		{
+			if(!groundTypesUsed.Contains(type))
+				groundTypesUsed.Add(type);
+		}
+
+		List<Material> matsToUse = new List<Material>();
+		List<GroundTypes.GroundDisplayInfo> groundInfo = new List<GroundTypes.GroundDisplayInfo>();
+		//TODO: CAN ONLY SUPPORT 10 TEXTURES AT A TIME!!!
+		foreach (GroundTypes.Type type in groundTypesUsed)
+		{
+			groundInfo.Add(GroundTypes.GetDisplayInfo(type));
+			if (groundInfo.Count >= 10)
+			{
+				matsToUse.Add(FlushGroundInfoToMat(groundInfo));
+				break;
+			}
+		}
+		if (groundInfo.Count > 0)
+			matsToUse.Add(FlushGroundInfoToMat(groundInfo));
+		return matsToUse;
+	}
+
+	private Material FlushGroundInfoToMat(List<GroundTypes.GroundDisplayInfo> groundInfo)
+	{
+		Material mat = new Material(Shader.Find("Custom/GroundShader"));
+		mat.SetTexture("_LookupTex", MapGenerator.GetTerrainTexture(GroundTypes));
+		mat.SetFloat("_LookupWidth", MapGenerator.GetTerrainTexture(GroundTypes).width);
+		for (int i = 0; i < 10 && i < groundInfo.Count; i++)
+		{
+			mat.SetVector("_Color" + i, groundInfo[i].lookupColor);
+			mat.SetTexture("_Tex" + i, groundInfo[i].texture);
+		}
+		return mat;
 	}
 
 	public class Environment
