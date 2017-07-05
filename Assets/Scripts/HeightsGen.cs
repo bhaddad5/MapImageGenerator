@@ -19,6 +19,7 @@ public class HeightsGen
 
 		GenerateMountainRanges(Random.Range(avgNumOfRanges/2, avgNumOfRanges + avgNumOfRanges/2));
 		GenerateHills(Random.Range(avgNumHills / 2, avgNumHills + avgNumHills / 2));
+		ZeroOutEdges();
 		RandomizeCoastline();
 		BlendHeightMap();
 		CreateRivers();
@@ -135,10 +136,28 @@ public class HeightsGen
 
 	private void RandomizeCoastline()
 	{
-		int numPasses = 2;
+		int numPasses = 3;
 		for (int i = 0; i < numPasses; i++)
 		{
 			RandomizeCoastlinePass();
+		}
+	}
+
+	private void ZeroOutEdges()
+	{
+		for (int i = 0; i < Map.Width; i++)
+		{
+			Map.SetPoint(new Int2(i, 0), 0);
+			Map.SetPoint(new Int2(i, 1), 0);
+			Map.SetPoint(new Int2(i, Map.Height - 2), 0);
+			Map.SetPoint(new Int2(i, Map.Height - 1), 0);
+		}
+		for (int i = 0; i < Map.Height; i++)
+		{
+			Map.SetPoint(new Int2(0, i), 0);
+			Map.SetPoint(new Int2(1, i), 0);
+			Map.SetPoint(new Int2(Map.Width - 2, i), 0);
+			Map.SetPoint(new Int2(Map.Width - 1, i), 0);
 		}
 	}
 
@@ -152,10 +171,9 @@ public class HeightsGen
 
 	private void TryRandomizeCoastTile(Int2 tile)
 	{
-		float probOfWaterfy = 0.4f;
 		if (IsCoastline(tile) && !BordersMountain(tile))
 		{
-			if (Helpers.Odds(probOfWaterfy))
+			if (Helpers.Odds(0.4f))
 				Map.SetPoint(tile, 0f);
 		}
 	}
@@ -174,7 +192,7 @@ public class HeightsGen
 	{
 		foreach (float neighbor in Map.GetAllNeighboringValues(tile))
 		{
-			if (neighbor > Globals.MinGroundHeight)
+			if (neighbor >= Globals.MountainHeight)
 				return true;
 		}
 		return false;

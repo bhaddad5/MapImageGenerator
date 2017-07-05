@@ -50,7 +50,7 @@
 		}
 
 		fixed4 LookupColor(float2 uv, float2 lookupUv) {
-			float textureScale = 10;
+			float textureScale = 30;
 
 			fixed4 c = tex2D(_LookupTex, lookupUv);
 			if (c.r == 1 && c.g == 1 && c.b == 0)

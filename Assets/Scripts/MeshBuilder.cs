@@ -80,26 +80,10 @@ class MeshBuilder
 		int numPasses = 3;
 		for(int i = 0; i < numPasses; i++)
 		{
-			//ZeroOutEdges();
 			RandomizeVertHeightsPass();
 		}
 
 		RandomizeCoastBumps();
-		//ZeroOutEdges();
-	}
-
-	private void ZeroOutEdges()
-	{
-		for (int i = 0; i < vertHeights.Width; i++)
-		{
-			vertHeights.SetPoint(new Int2(i, 0), 0);
-			vertHeights.SetPoint(new Int2(i, vertHeights.Height - 1), 0);
-		}
-		for (int i = 0; i < vertHeights.Height; i++)
-		{
-			vertHeights.SetPoint(new Int2(0, i), 0);
-			vertHeights.SetPoint(new Int2(vertHeights.Width - 1, i), 0);
-		}
 	}
 
 	private void RandomizeVertHeightsPass()
