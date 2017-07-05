@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MidlandGenerator : IMapGenerator
+public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 {
-	private Map2D<float> Heights;
-	private Map2D<GroundTypes.Type> Terrain;
 	public Map GenerateMaps(int width, int height)
 	{
 		Heights = new Map2D<float>(width, height);

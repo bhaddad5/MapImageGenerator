@@ -95,7 +95,9 @@
     <Compile Include="Assets\Scripts\MapBuilder.cs" />
     <Compile Include="Assets\Scripts\MapGenerator.cs" />
     <Compile Include="Assets\Scripts\MapGenerators\IMapGenerator.cs" />
+    <Compile Include="Assets\Scripts\MapGenerators\InitialMapGenerator.cs" />
     <Compile Include="Assets\Scripts\MapGenerators\Midland Generator.cs" />
+    <Compile Include="Assets\Scripts\MapGenerators\UndergroundGenerator.cs" />
     <Compile Include="Assets\Scripts\MeshBuilder.cs" />
     <Compile Include="Assets\Scripts\MeshSplitter.cs" />
     <Compile Include="Assets\Scripts\ModelPlacer.cs" />

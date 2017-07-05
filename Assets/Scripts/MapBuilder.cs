@@ -47,7 +47,8 @@ public class MapBuilder : MonoBehaviour
 
 		List<Environment> environments = new List<Environment>()
 		{
-			new Environment("Midlands", new MidlandGenerator())
+			new Environment("The Midlands", new MidlandGenerator()),
+			new Environment("The Under Realms", new UndergroundGenerator()),
 		};
 
 		StartCoroutine(BuildMap(width, height, cultures, environments[0]));
