@@ -36,31 +36,31 @@ public class Kingdom
 		tertiaryColor = GetHeraldryColor();
 	}
 
-	public void SetNamesAndHeraldry(Map2D<TerrainTile> terrainMap)
+	public void SetNamesAndHeraldry()
 	{
 		foreach (var sett in settlements)
 		{
-			var subCityTraits = sett.GetCityTraits(terrainMap);
+			var subCityTraits = sett.GetCityTraits();
 			var names = culture.GetSettlementName(subCityTraits);
 			sett.name = names.Value;
 			if(sett == settlements[0])
 			{
-				SetKingdomName(names.Key, terrainMap);
+				SetKingdomName(names.Key);
 			}
 		}
 		if(settlements.Count > 0)
 		{
-			var cityTraits = settlements[0].GetCityTraits(terrainMap);
+			var cityTraits = settlements[0].GetCityTraits();
 			heraldry = culture.GetHeraldry(cityTraits, this);
 		}
 	}
 
-	private void SetKingdomName(string coreSettlementName, Map2D<TerrainTile> terrainMap)
+	private void SetKingdomName(string coreSettlementName)
 	{
-		name = culture.GetKingdomName(coreSettlementName, GetKingdomTraits(terrainMap));
+		name = culture.GetKingdomName(coreSettlementName, GetKingdomTraits());
 	}
 
-	public void PrintKingdomInfo(Map2D<TerrainTile> terrainMap)
+	public void PrintKingdomInfo()
 	{
 		foreach (var sett in settlements)
 		{
@@ -71,16 +71,16 @@ public class Kingdom
 					adj += se.Value.name + ":" + se.Key + ", ";
 			}
 
-			Debug.Log(sett.name + " value = " + sett.GetSettlementValue(terrainMap) + ", defense = " + sett.GetSettlementDefensibility(terrainMap) + ", Adjacent to: " + adj);
+			Debug.Log(sett.name + " value = " + sett.GetSettlementValue() + ", defense = " + sett.GetSettlementDefensibility() + ", Adjacent to: " + adj);
 		}
 	}
 
-	public float Strength(Map2D<TerrainTile> terrainMap)
+	public float Strength()
 	{
 		float strength = 0;
 		foreach(var sett in settlements)
 		{
-			strength += sett.GetSettlementValue(terrainMap);
+			strength += sett.GetSettlementValue();
 		}
 		return strength;
 	}
@@ -119,7 +119,7 @@ public class Kingdom
 		else settlements.Add(sett);
 	}
 
-	public List<KingdomTrait> GetKingdomTraits(Map2D<TerrainTile> terrainMap)
+	public List<KingdomTrait> GetKingdomTraits()
 	{
 		List<KingdomTrait> traits = new List<KingdomTrait>();
 		if (settlements.Count == 1)
@@ -133,7 +133,7 @@ public class Kingdom
 
 		if(settlements.Count > 0)
 		{
-			var capitolTraits = settlements[0].GetCityTraits(terrainMap);
+			var capitolTraits = settlements[0].GetCityTraits();
 			if (capitolTraits.Contains(Settlement.CityTrait.Port))
 			{
 				traits.Add(KingdomTrait.CapitolPort);

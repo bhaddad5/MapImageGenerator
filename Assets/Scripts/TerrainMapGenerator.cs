@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class TerrainMapGenerator
 {
-	public static Map2D<TerrainTile> TerrainMap;
+	public static Map2D<GroundTypes.Type> TerrainMap;
 	Texture2D terrainMapImage;
 
 	public TerrainMapGenerator()
 	{
-		TerrainMap = new Map2D<TerrainTile>(HeightMapGenerator.HeightMap.Width, HeightMapGenerator.HeightMap.Height);
+		TerrainMap = new Map2D<GroundTypes.Type>(HeightMapGenerator.HeightMap.Width, HeightMapGenerator.HeightMap.Height);
 
 		foreach(var point in TerrainMap.GetMapPoints())
 		{
@@ -17,12 +17,12 @@ public class TerrainMapGenerator
 			{
 				int numLandBorders = NumLandBorders(point);
 				if(numLandBorders >= 6)
-					TerrainMap.SetPoint(point, new TerrainTile(TerrainTile.TileType.River));
-				else TerrainMap.SetPoint(point, new TerrainTile(TerrainTile.TileType.Ocean));
+					TerrainMap.SetPoint(point, GroundTypes.Type.River);
+				else TerrainMap.SetPoint(point, GroundTypes.Type.Ocean);
 			}
 			else if (HeightMapGenerator.HeightMap.GetValueAt(point) >= Globals.MountainHeight)
-				TerrainMap.SetPoint(point, new TerrainTile(TerrainTile.TileType.Mountain));
-			else TerrainMap.SetPoint(point, new TerrainTile(TerrainTile.TileType.Grass));
+				TerrainMap.SetPoint(point, GroundTypes.Type.Mountain);
+			else TerrainMap.SetPoint(point, GroundTypes.Type.Grass);
 		}
 
 		FillInLandTextures();
@@ -44,7 +44,7 @@ public class TerrainMapGenerator
 		List<Color> pixels = new List<Color>();
 		foreach (var tile in TerrainMap.GetMapValuesFlipped())
 		{
-			pixels.Add(tile.GetTileColor());
+			pixels.Add(GroundTypes.tileColors[tile]);
 		}
 		terrainMapImage = new Texture2D(TerrainMap.Width, TerrainMap.Height, TextureFormat.ARGB32, true, true);
 		terrainMapImage.filterMode = FilterMode.Point;
@@ -73,44 +73,44 @@ public class TerrainMapGenerator
 	private void TryFillInTile(Int2 tile)
 	{
 		float oddsOfForest = 0.01f +
-			0.01f * NextToNumOfType(tile, TerrainTile.TileType.Mountain) + 
-			0.3f * NextToNumOfType(tile, TerrainTile.TileType.Forest);
+			0.01f * NextToNumOfType(tile, GroundTypes.Type.Mountain) + 
+			0.3f * NextToNumOfType(tile, GroundTypes.Type.Forest);
 		float oddsOfFertile = 0.01f +
-			0.07f * NextToNumOfType(tile, TerrainTile.TileType.Ocean)+
-			0.15f * NextToNumOfType(tile, TerrainTile.TileType.River) -
-			0.01f * NextToNumOfType(tile, TerrainTile.TileType.Mountain) +
-			0.3f * NextToNumOfType(tile, TerrainTile.TileType.Fertile);
+			0.07f * NextToNumOfType(tile, GroundTypes.Type.Ocean)+
+			0.15f * NextToNumOfType(tile, GroundTypes.Type.River) -
+			0.01f * NextToNumOfType(tile, GroundTypes.Type.Mountain) +
+			0.3f * NextToNumOfType(tile, GroundTypes.Type.Fertile);
 		float oddsOfSwamp = 0.001f +
-			0.01f * NextToNumOfType(tile, TerrainTile.TileType.Ocean) +
-			0.01f * NextToNumOfType(tile, TerrainTile.TileType.River) -
-			1f * NextToNumOfType(tile, TerrainTile.TileType.Mountain) +
-			0.3f * NextToNumOfType(tile, TerrainTile.TileType.Swamp);
+			0.01f * NextToNumOfType(tile, GroundTypes.Type.Ocean) +
+			0.01f * NextToNumOfType(tile, GroundTypes.Type.River) -
+			1f * NextToNumOfType(tile, GroundTypes.Type.Mountain) +
+			0.3f * NextToNumOfType(tile, GroundTypes.Type.Swamp);
 
-		if (GetTile(tile).tileType == TerrainTile.TileType.Grass)
+		if (TerrainMap.GetValueAt(tile) == GroundTypes.Type.Grass)
 		{
 			if (Helpers.Odds(oddsOfFertile))
-				TerrainMap.SetPoint(tile, new TerrainTile(TerrainTile.TileType.Fertile));
+				TerrainMap.SetPoint(tile,GroundTypes.Type.Fertile);
 			else if(Helpers.Odds(oddsOfForest))
-				TerrainMap.SetPoint(tile, new TerrainTile(TerrainTile.TileType.Forest));
+				TerrainMap.SetPoint(tile, GroundTypes.Type.Forest);
 			else if (Helpers.Odds(oddsOfSwamp))
-				TerrainMap.SetPoint(tile, new TerrainTile(TerrainTile.TileType.Swamp));
+				TerrainMap.SetPoint(tile, GroundTypes.Type.Swamp);
 		}
 	}
 
-	private int NextToNumOfType(Int2 tile, TerrainTile.TileType type)
+	private int NextToNumOfType(Int2 tile, GroundTypes.Type type)
 	{
 		int numNextTo = 0;
-		foreach(TerrainTile t in GetNeighborTiles(tile))
+		foreach(GroundTypes.Type t in GetNeighborTiles(tile))
 		{
-			if (t.tileType == type)
+			if (t == type)
 				numNextTo++;
 		}
 		return numNextTo;
 	}
 
-	private List<TerrainTile> GetNeighborTiles(Int2 pos)
+	private List<GroundTypes.Type> GetNeighborTiles(Int2 pos)
 	{
-		List<TerrainTile> neighbors = new List<TerrainTile>();
+		List<GroundTypes.Type> neighbors = new List<GroundTypes.Type>();
 		TryAddTile(pos + new Int2(1, 0), neighbors);
 		TryAddTile(pos + new Int2(-1, 0), neighbors);
 		TryAddTile(pos + new Int2(0, 1), neighbors);
@@ -118,25 +118,15 @@ public class TerrainMapGenerator
 		return neighbors;
 	}
 
-	public void TryAddTile(Int2 pos, List<TerrainTile> neighbors)
+	public void TryAddTile(Int2 pos, List<GroundTypes.Type> neighbors)
 	{
 		if (pixelInBounds(pos))
-			neighbors.Add(GetTile(pos));
+			neighbors.Add(TerrainMap.GetValueAt(pos));
 	}
 
 	private bool pixelInBounds(Int2 pixel)
 	{
 		return !(pixel.X < 0 || pixel.X >= TerrainMap.Width || pixel.Y < 0 || pixel.Y >= TerrainMap.Height);
-	}
-
-	public TerrainTile GetTile(Int2 pos)
-	{
-		return TerrainMap.GetValueAt(pos);
-	}
-
-	public Map2D<TerrainTile> GetTerrainMap()
-	{
-		return TerrainMap;
 	}
 
 	public Texture2D GetTerrainTexture()
@@ -145,45 +135,13 @@ public class TerrainMapGenerator
 		return terrainMapImage;
 	}
 
-	public static float TileAreaValue(Culture culture, Int2 pos, bool includeDiag = false)
-	{
-		float value = culture.GetTileValue(pos, TerrainMap) * 2;
-
-		float oneWaterBorderValue = 3f;
-		float someWaterValue = 2f;
-		float allWaterValue = -1f;
-
-		int numWaterBorders = 0;
-		foreach (Int2 t in TerrainMap.GetAdjacentPoints(pos))
-		{
-			if (TerrainMap.GetValueAt(t).tileType == TerrainTile.TileType.Ocean || TerrainMap.GetValueAt(t).tileType == TerrainTile.TileType.River)
-				numWaterBorders++;
-			value += culture.GetTileValue(t, TerrainMap);
-		}
-
-		if (includeDiag)
-		{
-			foreach (Int2 t in TerrainMap.GetDiagonalPoints(pos))
-				value += culture.GetTileValue(t, TerrainMap) * .8f;
-		}
-
-		if (numWaterBorders == 1)
-			value += oneWaterBorderValue;
-		else if (numWaterBorders > 1 && numWaterBorders < 4)
-			value += someWaterValue;
-		else if (numWaterBorders == 4)
-			value += allWaterValue;
-
-		return value;
-	}
-
 	public int LandPixelCount()
 	{
 		int numTiles = 0;
 		foreach (var tile in TerrainMap.GetMapValues())
 		{
-			if (tile.tileType != TerrainTile.TileType.Ocean &&
-				tile.tileType != TerrainTile.TileType.River)
+			if (tile != GroundTypes.Type.Ocean &&
+				tile != GroundTypes.Type.River)
 				numTiles++;
 		}
 		return numTiles;

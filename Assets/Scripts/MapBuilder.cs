@@ -171,6 +171,11 @@ public class MapBuilder : MonoBehaviour
 		}
 	}
 
+	public class Environment
+	{
+		public string displayName;
+	}
+
 	public class CulturePrevelance
 	{
 		public enum Prevelance

@@ -82,8 +82,8 @@ public class Culture
 	public List<HeraldryOption> heraldryBackground;
 	public List<HeraldryOption> heraldryForeground;
 
-	public Dictionary<TerrainTile.TileType, float> tileDifficulties;
-	public Dictionary<TerrainTile.TileType, float> tileValues;
+	public Dictionary<GroundTypes.Type, float> tileDifficulties;
+	public Dictionary<GroundTypes.Type, float> tileValues;
 
 	public string GetKingdomName(string coreName, List<Kingdom.KingdomTrait> traits)
 	{
@@ -204,14 +204,14 @@ public class Culture
 		}
 	}
 
-	public float GetTileValue(Int2 tile, Map2D<TerrainTile> map)
+	public float GetTileValue(Int2 tile)
 	{
-		return tileValues[map.GetValueAt(tile).tileType];
+		return tileValues[TerrainMapGenerator.TerrainMap.GetValueAt(tile)];
 	}
 
-	public float GetTileDifficulty(Int2 tile, Map2D<TerrainTile> map)
+	public float GetTileDifficulty(Int2 tile)
 	{
-		return tileDifficulties[map.GetValueAt(tile).tileType];
+		return tileDifficulties[TerrainMapGenerator.TerrainMap.GetValueAt(tile)];
 	}
 
 	private Texture2D overlay;
@@ -222,6 +222,38 @@ public class Culture
 			overlay = (Texture2D)Resources.Load(heraldryOverlay, typeof(Texture2D));
 		}
 		return overlay;
+	}
+
+	public float TileAreaValue(Int2 pos, bool includeDiag = false)
+	{
+		float value = GetTileValue(pos) * 2;
+
+		float oneWaterBorderValue = 3f;
+		float someWaterValue = 2f;
+		float allWaterValue = -1f;
+
+		int numWaterBorders = 0;
+		foreach (Int2 t in TerrainMapGenerator.TerrainMap.GetAdjacentPoints(pos))
+		{
+			if (TerrainMapGenerator.TerrainMap.GetValueAt(t) == GroundTypes.Type.Ocean || TerrainMapGenerator.TerrainMap.GetValueAt(t) == GroundTypes.Type.River)
+				numWaterBorders++;
+			value += GetTileValue(t);
+		}
+
+		if (includeDiag)
+		{
+			foreach (Int2 t in TerrainMapGenerator.TerrainMap.GetDiagonalPoints(pos))
+				value += GetTileValue(t) * .8f;
+		}
+
+		if (numWaterBorders == 1)
+			value += oneWaterBorderValue;
+		else if (numWaterBorders > 1 && numWaterBorders < 4)
+			value += someWaterValue;
+		else if (numWaterBorders == 4)
+			value += allWaterValue;
+
+		return value;
 	}
 }
 

@@ -19,27 +19,12 @@ class RegionsMapGenerator
 
 			for (int i = settlementLocations.Count - 1; i >= 0; i--)
 			{
-				TerrainMapGenerator.TerrainMap.SetPoint(settlementLocations.ValueAt(i), new TerrainTile(TerrainTile.TileType.City));
+				TerrainMapGenerator.TerrainMap.SetPoint(settlementLocations.ValueAt(i), GroundTypes.Type.City);
 				Kingdom r = new Kingdom(culture.culture, settlementLocations.ValueAt(i));
 				Kingdoms.Add(r);
 				ExpandRegionFromSettlement(5, r.settlements[0], settlementLocations.ValueAt(i));
 			}
 		}
-
-		float humanTotal = 0;
-		float orcTotal = 0;
-		float DwarfTotal = 0;
-		foreach(var Kingdom in Kingdoms)
-		{
-			if (Kingdom.culture == CultureDefinitions.Anglo)
-				humanTotal += Kingdom.Strength(TerrainMapGenerator.TerrainMap);
-			if (Kingdom.culture == CultureDefinitions.Dwarf)
-				DwarfTotal += Kingdom.Strength(TerrainMapGenerator.TerrainMap);
-			if (Kingdom.culture == CultureDefinitions.Orc)
-				orcTotal += Kingdom.Strength(TerrainMapGenerator.TerrainMap);
-		}
-
-		Debug.Log(humanTotal + ", " + DwarfTotal + " , " + orcTotal);
 
 		EndFillMap();
 
@@ -53,27 +38,24 @@ class RegionsMapGenerator
 
 		foreach(var kingdom in Kingdoms)
 		{
-			kingdom.SetNamesAndHeraldry(TerrainMapGenerator.TerrainMap);
+			kingdom.SetNamesAndHeraldry();
 		}
+	}
 
-		/*foreach (var kingdom in Kingdoms)
-		{
-			kingdom.PrintKingdomInfo(TerrainMap.GetTerrainMap());
-		}*/
-
-		humanTotal = 0;
-		orcTotal = 0;
-		DwarfTotal = 0;
+	private void PrintStrengths()
+	{
+		float humanTotal = 0;
+		float orcTotal = 0;
+		float DwarfTotal = 0;
 		foreach (var Kingdom in Kingdoms)
 		{
 			if (Kingdom.culture == CultureDefinitions.Anglo)
-				humanTotal += Kingdom.Strength(TerrainMapGenerator.TerrainMap);
+				humanTotal += Kingdom.Strength();
 			if (Kingdom.culture == CultureDefinitions.Dwarf)
-				DwarfTotal += Kingdom.Strength(TerrainMapGenerator.TerrainMap);
+				DwarfTotal += Kingdom.Strength();
 			if (Kingdom.culture == CultureDefinitions.Orc)
-				orcTotal += Kingdom.Strength(TerrainMapGenerator.TerrainMap);
+				orcTotal += Kingdom.Strength();
 		}
-
 		Debug.Log(humanTotal + ", " + DwarfTotal + " , " + orcTotal);
 	}
 
@@ -92,8 +74,8 @@ class RegionsMapGenerator
 		Kingdom Ocean = new Kingdom(CultureDefinitions.Anglo, new Int2(0, 0));
 		foreach (var pixel in RegionsMap.GetMapPoints())
 		{
-			if(TerrainMapGenerator.TerrainMap.GetValueAt(pixel).tileType == TerrainTile.TileType.Ocean ||
-			   TerrainMapGenerator.TerrainMap.GetValueAt(pixel).tileType == TerrainTile.TileType.River)
+			if(TerrainMapGenerator.TerrainMap.GetValueAt(pixel) == GroundTypes.Type.Ocean ||
+			   TerrainMapGenerator.TerrainMap.GetValueAt(pixel) == GroundTypes.Type.River)
 				RegionsMap.SetPoint(pixel, new RegionTile(Ocean.settlements[0]));
 		}
 	}
@@ -105,13 +87,13 @@ class RegionsMapGenerator
 		for(int i = 0; i < numberOfSettlements * 200; i++)
 		{
 			Int2 testPos = new Int2(UnityEngine.Random.Range(0, TerrainMapGenerator.TerrainMap.Width), UnityEngine.Random.Range(0, TerrainMapGenerator.TerrainMap.Height));
-			if (TerrainMapGenerator.TerrainMap.GetValueAt(testPos).tileType != TerrainTile.TileType.Ocean &&
-				TerrainMapGenerator.TerrainMap.GetValueAt(testPos).tileType != TerrainTile.TileType.River &&
-				TerrainMapGenerator.TerrainMap.GetValueAt(testPos).tileType != TerrainTile.TileType.Mountain &&
+			if (TerrainMapGenerator.TerrainMap.GetValueAt(testPos) != GroundTypes.Type.Ocean &&
+				TerrainMapGenerator.TerrainMap.GetValueAt(testPos) != GroundTypes.Type.River &&
+				TerrainMapGenerator.TerrainMap.GetValueAt(testPos) != GroundTypes.Type.Mountain &&
 				!TooCloseToExistingSettlement(testPos, regions) &&
 				!TooCloseToBorder(testPos, new Int2(TerrainMapGenerator.TerrainMap.Width, TerrainMapGenerator.TerrainMap.Height)))
 			{
-				regions.Insert(TerrainMapGenerator.TileAreaValue(culture, testPos), testPos);
+				regions.Insert(culture.TileAreaValue(testPos), testPos);
 			}
 		}
 
@@ -130,7 +112,7 @@ class RegionsMapGenerator
 				break;
 			}
 
-			if (TerrainMapGenerator.TerrainMap.GetValueAt(regions.ValueAt(regionsIndex)).tileType == TerrainTile.TileType.City ||
+			if (TerrainMapGenerator.TerrainMap.GetValueAt(regions.ValueAt(regionsIndex)) == GroundTypes.Type.City ||
 				BordersCity(regions.ValueAt(regionsIndex)))
 			{
 				regionsIndex++;
@@ -157,7 +139,7 @@ class RegionsMapGenerator
 		bool bordersCity = false;
 		foreach (var border in TerrainMapGenerator.TerrainMap.GetAdjacentPoints(tile))
 		{
-			if (TerrainMapGenerator.TerrainMap.GetValueAt(border).tileType == TerrainTile.TileType.City)
+			if (TerrainMapGenerator.TerrainMap.GetValueAt(border) == GroundTypes.Type.City)
 			{
 				bordersCity = true;
 			}
@@ -187,7 +169,7 @@ class RegionsMapGenerator
 
 	private void ExpandRegionFromSettlement(float startingValue, Settlement settlement, Int2 pos)
 	{
-		TileAt(pos).TrySetRegion(settlement, startingValue - settlement.kingdom.culture.GetTileDifficulty(pos, TerrainMapGenerator.TerrainMap));
+		TileAt(pos).TrySetRegion(settlement, startingValue - settlement.kingdom.culture.GetTileDifficulty(pos));
 
 		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
 		frontierTiles.Insert(TileAt(pos).holdingStrength, pos);
@@ -195,11 +177,11 @@ class RegionsMapGenerator
 		{
 			foreach(var neighbor in GetPossibleNeighborTiles(frontierTiles.TopValue(), settlement))
 			{
-				float strength = frontierTiles.TopKey() - settlement.kingdom.culture.GetTileDifficulty(neighbor, TerrainMapGenerator.TerrainMap);
-				if(TerrainMapGenerator.TerrainMap.GetValueAt(neighbor).tileType == TerrainTile.TileType.Ocean &&
-					TerrainMapGenerator.TerrainMap.GetValueAt(frontierTiles.TopValue()).tileType != TerrainTile.TileType.Ocean)
+				float strength = frontierTiles.TopKey() - settlement.kingdom.culture.GetTileDifficulty(neighbor);
+				if(TerrainMapGenerator.TerrainMap.GetValueAt(neighbor) == GroundTypes.Type.Ocean &&
+					TerrainMapGenerator.TerrainMap.GetValueAt(frontierTiles.TopValue()) != GroundTypes.Type.Ocean)
 				{
-					strength = strength - TerrainTile.startOceanDifficulty;
+					strength = strength - GroundTypes.startOceanDifficulty;
 				}
 
 				if (TileAt(neighbor).TrySetRegion(settlement, strength))
@@ -230,7 +212,7 @@ class RegionsMapGenerator
 	private void CalculateRegionValues()
 	{
 		foreach(Int2 tile in RegionsMap.GetMapPoints())
-			RegionsMap.GetValueAt(tile).settlement.kingdom.value += RegionsMap.GetValueAt(tile).settlement.kingdom.culture.GetTileValue(tile, TerrainMapGenerator.TerrainMap);
+			RegionsMap.GetValueAt(tile).settlement.kingdom.value += RegionsMap.GetValueAt(tile).settlement.kingdom.culture.GetTileValue(tile);
 	}
 
 	private void ExpandSettlements()
@@ -238,7 +220,7 @@ class RegionsMapGenerator
 		foreach(var reg in Kingdoms)
 		{
 			foreach(var sett in reg.settlements)
-				sett.ExpandSettlement(reg.value, RegionsMap);
+				sett.ExpandSettlement(reg.value);
 		}
 	}
 
@@ -279,10 +261,10 @@ class RegionsMapGenerator
 			foreach(var tile in TerrainMapGenerator.TerrainMap.GetAdjacentPoints(currTile))
 			{
 				if (distMap.GetValueAt(tile) != 0 ||
-				    TerrainMapGenerator.TerrainMap.GetValueAt(tile).tileType == TerrainTile.TileType.Ocean)
+				    TerrainMapGenerator.TerrainMap.GetValueAt(tile) == GroundTypes.Type.Ocean)
 					continue;
 
-				if(TerrainMapGenerator.TerrainMap.GetValueAt(tile).tileType == TerrainTile.TileType.City)
+				if(TerrainMapGenerator.TerrainMap.GetValueAt(tile) == GroundTypes.Type.City)
 				{
 					var sett = GetSettlementFromTile(tile);
 					if (!settlementsHit.Contains(sett))
@@ -294,7 +276,7 @@ class RegionsMapGenerator
 					}
 				}
 
-				float difficulty = settlement.kingdom.culture.GetTileDifficulty(tile, TerrainMapGenerator.TerrainMap);
+				float difficulty = settlement.kingdom.culture.GetTileDifficulty(tile);
 				if(currDifficulty - difficulty > 0)
 				{
 					frontierTiles.Insert(currDifficulty - difficulty, tile);
@@ -306,10 +288,10 @@ class RegionsMapGenerator
 
 	private void BuildRoadBackFromTile(Int2 tile, Map2D<float> distMap)
 	{
-		if (TerrainMapGenerator.TerrainMap.GetValueAt(tile).tileType == TerrainTile.TileType.Road)
+		if (TerrainMapGenerator.TerrainMap.GetValueAt(tile) == GroundTypes.Type.Road)
 			return;
-		if (TerrainMapGenerator.TerrainMap.GetValueAt(tile).tileType != TerrainTile.TileType.City)
-			TerrainMapGenerator.TerrainMap.SetPoint(tile, new TerrainTile(TerrainTile.TileType.Road));
+		if (TerrainMapGenerator.TerrainMap.GetValueAt(tile) != GroundTypes.Type.City)
+			TerrainMapGenerator.TerrainMap.SetPoint(tile, GroundTypes.Type.Road);
 		Int2 maxTile = tile;
 		foreach(var t in distMap.GetAdjacentPoints(tile))
 		{
@@ -342,7 +324,7 @@ class RegionsMapGenerator
 				if (distMap.GetValueAt(tile) != 0)
 					continue;
 
-				if (TerrainMapGenerator.TerrainMap.GetValueAt(tile).tileType == TerrainTile.TileType.City)
+				if (TerrainMapGenerator.TerrainMap.GetValueAt(tile) == GroundTypes.Type.City)
 				{
 					var sett = GetSettlementFromTile(tile);
 					if (!hitSettlements.ContainsValue(sett))
@@ -356,13 +338,13 @@ class RegionsMapGenerator
 					}
 				}
 				else {
-					var type = TerrainMapGenerator.TerrainMap.GetValueAt(tile).tileType;
-					var currType = TerrainMapGenerator.TerrainMap.GetValueAt(currTile).tileType;
-					if ((type == TerrainTile.TileType.Ocean && (currType == TerrainTile.TileType.Ocean || currType == TerrainTile.TileType.City)) ||
-					(type == TerrainTile.TileType.River && (currType == TerrainTile.TileType.River || currType == TerrainTile.TileType.City)) ||
-					(type == TerrainTile.TileType.Road && (currType == TerrainTile.TileType.Road || currType == TerrainTile.TileType.City)))
+					var type = TerrainMapGenerator.TerrainMap.GetValueAt(tile);
+					var currType = TerrainMapGenerator.TerrainMap.GetValueAt(currTile);
+					if ((type == GroundTypes.Type.Ocean && (currType == GroundTypes.Type.Ocean || currType == GroundTypes.Type.City)) ||
+					(type == GroundTypes.Type.River && (currType == GroundTypes.Type.River || currType == GroundTypes.Type.City)) ||
+					(type == GroundTypes.Type.Road && (currType == GroundTypes.Type.Road || currType == GroundTypes.Type.City)))
 					{
-						float difficulty = settlement.kingdom.culture.GetTileDifficulty(tile, TerrainMapGenerator.TerrainMap);
+						float difficulty = settlement.kingdom.culture.GetTileDifficulty(tile);
 						if (currDifficulty - difficulty > 0)
 						{
 							frontierTiles.Insert(currDifficulty - difficulty, tile);
@@ -407,8 +389,8 @@ class RegionsMapGenerator
 			Settlement closestSett = kingdom.ClosestEnemySettlement();
 			if (closestSett != null)
 			{
-				float attackPower = kingdom.Strength(TerrainMapGenerator.TerrainMap) * Random.Range(.75f, 1.25f) * kingdom.culture.AttackMultiplier;
-				float defenderPower = (closestSett.kingdom.Strength(TerrainMapGenerator.TerrainMap) + closestSett.GetSettlementDefensibility(TerrainMapGenerator.TerrainMap)) * Random.Range(.75f, 1.25f) * closestSett.kingdom.culture.DefenseMultiplier;
+				float attackPower = kingdom.Strength() * Random.Range(.75f, 1.25f) * kingdom.culture.AttackMultiplier;
+				float defenderPower = (closestSett.kingdom.Strength() + closestSett.GetSettlementDefensibility()) * Random.Range(.75f, 1.25f) * closestSett.kingdom.culture.DefenseMultiplier;
 
 				if (attackPower > defenderPower)
 				{

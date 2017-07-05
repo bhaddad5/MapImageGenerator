@@ -30,38 +30,38 @@ public class Settlement
 		kingdom = k;
 	}
 
-	public void ExpandSettlement(float regionValue, Map2D<RegionTile> regionsMap)
+	public void ExpandSettlement(float regionValue)
 	{
-		TerrainMapGenerator.TerrainMap.SetPoint(cityTiles[0], new TerrainTile(TerrainTile.TileType.City));
+		TerrainMapGenerator.TerrainMap.SetPoint(cityTiles[0], GroundTypes.Type.City);
 
 		float valuePerNewTile = 10;
 		while (cityTiles.Count < regionValue / valuePerNewTile)
 		{
-			var expansionTiles = GetPossibleExpnasionTiles(regionsMap);
+			var expansionTiles = GetPossibleExpnasionTiles();
 			if (expansionTiles.Count == 0)
 				break;
 			cityTiles.Add(expansionTiles.TopValue());
-			TerrainMapGenerator.TerrainMap.SetPoint(expansionTiles.TopValue(), new TerrainTile(TerrainTile.TileType.City));
+			TerrainMapGenerator.TerrainMap.SetPoint(expansionTiles.TopValue(), GroundTypes.Type.City);
 		}
 	}
 
-	private SortedDupList<Int2> GetPossibleExpnasionTiles(Map2D<RegionTile> regionsMap)
+	private SortedDupList<Int2> GetPossibleExpnasionTiles()
 	{
 		SortedDupList<Int2> possibleExpansions = new SortedDupList<Int2>();
 		foreach (Int2 cityTile in cityTiles)
 		{
 			foreach (Int2 neighbor in TerrainMapGenerator.TerrainMap.GetAdjacentPoints(cityTile))
 			{
-				var neighborType = TerrainMapGenerator.TerrainMap.GetValueAt(neighbor).tileType;
+				var neighborType = TerrainMapGenerator.TerrainMap.GetValueAt(neighbor);
 				if (!possibleExpansions.ContainsValue(neighbor) &&
-					neighborType != TerrainTile.TileType.City &&
-					neighborType != TerrainTile.TileType.Ocean &&
-					neighborType != TerrainTile.TileType.River &&
-					neighborType != TerrainTile.TileType.Mountain &&
-					regionsMap.GetValueAt(neighbor).settlement == this &&
+					neighborType != GroundTypes.Type.City &&
+					neighborType != GroundTypes.Type.Ocean &&
+					neighborType != GroundTypes.Type.River &&
+					neighborType != GroundTypes.Type.Mountain &&
+					RegionsMapGenerator.RegionsMap.GetValueAt(neighbor).settlement == this &&
 					!BordersUnfriendlyCity(neighbor))
 				{
-					possibleExpansions.Insert(TerrainMapGenerator.TileAreaValue(kingdom.culture, neighbor, true), neighbor);
+					possibleExpansions.Insert(kingdom.culture.TileAreaValue(neighbor, true), neighbor);
 				}
 			}
 		}
@@ -73,7 +73,7 @@ public class Settlement
 		bool bordersUnfriendlyCity = false;
 		foreach(var border in TerrainMapGenerator.TerrainMap.GetAllNeighboringPoints(tile))
 		{
-			if(TerrainMapGenerator.TerrainMap.GetValueAt(border).tileType == TerrainTile.TileType.City)
+			if(TerrainMapGenerator.TerrainMap.GetValueAt(border) == GroundTypes.Type.City)
 			{
 				if(!cityTiles.Contains(border))
 					bordersUnfriendlyCity = true;
@@ -82,29 +82,29 @@ public class Settlement
 		return bordersUnfriendlyCity;
 	}
 
-	public List<Settlement.CityTrait> GetCityTraits(Map2D<TerrainTile> terrainMap)
+	public List<Settlement.CityTrait> GetCityTraits()
 	{
-		List<TerrainTile.TileType> neighboringTerrainTypes = new List<TerrainTile.TileType>();
+		List<GroundTypes.Type> neighboringTerrainTypes = new List<GroundTypes.Type>();
 		foreach (Int2 tile in cityTiles)
 		{
-			foreach (var neighbor in terrainMap.GetAdjacentValues(tile))
+			foreach (var neighbor in TerrainMapGenerator.TerrainMap.GetAdjacentValues(tile))
 			{
-				neighboringTerrainTypes.Add(neighbor.tileType);
+				neighboringTerrainTypes.Add(neighbor);
 			}
 		}
 
 		List<Settlement.CityTrait> traits = new List<CityTrait>();
-		if (neighboringTerrainTypes.Contains(TerrainTile.TileType.Mountain))
+		if (neighboringTerrainTypes.Contains(GroundTypes.Type.Mountain))
 			traits.Add(CityTrait.Mountains);
-		if (neighboringTerrainTypes.Contains(TerrainTile.TileType.Forest))
+		if (neighboringTerrainTypes.Contains(GroundTypes.Type.Forest))
 			traits.Add(CityTrait.Forest);
-		if (neighboringTerrainTypes.Contains(TerrainTile.TileType.Fertile))
+		if (neighboringTerrainTypes.Contains(GroundTypes.Type.Fertile))
 			traits.Add(CityTrait.Fertile);
 
 
-		if (neighboringTerrainTypes.Contains(TerrainTile.TileType.Ocean))
+		if (neighboringTerrainTypes.Contains(GroundTypes.Type.Ocean))
 			traits.Add(CityTrait.Port);
-		else if (neighboringTerrainTypes.Contains(TerrainTile.TileType.River))
+		else if (neighboringTerrainTypes.Contains(GroundTypes.Type.River))
 			traits.Add(CityTrait.River);
 		else traits.Add(CityTrait.Landlocked);
 
@@ -122,14 +122,14 @@ public class Settlement
 		else return CityTrait.Large;
 	}
 
-	public float GetSettlementValue(Map2D<TerrainTile> terrainMap)
+	public float GetSettlementValue()
 	{
 		float val = cityTiles.Count;
 		foreach(var tile in cityTiles)
 		{
-			foreach (var adj in terrainMap.GetAdjacentValues(tile))
+			foreach (var adj in TerrainMapGenerator.TerrainMap.GetAdjacentValues(tile))
 			{
-				if(adj.tileType == TerrainTile.TileType.Ocean || adj.tileType == TerrainTile.TileType.River || adj.tileType == TerrainTile.TileType.Road)
+				if(adj == GroundTypes.Type.Ocean || adj == GroundTypes.Type.River || adj == GroundTypes.Type.Road)
 					val += .5f;
 			}
 		}
@@ -137,22 +137,22 @@ public class Settlement
 		return val;
 	}
 
-	public float GetSettlementDefensibility(Map2D<TerrainTile> terrainMap)
+	public float GetSettlementDefensibility()
 	{
-		float defensibility = GetSettlementValue(terrainMap);
+		float defensibility = GetSettlementValue();
 		foreach (var tile in cityTiles)
 		{
-			foreach (var adj in terrainMap.GetAdjacentValues(tile))
+			foreach (var adj in TerrainMapGenerator.TerrainMap.GetAdjacentValues(tile))
 			{
-				if (adj.tileType == TerrainTile.TileType.Swamp || adj.tileType == TerrainTile.TileType.Mountain)
+				if (adj == GroundTypes.Type.Swamp || adj == GroundTypes.Type.Mountain)
 					defensibility += .5f;
-				if (adj.tileType == TerrainTile.TileType.Ocean)
+				if (adj == GroundTypes.Type.Ocean)
 					defensibility += .3f;
-				if (adj.tileType == TerrainTile.TileType.River)
+				if (adj == GroundTypes.Type.River)
 					defensibility += .2f;
-				if (adj.tileType == TerrainTile.TileType.Fertile || adj.tileType == TerrainTile.TileType.Grass)
+				if (adj == GroundTypes.Type.Fertile || adj == GroundTypes.Type.Grass)
 					defensibility -= .5f;
-				if (adj.tileType == TerrainTile.TileType.Road || adj.tileType == TerrainTile.TileType.Forest)
+				if (adj == GroundTypes.Type.Road || adj == GroundTypes.Type.Forest)
 					defensibility -= 1f;
 			}
 		}
