@@ -45,10 +45,15 @@ public class MapBuilder : MonoBehaviour
 			new CulturePrevelance(CultureDefinitions.Dwarf, CulturePrevelance.Prevelance.Occasional),
 		};
 
-		StartCoroutine(BuildMap(width, height, cultures));
+		List<Environment> environments = new List<Environment>()
+		{
+			new Environment("Midlands", new MidlandGenerator())
+		};
+
+		StartCoroutine(BuildMap(width, height, cultures, environments[0]));
 	}
 
-	public IEnumerator BuildMap(int width, int height, List<CulturePrevelance> cultures)
+	public IEnumerator BuildMap(int width, int height, List<CulturePrevelance> cultures, Environment environment)
 	{
 		terrainMeshDisplay.transform.localPosition = Vector3.zero;
 		for (int i = 0; i < terrainMeshDisplay.transform.childCount; i++)
@@ -67,7 +72,7 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Raising Mountains";
 		yield return null;
 
-		HeightsGen heightGenerator = new HeightsGen(width, height);
+		HeightsGen heightGenerator = new HeightsGen(width, height, environment.HeightGenerator);
 		
 		displayText.text = "Seeding Forests";
 		yield return null;
@@ -174,6 +179,13 @@ public class MapBuilder : MonoBehaviour
 	public class Environment
 	{
 		public string displayName;
+		public IHeightGenerator HeightGenerator;
+
+		public Environment(string name, IHeightGenerator gen)
+		{
+			displayName = name;
+			HeightGenerator = gen;
+		}
 	}
 
 	public class CulturePrevelance
