@@ -20,7 +20,8 @@ public class UndergroundGenerator : InitialMapGenerator, IMapGenerator
 		Heights.FillMap(1f);
 		MakeUndergroundLakes();
 		RandomizeCoastline(3, true);
-		FlattenLakeBorders(5);
+		MakeConnectingCaves();
+		ExpandCaves(4);
 	}
 
 	private void MakeUndergroundLakes()
@@ -28,7 +29,6 @@ public class UndergroundGenerator : InitialMapGenerator, IMapGenerator
 		int pixelsPerLake = 300;
 		int avgNumOfLakes = (Heights.Width * Heights.Height) / pixelsPerLake;
 		int numLakes = Random.Range(avgNumOfLakes / 2, avgNumOfLakes + avgNumOfLakes / 2);
-		Debug.Log(numLakes);
 		for (int i = 0; i < numLakes; i++)
 		{
 			Int2 randPos = new Int2(Random.Range(0, Heights.Width-1), Random.Range(0, Heights.Height-1));
@@ -59,7 +59,7 @@ public class UndergroundGenerator : InitialMapGenerator, IMapGenerator
 		}
 	}
 
-	private void FlattenLakeBorders(int numPasses)
+	private void ExpandCaves(int numPasses)
 	{
 		for (int i = 0; i < numPasses; i++)
 		{
@@ -86,6 +86,34 @@ public class UndergroundGenerator : InitialMapGenerator, IMapGenerator
 		if(bordersNonSolidRock && borderNonOcean && Helpers.Odds(0.7f))
 			newHeights.Set(point, Globals.MinGroundHeight);
 		return newHeights;
+	}
+
+	private void MakeConnectingCaves()
+	{
+		int pixeldPerCave = 200;
+		int averageNumCaves = (Heights.Width * Heights.Height) / pixeldPerCave;
+		int actualNumCaves = Random.Range(averageNumCaves / 2, averageNumCaves + averageNumCaves / 2);
+		for (int i = 0; i < actualNumCaves; i++)
+		{
+			MakeCave();
+		}
+	}
+
+	private void MakeCave()
+	{
+		Int2 randDir = new Int2(Random.Range(-1, 1), Random.Range(-1, 1));
+		int averageCaveLength = 8;
+		int actualCaveLength = Random.Range(averageCaveLength / 2, averageCaveLength + averageCaveLength / 2);
+		Int2 startingPixel = new Int2(Random.Range(0, Heights.Width - 1), Random.Range(0, Heights.Height - 1));
+
+		Int2 currPixel = startingPixel;
+		for (int k = 0; k < actualCaveLength; k++)
+		{
+			Heights.Set(currPixel, Globals.MinGroundHeight);
+			currPixel = GetNextPixelInDirection(currPixel, randDir, 3);
+			if (!Heights.PosInBounds(currPixel))
+				return;
+		}
 	}
 
 	private void MakeTerrain()

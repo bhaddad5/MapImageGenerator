@@ -71,36 +71,8 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 		{
 			float strength = startingStrength + Random.Range(-.4f, .4f);
 			TryMountainCenterPixel(currPixel, strength, distToCoast);
-			currPixel = TryGetNextMountainPixel(currPixel, mountainDirection); ;
+			currPixel = GetNextPixelInDirection(currPixel, mountainDirection, 3); ;
 		}
-	}
-
-	private Int2 TryGetNextMountainPixel(Int2 currPoint, Int2 direction)
-	{
-		Int2[] potentials = new Int2[10];
-		potentials[0] = currPoint + nextDirection(direction, 0) * 3;
-		potentials[1] = currPoint + nextDirection(direction, 0) * 3;
-		potentials[2] = currPoint + nextDirection(direction, 0) * 3;
-		potentials[3] = currPoint + nextDirection(direction, 0) * 3;
-		potentials[4] = currPoint + nextDirection(direction, 1) * 3;
-		potentials[5] = currPoint + nextDirection(direction, 1) * 3;
-		potentials[6] = currPoint + nextDirection(direction, 2) * 3;
-		potentials[7] = currPoint + nextDirection(direction, -1) * 3;
-		potentials[8] = currPoint + nextDirection(direction, -1) * 3;
-		potentials[9] = currPoint + nextDirection(direction, -2) * 3;
-
-		return potentials[Random.Range(0, 9)];
-	}
-
-	private Int2 nextDirection(Int2 dir, int forwardOrBack)
-	{
-		List<Int2> dirs = new List<Int2> { new Int2(-1, -1), new Int2(-1, 0), new Int2(-1, 1), new Int2(0, 1), new Int2(1, 1), new Int2(1, 0), new Int2(1, -1), new Int2(0, -1), };
-		int index = dirs.IndexOf(dir) + forwardOrBack;
-		if (index >= dirs.Count)
-			index = index - dirs.Count;
-		if (index < 0)
-			index = dirs.Count + index;
-		return dirs[index];
 	}
 
 	private bool TryMountainCenterPixel(Int2 pixel, float height, int distanceToCoast)
@@ -368,7 +340,7 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 		return landBorders;
 	}
 
-	public void FillInLandTextures()
+	private void FillInLandTextures()
 	{
 		int numPasses = 4;
 		for (int i = 0; i < numPasses; i++)
@@ -415,27 +387,11 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 	private int NextToNumOfType(Int2 tile, GroundTypes.Type type)
 	{
 		int numNextTo = 0;
-		foreach (GroundTypes.Type t in GetNeighborTiles(tile))
+		foreach (GroundTypes.Type t in Heights.GetAdjacentValues(tile))
 		{
 			if (t == type)
 				numNextTo++;
 		}
 		return numNextTo;
-	}
-
-	private List<GroundTypes.Type> GetNeighborTiles(Int2 pos)
-	{
-		List<GroundTypes.Type> neighbors = new List<GroundTypes.Type>();
-		TryAddTile(pos + new Int2(1, 0), neighbors);
-		TryAddTile(pos + new Int2(-1, 0), neighbors);
-		TryAddTile(pos + new Int2(0, 1), neighbors);
-		TryAddTile(pos + new Int2(0, -1), neighbors);
-		return neighbors;
-	}
-
-	public void TryAddTile(Int2 pos, List<GroundTypes.Type> neighbors)
-	{
-		if (Terrain.PosInBounds(pos))
-			neighbors.Add(Terrain.Get(pos));
 	}
 }
