@@ -206,12 +206,12 @@ public class Culture
 
 	public float GetTileValue(Int2 tile)
 	{
-		return tileValues[MapGenerator.Terrain.GetValueAt(tile)];
+		return tileValues[MapGenerator.Terrain.Get(tile)];
 	}
 
 	public float GetTileDifficulty(Int2 tile)
 	{
-		return tileDifficulties[MapGenerator.Terrain.GetValueAt(tile)];
+		return tileDifficulties[MapGenerator.Terrain.Get(tile)];
 	}
 
 	private Texture2D overlay;
@@ -235,7 +235,7 @@ public class Culture
 		int numWaterBorders = 0;
 		foreach (Int2 t in MapGenerator.Terrain.GetAdjacentPoints(pos))
 		{
-			if (MapGenerator.Terrain.GetValueAt(t) == GroundTypes.Type.Ocean || MapGenerator.Terrain.GetValueAt(t) == GroundTypes.Type.River)
+			if (MapGenerator.Terrain.Get(t) == GroundTypes.Type.Ocean || MapGenerator.Terrain.Get(t) == GroundTypes.Type.River)
 				numWaterBorders++;
 			value += GetTileValue(t);
 		}

@@ -19,7 +19,7 @@ class RegionsGen
 
 			for (int i = settlementLocations.Count - 1; i >= 0; i--)
 			{
-				MapGenerator.Terrain.SetPoint(settlementLocations.ValueAt(i), GroundTypes.Type.City);
+				MapGenerator.Terrain.Set(settlementLocations.ValueAt(i), GroundTypes.Type.City);
 				Kingdom r = new Kingdom(culture.culture, settlementLocations.ValueAt(i));
 				Kingdoms.Add(r);
 				ExpandRegionFromSettlement(5, r.settlements[0], settlementLocations.ValueAt(i));
@@ -65,7 +65,7 @@ class RegionsGen
 		Map = new Map2D<RegionTile>(MapGenerator.Terrain.Width, MapGenerator.Terrain.Height);
 		foreach(var pixel in Map.GetMapPoints())
 		{
-			Map.SetPoint(pixel, new RegionTile(noMansLand.settlements[0]));
+			Map.Set(pixel, new RegionTile(noMansLand.settlements[0]));
 		}
 	}
 
@@ -74,9 +74,9 @@ class RegionsGen
 		Kingdom Ocean = new Kingdom(CultureDefinitions.Anglo, new Int2(0, 0));
 		foreach (var pixel in Map.GetMapPoints())
 		{
-			if(MapGenerator.Terrain.GetValueAt(pixel) == GroundTypes.Type.Ocean ||
-			   MapGenerator.Terrain.GetValueAt(pixel) == GroundTypes.Type.River)
-				Map.SetPoint(pixel, new RegionTile(Ocean.settlements[0]));
+			if(MapGenerator.Terrain.Get(pixel) == GroundTypes.Type.Ocean ||
+			   MapGenerator.Terrain.Get(pixel) == GroundTypes.Type.River)
+				Map.Set(pixel, new RegionTile(Ocean.settlements[0]));
 		}
 	}
 
@@ -87,9 +87,9 @@ class RegionsGen
 		for(int i = 0; i < numberOfSettlements * 200; i++)
 		{
 			Int2 testPos = new Int2(UnityEngine.Random.Range(0, MapGenerator.Terrain.Width), UnityEngine.Random.Range(0, MapGenerator.Terrain.Height));
-			if (MapGenerator.Terrain.GetValueAt(testPos) != GroundTypes.Type.Ocean &&
-				MapGenerator.Terrain.GetValueAt(testPos) != GroundTypes.Type.River &&
-				MapGenerator.Terrain.GetValueAt(testPos) != GroundTypes.Type.Mountain &&
+			if (MapGenerator.Terrain.Get(testPos) != GroundTypes.Type.Ocean &&
+				MapGenerator.Terrain.Get(testPos) != GroundTypes.Type.River &&
+				MapGenerator.Terrain.Get(testPos) != GroundTypes.Type.Mountain &&
 				!TooCloseToExistingSettlement(testPos, regions) &&
 				!TooCloseToBorder(testPos, new Int2(MapGenerator.Terrain.Width, MapGenerator.Terrain.Height)))
 			{
@@ -112,7 +112,7 @@ class RegionsGen
 				break;
 			}
 
-			if (MapGenerator.Terrain.GetValueAt(regions.ValueAt(regionsIndex)) == GroundTypes.Type.City ||
+			if (MapGenerator.Terrain.Get(regions.ValueAt(regionsIndex)) == GroundTypes.Type.City ||
 				BordersCity(regions.ValueAt(regionsIndex)))
 			{
 				regionsIndex++;
@@ -139,7 +139,7 @@ class RegionsGen
 		bool bordersCity = false;
 		foreach (var border in MapGenerator.Terrain.GetAdjacentPoints(tile))
 		{
-			if (MapGenerator.Terrain.GetValueAt(border) == GroundTypes.Type.City)
+			if (MapGenerator.Terrain.Get(border) == GroundTypes.Type.City)
 			{
 				bordersCity = true;
 			}
@@ -178,8 +178,8 @@ class RegionsGen
 			foreach(var neighbor in GetPossibleNeighborTiles(frontierTiles.TopValue(), settlement))
 			{
 				float strength = frontierTiles.TopKey() - settlement.kingdom.culture.GetTileDifficulty(neighbor);
-				if(MapGenerator.Terrain.GetValueAt(neighbor) == GroundTypes.Type.Ocean &&
-					MapGenerator.Terrain.GetValueAt(frontierTiles.TopValue()) != GroundTypes.Type.Ocean)
+				if(MapGenerator.Terrain.Get(neighbor) == GroundTypes.Type.Ocean &&
+					MapGenerator.Terrain.Get(frontierTiles.TopValue()) != GroundTypes.Type.Ocean)
 				{
 					float startOceanDifficulty = 0.35f;
 					strength = strength - startOceanDifficulty;
@@ -213,7 +213,7 @@ class RegionsGen
 	private void CalculateRegionValues()
 	{
 		foreach(Int2 tile in Map.GetMapPoints())
-			Map.GetValueAt(tile).settlement.kingdom.value += Map.GetValueAt(tile).settlement.kingdom.culture.GetTileValue(tile);
+			Map.Get(tile).settlement.kingdom.value += Map.Get(tile).settlement.kingdom.culture.GetTileValue(tile);
 	}
 
 	private void ExpandSettlements()
@@ -256,16 +256,16 @@ class RegionsGen
 
 		while(frontierTiles.Count > 0)
 		{
-			distMap.SetPoint(frontierTiles.TopValue(), frontierTiles.TopKey());
+			distMap.Set(frontierTiles.TopValue(), frontierTiles.TopKey());
 			float currDifficulty = frontierTiles.TopKey();
 			Int2 currTile = frontierTiles.Pop();
 			foreach(var tile in MapGenerator.Terrain.GetAdjacentPoints(currTile))
 			{
-				if (distMap.GetValueAt(tile) != 0 ||
-				    MapGenerator.Terrain.GetValueAt(tile) == GroundTypes.Type.Ocean)
+				if (distMap.Get(tile) != 0 ||
+				    MapGenerator.Terrain.Get(tile) == GroundTypes.Type.Ocean)
 					continue;
 
-				if(MapGenerator.Terrain.GetValueAt(tile) == GroundTypes.Type.City)
+				if(MapGenerator.Terrain.Get(tile) == GroundTypes.Type.City)
 				{
 					var sett = GetSettlementFromTile(tile);
 					if (!settlementsHit.Contains(sett))
@@ -281,7 +281,7 @@ class RegionsGen
 				if(currDifficulty - difficulty > 0)
 				{
 					frontierTiles.Insert(currDifficulty - difficulty, tile);
-					distMap.SetPoint(tile, currDifficulty - difficulty);
+					distMap.Set(tile, currDifficulty - difficulty);
 				}
 			}
 		}
@@ -289,14 +289,14 @@ class RegionsGen
 
 	private void BuildRoadBackFromTile(Int2 tile, Map2D<float> distMap)
 	{
-		if (MapGenerator.Terrain.GetValueAt(tile) == GroundTypes.Type.Road)
+		if (MapGenerator.Terrain.Get(tile) == GroundTypes.Type.Road)
 			return;
-		if (MapGenerator.Terrain.GetValueAt(tile) != GroundTypes.Type.City)
-			MapGenerator.Terrain.SetPoint(tile, GroundTypes.Type.Road);
+		if (MapGenerator.Terrain.Get(tile) != GroundTypes.Type.City)
+			MapGenerator.Terrain.Set(tile, GroundTypes.Type.Road);
 		Int2 maxTile = tile;
 		foreach(var t in distMap.GetAdjacentPoints(tile))
 		{
-			if (distMap.GetValueAt(t) > distMap.GetValueAt(maxTile))
+			if (distMap.Get(t) > distMap.Get(maxTile))
 				maxTile = t;
 		}
 
@@ -317,15 +317,15 @@ class RegionsGen
 
 		while (frontierTiles.Count > 0)
 		{
-			distMap.SetPoint(frontierTiles.TopValue(), frontierTiles.TopKey());
+			distMap.Set(frontierTiles.TopValue(), frontierTiles.TopKey());
 			float currDifficulty = frontierTiles.TopKey();
 			Int2 currTile = frontierTiles.Pop();
 			foreach (var tile in MapGenerator.Terrain.GetAdjacentPoints(currTile))
 			{
-				if (distMap.GetValueAt(tile) != 0)
+				if (distMap.Get(tile) != 0)
 					continue;
 
-				if (MapGenerator.Terrain.GetValueAt(tile) == GroundTypes.Type.City)
+				if (MapGenerator.Terrain.Get(tile) == GroundTypes.Type.City)
 				{
 					var sett = GetSettlementFromTile(tile);
 					if (!hitSettlements.ContainsValue(sett))
@@ -335,12 +335,12 @@ class RegionsGen
 					else if (sett == settlement)
 					{
 						frontierTiles.Insert(currDifficulty, tile);
-						distMap.SetPoint(tile, currDifficulty);
+						distMap.Set(tile, currDifficulty);
 					}
 				}
 				else {
-					var type = MapGenerator.Terrain.GetValueAt(tile);
-					var currType = MapGenerator.Terrain.GetValueAt(currTile);
+					var type = MapGenerator.Terrain.Get(tile);
+					var currType = MapGenerator.Terrain.Get(currTile);
 					if ((type == GroundTypes.Type.Ocean && (currType == GroundTypes.Type.Ocean || currType == GroundTypes.Type.City)) ||
 					(type == GroundTypes.Type.River && (currType == GroundTypes.Type.River || currType == GroundTypes.Type.City)) ||
 					(type == GroundTypes.Type.Road && (currType == GroundTypes.Type.Road || currType == GroundTypes.Type.City)))
@@ -349,7 +349,7 @@ class RegionsGen
 						if (currDifficulty - difficulty > 0)
 						{
 							frontierTiles.Insert(currDifficulty - difficulty, tile);
-							distMap.SetPoint(tile, currDifficulty - difficulty);
+							distMap.Set(tile, currDifficulty - difficulty);
 						}
 					}
 				}
@@ -413,7 +413,7 @@ class RegionsGen
 
 	private RegionTile TileAt(Int2 pos)
 	{
-		return Map.GetValueAt(pos);
+		return Map.Get(pos);
 	}
 
 	public Color GetTileColor(Int2 pos)

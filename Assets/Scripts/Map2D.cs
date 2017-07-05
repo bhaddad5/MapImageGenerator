@@ -50,7 +50,7 @@ public class Map2D<T>
 	{
 		List<T> points = new List<T>();
 		foreach (Int2 pt in GetMapPoints())
-			points.Add(GetValueAt(pt));
+			points.Add(Get(pt));
 		return points;
 	}
 
@@ -58,7 +58,7 @@ public class Map2D<T>
 	{
 		List<T> points = new List<T>();
 		foreach (Int2 pt in GetMapPointsFlipped())
-			points.Add(GetValueAt(pt));
+			points.Add(Get(pt));
 		return points;
 	}
 
@@ -66,7 +66,7 @@ public class Map2D<T>
 	{
 		List<T> values = new List<T>();
 		foreach (var point in GetAdjacentPoints(pos))
-			values.Add(GetValueAt(point));
+			values.Add(Get(point));
 		return values;
 	}
 
@@ -74,7 +74,7 @@ public class Map2D<T>
 	{
 		List<T> values = new List<T>();
 		foreach (var point in GetDiagonalPoints(pos))
-			values.Add(GetValueAt(point));
+			values.Add(Get(point));
 		return values;
 	}
 
@@ -85,29 +85,23 @@ public class Map2D<T>
 		return values;
 	}
 
-	private void TryAddValue(Int2 pos, List<T> values)
-	{
-		if (PosInBounds(pos))
-			values.Add(GetValueAt(pos));
-	}
-
 	public List<Int2> GetAdjacentPoints(Int2 pos)
 	{
 		List<Int2> values = new List<Int2>();
-		TryAddPoint(pos + new Int2(0, 1), values);
-		TryAddPoint(pos + new Int2(0, -1), values);
-		TryAddPoint(pos + new Int2(1, 0), values);
-		TryAddPoint(pos + new Int2(-1, 0), values);
+		TryAdd(pos + new Int2(0, 1), values);
+		TryAdd(pos + new Int2(0, -1), values);
+		TryAdd(pos + new Int2(1, 0), values);
+		TryAdd(pos + new Int2(-1, 0), values);
 		return values;
 	}
 
 	public List<Int2> GetDiagonalPoints(Int2 pos)
 	{
 		List<Int2> values = new List<Int2>();
-		TryAddPoint(pos + new Int2(1, 1), values);
-		TryAddPoint(pos + new Int2(1, -1), values);
-		TryAddPoint(pos + new Int2(-1, 1), values);
-		TryAddPoint(pos + new Int2(-1, -1), values);
+		TryAdd(pos + new Int2(1, 1), values);
+		TryAdd(pos + new Int2(1, -1), values);
+		TryAdd(pos + new Int2(-1, 1), values);
+		TryAdd(pos + new Int2(-1, -1), values);
 		return values;
 	}
 
@@ -118,7 +112,7 @@ public class Map2D<T>
 		return values;
 	}
 
-	private void TryAddPoint(Int2 pos, List<Int2> values)
+	private void TryAdd(Int2 pos, List<Int2> values)
 	{
 		if (PosInBounds(pos))
 			values.Add(pos);
@@ -129,12 +123,12 @@ public class Map2D<T>
 		return pos.X >= 0 && pos.X < Width && pos.Y >= 0 && pos.Y < Height;
 	}
 
-	public T GetValueAt(Int2 point)
+	public T Get(Int2 point)
 	{
 		return map[point.X][point.Y];
 	}
 
-	public void SetPoint(Int2 point, T val)
+	public void Set(Int2 point, T val)
 	{
 		map[point.X][point.Y] = val;
 	}
