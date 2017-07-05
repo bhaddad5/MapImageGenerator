@@ -72,17 +72,12 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Raising Mountains";
 		yield return null;
 
-		HeightsGen heightGenerator = new HeightsGen(width, height, environment.HeightGenerator);
-		
-		displayText.text = "Seeding Forests";
-		yield return null;
-
-		TerrainGen terrainGen = new TerrainGen();
+		MapGenerator mapGenerator = new MapGenerator(width, height, environment.HeightGenerator);
 		
 		displayText.text = "Forging Kingdoms";
 		yield return null;
 
-		int landPixelCount = terrainGen.LandPixelCount();
+		int landPixelCount = mapGenerator.LandPixelCount();
 		foreach (var culture in cultures)
 			culture.SetNumSettlements(landPixelCount);
 
@@ -96,17 +91,17 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Presenting World";
 		yield return null;
 
-		generatedMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = heightGenerator.GetHeightMapTexture();
-		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = terrainGen.GetTerrainTexture();
+		generatedMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = mapGenerator.GetHeightMapTexture();
+		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = mapGenerator.GetTerrainTexture();
 
 
-		terrainMaterial.SetTexture("_LookupTex", terrainGen.GetTerrainTexture());
-		terrainMaterial.SetFloat("_LookupWidth", terrainGen.GetTerrainTexture().width);
+		terrainMaterial.SetTexture("_LookupTex", mapGenerator.GetTerrainTexture());
+		terrainMaterial.SetFloat("_LookupWidth", mapGenerator.GetTerrainTexture().width);
 		terrainMaterial.SetFloat("_TexSize", 512);
 		
 		Texture2D regions = WriteRegionsMap(regionsMap, meshBuilder);
 		regionsMaterial.mainTexture = regions;
-		regionsMaterial.SetFloat("_LookupWidth", terrainGen.GetTerrainTexture().width);
+		regionsMaterial.SetFloat("_LookupWidth", mapGenerator.GetTerrainTexture().width);
 
 		int meshNum = 0;
 		foreach(Mesh m in meshBuilder.GetBuiltMeshes())
@@ -121,7 +116,7 @@ public class MapBuilder : MonoBehaviour
 			meshNum++;
 		}
 
-		displayText.text = "Detailing Realms";
+		displayText.text = "Seeding Forests";
 		yield return null;
 
 		ModelPlacer mp = new ModelPlacer();
@@ -179,9 +174,9 @@ public class MapBuilder : MonoBehaviour
 	public class Environment
 	{
 		public string displayName;
-		public IHeightGenerator HeightGenerator;
+		public IMapGenerator HeightGenerator;
 
-		public Environment(string name, IHeightGenerator gen)
+		public Environment(string name, IMapGenerator gen)
 		{
 			displayName = name;
 			HeightGenerator = gen;

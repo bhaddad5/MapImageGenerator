@@ -37,11 +37,11 @@ class MeshBuilder
 
 	private void populateVertHeights()
 	{
-		vertHeights = new Map2D<float>(TerrainGen.Map.Width * vertsPerTileAcross + 1, TerrainGen.Map.Height * vertsPerTileAcross + 1);
+		vertHeights = new Map2D<float>(MapGenerator.Terrain.Width * vertsPerTileAcross + 1, MapGenerator.Terrain.Height * vertsPerTileAcross + 1);
 
-		foreach(var pixle in TerrainGen.Map.GetMapPoints())
+		foreach(var pixle in MapGenerator.Terrain.GetMapPoints())
 		{
-			fillHeightsForTile(pixle, HeightsGen.Map.GetValueAt(pixle), TerrainGen.Map.Width, TerrainGen.Map.Height);
+			fillHeightsForTile(pixle, MapGenerator.Heights.GetValueAt(pixle), MapGenerator.Terrain.Width, MapGenerator.Terrain.Height);
 		}
 	}
 
