@@ -67,21 +67,21 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Raising Mountains";
 		yield return null;
 
-		HeightMapGenerator heightGenerator = new HeightMapGenerator(width, height);
+		HeightsGen heightGenerator = new HeightsGen(width, height);
 		
 		displayText.text = "Seeding Forests";
 		yield return null;
 
-		TerrainMapGenerator terrainMapGenerator = new TerrainMapGenerator();
+		TerrainGen terrainGen = new TerrainGen();
 		
 		displayText.text = "Forging Kingdoms";
 		yield return null;
 
-		int landPixelCount = terrainMapGenerator.LandPixelCount();
+		int landPixelCount = terrainGen.LandPixelCount();
 		foreach (var culture in cultures)
 			culture.SetNumSettlements(landPixelCount);
 
-		RegionsMapGenerator regionsMap = new RegionsMapGenerator(cultures);
+		RegionsGen regionsMap = new RegionsGen(cultures);
 
 		displayText.text = "Artificing Lands";
 		yield return null;
@@ -92,16 +92,16 @@ public class MapBuilder : MonoBehaviour
 		yield return null;
 
 		generatedMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = heightGenerator.GetHeightMapTexture();
-		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = terrainMapGenerator.GetTerrainTexture();
+		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = terrainGen.GetTerrainTexture();
 
 
-		terrainMaterial.SetTexture("_LookupTex", terrainMapGenerator.GetTerrainTexture());
-		terrainMaterial.SetFloat("_LookupWidth", terrainMapGenerator.GetTerrainTexture().width);
+		terrainMaterial.SetTexture("_LookupTex", terrainGen.GetTerrainTexture());
+		terrainMaterial.SetFloat("_LookupWidth", terrainGen.GetTerrainTexture().width);
 		terrainMaterial.SetFloat("_TexSize", 512);
 		
 		Texture2D regions = WriteRegionsMap(regionsMap, meshBuilder);
 		regionsMaterial.mainTexture = regions;
-		regionsMaterial.SetFloat("_LookupWidth", terrainMapGenerator.GetTerrainTexture().width);
+		regionsMaterial.SetFloat("_LookupWidth", terrainGen.GetTerrainTexture().width);
 
 		int meshNum = 0;
 		foreach(Mesh m in meshBuilder.GetBuiltMeshes())
@@ -135,7 +135,7 @@ public class MapBuilder : MonoBehaviour
 		displayText.enabled = false;
 	}
 
-	private Texture2D WriteRegionsMap(RegionsMapGenerator map, MeshBuilder meshBuilder)
+	private Texture2D WriteRegionsMap(RegionsGen map, MeshBuilder meshBuilder)
 	{
 		Texture2D mapOut = new Texture2D(map.Width, map.Height);
 		mapOut.anisoLevel = 0;
@@ -155,7 +155,7 @@ public class MapBuilder : MonoBehaviour
 		return mapOut;
 	}
 
-	private void AddSettlementInfoPanels(RegionsMapGenerator regionsMap)
+	private void AddSettlementInfoPanels(RegionsGen regionsMap)
 	{
 		float tileWidth = 1f;
 		foreach(Kingdom r in regionsMap.GetKingdoms())

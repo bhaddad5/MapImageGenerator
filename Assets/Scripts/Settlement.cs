@@ -32,7 +32,7 @@ public class Settlement
 
 	public void ExpandSettlement(float regionValue)
 	{
-		TerrainMapGenerator.TerrainMap.SetPoint(cityTiles[0], GroundTypes.Type.City);
+		TerrainGen.Map.SetPoint(cityTiles[0], GroundTypes.Type.City);
 
 		float valuePerNewTile = 10;
 		while (cityTiles.Count < regionValue / valuePerNewTile)
@@ -41,7 +41,7 @@ public class Settlement
 			if (expansionTiles.Count == 0)
 				break;
 			cityTiles.Add(expansionTiles.TopValue());
-			TerrainMapGenerator.TerrainMap.SetPoint(expansionTiles.TopValue(), GroundTypes.Type.City);
+			TerrainGen.Map.SetPoint(expansionTiles.TopValue(), GroundTypes.Type.City);
 		}
 	}
 
@@ -50,15 +50,15 @@ public class Settlement
 		SortedDupList<Int2> possibleExpansions = new SortedDupList<Int2>();
 		foreach (Int2 cityTile in cityTiles)
 		{
-			foreach (Int2 neighbor in TerrainMapGenerator.TerrainMap.GetAdjacentPoints(cityTile))
+			foreach (Int2 neighbor in TerrainGen.Map.GetAdjacentPoints(cityTile))
 			{
-				var neighborType = TerrainMapGenerator.TerrainMap.GetValueAt(neighbor);
+				var neighborType = TerrainGen.Map.GetValueAt(neighbor);
 				if (!possibleExpansions.ContainsValue(neighbor) &&
 					neighborType != GroundTypes.Type.City &&
 					neighborType != GroundTypes.Type.Ocean &&
 					neighborType != GroundTypes.Type.River &&
 					neighborType != GroundTypes.Type.Mountain &&
-					RegionsMapGenerator.RegionsMap.GetValueAt(neighbor).settlement == this &&
+					RegionsGen.Map.GetValueAt(neighbor).settlement == this &&
 					!BordersUnfriendlyCity(neighbor))
 				{
 					possibleExpansions.Insert(kingdom.culture.TileAreaValue(neighbor, true), neighbor);
@@ -71,9 +71,9 @@ public class Settlement
 	private bool BordersUnfriendlyCity(Int2 tile)
 	{
 		bool bordersUnfriendlyCity = false;
-		foreach(var border in TerrainMapGenerator.TerrainMap.GetAllNeighboringPoints(tile))
+		foreach(var border in TerrainGen.Map.GetAllNeighboringPoints(tile))
 		{
-			if(TerrainMapGenerator.TerrainMap.GetValueAt(border) == GroundTypes.Type.City)
+			if(TerrainGen.Map.GetValueAt(border) == GroundTypes.Type.City)
 			{
 				if(!cityTiles.Contains(border))
 					bordersUnfriendlyCity = true;
@@ -87,7 +87,7 @@ public class Settlement
 		List<GroundTypes.Type> neighboringTerrainTypes = new List<GroundTypes.Type>();
 		foreach (Int2 tile in cityTiles)
 		{
-			foreach (var neighbor in TerrainMapGenerator.TerrainMap.GetAdjacentValues(tile))
+			foreach (var neighbor in TerrainGen.Map.GetAdjacentValues(tile))
 			{
 				neighboringTerrainTypes.Add(neighbor);
 			}
@@ -127,7 +127,7 @@ public class Settlement
 		float val = cityTiles.Count;
 		foreach(var tile in cityTiles)
 		{
-			foreach (var adj in TerrainMapGenerator.TerrainMap.GetAdjacentValues(tile))
+			foreach (var adj in TerrainGen.Map.GetAdjacentValues(tile))
 			{
 				if(adj == GroundTypes.Type.Ocean || adj == GroundTypes.Type.River || adj == GroundTypes.Type.Road)
 					val += .5f;
@@ -142,7 +142,7 @@ public class Settlement
 		float defensibility = GetSettlementValue();
 		foreach (var tile in cityTiles)
 		{
-			foreach (var adj in TerrainMapGenerator.TerrainMap.GetAdjacentValues(tile))
+			foreach (var adj in TerrainGen.Map.GetAdjacentValues(tile))
 			{
 				if (adj == GroundTypes.Type.Swamp || adj == GroundTypes.Type.Mountain)
 					defensibility += .5f;

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeightMapGenerator
+public class HeightsGen
 {
-	public static Map2D<float> HeightMap;
+	public static Map2D<float> Map;
 	private Texture2D heightMapImage;
 
-	public HeightMapGenerator(int width, int height)
+	public HeightsGen(int width, int height)
 	{
-		HeightMap = new Map2D<float>(width, height);
+		Map = new Map2D<float>(width, height);
 
 		int pixelsPerRange = 700;
 		int avgNumOfRanges = (width * height) / pixelsPerRange;
@@ -24,7 +24,7 @@ public class HeightMapGenerator
 		CreateRivers();
 
 		List<Color> pixels = new List<Color>();
-		foreach (float h in HeightMap.GetMapValues())
+		foreach (float h in Map.GetMapValues())
 		{
 			if (h.Equals(-1))
 				pixels.Add(Color.red);
@@ -47,7 +47,7 @@ public class HeightMapGenerator
 
 	private void GenerateMountainRange()
 	{
-		Int2 startingPixel = new Int2(Random.Range(0, HeightMap.Width - 1), Random.Range(0, HeightMap.Height - 1));
+		Int2 startingPixel = new Int2(Random.Range(0, Map.Width - 1), Random.Range(0, Map.Height - 1));
 		float startingStrength = Random.Range(.6f, .75f);
 		Int2 mountainDirection = new Int2(Random.Range(-1, 1), Random.Range(-1, 1));
 		int mountainsLength = Random.Range(4, 50);
@@ -92,20 +92,20 @@ public class HeightMapGenerator
 
 	private bool TryMountainCenterPixel(Int2 pixel, float height, int distanceToCoast)
 	{
-		if (!HeightMap.PosInBounds(pixel))
+		if (!Map.PosInBounds(pixel))
 			return false;
 
 		//Random mountain passes
 		if (Helpers.Odds(0.2f))
 			return true;
 
-		HeightMap.SetPoint(pixel, height);
+		Map.SetPoint(pixel, height);
 
 		TrySpreadLandArea(pixel, distanceToCoast);
-		foreach (Int2 point in HeightMap.GetAllNeighboringPoints(pixel))
+		foreach (Int2 point in Map.GetAllNeighboringPoints(pixel))
 		{
-			if(HeightMap.PosInBounds(point) && Helpers.Odds(0.7f))
-				HeightMap.SetPoint(point, height * .6f);
+			if(Map.PosInBounds(point) && Helpers.Odds(0.7f))
+				Map.SetPoint(point, height * .6f);
 		}
 
 		return true;
@@ -120,11 +120,11 @@ public class HeightMapGenerator
 		{
 			if (pixelsToSpreadTo.TopKey() > 0)
 			{
-				foreach (Int2 neighbor in HeightMap.GetAdjacentPoints(pixelsToSpreadTo.TopValue()))
+				foreach (Int2 neighbor in Map.GetAdjacentPoints(pixelsToSpreadTo.TopValue()))
 				{
-					if(HeightMap.GetValueAt(neighbor) == 0)
+					if(Map.GetValueAt(neighbor) == 0)
 					{
-						HeightMap.SetPoint(neighbor, Globals.MinGroundHeight);
+						Map.SetPoint(neighbor, Globals.MinGroundHeight);
 						pixelsToSpreadTo.Insert(pixelsToSpreadTo.TopKey() - 1, neighbor);
 					}
 				}
@@ -144,7 +144,7 @@ public class HeightMapGenerator
 
 	private void RandomizeCoastlinePass()
 	{
-		foreach(Int2 point in HeightMap.GetMapPoints())
+		foreach(Int2 point in Map.GetMapPoints())
 		{
 			TryRandomizeCoastTile(point);
 		}
@@ -156,13 +156,13 @@ public class HeightMapGenerator
 		if (IsCoastline(tile) && !BordersMountain(tile))
 		{
 			if (Helpers.Odds(probOfWaterfy))
-				HeightMap.SetPoint(tile, 0f);
+				Map.SetPoint(tile, 0f);
 		}
 	}
 
 	private bool IsCoastline(Int2 tile)
 	{
-		foreach (Int2 neighbor in HeightMap.GetAdjacentPoints(tile))
+		foreach (Int2 neighbor in Map.GetAdjacentPoints(tile))
 		{
 			if (HeightAt(neighbor).Equals(0))
 				return true;
@@ -172,7 +172,7 @@ public class HeightMapGenerator
 
 	private bool BordersMountain(Int2 tile)
 	{
-		foreach (float neighbor in HeightMap.GetAllNeighboringValues(tile))
+		foreach (float neighbor in Map.GetAllNeighboringValues(tile))
 		{
 			if (neighbor > Globals.MinGroundHeight)
 				return true;
@@ -185,20 +185,20 @@ public class HeightMapGenerator
 		List<Int2> possibleHillSites = new List<Int2>();
 		for(int i = 0; i < numOfHills * 100; i++)
 		{
-			Int2 pos = new Int2(Random.Range(0, HeightMap.Width - 1), Random.Range(0, HeightMap.Height - 1));
-			if (HeightMap.GetValueAt(pos) == Globals.MinGroundHeight && !BordersWater(pos))
+			Int2 pos = new Int2(Random.Range(0, Map.Width - 1), Random.Range(0, Map.Height - 1));
+			if (Map.GetValueAt(pos) == Globals.MinGroundHeight && !BordersWater(pos))
 				possibleHillSites.Add(pos);
 		}
 
 		for(int i = 0; i < numOfHills && i < possibleHillSites.Count; i++)
 		{
 			float hillHeight = Random.Range(.25f, .3f);
-			HeightMap.SetPoint(possibleHillSites[i], hillHeight);
+			Map.SetPoint(possibleHillSites[i], hillHeight);
 
-			foreach (Int2 point in HeightMap.GetAllNeighboringPoints(possibleHillSites[i]))
+			foreach (Int2 point in Map.GetAllNeighboringPoints(possibleHillSites[i]))
 			{
-				if (HeightMap.PosInBounds(point) && HeightMap.GetValueAt(point) == Globals.MinGroundHeight && Helpers.Odds(0.8f))
-					HeightMap.SetPoint(point, hillHeight * .85f);
+				if (Map.PosInBounds(point) && Map.GetValueAt(point) == Globals.MinGroundHeight && Helpers.Odds(0.8f))
+					Map.SetPoint(point, hillHeight * .85f);
 			}
 
 		}
@@ -206,7 +206,7 @@ public class HeightMapGenerator
 
 	private bool BordersWater(Int2 tile)
 	{
-		foreach (float neighbor in HeightMap.GetAllNeighboringValues(tile))
+		foreach (float neighbor in Map.GetAllNeighboringValues(tile))
 		{
 			if (neighbor < Globals.MinGroundHeight)
 				return true;
@@ -225,18 +225,18 @@ public class HeightMapGenerator
 
 	private void BlendHeightMapPass()
 	{
-		foreach (Int2 pixle in HeightMap.GetMapPoints())
+		foreach (Int2 pixle in Map.GetMapPoints())
 		{
 			float avg = NeighborAverageHeight(pixle);
-			if (HeightMap.GetValueAt(pixle) > 0 && (HeightMap.GetValueAt(pixle) > Globals.MinGroundHeight || avg > Globals.MinGroundHeight))
-				HeightMap.SetPoint(pixle, (HeightMap.GetValueAt(pixle) + avg) / 2);
+			if (Map.GetValueAt(pixle) > 0 && (Map.GetValueAt(pixle) > Globals.MinGroundHeight || avg > Globals.MinGroundHeight))
+				Map.SetPoint(pixle, (Map.GetValueAt(pixle) + avg) / 2);
 		}
 	}
 
 	private float NeighborAverageHeight(Int2 pixle)
 	{
 		float sum = 0f;
-		var points = HeightMap.GetAdjacentValues(pixle);
+		var points = Map.GetAdjacentValues(pixle);
 		foreach (var pt in points)
 		{
 			sum += pt;
@@ -247,12 +247,12 @@ public class HeightMapGenerator
 	private void CreateRivers()
 	{
 		int mapPixelsPerRiver = 500;
-		int numOfRivers = (HeightMap.Width * HeightMap.Height) / mapPixelsPerRiver;
+		int numOfRivers = (Map.Width * Map.Height) / mapPixelsPerRiver;
 
 		List<Int2> possibleRiverStarts = new List<Int2>();
 		for(int i = 0; i < numOfRivers * 500; i++)
 		{
-			Int2 randPos = new Int2(Random.Range(0, HeightMap.Width), Random.Range(0, HeightMap.Height));
+			Int2 randPos = new Int2(Random.Range(0, Map.Width), Random.Range(0, Map.Height));
 
 			if(HeightAt(randPos) < Globals.MountainHeight && HeightAt(randPos) >= Globals.MinGroundHeight)
 			{
@@ -271,7 +271,7 @@ public class HeightMapGenerator
 				if (river != null)
 				{
 					foreach (var px in river)
-						HeightMap.SetPoint(px, Globals.MinGroundHeight - 0.05f);
+						Map.SetPoint(px, Globals.MinGroundHeight - 0.05f);
 					numOfRivers--;
 				}
 			}
@@ -284,7 +284,7 @@ public class HeightMapGenerator
 		int numMountains = 0;
 		int numOceans = 0;
 		int numOthers = 0;
-		foreach(float h in HeightMap.GetAdjacentValues(startPos))
+		foreach(float h in Map.GetAdjacentValues(startPos))
 		{
 			if (h >= Globals.MountainHeight)
 				numMountains++;
@@ -300,7 +300,7 @@ public class HeightMapGenerator
 
 	private List<Int2> TryExpandRiver(Int2 pos, List<Int2> currPath)
 	{
-		Map2D<int> checkedTiles = new Map2D<int>(HeightMap.Width, HeightMap.Height);
+		Map2D<int> checkedTiles = new Map2D<int>(Map.Width, Map.Height);
 		SortedDupList<Int2> nextRiverTiles = new SortedDupList<Int2>();
 		int maxRiverLength = int.MaxValue;
 
@@ -314,12 +314,12 @@ public class HeightMapGenerator
 			nextRiverTiles.PopMin();
 			foreach (var neighbor in GetAdjacentRiverExpansions(shortestTile, checkedTiles))
 			{
-				if (HeightMap.GetValueAt(neighbor) < Globals.MinGroundHeight)
+				if (Map.GetValueAt(neighbor) < Globals.MinGroundHeight)
 				{
 					endTile = shortestTile;
 					break;
 				}
-				else if(HeightMap.GetValueAt(neighbor) <= HeightMap.GetValueAt(shortestTile) + 0.03f)
+				else if(Map.GetValueAt(neighbor) <= Map.GetValueAt(shortestTile) + 0.03f)
 				{
 					checkedTiles.SetPoint(neighbor, checkedTiles.GetValueAt(shortestTile)- 1);
 					nextRiverTiles.Insert(checkedTiles.GetValueAt(shortestTile) - 1, neighbor);
@@ -341,9 +341,9 @@ public class HeightMapGenerator
 	private List<Int2> GetAdjacentRiverExpansions(Int2 pos, Map2D<int> checkedTiles)
 	{
 		List<Int2> expansionTiles = new List<Int2>();
-		foreach (Int2 neighbor in HeightMap.GetAdjacentPoints(pos))
+		foreach (Int2 neighbor in Map.GetAdjacentPoints(pos))
 		{
-			if (checkedTiles.GetValueAt(neighbor) == 0 && HeightMap.GetValueAt(neighbor) < Globals.MountainHeight)
+			if (checkedTiles.GetValueAt(neighbor) == 0 && Map.GetValueAt(neighbor) < Globals.MountainHeight)
 				expansionTiles.Add(neighbor);
 		}
 		return expansionTiles;
@@ -375,7 +375,7 @@ public class HeightMapGenerator
 
 	private float HeightAt(Int2 px)
 	{
-		return HeightMap.GetValueAt(px);
+		return Map.GetValueAt(px);
 	}
 
 	public Texture2D GetHeightMapTexture()
@@ -386,6 +386,6 @@ public class HeightMapGenerator
 
 	public Map2D<float> GetHeightMap()
 	{
-		return HeightMap;
+		return Map;
 	}
 }

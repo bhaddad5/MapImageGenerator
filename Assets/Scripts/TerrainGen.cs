@@ -2,27 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TerrainMapGenerator
+public class TerrainGen
 {
-	public static Map2D<GroundTypes.Type> TerrainMap;
+	public static Map2D<GroundTypes.Type> Map;
 	Texture2D terrainMapImage;
 
-	public TerrainMapGenerator()
+	public TerrainGen()
 	{
-		TerrainMap = new Map2D<GroundTypes.Type>(HeightMapGenerator.HeightMap.Width, HeightMapGenerator.HeightMap.Height);
+		Map = new Map2D<GroundTypes.Type>(HeightsGen.Map.Width, HeightsGen.Map.Height);
 
-		foreach(var point in TerrainMap.GetMapPoints())
+		foreach(var point in Map.GetMapPoints())
 		{
-			if (HeightMapGenerator.HeightMap.GetValueAt(point) < Globals.MinGroundHeight)
+			if (HeightsGen.Map.GetValueAt(point) < Globals.MinGroundHeight)
 			{
 				int numLandBorders = NumLandBorders(point);
 				if(numLandBorders >= 6)
-					TerrainMap.SetPoint(point, GroundTypes.Type.River);
-				else TerrainMap.SetPoint(point, GroundTypes.Type.Ocean);
+					Map.SetPoint(point, GroundTypes.Type.River);
+				else Map.SetPoint(point, GroundTypes.Type.Ocean);
 			}
-			else if (HeightMapGenerator.HeightMap.GetValueAt(point) >= Globals.MountainHeight)
-				TerrainMap.SetPoint(point, GroundTypes.Type.Mountain);
-			else TerrainMap.SetPoint(point, GroundTypes.Type.Grass);
+			else if (HeightsGen.Map.GetValueAt(point) >= Globals.MountainHeight)
+				Map.SetPoint(point, GroundTypes.Type.Mountain);
+			else Map.SetPoint(point, GroundTypes.Type.Grass);
 		}
 
 		FillInLandTextures();
@@ -31,7 +31,7 @@ public class TerrainMapGenerator
 	private int NumLandBorders(Int2 point)
 	{
 		int landBorders = 0;
-		foreach(var tile in HeightMapGenerator.HeightMap.GetAllNeighboringValues(point))
+		foreach(var tile in HeightsGen.Map.GetAllNeighboringValues(point))
 		{
 			if (tile >= Globals.MinGroundHeight)
 				landBorders++;
@@ -42,11 +42,11 @@ public class TerrainMapGenerator
 	public void RebuildTerrainTexture()
 	{
 		List<Color> pixels = new List<Color>();
-		foreach (var tile in TerrainMap.GetMapValuesFlipped())
+		foreach (var tile in Map.GetMapValuesFlipped())
 		{
 			pixels.Add(GroundTypes.tileColors[tile]);
 		}
-		terrainMapImage = new Texture2D(TerrainMap.Width, TerrainMap.Height, TextureFormat.ARGB32, true, true);
+		terrainMapImage = new Texture2D(Map.Width, Map.Height, TextureFormat.ARGB32, true, true);
 		terrainMapImage.filterMode = FilterMode.Point;
 		terrainMapImage.anisoLevel = 0;
 		terrainMapImage.SetPixels(pixels.ToArray());
@@ -64,7 +64,7 @@ public class TerrainMapGenerator
 
 	private void FillInLandTexturesPass()
 	{
-		foreach(var tile in TerrainMap.GetMapPoints())
+		foreach(var tile in Map.GetMapPoints())
 		{
 			TryFillInTile(tile);
 		}
@@ -86,14 +86,14 @@ public class TerrainMapGenerator
 			1f * NextToNumOfType(tile, GroundTypes.Type.Mountain) +
 			0.3f * NextToNumOfType(tile, GroundTypes.Type.Swamp);
 
-		if (TerrainMap.GetValueAt(tile) == GroundTypes.Type.Grass)
+		if (Map.GetValueAt(tile) == GroundTypes.Type.Grass)
 		{
 			if (Helpers.Odds(oddsOfFertile))
-				TerrainMap.SetPoint(tile,GroundTypes.Type.Fertile);
+				Map.SetPoint(tile,GroundTypes.Type.Fertile);
 			else if(Helpers.Odds(oddsOfForest))
-				TerrainMap.SetPoint(tile, GroundTypes.Type.Forest);
+				Map.SetPoint(tile, GroundTypes.Type.Forest);
 			else if (Helpers.Odds(oddsOfSwamp))
-				TerrainMap.SetPoint(tile, GroundTypes.Type.Swamp);
+				Map.SetPoint(tile, GroundTypes.Type.Swamp);
 		}
 	}
 
@@ -121,12 +121,12 @@ public class TerrainMapGenerator
 	public void TryAddTile(Int2 pos, List<GroundTypes.Type> neighbors)
 	{
 		if (pixelInBounds(pos))
-			neighbors.Add(TerrainMap.GetValueAt(pos));
+			neighbors.Add(Map.GetValueAt(pos));
 	}
 
 	private bool pixelInBounds(Int2 pixel)
 	{
-		return !(pixel.X < 0 || pixel.X >= TerrainMap.Width || pixel.Y < 0 || pixel.Y >= TerrainMap.Height);
+		return !(pixel.X < 0 || pixel.X >= Map.Width || pixel.Y < 0 || pixel.Y >= Map.Height);
 	}
 
 	public Texture2D GetTerrainTexture()
@@ -138,7 +138,7 @@ public class TerrainMapGenerator
 	public int LandPixelCount()
 	{
 		int numTiles = 0;
-		foreach (var tile in TerrainMap.GetMapValues())
+		foreach (var tile in Map.GetMapValues())
 		{
 			if (tile != GroundTypes.Type.Ocean &&
 				tile != GroundTypes.Type.River)

@@ -90,7 +90,7 @@
     <Compile Include="Assets\Scripts\Culture.cs" />
     <Compile Include="Assets\Scripts\CultureDefinitions.cs" />
     <Compile Include="Assets\Scripts\Globals.cs" />
-    <Compile Include="Assets\Scripts\HeightMapGenerator.cs" />
+    <Compile Include="Assets\Scripts\HeightsGen.cs" />
     <Compile Include="Assets\Scripts\Helpers.cs" />
     <Compile Include="Assets\Scripts\Kingdom.cs" />
     <Compile Include="Assets\Scripts\Map2D.cs" />
@@ -99,9 +99,9 @@
     <Compile Include="Assets\Scripts\MeshSplitter.cs" />
     <Compile Include="Assets\Scripts\ModelPlacer.cs" />
     <Compile Include="Assets\Scripts\RegionTile.cs" />
-    <Compile Include="Assets\Scripts\RegionsMapGenerator.cs" />
+    <Compile Include="Assets\Scripts\RegionsGen.cs" />
     <Compile Include="Assets\Scripts\Settlement.cs" />
-    <Compile Include="Assets\Scripts\TerrainMapGenerator.cs" />
+    <Compile Include="Assets\Scripts\TerrainGen.cs" />
     <Compile Include="Assets\Scripts\GroundTypes.cs" />
     <Compile Include="Assets\Scripts\UserInteractions\CameraControls.cs" />
     <Compile Include="Assets\Scripts\UserInteractions\LightController.cs" />

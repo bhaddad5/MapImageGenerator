@@ -11,7 +11,7 @@ public class ModelPlacer
 	{
 		lookup = lu;
 		objectParent = par;
-		foreach (Int2 tile in TerrainMapGenerator.TerrainMap.GetMapPoints())
+		foreach (Int2 tile in TerrainGen.Map.GetMapPoints())
 		{
 			HandleTile(tile);
 		}
@@ -19,18 +19,18 @@ public class ModelPlacer
 
 	private void HandleTile(Int2 tile)
 	{
-		Culture culture = RegionsMapGenerator.RegionsMap.GetValueAt(tile).settlement.kingdom.culture;
-		if (TerrainMapGenerator.TerrainMap.GetValueAt(tile) == GroundTypes.Type.City)
+		Culture culture = RegionsGen.Map.GetValueAt(tile).settlement.kingdom.culture;
+		if (TerrainGen.Map.GetValueAt(tile) == GroundTypes.Type.City)
 			PlaceCityTile(tile, culture);
-		if (TerrainMapGenerator.TerrainMap.GetValueAt(tile) == GroundTypes.Type.Forest)
+		if (TerrainGen.Map.GetValueAt(tile) == GroundTypes.Type.Forest)
 			PlaceForestTile(tile, culture);
-		if (TerrainMapGenerator.TerrainMap.GetValueAt(tile) == GroundTypes.Type.Swamp)
+		if (TerrainGen.Map.GetValueAt(tile) == GroundTypes.Type.Swamp)
 			PlaceSwampTile(tile, culture);
-		if (TerrainMapGenerator.TerrainMap.GetValueAt(tile) == GroundTypes.Type.Grass)
+		if (TerrainGen.Map.GetValueAt(tile) == GroundTypes.Type.Grass)
 			PlaceWildernessTile(tile, culture);
-		if (TerrainMapGenerator.TerrainMap.GetValueAt(tile) == GroundTypes.Type.Fertile)
+		if (TerrainGen.Map.GetValueAt(tile) == GroundTypes.Type.Fertile)
 			PlaceFarmTile(tile, culture);
-		if (TerrainMapGenerator.TerrainMap.GetValueAt(tile) == GroundTypes.Type.Road)
+		if (TerrainGen.Map.GetValueAt(tile) == GroundTypes.Type.Road)
 			PlaceRoadTile(tile, culture);
 	}
 
@@ -117,14 +117,14 @@ public class ModelPlacer
 
 	private void PlaceRoadTile(Int2 tile, Culture culture)
 	{
-		if(HeightMapGenerator.HeightMap.GetValueAt(tile) < Globals.MinGroundHeight)
+		if(HeightsGen.Map.GetValueAt(tile) < Globals.MinGroundHeight)
 		{
-			foreach(var t in TerrainMapGenerator.TerrainMap.GetAdjacentPoints(tile))
+			foreach(var t in TerrainGen.Map.GetAdjacentPoints(tile))
 			{
-				if(TerrainMapGenerator.TerrainMap.GetValueAt(t) == GroundTypes.Type.Road ||
-					TerrainMapGenerator.TerrainMap.GetValueAt(t) == GroundTypes.Type.City)
+				if(TerrainGen.Map.GetValueAt(t) == GroundTypes.Type.Road ||
+					TerrainGen.Map.GetValueAt(t) == GroundTypes.Type.City)
 				{
-					if (HeightMapGenerator.HeightMap.GetValueAt(t) >= Globals.MinGroundHeight)
+					if (HeightsGen.Map.GetValueAt(t) >= Globals.MinGroundHeight)
 					{
 						Vector3 rot = new Vector3();
 						if (t.Y != tile.Y)
@@ -172,7 +172,7 @@ public class ModelPlacer
 
 	private Settlement GetSettlementFromTile(Int2 tile)
 	{
-		foreach(var kingdom in RegionsMapGenerator.Kingdoms)
+		foreach(var kingdom in RegionsGen.Kingdoms)
 		{
 			foreach(var sett in kingdom.settlements)
 			{
@@ -193,7 +193,7 @@ public class ModelPlacer
 
 	private void PlaceMediumAngloCity(Int2 tile)
 	{
-		foreach (Int2 pt in TerrainMapGenerator.TerrainMap.GetAdjacentPoints(tile))
+		foreach (Int2 pt in TerrainGen.Map.GetAdjacentPoints(tile))
 		{
 			if (TileIsRoad(pt))
 			{
@@ -211,7 +211,7 @@ public class ModelPlacer
 
 	private void PlaceLargeAngloCity(Int2 tile)
 	{
-		foreach(Int2 pt in TerrainMapGenerator.TerrainMap.GetAdjacentPoints(tile))
+		foreach(Int2 pt in TerrainGen.Map.GetAdjacentPoints(tile))
 		{
 			if (TileIsRoad(pt))
 			{
@@ -239,7 +239,7 @@ public class ModelPlacer
 
 	private void PlaceLargeDwarfCity(Int2 tile)
 	{
-		foreach (Int2 pt in TerrainMapGenerator.TerrainMap.GetAdjacentPoints(tile))
+		foreach (Int2 pt in TerrainGen.Map.GetAdjacentPoints(tile))
 		{
 			if (TileIsRoad(pt))
 			{
@@ -264,7 +264,7 @@ public class ModelPlacer
 	{
 		PlaceObjectsOnTile(tile, Random.Range(20, 25), lookup.OrcHut);
 
-		foreach (Int2 pt in TerrainMapGenerator.TerrainMap.GetAdjacentPoints(tile))
+		foreach (Int2 pt in TerrainGen.Map.GetAdjacentPoints(tile))
 		{
 			if (TileIsRoad(pt))
 			{
@@ -286,20 +286,20 @@ public class ModelPlacer
 
 	private bool TileIsRoad(Int2 tile)
 	{
-		return TerrainMapGenerator.TerrainMap.PosInBounds(tile) && TerrainMapGenerator.TerrainMap.GetValueAt(tile) == GroundTypes.Type.Road;
+		return TerrainGen.Map.PosInBounds(tile) && TerrainGen.Map.GetValueAt(tile) == GroundTypes.Type.Road;
 	}
 
 	private bool TileIsCityBorder(Int2 tile)
 	{
-		return TerrainMapGenerator.TerrainMap.PosInBounds(tile) &&
-			TerrainMapGenerator.TerrainMap.GetValueAt(tile) != GroundTypes.Type.City &&
-			TerrainMapGenerator.TerrainMap.GetValueAt(tile) != GroundTypes.Type.Ocean &&
-			TerrainMapGenerator.TerrainMap.GetValueAt(tile) != GroundTypes.Type.River;
+		return TerrainGen.Map.PosInBounds(tile) &&
+			TerrainGen.Map.GetValueAt(tile) != GroundTypes.Type.City &&
+			TerrainGen.Map.GetValueAt(tile) != GroundTypes.Type.Ocean &&
+			TerrainGen.Map.GetValueAt(tile) != GroundTypes.Type.River;
 	}
 
 	private void PlaceTurretsOnCorners(Int2 tile, GameObject turret)
 	{
-		foreach (var t in TerrainMapGenerator.TerrainMap.GetDiagonalPoints(tile))
+		foreach (var t in TerrainGen.Map.GetDiagonalPoints(tile))
 		{
 			if (TileIsCityBorder(t) ||
 			TileIsCityBorder(tile + new Int2(t.X - tile.X, 0)) ||
