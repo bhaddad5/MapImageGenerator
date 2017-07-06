@@ -9,6 +9,21 @@
 		{"GroundType":"Fertile","Texture":"Midlands/Fertile.png"},
 		{"GroundType":"City","Texture":"Midlands/City.png"},
 		{"GroundType":"Road","Texture":"Midlands/Road.png"},
-		{"GroundType":"Wilderness","Texture":"Midlands/Wilderness.png"},
+		{"GroundType":"Wilderness","Texture":"Midlands/Wilderness.png"}
+	]
+}
+|
+{
+	"displayName":"Underground",
+	"groundTypes":[
+		{"GroundType":"Ocean","Texture":"Underground/CaveWall.png"},
+		{"GroundType":"River","Texture":"Underground/CaveWall.png"},
+		{"GroundType":"Swamp","Texture":"Midlands/Swamp.png"},
+		{"GroundType":"Mountain","Texture":"Underground/CaveWall.png"},
+		{"GroundType":"Forest","Texture":"Midlands/Forest.png"},
+		{"GroundType":"Fertile","Texture":"Midlands/Fertile.png"},
+		{"GroundType":"City","Texture":"Midlands/City.png"},
+		{"GroundType":"Road","Texture":"Midlands/Road.png"},
+		{"GroundType":"Wilderness","Texture":"Underground/CaveFloor.png"}
 	]
 }

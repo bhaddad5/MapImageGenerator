@@ -10,6 +10,7 @@ public class MapGenerator
 
 	public MapGenerator(int width, int height, IMapGenerator generator, MapEnvironment env)
 	{
+		Environment = env;
 		var maps = generator.GenerateMaps(width, height, env);
 		Heights = maps.heights;
 		Terrain = maps.terrain;

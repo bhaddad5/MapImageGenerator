@@ -13,8 +13,9 @@ public class EnvironmentParser
 		store.displayName = "Midlands";
 		store.groundTypes = new []
 		{
-			new StoredGroundDisplayInfo() {GroundType = "Ocean", Texture = "Midlands/Sand"},
-			new StoredGroundDisplayInfo() {GroundType = "Wilderness", Texture = "Midlands/Wilderness"},
+			new StoredGroundDisplayInfo() {GroundType = "Ocean", Texture = "Midlands/Sand.png"},
+			new StoredGroundDisplayInfo() {GroundType = "Swamp", Texture = "Midlands/Swamp.png"},
+			new StoredGroundDisplayInfo() {GroundType = "Wilderness", Texture = "Midlands/Wilderness.png"},
 		};
 		string str = JsonUtility.ToJson(store);
 		Debug.Log(str);*/
@@ -25,6 +26,8 @@ public class EnvironmentParser
 		string[] environments = environmentsFile.Split(new[] { "|" }, StringSplitOptions.None);
 		foreach (string env in environments)
 		{
+			env.Replace("\n", "");
+			env.Replace("\t", "");
 			StoredEnvironment storedEnvironment = JsonUtility.FromJson<StoredEnvironment>(env);
 			LoadedEnvironments.Add(storedEnvironment.ToEnvironment());
 		}
