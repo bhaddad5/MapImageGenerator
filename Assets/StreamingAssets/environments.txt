@@ -1,0 +1,14 @@
+{
+	"displayName":"Midlands",
+	"groundTypes":[
+		{"GroundType":"Ocean","Texture":"Midlands/Sand.png"},
+		{"GroundType":"River","Texture":"Midlands/Fertile.png"},
+		{"GroundType":"Swamp","Texture":"Midlands/Swamp.png"},
+		{"GroundType":"Mountain","Texture":"Midlands/Mountains.png"},
+		{"GroundType":"Forest","Texture":"Midlands/Forest.png"},
+		{"GroundType":"Fertile","Texture":"Midlands/Fertile.png"},
+		{"GroundType":"City","Texture":"Midlands/City.png"},
+		{"GroundType":"Road","Texture":"Midlands/Road.png"},
+		{"GroundType":"Wilderness","Texture":"Midlands/Wilderness.png"},
+	]
+}

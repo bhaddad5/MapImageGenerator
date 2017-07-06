@@ -82,8 +82,8 @@ public class Culture
 	public List<HeraldryOption> heraldryBackground;
 	public List<HeraldryOption> heraldryForeground;
 
-	public Dictionary<GroundTypes.Type, float> tileDifficulties;
-	public Dictionary<GroundTypes.Type, float> tileValues;
+	public Dictionary<string, float> tileDifficulties;
+	public Dictionary<string, float> tileValues;
 
 	public string GetKingdomName(string coreName, List<Kingdom.KingdomTrait> traits)
 	{
@@ -206,12 +206,12 @@ public class Culture
 
 	public float GetTileValue(Int2 tile)
 	{
-		return tileValues[MapGenerator.Terrain.Get(tile)];
+		return tileValues[MapGenerator.Terrain.Get(tile).groundType];
 	}
 
 	public float GetTileDifficulty(Int2 tile)
 	{
-		return tileDifficulties[MapGenerator.Terrain.Get(tile)];
+		return tileDifficulties[MapGenerator.Terrain.Get(tile).groundType];
 	}
 
 	private Texture2D overlay;
@@ -235,7 +235,7 @@ public class Culture
 		int numWaterBorders = 0;
 		foreach (Int2 t in MapGenerator.Terrain.GetAdjacentPoints(pos))
 		{
-			if (MapGenerator.Terrain.Get(t) == GroundTypes.Type.Ocean || MapGenerator.Terrain.Get(t) == GroundTypes.Type.River)
+			if (MapGenerator.Terrain.Get(t).groundType == "Ocean" || MapGenerator.Terrain.Get(t).groundType == "River")
 				numWaterBorders++;
 			value += GetTileValue(t);
 		}

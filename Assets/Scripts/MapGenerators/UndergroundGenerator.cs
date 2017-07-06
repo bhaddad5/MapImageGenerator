@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class UndergroundGenerator : InitialMapGenerator, IMapGenerator
 {
-	public Map GenerateMaps(int width, int height)
+	public Map GenerateMaps(int width, int height, MapEnvironment env)
 	{
+		mapEnvironment = env;
 		Heights = new Map2D<float>(width, height);
 		MakeHeights();
 
-		Terrain = new Map2D<GroundTypes.Type>(width, height);
+		Terrain = new Map2D<GroundDisplayInfo>(width, height);
 		MakeTerrain();
 
 		return new Map(Heights, Terrain);
@@ -118,15 +119,15 @@ public class UndergroundGenerator : InitialMapGenerator, IMapGenerator
 
 	private void MakeTerrain()
 	{
-		Terrain.FillMap(GroundTypes.Type.SolidRock);
+		Terrain.FillMap(mapEnvironment.groundTypes["Mountain"]);
 
 		foreach (Int2 point in Heights.GetMapPoints())
 		{
 			float height = Heights.Get(point);
 			if (height < Globals.MinGroundHeight)
-				Terrain.Set(point, GroundTypes.Type.Ocean);
+				Terrain.Set(point, mapEnvironment.groundTypes["Ocean"]);
 			if(height >= Globals.MinGroundHeight && height < Globals.MountainHeight)
-				Terrain.Set(point, GroundTypes.Type.CaveFloor);
+				Terrain.Set(point, mapEnvironment.groundTypes["Wilderness"]);
 		}
 	}
 }

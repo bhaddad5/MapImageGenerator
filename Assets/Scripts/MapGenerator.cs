@@ -5,11 +5,12 @@ using UnityEngine;
 public class MapGenerator
 {
 	public static Map2D<float> Heights;
-	public static Map2D<GroundTypes.Type> Terrain;
+	public static Map2D<GroundDisplayInfo> Terrain;
+	public static MapEnvironment Environment;
 
-	public MapGenerator(int width, int height, IMapGenerator generator)
+	public MapGenerator(int width, int height, IMapGenerator generator, MapEnvironment env)
 	{
-		var maps = generator.GenerateMaps(width, height);
+		var maps = generator.GenerateMaps(width, height, env);
 		Heights = maps.heights;
 		Terrain = maps.terrain;
 	}
@@ -31,12 +32,12 @@ public class MapGenerator
 		return heightMapImage;
 	}
 
-	public static Texture2D GetTerrainTexture(GroundTypes groundTypes)
+	public static Texture2D GetTerrainTexture()
 	{
 		List<Color> pixels = new List<Color>();
 		foreach (var tile in Terrain.GetMapValuesFlipped())
 		{
-			pixels.Add(groundTypes.GetDisplayInfo(tile).lookupColor);
+			pixels.Add(tile.lookupColor);
 		}
 		Texture2D terrainMapImage = new Texture2D(Terrain.Width, Terrain.Height, TextureFormat.ARGB32, true, true);
 		terrainMapImage.filterMode = FilterMode.Point;
@@ -51,8 +52,8 @@ public class MapGenerator
 		int numTiles = 0;
 		foreach (var tile in Terrain.GetMapValues())
 		{
-			if (tile != GroundTypes.Type.Ocean &&
-			    tile != GroundTypes.Type.River)
+			if (tile != Environment.GetGround(MapEnvironment.GroundTypes.Ocean) &&
+			    tile != Environment.GetGround(MapEnvironment.GroundTypes.River))
 				numTiles++;
 		}
 		return numTiles;

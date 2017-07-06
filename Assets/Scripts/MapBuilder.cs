@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System.Linq;
 
 public class MapBuilder : MonoBehaviour
 {
@@ -18,7 +19,6 @@ public class MapBuilder : MonoBehaviour
 	public GameObject SettlementInfoPrefab;
 
 	public ModelLookup ModelLookup;
-	public GroundTypes GroundTypes;
 
 	// Use this for initialization
 	void Start ()
@@ -42,16 +42,12 @@ public class MapBuilder : MonoBehaviour
 			new CulturePrevelance(CultureDefinitions.Dwarf, CulturePrevelance.Prevelance.Dominant),
 		};
 
-		List<Environment> environments = new List<Environment>()
-		{
-			new Environment("The Midlands", new MidlandGenerator()),
-			new Environment("The Under Realms", new UndergroundGenerator()),
-		};
+		var environments = EnvironmentParser.LoadEnvironments();
 
-		StartCoroutine(BuildMap(width, height, cultures, environments[1]));
+		StartCoroutine(BuildMap(width, height, cultures, environments[0]));
 	}
 
-	public IEnumerator BuildMap(int width, int height, List<CulturePrevelance> cultures, Environment environment)
+	public IEnumerator BuildMap(int width, int height, List<CulturePrevelance> cultures, MapEnvironment mapEnvironment)
 	{
 		terrainMeshDisplay.transform.localPosition = Vector3.zero;
 		for (int i = 0; i < terrainMeshDisplay.transform.childCount; i++)
@@ -70,7 +66,7 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Raising Mountains";
 		yield return null;
 
-		MapGenerator mapGenerator = new MapGenerator(width, height, environment.HeightGenerator);
+		MapGenerator mapGenerator = new MapGenerator(width, height, mapEnvironment.HeightGenerator, mapEnvironment);
 		
 		displayText.text = "Forging Kingdoms";
 		yield return null;
@@ -90,9 +86,9 @@ public class MapBuilder : MonoBehaviour
 		yield return null;
 
 		generatedMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapGenerator.GetHeightMapTexture();
-		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapGenerator.GetTerrainTexture(GroundTypes);
+		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapGenerator.GetTerrainTexture();
 
-		List<Material> mapMats = GetMapMaterials();
+		List<Material> mapMats = GetMapMaterials(mapEnvironment.groundTypes.Values.ToList());
 
 		int meshNum = 0;
 		foreach(Mesh m in meshBuilder.GetBuiltMeshes())
@@ -142,37 +138,17 @@ public class MapBuilder : MonoBehaviour
 		}
 	}
 
-	private List<Material> GetMapMaterials()
+	private List<Material> GetMapMaterials(List<GroundDisplayInfo> groundTypes)
 	{
-		List<GroundTypes.Type> groundTypesUsed = new List<GroundTypes.Type>();
-		foreach (GroundTypes.Type type in MapGenerator.Terrain.GetMapValues())
-		{
-			if(!groundTypesUsed.Contains(type))
-				groundTypesUsed.Add(type);
-		}
-
-		List<Material> matsToUse = new List<Material>();
-		List<GroundTypes.GroundDisplayInfo> groundInfo = new List<GroundTypes.GroundDisplayInfo>();
-		//TODO: CAN ONLY SUPPORT 10 TEXTURES AT A TIME!!!
-		foreach (GroundTypes.Type type in groundTypesUsed)
-		{
-			groundInfo.Add(GroundTypes.GetDisplayInfo(type));
-			if (groundInfo.Count >= 10)
-			{
-				matsToUse.Add(FlushGroundInfoToMat(groundInfo));
-				break;
-			}
-		}
-		if (groundInfo.Count > 0)
-			matsToUse.Add(FlushGroundInfoToMat(groundInfo));
-		return matsToUse;
+		var mats = new List<Material>() {FlushGroundInfoToMat(groundTypes)};
+		return mats;
 	}
 
-	private Material FlushGroundInfoToMat(List<GroundTypes.GroundDisplayInfo> groundInfo)
+	private Material FlushGroundInfoToMat(List<GroundDisplayInfo> groundInfo)
 	{
 		Material mat = new Material(Shader.Find("Custom/GroundShader"));
-		mat.SetTexture("_LookupTex", MapGenerator.GetTerrainTexture(GroundTypes));
-		mat.SetFloat("_LookupWidth", MapGenerator.GetTerrainTexture(GroundTypes).width);
+		mat.SetTexture("_LookupTex", MapGenerator.GetTerrainTexture());
+		mat.SetFloat("_LookupWidth", MapGenerator.GetTerrainTexture().width);
 		for (int i = 0; i < 10 && i < groundInfo.Count; i++)
 		{
 			mat.SetVector("_Color" + i, groundInfo[i].lookupColor);
@@ -181,17 +157,7 @@ public class MapBuilder : MonoBehaviour
 		return mat;
 	}
 
-	public class Environment
-	{
-		public string displayName;
-		public IMapGenerator HeightGenerator;
-
-		public Environment(string name, IMapGenerator gen)
-		{
-			displayName = name;
-			HeightGenerator = gen;
-		}
-	}
+	
 
 	public class CulturePrevelance
 	{

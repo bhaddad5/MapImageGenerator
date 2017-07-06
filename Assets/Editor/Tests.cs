@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NUnit.Framework;
@@ -9,6 +10,6 @@ public class Tests
 	[Test]
 	public void TestColorShit()
 	{
-		Debug.Log("test");
+		
 	}
 }

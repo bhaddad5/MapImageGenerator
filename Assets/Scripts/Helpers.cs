@@ -6,6 +6,11 @@ using UnityEngine;
 
 public static class Helpers
 {
+	public static Color RandomColor()
+	{
+		return new Color(UnityEngine.Random.Range(0, 1f), UnityEngine.Random.Range(0, 1f), UnityEngine.Random.Range(0, 1f));
+	}
+
 	public static void DEBUGSphereAtPoint(Vector3 point, float scale)
 	{
 		GameObject sphere = GameObject.Instantiate(Resources.Load("DebugSphere") as GameObject);

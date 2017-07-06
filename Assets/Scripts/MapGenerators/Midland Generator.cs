@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 {
-	public Map GenerateMaps(int width, int height)
+	public Map GenerateMaps(int width, int height, MapEnvironment env)
 	{
+		mapEnvironment = env;
 		Heights = new Map2D<float>(width, height);
 		MakeHeights();
 
-		Terrain = new Map2D<GroundTypes.Type>(width, height);
+		Terrain = new Map2D<GroundDisplayInfo>(width, height);
 		MakeTerrain();
 		
 		return new Map(Heights, Terrain);
@@ -39,12 +40,12 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 			{
 				int numLandBorders = NumLandBorders(point);
 				if (numLandBorders >= 6)
-					Terrain.Set(point, GroundTypes.Type.River);
-				else Terrain.Set(point, GroundTypes.Type.Ocean);
+					Terrain.Set(point, mapEnvironment.groundTypes["River"]);
+				else Terrain.Set(point, mapEnvironment.groundTypes["Ocean"]);
 			}
 			else if (Heights.Get(point) >= Globals.MountainHeight)
-				Terrain.Set(point, GroundTypes.Type.Mountain);
-			else Terrain.Set(point, GroundTypes.Type.Grass);
+				Terrain.Set(point, mapEnvironment.groundTypes["Mountain"]);
+			else Terrain.Set(point, mapEnvironment.groundTypes["Wilderness"]);
 		}
 
 		FillInLandTextures();
@@ -360,34 +361,34 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 	private void TryFillInTile(Int2 tile)
 	{
 		float oddsOfForest = 0.01f +
-		                     0.01f * NextToNumOfType(tile, GroundTypes.Type.Mountain) +
-		                     0.3f * NextToNumOfType(tile, GroundTypes.Type.Forest);
+		                     0.01f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Mountain)) +
+		                     0.3f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Forest));
 		float oddsOfFertile = 0.01f +
-		                      0.07f * NextToNumOfType(tile, GroundTypes.Type.Ocean) +
-		                      0.15f * NextToNumOfType(tile, GroundTypes.Type.River) -
-		                      0.01f * NextToNumOfType(tile, GroundTypes.Type.Mountain) +
-		                      0.3f * NextToNumOfType(tile, GroundTypes.Type.Fertile);
+		                      0.07f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Ocean)) +
+		                      0.15f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.River)) -
+		                      0.01f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Mountain)) +
+		                      0.3f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Fertile));
 		float oddsOfSwamp = 0.001f +
-		                    0.01f * NextToNumOfType(tile, GroundTypes.Type.Ocean) +
-		                    0.01f * NextToNumOfType(tile, GroundTypes.Type.River) -
-		                    1f * NextToNumOfType(tile, GroundTypes.Type.Mountain) +
-		                    0.3f * NextToNumOfType(tile, GroundTypes.Type.Swamp);
+		                    0.01f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Ocean)) +
+		                    0.01f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.River)) -
+		                    1f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Mountain)) +
+		                    0.3f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Swamp));
 
-		if (Terrain.Get(tile) == GroundTypes.Type.Grass)
+		if (Terrain.Get(tile) == mapEnvironment.GetGround(MapEnvironment.GroundTypes.Wilderness))
 		{
 			if (Helpers.Odds(oddsOfFertile))
-				Terrain.Set(tile, GroundTypes.Type.Fertile);
+				Terrain.Set(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Fertile));
 			else if (Helpers.Odds(oddsOfForest))
-				Terrain.Set(tile, GroundTypes.Type.Forest);
+				Terrain.Set(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Forest));
 			else if (Helpers.Odds(oddsOfSwamp))
-				Terrain.Set(tile, GroundTypes.Type.Swamp);
+				Terrain.Set(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Swamp));
 		}
 	}
 
-	private int NextToNumOfType(Int2 tile, GroundTypes.Type type)
+	private int NextToNumOfType(Int2 tile, GroundDisplayInfo type)
 	{
 		int numNextTo = 0;
-		foreach (GroundTypes.Type t in Heights.GetAdjacentValues(tile))
+		foreach (GroundDisplayInfo t in Terrain.GetAdjacentValues(tile))
 		{
 			if (t == type)
 				numNextTo++;

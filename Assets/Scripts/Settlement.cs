@@ -32,7 +32,7 @@ public class Settlement
 
 	public void ExpandSettlement(float regionValue)
 	{
-		MapGenerator.Terrain.Set(cityTiles[0], GroundTypes.Type.City);
+		MapGenerator.Terrain.Set(cityTiles[0], MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.City));
 
 		float valuePerNewTile = 10;
 		while (cityTiles.Count < regionValue / valuePerNewTile)
@@ -41,7 +41,7 @@ public class Settlement
 			if (expansionTiles.Count == 0)
 				break;
 			cityTiles.Add(expansionTiles.TopValue());
-			MapGenerator.Terrain.Set(expansionTiles.TopValue(), GroundTypes.Type.City);
+			MapGenerator.Terrain.Set(expansionTiles.TopValue(), MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.City));
 		}
 	}
 
@@ -54,8 +54,8 @@ public class Settlement
 			{
 				var neighborType = MapGenerator.Terrain.Get(neighbor);
 				if (!possibleExpansions.ContainsValue(neighbor) &&
-					neighborType != GroundTypes.Type.City &&
-					GroundTypes.ViableCityTerrain(neighborType) &&
+					neighborType != MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.City) &&
+					MapGenerator.Environment.ViableCityTerrain(neighborType) &&
 					RegionsGen.Map.Get(neighbor).settlement == this &&
 					!BordersUnfriendlyCity(neighbor))
 				{
@@ -71,7 +71,7 @@ public class Settlement
 		bool bordersUnfriendlyCity = false;
 		foreach(var border in MapGenerator.Terrain.GetAllNeighboringPoints(tile))
 		{
-			if(MapGenerator.Terrain.Get(border) == GroundTypes.Type.City)
+			if(MapGenerator.Terrain.Get(border) == MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.City))
 			{
 				if(!cityTiles.Contains(border))
 					bordersUnfriendlyCity = true;
@@ -82,7 +82,7 @@ public class Settlement
 
 	public List<Settlement.CityTrait> GetCityTraits()
 	{
-		List<GroundTypes.Type> neighboringTerrainTypes = new List<GroundTypes.Type>();
+		List<GroundDisplayInfo> neighboringTerrainTypes = new List<GroundDisplayInfo>();
 		foreach (Int2 tile in cityTiles)
 		{
 			foreach (var neighbor in MapGenerator.Terrain.GetAdjacentValues(tile))
@@ -92,17 +92,17 @@ public class Settlement
 		}
 
 		List<Settlement.CityTrait> traits = new List<CityTrait>();
-		if (neighboringTerrainTypes.Contains(GroundTypes.Type.Mountain))
+		if (neighboringTerrainTypes.Contains(MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.Mountain)))
 			traits.Add(CityTrait.Mountains);
-		if (neighboringTerrainTypes.Contains(GroundTypes.Type.Forest))
+		if (neighboringTerrainTypes.Contains(MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.Forest)))
 			traits.Add(CityTrait.Forest);
-		if (neighboringTerrainTypes.Contains(GroundTypes.Type.Fertile))
+		if (neighboringTerrainTypes.Contains(MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.Fertile)))
 			traits.Add(CityTrait.Fertile);
 
 
-		if (neighboringTerrainTypes.Contains(GroundTypes.Type.Ocean))
+		if (neighboringTerrainTypes.Contains(MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.Ocean)))
 			traits.Add(CityTrait.Port);
-		else if (neighboringTerrainTypes.Contains(GroundTypes.Type.River))
+		else if (neighboringTerrainTypes.Contains(MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.River)))
 			traits.Add(CityTrait.River);
 		else traits.Add(CityTrait.Landlocked);
 
@@ -127,7 +127,7 @@ public class Settlement
 		{
 			foreach (var adj in MapGenerator.Terrain.GetAdjacentValues(tile))
 			{
-				if(adj == GroundTypes.Type.Ocean || adj == GroundTypes.Type.River || adj == GroundTypes.Type.Road)
+				if(adj == MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.Ocean) || adj == MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.River) || adj == MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.Road))
 					val += .5f;
 			}
 		}
@@ -142,15 +142,15 @@ public class Settlement
 		{
 			foreach (var adj in MapGenerator.Terrain.GetAdjacentValues(tile))
 			{
-				if (adj == GroundTypes.Type.Swamp || adj == GroundTypes.Type.Mountain)
+				if (adj == MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.Swamp) || adj == MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.Mountain))
 					defensibility += .5f;
-				if (adj == GroundTypes.Type.Ocean)
+				if (adj == MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.Ocean))
 					defensibility += .3f;
-				if (adj == GroundTypes.Type.River)
+				if (adj == MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.River))
 					defensibility += .2f;
-				if (adj == GroundTypes.Type.Fertile || adj == GroundTypes.Type.Grass)
+				if (adj == MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.Fertile) || adj == MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.Wilderness))
 					defensibility -= .5f;
-				if (adj == GroundTypes.Type.Road || adj == GroundTypes.Type.Forest)
+				if (adj == MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.Road) || adj == MapGenerator.Environment.GetGround(MapEnvironment.GroundTypes.Forest))
 					defensibility -= 1f;
 			}
 		}

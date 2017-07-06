@@ -127,35 +127,29 @@ public static class CultureDefinitions
 			new HeraldryOption("Anglo/Heraldry/Symbols/Gryphon"),
 			new HeraldryOption("Anglo/Heraldry/Symbols/Horse"),
 		},
-		tileDifficulties = new Dictionary<GroundTypes.Type, float>()
+		tileDifficulties = new Dictionary<string, float>()
 		{
-			{ GroundTypes.Type.Ocean, .1f },
-			{ GroundTypes.Type.River, .5f },
-			{ GroundTypes.Type.Swamp, .35f },
-			{ GroundTypes.Type.Mountain, .6f },
-			{ GroundTypes.Type.Forest, .25f },
-			{ GroundTypes.Type.Grass, .2f },
-			{ GroundTypes.Type.Fertile, .1f },
-			{ GroundTypes.Type.City, .05f },
-			{ GroundTypes.Type.Road, .05f },
-			{ GroundTypes.Type.SolidRock, 100f },
-			{ GroundTypes.Type.CaveFloor, .3f },
-			{ GroundTypes.Type.MushroomForest, .3f },
+			{ "Ocean",.1f },
+			{ "River", .5f },
+			{ "Swamp", .35f },
+			{ "Mountain", .6f },
+			{ "Forest", .25f },
+			{ "Wilderness", .2f },
+			{ "Fertile", .1f },
+			{ "City", .05f },
+			{ "Road", .05f },
 		},
-		tileValues = new Dictionary<GroundTypes.Type, float>()
+		tileValues = new Dictionary<string, float>()
 		{
-			{ GroundTypes.Type.Ocean, 0f },
-			{ GroundTypes.Type.River, 0f },
-			{ GroundTypes.Type.Swamp, .1f },
-			{ GroundTypes.Type.Mountain, .1f },
-			{ GroundTypes.Type.Forest, .2f },
-			{ GroundTypes.Type.Grass, .2f },
-			{ GroundTypes.Type.Fertile, .4f },
-			{ GroundTypes.Type.City, 5f },
-			{ GroundTypes.Type.Road, 3f },
-			{ GroundTypes.Type.SolidRock, 0f },
-			{ GroundTypes.Type.CaveFloor, .1f },
-			{ GroundTypes.Type.MushroomForest, .2f },
+			{ "Ocean",0f },
+			{ "River",0f },
+			{ "Swamp",.1f },
+			{ "Mountain",.1f },
+			{ "Forest",.2f },
+			{ "Wilderness",.2f },
+			{ "Fertile",.4f },
+			{ "City",5f },
+			{ "Road",3f },
 		}
 	};
 
@@ -255,36 +249,30 @@ public static class CultureDefinitions
 			new HeraldryOption("Dwarf/Heraldry/Symbols/Helmet"),
 		},
 
-		tileDifficulties = new Dictionary<GroundTypes.Type, float>()
+		tileDifficulties = new Dictionary<string, float>()
 		{
-			{ GroundTypes.Type.Ocean, .4f },
-			{ GroundTypes.Type.River, .5f },
-			{ GroundTypes.Type.Swamp, .45f },
-			{ GroundTypes.Type.Mountain, .35f },
-			{ GroundTypes.Type.Forest, .25f },
-			{ GroundTypes.Type.Grass, .2f },
-			{ GroundTypes.Type.Fertile, .2f },
-			{ GroundTypes.Type.City, .05f },
-			{ GroundTypes.Type.Road, .05f },
-			{ GroundTypes.Type.SolidRock, 100f },
-			{ GroundTypes.Type.CaveFloor, .2f },
-			{ GroundTypes.Type.MushroomForest, .2f },
+			{ "Ocean",.4f },
+			{ "River",.5f },
+			{ "Swamp",.45f },
+			{ "Mountain",.35f },
+			{ "Forest",.25f },
+			{ "Wilderness",.2f },
+			{ "Fertile",.2f },
+			{ "City",.05f },
+			{ "Road",.05f },
 		},
 
-		tileValues = new Dictionary<GroundTypes.Type, float>()
+		tileValues = new Dictionary<string, float>()
 		{
-			{ GroundTypes.Type.Ocean, 0f },
-			{ GroundTypes.Type.River, 0f },
-			{ GroundTypes.Type.Swamp, .1f },
-			{ GroundTypes.Type.Mountain, .6f },
-			{ GroundTypes.Type.Forest, .25f },
-			{ GroundTypes.Type.Grass, .25f },
-			{ GroundTypes.Type.Fertile, .25f },
-			{ GroundTypes.Type.City, 5f },
-			{ GroundTypes.Type.Road, 3f },
-			{ GroundTypes.Type.SolidRock, 0f },
-			{ GroundTypes.Type.CaveFloor, .3f },
-			{ GroundTypes.Type.MushroomForest, .2f },
+			{ "Ocean",0f },
+			{ "River",0f },
+			{ "Swamp",.1f },
+			{ "Mountain",.6f },
+			{ "Forest",.25f },
+			{ "Wilderness",.25f },
+			{ "Fertile",.25f },
+			{ "City",5f },
+			{ "Road",3f },
 		}
 	};
 
@@ -372,36 +360,30 @@ public static class CultureDefinitions
 			new HeraldryOption("Orc/Heraldry/Symbols/Skull"),
 		},
 
-		tileDifficulties = new Dictionary<GroundTypes.Type, float>()
+		tileDifficulties = new Dictionary<string, float>()
 		{
-			{ GroundTypes.Type.Ocean, .4f },
-			{ GroundTypes.Type.River, .5f },
-			{ GroundTypes.Type.Swamp, .2f },
-			{ GroundTypes.Type.Mountain, .35f },
-			{ GroundTypes.Type.Forest, .2f },
-			{ GroundTypes.Type.Grass, .2f },
-			{ GroundTypes.Type.Fertile, .3f },
-			{ GroundTypes.Type.City, .05f },
-			{ GroundTypes.Type.Road, .05f },
-			{ GroundTypes.Type.SolidRock, 100f },
-			{ GroundTypes.Type.CaveFloor, .2f },
-			{ GroundTypes.Type.MushroomForest, .2f },
+			{ "Ocean",.4f },
+			{ "River",.5f },
+			{ "Swamp",.2f },
+			{ "Mountain",.35f },
+			{ "Forest",.2f },
+			{ "Wilderness",.2f },
+			{ "Fertile",.3f },
+			{ "City",.05f },
+			{ "Road",.05f },
 		},
 
-		tileValues = new Dictionary<GroundTypes.Type, float>()
+		tileValues = new Dictionary<string, float>()
 		{
-			{ GroundTypes.Type.Ocean, 0f },
-			{ GroundTypes.Type.River, 0f },
-			{ GroundTypes.Type.Swamp, .4f },
-			{ GroundTypes.Type.Mountain, .5f },
-			{ GroundTypes.Type.Forest, .5f },
-			{ GroundTypes.Type.Grass, .3f },
-			{ GroundTypes.Type.Fertile, .1f },
-			{ GroundTypes.Type.City, 5f },
-			{ GroundTypes.Type.Road, 3f },
-			{ GroundTypes.Type.SolidRock, 0f },
-			{ GroundTypes.Type.CaveFloor, .2f },
-			{ GroundTypes.Type.MushroomForest, .2f },
+			{ "Ocean", 0f },
+			{ "River", 0f },
+			{ "Swamp",.4f },
+			{ "Mountain",.5f },
+			{ "Forest",.5f },
+			{ "Wilderness",.3f },
+			{ "Fertile",.1f },
+			{ "City", 5f },
+			{ "Road", 3f },
 		}
 	};
 }

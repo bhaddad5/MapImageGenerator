@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ModelLookup : MonoBehaviour
 {
-	[Header("Environment")]
+	[Header("MapEnvironment")]
 	public GameObject PineTree;
 	public GameObject Willow;
 	public GameObject Rushes;
