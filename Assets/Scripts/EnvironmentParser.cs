@@ -7,15 +7,55 @@ using UnityEngine;
 
 public class EnvironmentParser
 {
+	public static ModelLookup modelLookup;
+
 	public static List<MapEnvironment> LoadEnvironments()
 	{
+		//TODO: Kill Soon...
+		modelLookup = GameObject.Find("ModelLookup").GetComponent<ModelLookup>();
+
 		/*StoredEnvironment store = new StoredEnvironment();
 		store.displayName = "Midlands";
 		store.groundTypes = new []
 		{
 			new StoredGroundDisplayInfo() {GroundType = "Ocean", Texture = "Midlands/Sand.png"},
-			new StoredGroundDisplayInfo() {GroundType = "Swamp", Texture = "Midlands/Swamp.png"},
-			new StoredGroundDisplayInfo() {GroundType = "Wilderness", Texture = "Midlands/Wilderness.png"},
+			new StoredGroundDisplayInfo()
+			{
+				GroundType = "Swamp",
+				Texture = "Midlands/Swamp.png",
+				DefaultModelPlacement = new []
+				{
+					new StoredModelPlacementInfo()
+					{
+						max = 1,
+						min = 1,
+						model = "Willow",
+						placementMode = "Scattered"
+					},
+					new StoredModelPlacementInfo()
+					{
+						max = 1,
+						min = 1,
+						model = "Rushes",
+						placementMode = "Scattered"
+					},
+				}
+			},
+			new StoredGroundDisplayInfo()
+			{
+				GroundType = "Wilderness",
+				Texture = "Midlands/Wilderness.png",
+				DefaultModelPlacement = new []
+				{
+					new StoredModelPlacementInfo()
+					{
+						max = 1,
+						min = 1,
+						model = "PineTree",
+						placementMode = "Scattered"
+					},
+				}
+			},
 		};
 		string str = JsonUtility.ToJson(store);
 		Debug.Log(str);*/
@@ -26,12 +66,35 @@ public class EnvironmentParser
 		string[] environments = environmentsFile.Split(new[] { "|" }, StringSplitOptions.None);
 		foreach (string env in environments)
 		{
-			env.Replace("\n", "");
-			env.Replace("\t", "");
 			StoredEnvironment storedEnvironment = JsonUtility.FromJson<StoredEnvironment>(env);
 			LoadedEnvironments.Add(storedEnvironment.ToEnvironment());
 		}
 		return LoadedEnvironments;
+	}
+}
+
+public class ModelPlacementInfo
+{
+	public enum PlacementMode
+	{
+		Scattered,
+		ScatteredBordered,
+		Edges,
+		Corners,
+	}
+
+	public PlacementMode Mode;
+	public GameObject Model;
+	private int min;
+	private int max;
+	public int NumToPlace { get { return UnityEngine.Random.Range(min, max+1); } }
+
+	public ModelPlacementInfo(string model, string mode, int mi, int ma)
+	{
+		min = mi;
+		max = ma;
+		Model = EnvironmentParser.modelLookup.LookupModel(model);
+		Mode = (PlacementMode)System.Enum.Parse(typeof(PlacementMode), mode);
 	}
 }
 
@@ -40,6 +103,7 @@ public class GroundDisplayInfo
 	public string groundType;
 	public Color lookupColor;
 	public Texture2D texture;
+	public List<ModelPlacementInfo> placementInfos;
 }
 
 public class MapEnvironment
@@ -66,10 +130,20 @@ public class MapEnvironment
 }
 
 [Serializable]
+public class StoredModelPlacementInfo
+{
+	public string model;
+	public string placementMode;
+	public int min;
+	public int max;
+}
+
+[Serializable]
 public class StoredGroundDisplayInfo
 {
 	public string GroundType;
 	public string Texture;
+	public StoredModelPlacementInfo[] DefaultModelPlacement;
 
 	public GroundDisplayInfo ToDisplayInfo()
 	{
