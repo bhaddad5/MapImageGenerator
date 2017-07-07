@@ -84,6 +84,8 @@ public class Culture
 
 	public Dictionary<GroundInfo.GroundTraits, float> tileValues;
 
+	public Dictionary<GroundInfo.GroundTraits, List<ModelPlacementInfo>> tileModelPlacement;
+
 	public string GetKingdomName(string coreName, List<Kingdom.KingdomTrait> traits)
 	{
 		var kingdomTitle = GetKingdomNameChunk(kingdomTitles, traits);

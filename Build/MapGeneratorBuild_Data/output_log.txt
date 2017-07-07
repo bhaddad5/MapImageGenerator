@@ -9,38 +9,20 @@ Direct3D:
 Begin MonoManager ReloadAssembly
 Platform assembly: C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\UnityEngine.dll (this message is harmless)
 Loading C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
 Platform assembly: C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\Assembly-CSharp.dll (this message is harmless)
 Loading C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
 Platform assembly: C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\UnityEngine.UI.dll (this message is harmless)
 Loading C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.017 seconds
+- Completed reload, in  0.052 seconds
 Platform assembly: C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\System.dll (this message is harmless)
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 3840x2160 60Hz; virtual: 3840x2160 at 0,0
 <RI> Initialized touch support.
-UnloadTime: 0.925450 ms
+UnloadTime: 50.846180 ms
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 3418 -> priority: 1 
-  Thread -> id: 1f0c -> priority: 1 
-17, 5 , 11
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-146.5, 0 , 11.5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-28, 7 , 14
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-174.5, 45.5 , 15
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
+  Thread -> id: 2e0c -> priority: 1 
+  Thread -> id: 2ad0 -> priority: 1 

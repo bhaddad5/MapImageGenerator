@@ -20,8 +20,13 @@ public class ModelPlacer
 	private void HandleTile(Int2 tile)
 	{
 		PlaceEnvironmentObjectsOnTile(tile, MapGenerator.Terrain.Get(tile).placementInfos);
+		//PlaceCultureObjectsOnTile(tile, MapGenerator.Terrain.Get(tile).traits,
+		//	RegionsGen.Map.Get(tile).settlement.kingdom.culture);
 
-		Culture culture = RegionsGen.Map.Get(tile).settlement.kingdom.culture;
+		if (MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.City))
+			PlaceCityTile(tile, RegionsGen.Map.Get(tile).settlement.kingdom.culture);
+
+		/*Culture culture = RegionsGen.Map.Get(tile).settlement.kingdom.culture;
 		if (MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.City))
 			PlaceCityTile(tile, culture);
 		if (MapGenerator.Terrain.Get(tile) == MapGenerator.Environment.GetGround("Forest"))
@@ -33,7 +38,7 @@ public class ModelPlacer
 		if (MapGenerator.Terrain.Get(tile) == MapGenerator.Environment.GetGround("Fertile"))
 			PlaceFarmTile(tile, culture);
 		if (MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.Road))
-			PlaceRoadTile(tile, culture);
+			PlaceRoadTile(tile, culture);*/
 	}
 
 	private void PlaceEnvironmentObjectsOnTile(Int2 tile, List<ModelPlacementInfo> infos)
@@ -49,6 +54,13 @@ public class ModelPlacer
 		if (mode == ModelPlacementInfo.PlacementMode.Scattered)
 			PlaceObjectsOnTile(tile, num, obj);
 	}
+
+	private void PlaceCultureObjectsOnTile(Int2 tile, Culture culture, List<GroundInfo.GroundTraits> traits)
+	{
+		
+	}
+
+
 
 
 

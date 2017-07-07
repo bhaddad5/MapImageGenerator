@@ -247,7 +247,17 @@ public static class CultureDefinitions
 			{ GroundInfo.GroundTraits.Fertile, .2f },
 			{ GroundInfo.GroundTraits.City, 6f },
 			{ GroundInfo.GroundTraits.Road, 3f },
-		}
+		},
+		/*tileModelPlacement = new Dictionary<GroundInfo.GroundTraits, List<ModelPlacementInfo>>()
+		{
+			{GroundInfo.GroundTraits.City, new List<ModelPlacementInfo>()
+			{
+				new ModelPlacementInfo("DwarfHouse", "ScatteredBordered", 20, 25),
+				new ModelPlacementInfo("DwarfWall", "Edges", 4, 4),
+				new ModelPlacementInfo("DwarfGate", "RoadCityEdge", 4, 4),
+				new ModelPlacementInfo("DwarfTower", "Corners", 4, 4),
+			} }
+		}*/
 	};
 
 
