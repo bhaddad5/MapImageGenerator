@@ -18,7 +18,16 @@ public class EnvironmentParser
 		store.displayName = "Midlands";
 		store.groundTypes = new []
 		{
-			new StoredGroundDisplayInfo() {GroundType = "Ocean", Texture = "Midlands/Sand.png"},
+			new StoredGroundDisplayInfo()
+			{
+				GroundType = "Ocean",
+				Texture = "Midlands/Sand.png",
+				StoredTraits = new []
+				{
+					"Water",
+					"Impassable"
+				}
+			},
 			new StoredGroundDisplayInfo()
 			{
 				GroundType = "Swamp",
@@ -39,6 +48,10 @@ public class EnvironmentParser
 						model = "Rushes",
 						placementMode = "Scattered"
 					},
+				},
+				StoredTraits = new []
+				{
+					"Muddy",
 				}
 			},
 			new StoredGroundDisplayInfo()
@@ -54,6 +67,10 @@ public class EnvironmentParser
 						model = "PineTree",
 						placementMode = "Scattered"
 					},
+				},
+				StoredTraits = new []
+				{
+					"Hunting"
 				}
 			},
 		};
@@ -73,61 +90,6 @@ public class EnvironmentParser
 	}
 }
 
-public class ModelPlacementInfo
-{
-	public enum PlacementMode
-	{
-		Scattered,
-		ScatteredBordered,
-		Edges,
-		Corners,
-	}
-
-	public PlacementMode Mode;
-	public GameObject Model;
-	private int min;
-	private int max;
-	public int NumToPlace { get { return UnityEngine.Random.Range(min, max+1); } }
-
-	public ModelPlacementInfo(string model, string mode, int mi, int ma)
-	{
-		min = mi;
-		max = ma;
-		Model = EnvironmentParser.modelLookup.LookupModel(model);
-		Mode = (PlacementMode)System.Enum.Parse(typeof(PlacementMode), mode);
-	}
-}
-
-public class GroundDisplayInfo
-{
-	public string groundType;
-	public Color lookupColor;
-	public Texture2D texture;
-	public List<ModelPlacementInfo> placementInfos;
-}
-
-public class MapEnvironment
-{public GroundDisplayInfo Ocean {get { return groundTypes["Ocean"]; } }
-	public GroundDisplayInfo River { get { return groundTypes["River"]; } }
-	public GroundDisplayInfo City { get { return groundTypes["City"]; } }
-	public GroundDisplayInfo Road { get { return groundTypes["Road"]; } }
-
-	public string displayName;
-	public Dictionary<string, GroundDisplayInfo> groundTypes = new Dictionary<string, GroundDisplayInfo>();
-	public IMapGenerator HeightGenerator;
-
-	public GroundDisplayInfo GetGround(string type)
-	{
-		return groundTypes[type];
-	}
-
-	public bool ViableCityTerrain(GroundDisplayInfo groundDisplay)
-	{
-		return groundDisplay != Ocean &&
-		       groundDisplay != River &&
-		       groundDisplay != groundTypes["Mountain"];
-	}
-}
 
 [Serializable]
 public class StoredModelPlacementInfo
@@ -143,11 +105,12 @@ public class StoredGroundDisplayInfo
 {
 	public string GroundType;
 	public string Texture;
+	public string[] StoredTraits = new string[0];
 	public StoredModelPlacementInfo[] DefaultModelPlacement = new StoredModelPlacementInfo[0];
 
-	public GroundDisplayInfo ToDisplayInfo()
+	public GroundInfo ToDisplayInfo()
 	{
-		var gdi = new GroundDisplayInfo();
+		var gdi = new GroundInfo();
 		gdi.lookupColor = Helpers.RandomColor();
 
 		Byte[] file = File.ReadAllBytes(Application.streamingAssetsPath + "/" + Texture);
@@ -155,6 +118,12 @@ public class StoredGroundDisplayInfo
 		tex.LoadImage(file);
 		gdi.texture = tex;
 		gdi.groundType = GroundType;
+
+		gdi.traits = new List<GroundInfo.GroundTraits>();
+		foreach (string trait in StoredTraits)
+		{
+			gdi.traits.Add((GroundInfo.GroundTraits)System.Enum.Parse(typeof(GroundInfo.GroundTraits), trait));
+		}
 
 		gdi.placementInfos = new List<ModelPlacementInfo>();
 		foreach (StoredModelPlacementInfo info in DefaultModelPlacement)
@@ -184,8 +153,8 @@ public class StoredEnvironment
 			env.HeightGenerator = new UndergroundGenerator();
 		foreach (StoredGroundDisplayInfo groundType in groundTypes)
 		{
-			GroundDisplayInfo displayInfo = groundType.ToDisplayInfo();
-			env.groundTypes[groundType.GroundType] = displayInfo;
+			GroundInfo info = groundType.ToDisplayInfo();
+			env.groundTypes[groundType.GroundType] = info;
 		}
 		return env;
 	}

@@ -22,7 +22,7 @@ public class ModelPlacer
 		PlaceEnvironmentObjectsOnTile(tile, MapGenerator.Terrain.Get(tile).placementInfos);
 
 		Culture culture = RegionsGen.Map.Get(tile).settlement.kingdom.culture;
-		if (MapGenerator.Terrain.Get(tile) == MapGenerator.Environment.City)
+		if (MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.City))
 			PlaceCityTile(tile, culture);
 		if (MapGenerator.Terrain.Get(tile) == MapGenerator.Environment.GetGround("Forest"))
 			PlaceForestTile(tile, culture);
@@ -137,7 +137,7 @@ public class ModelPlacer
 			foreach(var t in MapGenerator.Terrain.GetAdjacentPoints(tile))
 			{
 				if(MapGenerator.Terrain.Get(t) == MapGenerator.Environment.Road ||
-				   MapGenerator.Terrain.Get(t) == MapGenerator.Environment.City)
+				   MapGenerator.Terrain.Get(t).HasTrait(GroundInfo.GroundTraits.City))
 				{
 					if (MapGenerator.Heights.Get(t) >= Globals.MinGroundHeight)
 					{

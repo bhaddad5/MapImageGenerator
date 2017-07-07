@@ -54,8 +54,8 @@ public class Settlement
 			{
 				var neighborType = MapGenerator.Terrain.Get(neighbor);
 				if (!possibleExpansions.ContainsValue(neighbor) &&
-					neighborType != MapGenerator.Environment.City &&
-					MapGenerator.Environment.ViableCityTerrain(neighborType) &&
+					!neighborType.HasTrait(GroundInfo.GroundTraits.City) &&
+					!neighborType.HasTrait(GroundInfo.GroundTraits.Impassable) &&
 					RegionsGen.Map.Get(neighbor).settlement == this &&
 					!BordersUnfriendlyCity(neighbor))
 				{
@@ -71,7 +71,7 @@ public class Settlement
 		bool bordersUnfriendlyCity = false;
 		foreach(var border in MapGenerator.Terrain.GetAllNeighboringPoints(tile))
 		{
-			if(MapGenerator.Terrain.Get(border) == MapGenerator.Environment.City)
+			if(MapGenerator.Terrain.Get(border).HasTrait(GroundInfo.GroundTraits.City))
 			{
 				if(!cityTiles.Contains(border))
 					bordersUnfriendlyCity = true;
@@ -82,7 +82,7 @@ public class Settlement
 
 	public List<Settlement.CityTrait> GetCityTraits()
 	{
-		List<GroundDisplayInfo> neighboringTerrainTypes = new List<GroundDisplayInfo>();
+		List<GroundInfo> neighboringTerrainTypes = new List<GroundInfo>();
 		foreach (Int2 tile in cityTiles)
 		{
 			foreach (var neighbor in MapGenerator.Terrain.GetAdjacentValues(tile))

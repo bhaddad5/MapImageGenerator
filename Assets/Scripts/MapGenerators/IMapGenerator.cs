@@ -10,9 +10,9 @@ public interface IMapGenerator
 public class Map
 {
 	public Map2D<float> heights;
-	public Map2D<GroundDisplayInfo> terrain;
+	public Map2D<GroundInfo> terrain;
 
-	public Map(Map2D<float> h, Map2D<GroundDisplayInfo> ter)
+	public Map(Map2D<float> h, Map2D<GroundInfo> ter)
 	{
 		heights = h;
 		terrain = ter;

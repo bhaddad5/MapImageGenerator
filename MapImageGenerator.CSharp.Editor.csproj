@@ -114,10 +114,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="MapImageGenerator.CSharp.Plugins.csproj">
-      <Project>{2EFBFD1B-CFE5-E32F-1B6C-94E95123362A}</Project>
-      <Name>MapImageGenerator.CSharp.Plugins</Name>
-    </ProjectReference>
     <ProjectReference Include="MapImageGenerator.CSharp.csproj">
       <Project>{4527E1EC-AFD6-5E82-FAA4-DD5D044518A9}</Project>
       <Name>MapImageGenerator.CSharp</Name>
@@ -127,9 +123,9 @@
     <Compile Include="Assets\Editor\Tests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\ExternalAssets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
     <None Include="Assets\MapDisplay\BordersShader.shader" />
     <None Include="Assets\MapDisplay\GroundShader.shader" />
-    <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
     <None Include="Assets\StreamingAssets\environments.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

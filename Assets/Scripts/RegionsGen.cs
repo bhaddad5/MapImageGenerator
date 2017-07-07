@@ -87,7 +87,7 @@ class RegionsGen
 		for(int i = 0; i < numberOfSettlements * 200; i++)
 		{
 			Int2 testPos = new Int2(UnityEngine.Random.Range(0, MapGenerator.Terrain.Width), UnityEngine.Random.Range(0, MapGenerator.Terrain.Height));
-			if (MapGenerator.Environment.ViableCityTerrain(MapGenerator.Terrain.Get(testPos)) &&
+			if (!MapGenerator.Terrain.Get(testPos).HasTrait(GroundInfo.GroundTraits.Impassable) &&
 				!TooCloseToExistingSettlement(testPos, regions) &&
 				!TooCloseToBorder(testPos, new Int2(MapGenerator.Terrain.Width, MapGenerator.Terrain.Height)))
 			{
@@ -110,7 +110,7 @@ class RegionsGen
 				break;
 			}
 
-			if (MapGenerator.Terrain.Get(regions.ValueAt(regionsIndex)) == MapGenerator.Environment.City ||
+			if (MapGenerator.Terrain.Get(regions.ValueAt(regionsIndex)).HasTrait(GroundInfo.GroundTraits.City) ||
 				BordersCity(regions.ValueAt(regionsIndex)))
 			{
 				regionsIndex++;
@@ -137,7 +137,7 @@ class RegionsGen
 		bool bordersCity = false;
 		foreach (var border in MapGenerator.Terrain.GetAdjacentPoints(tile))
 		{
-			if (MapGenerator.Terrain.Get(border) == MapGenerator.Environment.City)
+			if (MapGenerator.Terrain.Get(border).HasTrait(GroundInfo.GroundTraits.City))
 			{
 				bordersCity = true;
 			}
@@ -263,7 +263,7 @@ class RegionsGen
 				    MapGenerator.Terrain.Get(tile) == MapGenerator.Environment.Ocean)
 					continue;
 
-				if(MapGenerator.Terrain.Get(tile) == MapGenerator.Environment.City)
+				if(MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.City))
 				{
 					var sett = GetSettlementFromTile(tile);
 					if (!settlementsHit.Contains(sett))
@@ -323,7 +323,7 @@ class RegionsGen
 				if (distMap.Get(tile) != 0)
 					continue;
 
-				if (MapGenerator.Terrain.Get(tile) == MapGenerator.Environment.City)
+				if (MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.City))
 				{
 					var sett = GetSettlementFromTile(tile);
 					if (!hitSettlements.ContainsValue(sett))
@@ -339,9 +339,9 @@ class RegionsGen
 				else {
 					var type = MapGenerator.Terrain.Get(tile);
 					var currType = MapGenerator.Terrain.Get(currTile);
-					if ((type == MapGenerator.Environment.Ocean && (currType == MapGenerator.Environment.Ocean || currType == MapGenerator.Environment.City)) ||
-					(type == MapGenerator.Environment.River && (currType == MapGenerator.Environment.River || currType == MapGenerator.Environment.City)) ||
-					(type == MapGenerator.Environment.Road && (currType == MapGenerator.Environment.Road || currType == MapGenerator.Environment.City)))
+					if ((type == MapGenerator.Environment.Ocean && (currType == MapGenerator.Environment.Ocean || currType.HasTrait(GroundInfo.GroundTraits.City))) ||
+					(type == MapGenerator.Environment.River && (currType == MapGenerator.Environment.River || currType.HasTrait(GroundInfo.GroundTraits.City))) ||
+					(type == MapGenerator.Environment.Road && (currType == MapGenerator.Environment.Road || currType.HasTrait(GroundInfo.GroundTraits.City))))
 					{
 						float difficulty = settlement.kingdom.culture.GetTileDifficulty(tile);
 						if (currDifficulty - difficulty > 0)

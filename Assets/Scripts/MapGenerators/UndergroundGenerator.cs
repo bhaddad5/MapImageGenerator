@@ -10,7 +10,7 @@ public class UndergroundGenerator : InitialMapGenerator, IMapGenerator
 		Heights = new Map2D<float>(width, height);
 		MakeHeights();
 
-		Terrain = new Map2D<GroundDisplayInfo>(width, height);
+		Terrain = new Map2D<GroundInfo>(width, height);
 		MakeTerrain();
 
 		return new Map(Heights, Terrain);

@@ -138,13 +138,13 @@ public class MapBuilder : MonoBehaviour
 		}
 	}
 
-	private List<Material> GetMapMaterials(List<GroundDisplayInfo> groundTypes)
+	private List<Material> GetMapMaterials(List<GroundInfo> groundTypes)
 	{
 		var mats = new List<Material>() {FlushGroundInfoToMat(groundTypes)};
 		return mats;
 	}
 
-	private Material FlushGroundInfoToMat(List<GroundDisplayInfo> groundInfo)
+	private Material FlushGroundInfoToMat(List<GroundInfo> groundInfo)
 	{
 		Material mat = new Material(Shader.Find("Custom/GroundShader"));
 		mat.SetTexture("_LookupTex", MapGenerator.GetTerrainTexture());

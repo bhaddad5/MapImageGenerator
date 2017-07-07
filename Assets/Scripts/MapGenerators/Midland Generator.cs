@@ -10,7 +10,7 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 		Heights = new Map2D<float>(width, height);
 		MakeHeights();
 
-		Terrain = new Map2D<GroundDisplayInfo>(width, height);
+		Terrain = new Map2D<GroundInfo>(width, height);
 		MakeTerrain();
 		
 		return new Map(Heights, Terrain);
@@ -385,10 +385,10 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 		}
 	}
 
-	private int NextToNumOfType(Int2 tile, GroundDisplayInfo type)
+	private int NextToNumOfType(Int2 tile, GroundInfo type)
 	{
 		int numNextTo = 0;
-		foreach (GroundDisplayInfo t in Terrain.GetAdjacentValues(tile))
+		foreach (GroundInfo t in Terrain.GetAdjacentValues(tile))
 		{
 			if (t == type)
 				numNextTo++;

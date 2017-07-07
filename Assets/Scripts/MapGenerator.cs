@@ -5,7 +5,7 @@ using UnityEngine;
 public class MapGenerator
 {
 	public static Map2D<float> Heights;
-	public static Map2D<GroundDisplayInfo> Terrain;
+	public static Map2D<GroundInfo> Terrain;
 	public static MapEnvironment Environment;
 
 	public MapGenerator(int width, int height, IMapGenerator generator, MapEnvironment env)

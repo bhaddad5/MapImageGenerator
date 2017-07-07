@@ -4,7 +4,10 @@
 		{
 			"GroundType":"Ocean",
 			"Texture":"Midlands/Sand.png",
-			"DefaultModelPlacement":[]
+			"StoredTraits":[
+				"Water",
+				"Impassable"
+			]
 		},
 		{
 			"GroundType":"Swamp",
@@ -12,6 +15,9 @@
 			"DefaultModelPlacement":[
 				{"model":"Willow","placementMode":"Scattered","min":2,"max":3},
 				{"model":"Rushes","placementMode":"Scattered","min":5,"max":7}
+			],
+			"StoredTraits":[
+				"Muddy"
 			]
 		},
 		{
@@ -19,6 +25,9 @@
 			"Texture":"Midlands/Wilderness.png",
 			"DefaultModelPlacement":[
 				{"model":"PineTree","placementMode":"Scattered","min":0,"max":3}
+			],
+			"StoredTraits":[
+				"Hunting"
 			]
 		},
 		{
@@ -26,13 +35,48 @@
 			"Texture":"Midlands/Forest.png",
 			"DefaultModelPlacement":[
 				{"model":"PineTree","placementMode":"Scattered","min":7,"max":10}
+			],
+			"StoredTraits":[
+				"Hunting"
 			]
 		},
-		{"GroundType":"River","Texture":"Midlands/Fertile.png"},
-		{"GroundType":"Mountain","Texture":"Midlands/Mountains.png"},
-		{"GroundType":"Fertile","Texture":"Midlands/Fertile.png"},
-		{"GroundType":"City","Texture":"Midlands/City.png"},
-		{"GroundType":"Road","Texture":"Midlands/Road.png"}
+		{
+			"GroundType":"River",
+			"Texture":"Midlands/Fertile.png",
+			"StoredTraits":[
+				"Water",
+				"Impassable"
+			]
+		},
+		{
+			"GroundType":"Mountain",
+			"Texture":"Midlands/Mountains.png",
+			"StoredTraits":[
+				"Rocky",
+				"Impassable"
+			]
+		},
+		{
+			"GroundType":"Fertile",
+			"Texture":"Midlands/Fertile.png",
+			"StoredTraits":[
+				"Fertile"
+			]
+		},
+		{
+			"GroundType":"City",
+			"Texture":"Midlands/City.png",
+			"StoredTraits":[
+				"City"
+			]
+		},
+		{
+			"GroundType":"Road",
+			"Texture":"Midlands/Road.png",
+			"StoredTraits":[
+				"Road"
+			]
+		}
 	]
 }
 |
