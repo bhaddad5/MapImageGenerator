@@ -9,7 +9,8 @@ public class ModelPlacementInfo
 	{
 		Scattered,
 		ScatteredBordered,
-		Edges,
+		CityWalls,
+		CityGates,
 		Corners,
 	}
 
@@ -23,7 +24,8 @@ public class ModelPlacementInfo
 	{
 		min = mi;
 		max = ma;
-		Model = EnvironmentParser.modelLookup.LookupModel(model);
+		//TODO: KILL ASAP!!!
+		Model = GameObject.Find("ModelLookup").GetComponent<ModelLookup>().LookupModel(model);
 		Mode = (PlacementMode)System.Enum.Parse(typeof(PlacementMode), mode);
 	}
 }

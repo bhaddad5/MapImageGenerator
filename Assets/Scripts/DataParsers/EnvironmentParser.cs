@@ -7,13 +7,8 @@ using UnityEngine;
 
 public class EnvironmentParser
 {
-	public static ModelLookup modelLookup;
-
 	public static List<MapEnvironment> LoadEnvironments()
 	{
-		//TODO: Kill Soon...
-		modelLookup = GameObject.Find("ModelLookup").GetComponent<ModelLookup>();
-
 		/*StoredEnvironment store = new StoredEnvironment();
 		store.displayName = "Midlands";
 		store.groundTypes = new []

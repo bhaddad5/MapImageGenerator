@@ -25,11 +25,8 @@ public class ModelLookup : MonoBehaviour
 		return null;
 	}
 
-	[Header("MapEnvironment")]
-	public GameObject WheatField;
-
-
 	[Header("Anglo Settlements")]
+	public GameObject WheatField;
 	public GameObject Hovel;
 	public GameObject TownHouse;	
 	public GameObject Wall;
@@ -38,16 +35,4 @@ public class ModelLookup : MonoBehaviour
 	public GameObject Bridge;
 	public GameObject WoodenWall;
 	public GameObject WoodenGate;
-
-	[Header("Dwarf Settlements")]
-	public GameObject DwarfHouse;
-	public GameObject DwarfWall;
-	public GameObject DwarfGates;
-	public GameObject DwarfTower;
-
-	[Header("Orc Settlements")]
-	public GameObject OrcWall;
-	public GameObject OrcGate;
-	public GameObject OrcTower;
-	public GameObject OrcHut;
 }

@@ -138,6 +138,9 @@ public static class CultureDefinitions
 			{ GroundInfo.GroundTraits.Fertile, .4f },
 			{ GroundInfo.GroundTraits.City, 5f },
 			{ GroundInfo.GroundTraits.Road, 3f },
+		},
+		tileModelPlacement = new Dictionary<GroundInfo.GroundTraits, List<ModelPlacementInfo>>()
+		{
 		}
 	};
 
@@ -248,16 +251,15 @@ public static class CultureDefinitions
 			{ GroundInfo.GroundTraits.City, 6f },
 			{ GroundInfo.GroundTraits.Road, 3f },
 		},
-		/*tileModelPlacement = new Dictionary<GroundInfo.GroundTraits, List<ModelPlacementInfo>>()
+		tileModelPlacement = new Dictionary<GroundInfo.GroundTraits, List<ModelPlacementInfo>>()
 		{
-			{GroundInfo.GroundTraits.City, new List<ModelPlacementInfo>()
-			{
+			{GroundInfo.GroundTraits.City, new List<ModelPlacementInfo>(){
 				new ModelPlacementInfo("DwarfHouse", "ScatteredBordered", 20, 25),
-				new ModelPlacementInfo("DwarfWall", "Edges", 4, 4),
-				new ModelPlacementInfo("DwarfGate", "RoadCityEdge", 4, 4),
+				new ModelPlacementInfo("DwarfWall", "CityWalls", 4, 4),
+				new ModelPlacementInfo("DwarfGate", "CityGates", 4, 4),
 				new ModelPlacementInfo("DwarfTower", "Corners", 4, 4),
 			} }
-		}*/
+		}
 	};
 
 
@@ -354,6 +356,15 @@ public static class CultureDefinitions
 			{ GroundInfo.GroundTraits.Fertile, .15f },
 			{ GroundInfo.GroundTraits.City, 4f },
 			{ GroundInfo.GroundTraits.Road, 2f },
+		},
+		tileModelPlacement = new Dictionary<GroundInfo.GroundTraits, List<ModelPlacementInfo>>()
+		{
+			{GroundInfo.GroundTraits.City, new List<ModelPlacementInfo>(){
+				new ModelPlacementInfo("OrcHut", "ScatteredBordered", 20, 25),
+				new ModelPlacementInfo("OrcWall", "CityWalls", 4, 4),
+				new ModelPlacementInfo("OrcGate", "CityGates", 4, 4),
+				new ModelPlacementInfo("OrcTower", "Corners", 4, 4),
+			} }
 		}
 	};
 }
