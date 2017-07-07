@@ -143,7 +143,7 @@ public class StoredGroundDisplayInfo
 {
 	public string GroundType;
 	public string Texture;
-	public StoredModelPlacementInfo[] DefaultModelPlacement;
+	public StoredModelPlacementInfo[] DefaultModelPlacement = new StoredModelPlacementInfo[0];
 
 	public GroundDisplayInfo ToDisplayInfo()
 	{
@@ -155,6 +155,13 @@ public class StoredGroundDisplayInfo
 		tex.LoadImage(file);
 		gdi.texture = tex;
 		gdi.groundType = GroundType;
+
+		gdi.placementInfos = new List<ModelPlacementInfo>();
+		foreach (StoredModelPlacementInfo info in DefaultModelPlacement)
+		{
+			gdi.placementInfos.Add(new ModelPlacementInfo(info.model, info.placementMode, info.min, info.max));
+		}
+
 		return gdi;
 	}
 }

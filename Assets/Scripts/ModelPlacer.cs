@@ -19,6 +19,8 @@ public class ModelPlacer
 
 	private void HandleTile(Int2 tile)
 	{
+		PlaceEnvironmentObjectsOnTile(tile, MapGenerator.Terrain.Get(tile).placementInfos);
+
 		Culture culture = RegionsGen.Map.Get(tile).settlement.kingdom.culture;
 		if (MapGenerator.Terrain.Get(tile) == MapGenerator.Environment.City)
 			PlaceCityTile(tile, culture);
@@ -34,9 +36,25 @@ public class ModelPlacer
 			PlaceRoadTile(tile, culture);
 	}
 
+	private void PlaceEnvironmentObjectsOnTile(Int2 tile, List<ModelPlacementInfo> infos)
+	{
+		foreach (var info in infos)
+		{
+			PlaceModels(tile, info.Model, info.Mode, info.NumToPlace);
+		}
+	}
+
+	private void PlaceModels(Int2 tile, GameObject obj, ModelPlacementInfo.PlacementMode mode, int num)
+	{
+		if (mode == ModelPlacementInfo.PlacementMode.Scattered)
+			PlaceObjectsOnTile(tile, num, obj);
+	}
+
+
+
+
 	private void PlaceForestTile(Int2 tile, Culture culture)
 	{
-		PlaceObjectsOnTile(tile, Random.Range(7, 10), lookup.PineTree);
 		if (culture == CultureDefinitions.Anglo)
 		{
 			if (Helpers.Odds(0.05f))
@@ -56,8 +74,6 @@ public class ModelPlacer
 
 	private void PlaceSwampTile(Int2 tile, Culture culture)
 	{
-		PlaceObjectsOnTile(tile, Random.Range(0, 4), lookup.Willow);
-		PlaceObjectsOnTile(tile, Random.Range(5, 9), lookup.Rushes);
 		if (culture == CultureDefinitions.Anglo)
 		{
 			if (Helpers.Odds(0.03f))
@@ -76,7 +92,6 @@ public class ModelPlacer
 
 	private void PlaceWildernessTile(Int2 tile, Culture culture)
 	{
-		PlaceObjectsOnTile(tile, Random.Range(0, 3), lookup.PineTree);
 		if (culture == CultureDefinitions.Anglo)
 		{
 			if (Helpers.Odds(0.1f))

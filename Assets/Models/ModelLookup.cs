@@ -26,9 +26,6 @@ public class ModelLookup : MonoBehaviour
 	}
 
 	[Header("MapEnvironment")]
-	public GameObject PineTree;
-	public GameObject Willow;
-	public GameObject Rushes;
 	public GameObject WheatField;
 
 
