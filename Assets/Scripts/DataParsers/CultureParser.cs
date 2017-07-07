@@ -12,3 +12,7 @@ public class CultureParser
 	}
 
 }
+
+public class StoredCulture
+{
+}

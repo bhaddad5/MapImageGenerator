@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.SymbolStore;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -92,19 +93,22 @@ public class Settlement
 		}
 
 		List<Settlement.CityTrait> traits = new List<CityTrait>();
-		if (neighboringTerrainTypes.Contains(MapGenerator.Environment.GetGround("Mountain")))
-			traits.Add(CityTrait.Mountains);
-		if (neighboringTerrainTypes.Contains(MapGenerator.Environment.GetGround("Forest")))
-			traits.Add(CityTrait.Forest);
-		if (neighboringTerrainTypes.Contains(MapGenerator.Environment.GetGround("Fertile")))
-			traits.Add(CityTrait.Fertile);
+		foreach (GroundInfo groundInfo in neighboringTerrainTypes)
+		{
+			if(groundInfo.traits.Contains(GroundInfo.GroundTraits.Rocky))
+				traits.Add(CityTrait.Mountains);
+			if (groundInfo.traits.Contains(GroundInfo.GroundTraits.Forest))
+				traits.Add(CityTrait.Forest);
+			if (groundInfo.traits.Contains(GroundInfo.GroundTraits.Fertile))
+				traits.Add(CityTrait.Fertile);
+			if (groundInfo.traits.Contains(GroundInfo.GroundTraits.Water))
+				traits.Add(CityTrait.Port);
+			if (neighboringTerrainTypes.Contains(MapGenerator.Environment.River))
+				traits.Add(CityTrait.River);
+		}
 
-
-		if (neighboringTerrainTypes.Contains(MapGenerator.Environment.Ocean))
-			traits.Add(CityTrait.Port);
-		else if (neighboringTerrainTypes.Contains(MapGenerator.Environment.River))
-			traits.Add(CityTrait.River);
-		else traits.Add(CityTrait.Landlocked);
+		if(!traits.Contains(CityTrait.Port) && !traits.Contains(CityTrait.River))
+			traits.Add(CityTrait.Landlocked);
 
 		traits.Add(GetSettlementSize());
 
@@ -141,18 +145,7 @@ public class Settlement
 		foreach (var tile in cityTiles)
 		{
 			foreach (var adj in MapGenerator.Terrain.GetAdjacentValues(tile))
-			{
-				if (adj == MapGenerator.Environment.GetGround("Swamp") || adj == MapGenerator.Environment.GetGround("Mountain"))
-					defensibility += .5f;
-				if (adj == MapGenerator.Environment.Ocean)
-					defensibility += .3f;
-				if (adj == MapGenerator.Environment.River)
-					defensibility += .2f;
-				if (adj == MapGenerator.Environment.GetGround("Fertile") || adj == MapGenerator.Environment.GetGround("Wilderness"))
-					defensibility -= .5f;
-				if (adj.HasTrait(GroundInfo.GroundTraits.Road) || adj == MapGenerator.Environment.GetGround("Forest"))
-					defensibility -= 1f;
-			}
+				defensibility += adj.GetDefensibility();
 		}
 		return defensibility;
 	}

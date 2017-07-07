@@ -41,7 +41,8 @@
 				{"model":"PineTree","placementMode":"Scattered","min":7,"max":10}
 			],
 			"StoredTraits":[
-				"Hunting"
+				"Hunting",
+				"Forest"
 			]
 		},
 		{
@@ -92,14 +93,71 @@
 {
 	"displayName":"Underground",
 	"groundTypes":[
-		{"GroundType":"Ocean","Texture":"Underground/CaveWall.png"},
-		{"GroundType":"River","Texture":"Underground/CaveWall.png"},
-		{"GroundType":"Swamp","Texture":"Midlands/Swamp.png"},
-		{"GroundType":"Mountain","Texture":"Underground/CaveWall.png"},
-		{"GroundType":"Forest","Texture":"Midlands/Forest.png"},
-		{"GroundType":"Fertile","Texture":"Midlands/Fertile.png"},
-		{"GroundType":"City","Texture":"Midlands/City.png"},
-		{"GroundType":"Road","Texture":"Midlands/Road.png"},
-		{"GroundType":"Wilderness","Texture":"Underground/CaveFloor.png"}
+		{
+			"GroundType":"Ocean",
+			"Texture":"Underground/CaveWall.png",
+			"Difficulty":0.1,
+			"StoredTraits":[
+				"Water",
+				"Impassable"
+			]
+		},
+		{
+			"GroundType":"MushroomSwamp",
+			"Texture":"Midlands/Swamp.png",
+			"Difficulty":0.35,
+			"DefaultModelPlacement":[
+				
+			],
+			"StoredTraits":[
+				"Muddy",
+				"Forest"
+			]
+		},
+		{
+			"GroundType":"CaveFloor",
+			"Texture":"Underground/CaveFloor.png",
+			"Difficulty":0.2,
+			"DefaultModelPlacement":[
+				
+			],
+			"StoredTraits":[
+				"Hunting"
+			]
+		},
+		{
+			"GroundType":"CaveWall",
+			"Difficulty":50,
+			"Texture":"Underground/CaveWall.png",
+			"StoredTraits":[
+				"Rocky",
+				"Impassable"
+			]
+		},
+		{
+			"GroundType":"River",
+			"Difficulty":0.5,
+			"Texture":"Underground/CaveWall.png",
+			"StoredTraits":[
+				"Water",
+				"Impassable"
+			]
+		},
+		{
+			"GroundType":"City",
+			"Difficulty":0.05,
+			"Texture":"Midlands/City.png",
+			"StoredTraits":[
+				"City"
+			]
+		},
+		{
+			"GroundType":"Road",
+			"Difficulty":0.05,
+			"Texture":"Midlands/Road.png",
+			"StoredTraits":[
+				"Road"
+			]
+		}
 	]
 }

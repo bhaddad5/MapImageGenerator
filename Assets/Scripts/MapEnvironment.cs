@@ -38,8 +38,22 @@ public class GroundInfo
 		Muddy,
 		Hunting,
 		City,
-		Road
+		Road,
+		Forest
 	}
+
+	private Dictionary<GroundInfo.GroundTraits, float> Defense = new Dictionary<GroundTraits, float>()
+	{
+		{GroundTraits.Water, .3f },
+		{GroundTraits.Impassable, .2f },
+		{GroundTraits.Rocky, .5f },
+		{GroundTraits.Fertile, -.5f },
+		{GroundTraits.Muddy, .5f },
+		{GroundTraits.Hunting, -.3f },
+		{GroundTraits.Forest, -.3f },
+		{GroundTraits.City, 0 },
+		{GroundTraits.Road, -1f },
+	};
 
 	public string groundType;
 	public Color lookupColor;
@@ -51,6 +65,16 @@ public class GroundInfo
 	public bool HasTrait(GroundTraits trait)
 	{
 		return traits.Contains(trait);
+	}
+
+	public float GetDefensibility()
+	{
+		float defense = 0;
+		foreach (GroundTraits trait in traits)
+		{
+			defense += Defense[trait];
+		}
+		return defense;
 	}
 }
 
