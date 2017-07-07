@@ -43,34 +43,25 @@ public class GroundDisplayInfo
 }
 
 public class MapEnvironment
-{
-	public enum GroundTypes
-	{
-		Ocean,
-		River,
-		Swamp,
-		Mountain,
-		Forest,
-		Wilderness,
-		Fertile,
-		City,
-		Road,
-	}
+{public GroundDisplayInfo Ocean {get { return groundTypes["Ocean"]; } }
+	public GroundDisplayInfo River { get { return groundTypes["River"]; } }
+	public GroundDisplayInfo City { get { return groundTypes["City"]; } }
+	public GroundDisplayInfo Road { get { return groundTypes["Road"]; } }
 
 	public string displayName;
 	public Dictionary<string, GroundDisplayInfo> groundTypes = new Dictionary<string, GroundDisplayInfo>();
 	public IMapGenerator HeightGenerator;
 
-	public GroundDisplayInfo GetGround(GroundTypes type)
+	public GroundDisplayInfo GetGround(string type)
 	{
-		return groundTypes[type.ToString()];
+		return groundTypes[type];
 	}
 
 	public bool ViableCityTerrain(GroundDisplayInfo groundDisplay)
 	{
-		return groundDisplay != groundTypes[GroundTypes.Ocean.ToString()] &&
-		       groundDisplay != groundTypes[GroundTypes.River.ToString()] &&
-		       groundDisplay != groundTypes[GroundTypes.Mountain.ToString()];
+		return groundDisplay != Ocean &&
+		       groundDisplay != River &&
+		       groundDisplay != groundTypes["Mountain"];
 	}
 }
 

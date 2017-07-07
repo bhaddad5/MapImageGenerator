@@ -6,7 +6,7 @@ public class UndergroundGenerator : InitialMapGenerator, IMapGenerator
 {
 	public Map GenerateMaps(int width, int height, MapEnvironment env)
 	{
-		mapEnvironment = env;
+		MapGenerator.Environment = env;
 		Heights = new Map2D<float>(width, height);
 		MakeHeights();
 
@@ -119,15 +119,15 @@ public class UndergroundGenerator : InitialMapGenerator, IMapGenerator
 
 	private void MakeTerrain()
 	{
-		Terrain.FillMap(mapEnvironment.groundTypes["Mountain"]);
+		Terrain.FillMap(MapGenerator.Environment.groundTypes["Mountain"]);
 
 		foreach (Int2 point in Heights.GetMapPoints())
 		{
 			float height = Heights.Get(point);
 			if (height < Globals.MinGroundHeight)
-				Terrain.Set(point, mapEnvironment.groundTypes["Ocean"]);
+				Terrain.Set(point, MapGenerator.Environment.groundTypes["Ocean"]);
 			if(height >= Globals.MinGroundHeight && height < Globals.MountainHeight)
-				Terrain.Set(point, mapEnvironment.groundTypes["Wilderness"]);
+				Terrain.Set(point, MapGenerator.Environment.groundTypes["Wilderness"]);
 		}
 	}
 }

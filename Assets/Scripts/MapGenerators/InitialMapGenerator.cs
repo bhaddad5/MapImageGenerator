@@ -6,7 +6,6 @@ public class InitialMapGenerator
 {
 	protected Map2D<float> Heights;
 	protected Map2D<GroundDisplayInfo> Terrain;
-	protected MapEnvironment mapEnvironment;
 
 	protected bool IsCoastline(Int2 tile)
 	{

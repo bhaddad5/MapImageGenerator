@@ -53,8 +53,8 @@ public class MapGenerator
 		int numTiles = 0;
 		foreach (var tile in Terrain.GetMapValues())
 		{
-			if (tile != Environment.GetGround(MapEnvironment.GroundTypes.Ocean) &&
-			    tile != Environment.GetGround(MapEnvironment.GroundTypes.River))
+			if (tile != Environment.Ocean &&
+			    tile != Environment.River)
 				numTiles++;
 		}
 		return numTiles;

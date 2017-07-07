@@ -6,7 +6,7 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 {
 	public Map GenerateMaps(int width, int height, MapEnvironment env)
 	{
-		mapEnvironment = env;
+		MapGenerator.Environment = env;
 		Heights = new Map2D<float>(width, height);
 		MakeHeights();
 
@@ -40,12 +40,12 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 			{
 				int numLandBorders = NumLandBorders(point);
 				if (numLandBorders >= 6)
-					Terrain.Set(point, mapEnvironment.groundTypes["River"]);
-				else Terrain.Set(point, mapEnvironment.groundTypes["Ocean"]);
+					Terrain.Set(point, MapGenerator.Environment.groundTypes["River"]);
+				else Terrain.Set(point, MapGenerator.Environment.groundTypes["Ocean"]);
 			}
 			else if (Heights.Get(point) >= Globals.MountainHeight)
-				Terrain.Set(point, mapEnvironment.groundTypes["Mountain"]);
-			else Terrain.Set(point, mapEnvironment.groundTypes["Wilderness"]);
+				Terrain.Set(point, MapGenerator.Environment.groundTypes["Mountain"]);
+			else Terrain.Set(point, MapGenerator.Environment.groundTypes["Wilderness"]);
 		}
 
 		FillInLandTextures();
@@ -361,27 +361,27 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 	private void TryFillInTile(Int2 tile)
 	{
 		float oddsOfForest = 0.01f +
-		                     0.01f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Mountain)) +
-		                     0.3f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Forest));
+		                     0.01f * NextToNumOfType(tile, MapGenerator.Environment.GetGround("Mountain")) +
+		                     0.3f * NextToNumOfType(tile, MapGenerator.Environment.GetGround("Forest"));
 		float oddsOfFertile = 0.01f +
-		                      0.07f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Ocean)) +
-		                      0.15f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.River)) -
-		                      0.01f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Mountain)) +
-		                      0.3f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Fertile));
+		                      0.07f * NextToNumOfType(tile, MapGenerator.Environment.Ocean) +
+		                      0.15f * NextToNumOfType(tile, MapGenerator.Environment.River) -
+		                      0.01f * NextToNumOfType(tile, MapGenerator.Environment.GetGround("Mountain")) +
+		                      0.3f * NextToNumOfType(tile, MapGenerator.Environment.GetGround("Fertile"));
 		float oddsOfSwamp = 0.001f +
-		                    0.01f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Ocean)) +
-		                    0.01f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.River)) -
-		                    1f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Mountain)) +
-		                    0.3f * NextToNumOfType(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Swamp));
+		                    0.01f * NextToNumOfType(tile, MapGenerator.Environment.Ocean) +
+		                    0.01f * NextToNumOfType(tile, MapGenerator.Environment.River) -
+		                    1f * NextToNumOfType(tile, MapGenerator.Environment.GetGround("Mountain")) +
+		                    0.3f * NextToNumOfType(tile, MapGenerator.Environment.GetGround("Swamp"));
 
-		if (Terrain.Get(tile) == mapEnvironment.GetGround(MapEnvironment.GroundTypes.Wilderness))
+		if (Terrain.Get(tile) == MapGenerator.Environment.GetGround("Wilderness"))
 		{
 			if (Helpers.Odds(oddsOfFertile))
-				Terrain.Set(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Fertile));
+				Terrain.Set(tile, MapGenerator.Environment.GetGround("Fertile"));
 			else if (Helpers.Odds(oddsOfForest))
-				Terrain.Set(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Forest));
+				Terrain.Set(tile, MapGenerator.Environment.GetGround("Forest"));
 			else if (Helpers.Odds(oddsOfSwamp))
-				Terrain.Set(tile, mapEnvironment.GetGround(MapEnvironment.GroundTypes.Swamp));
+				Terrain.Set(tile, MapGenerator.Environment.GetGround("Swamp"));
 		}
 	}
 
