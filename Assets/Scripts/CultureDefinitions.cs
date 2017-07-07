@@ -127,29 +127,16 @@ public static class CultureDefinitions
 			new HeraldryOption("Anglo/Heraldry/Symbols/Gryphon"),
 			new HeraldryOption("Anglo/Heraldry/Symbols/Horse"),
 		},
-		tileDifficulties = new Dictionary<string, float>()
+		tileValues = new Dictionary<GroundInfo.GroundTraits, float>()
 		{
-			{ "Ocean",.1f },
-			{ "River", .5f },
-			{ "Swamp", .35f },
-			{ "Mountain", .6f },
-			{ "Forest", .25f },
-			{ "Wilderness", .2f },
-			{ "Fertile", .1f },
-			{ "City", .05f },
-			{ "Road", .05f },
-		},
-		tileValues = new Dictionary<string, float>()
-		{
-			{ "Ocean",0f },
-			{ "River",0f },
-			{ "Swamp",.1f },
-			{ "Mountain",.1f },
-			{ "Forest",.2f },
-			{ "Wilderness",.2f },
-			{ "Fertile",.4f },
-			{ "City",5f },
-			{ "Road",3f },
+			{ GroundInfo.GroundTraits.Water, 0f },
+			{ GroundInfo.GroundTraits.Impassable, 0f },
+			{ GroundInfo.GroundTraits.Muddy, .1f },
+			{ GroundInfo.GroundTraits.Rocky, .1f },
+			{ GroundInfo.GroundTraits.Hunting, .2f },
+			{ GroundInfo.GroundTraits.Fertile, .4f },
+			{ GroundInfo.GroundTraits.City, 5f },
+			{ GroundInfo.GroundTraits.Road, 3f },
 		}
 	};
 
@@ -248,31 +235,16 @@ public static class CultureDefinitions
 			new HeraldryOption("Dwarf/Heraldry/Symbols/AleHorn"),
 			new HeraldryOption("Dwarf/Heraldry/Symbols/Helmet"),
 		},
-
-		tileDifficulties = new Dictionary<string, float>()
+		tileValues = new Dictionary<GroundInfo.GroundTraits, float>()
 		{
-			{ "Ocean",.4f },
-			{ "River",.5f },
-			{ "Swamp",.45f },
-			{ "Mountain",.35f },
-			{ "Forest",.25f },
-			{ "Wilderness",.2f },
-			{ "Fertile",.2f },
-			{ "City",.05f },
-			{ "Road",.05f },
-		},
-
-		tileValues = new Dictionary<string, float>()
-		{
-			{ "Ocean",0f },
-			{ "River",0f },
-			{ "Swamp",.1f },
-			{ "Mountain",.6f },
-			{ "Forest",.25f },
-			{ "Wilderness",.25f },
-			{ "Fertile",.25f },
-			{ "City",5f },
-			{ "Road",3f },
+			{ GroundInfo.GroundTraits.Water, 0f },
+			{ GroundInfo.GroundTraits.Impassable, 0f },
+			{ GroundInfo.GroundTraits.Muddy, 0f },
+			{ GroundInfo.GroundTraits.Rocky, .6f },
+			{ GroundInfo.GroundTraits.Hunting, .2f },
+			{ GroundInfo.GroundTraits.Fertile, .2f },
+			{ GroundInfo.GroundTraits.City, 6f },
+			{ GroundInfo.GroundTraits.Road, 3f },
 		}
 	};
 
@@ -359,31 +331,16 @@ public static class CultureDefinitions
 			new HeraldryOption("Orc/Heraldry/Symbols/Dragon"),
 			new HeraldryOption("Orc/Heraldry/Symbols/Skull"),
 		},
-
-		tileDifficulties = new Dictionary<string, float>()
+		tileValues = new Dictionary<GroundInfo.GroundTraits, float>()
 		{
-			{ "Ocean",.4f },
-			{ "River",.5f },
-			{ "Swamp",.2f },
-			{ "Mountain",.35f },
-			{ "Forest",.2f },
-			{ "Wilderness",.2f },
-			{ "Fertile",.3f },
-			{ "City",.05f },
-			{ "Road",.05f },
-		},
-
-		tileValues = new Dictionary<string, float>()
-		{
-			{ "Ocean", 0f },
-			{ "River", 0f },
-			{ "Swamp",.4f },
-			{ "Mountain",.5f },
-			{ "Forest",.5f },
-			{ "Wilderness",.3f },
-			{ "Fertile",.1f },
-			{ "City", 5f },
-			{ "Road", 3f },
+			{ GroundInfo.GroundTraits.Water, 0f },
+			{ GroundInfo.GroundTraits.Impassable, 0f },
+			{ GroundInfo.GroundTraits.Muddy, .4f },
+			{ GroundInfo.GroundTraits.Rocky, .3f },
+			{ GroundInfo.GroundTraits.Hunting, .35f },
+			{ GroundInfo.GroundTraits.Fertile, .15f },
+			{ GroundInfo.GroundTraits.City, 4f },
+			{ GroundInfo.GroundTraits.Road, 2f },
 		}
 	};
 }

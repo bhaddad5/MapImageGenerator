@@ -32,7 +32,7 @@ public class ModelPlacer
 			PlaceWildernessTile(tile, culture);
 		if (MapGenerator.Terrain.Get(tile) == MapGenerator.Environment.GetGround("Fertile"))
 			PlaceFarmTile(tile, culture);
-		if (MapGenerator.Terrain.Get(tile) == MapGenerator.Environment.Road)
+		if (MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.Road))
 			PlaceRoadTile(tile, culture);
 	}
 
@@ -136,7 +136,7 @@ public class ModelPlacer
 		{
 			foreach(var t in MapGenerator.Terrain.GetAdjacentPoints(tile))
 			{
-				if(MapGenerator.Terrain.Get(t) == MapGenerator.Environment.Road ||
+				if(MapGenerator.Terrain.Get(t).HasTrait(GroundInfo.GroundTraits.Road) ||
 				   MapGenerator.Terrain.Get(t).HasTrait(GroundInfo.GroundTraits.City))
 				{
 					if (MapGenerator.Heights.Get(t) >= Globals.MinGroundHeight)
@@ -301,15 +301,14 @@ public class ModelPlacer
 
 	private bool TileIsRoad(Int2 tile)
 	{
-		return MapGenerator.Terrain.PosInBounds(tile) && MapGenerator.Terrain.Get(tile) == MapGenerator.Environment.Road;
+		return MapGenerator.Terrain.PosInBounds(tile) && MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.Road);
 	}
 
 	private bool TileIsCityBorder(Int2 tile)
 	{
 		return MapGenerator.Terrain.PosInBounds(tile) &&
-		       MapGenerator.Terrain.Get(tile) != MapGenerator.Environment.City &&
-		       MapGenerator.Terrain.Get(tile) != MapGenerator.Environment.Ocean &&
-		       MapGenerator.Terrain.Get(tile) != MapGenerator.Environment.River;
+		       !MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.Impassable) &&
+		       !MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.City);
 	}
 
 	private void PlaceTurretsOnCorners(Int2 tile, GameObject turret)

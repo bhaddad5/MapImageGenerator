@@ -19,7 +19,7 @@ class RegionsGen
 
 			for (int i = settlementLocations.Count - 1; i >= 0; i--)
 			{
-				MapGenerator.Terrain.Set(settlementLocations.ValueAt(i), MapGenerator.Environment.City);
+				MapGenerator.Terrain.Set(settlementLocations.ValueAt(i), MapGenerator.Environment.GetFirstWithTrait(GroundInfo.GroundTraits.City));
 				Kingdom r = new Kingdom(culture.culture, settlementLocations.ValueAt(i));
 				Kingdoms.Add(r);
 				ExpandRegionFromSettlement(5, r.settlements[0], settlementLocations.ValueAt(i));
@@ -167,7 +167,7 @@ class RegionsGen
 
 	private void ExpandRegionFromSettlement(float startingValue, Settlement settlement, Int2 pos)
 	{
-		TileAt(pos).TrySetRegion(settlement, startingValue - settlement.kingdom.culture.GetTileDifficulty(pos));
+		TileAt(pos).TrySetRegion(settlement, startingValue - MapGenerator.Terrain.Get(pos).difficulty);
 
 		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
 		frontierTiles.Insert(pos, TileAt(pos).holdingStrength);
@@ -175,7 +175,7 @@ class RegionsGen
 		{
 			foreach(var neighbor in GetPossibleNeighborTiles(frontierTiles.TopValue(), settlement))
 			{
-				float strength = frontierTiles.TopKey() - settlement.kingdom.culture.GetTileDifficulty(neighbor);
+				float strength = frontierTiles.TopKey() - MapGenerator.Terrain.Get(neighbor).difficulty;
 				if(MapGenerator.Terrain.Get(neighbor) == MapGenerator.Environment.Ocean &&
 					MapGenerator.Terrain.Get(frontierTiles.TopValue()) != MapGenerator.Environment.Ocean)
 				{
@@ -275,7 +275,7 @@ class RegionsGen
 					}
 				}
 
-				float difficulty = settlement.kingdom.culture.GetTileDifficulty(tile);
+				float difficulty = MapGenerator.Terrain.Get(tile).difficulty;
 				if(currDifficulty - difficulty > 0)
 				{
 					frontierTiles.Insert(tile, currDifficulty - difficulty);
@@ -287,9 +287,9 @@ class RegionsGen
 
 	private void BuildRoadBackFromTile(Int2 tile, Map2D<float> distMap)
 	{
-		if (MapGenerator.Terrain.Get(tile) == MapGenerator.Environment.Road)
+		if (MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.Road))
 			return;
-		if (MapGenerator.Terrain.Get(tile) != MapGenerator.Environment.City)
+		if (!MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.City))
 			MapGenerator.Terrain.Set(tile, MapGenerator.Environment.Road);
 		Int2 maxTile = tile;
 		foreach(var t in distMap.GetAdjacentPoints(tile))
@@ -341,9 +341,9 @@ class RegionsGen
 					var currType = MapGenerator.Terrain.Get(currTile);
 					if ((type == MapGenerator.Environment.Ocean && (currType == MapGenerator.Environment.Ocean || currType.HasTrait(GroundInfo.GroundTraits.City))) ||
 					(type == MapGenerator.Environment.River && (currType == MapGenerator.Environment.River || currType.HasTrait(GroundInfo.GroundTraits.City))) ||
-					(type == MapGenerator.Environment.Road && (currType == MapGenerator.Environment.Road || currType.HasTrait(GroundInfo.GroundTraits.City))))
+					(type.HasTrait(GroundInfo.GroundTraits.Road) && (currType.HasTrait(GroundInfo.GroundTraits.Road) || currType.HasTrait(GroundInfo.GroundTraits.City))))
 					{
-						float difficulty = settlement.kingdom.culture.GetTileDifficulty(tile);
+						float difficulty = MapGenerator.Terrain.Get(tile).difficulty;
 						if (currDifficulty - difficulty > 0)
 						{
 							frontierTiles.Insert(tile, currDifficulty - difficulty);

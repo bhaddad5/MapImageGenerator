@@ -82,8 +82,7 @@ public class Culture
 	public List<HeraldryOption> heraldryBackground;
 	public List<HeraldryOption> heraldryForeground;
 
-	public Dictionary<string, float> tileDifficulties;
-	public Dictionary<string, float> tileValues;
+	public Dictionary<GroundInfo.GroundTraits, float> tileValues;
 
 	public string GetKingdomName(string coreName, List<Kingdom.KingdomTrait> traits)
 	{
@@ -206,12 +205,12 @@ public class Culture
 
 	public float GetTileValue(Int2 tile)
 	{
-		return tileValues[MapGenerator.Terrain.Get(tile).groundType];
-	}
-
-	public float GetTileDifficulty(Int2 tile)
-	{
-		return tileDifficulties[MapGenerator.Terrain.Get(tile).groundType];
+		float value = 0;
+		foreach (GroundInfo.GroundTraits trait in MapGenerator.Terrain.Get(tile).traits)
+		{
+			value += tileValues[trait];
+		}
+		return value;
 	}
 
 	private Texture2D overlay;

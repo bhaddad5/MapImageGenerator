@@ -105,6 +105,7 @@ public class StoredGroundDisplayInfo
 {
 	public string GroundType;
 	public string Texture;
+	public float Difficulty = 0.1f;
 	public string[] StoredTraits = new string[0];
 	public StoredModelPlacementInfo[] DefaultModelPlacement = new StoredModelPlacementInfo[0];
 
@@ -118,6 +119,7 @@ public class StoredGroundDisplayInfo
 		tex.LoadImage(file);
 		gdi.texture = tex;
 		gdi.groundType = GroundType;
+		gdi.difficulty = Difficulty;
 
 		gdi.traits = new List<GroundInfo.GroundTraits>();
 		foreach (string trait in StoredTraits)

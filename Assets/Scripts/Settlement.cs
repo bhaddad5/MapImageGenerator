@@ -32,7 +32,7 @@ public class Settlement
 
 	public void ExpandSettlement(float regionValue)
 	{
-		MapGenerator.Terrain.Set(cityTiles[0], MapGenerator.Environment.City);
+		MapGenerator.Terrain.Set(cityTiles[0], MapGenerator.Environment.GetFirstWithTrait(GroundInfo.GroundTraits.City));
 
 		float valuePerNewTile = 10;
 		while (cityTiles.Count < regionValue / valuePerNewTile)
@@ -41,7 +41,7 @@ public class Settlement
 			if (expansionTiles.Count == 0)
 				break;
 			cityTiles.Add(expansionTiles.TopValue());
-			MapGenerator.Terrain.Set(expansionTiles.TopValue(), MapGenerator.Environment.City);
+			MapGenerator.Terrain.Set(expansionTiles.TopValue(), MapGenerator.Environment.GetFirstWithTrait(GroundInfo.GroundTraits.City));
 		}
 	}
 
@@ -127,7 +127,7 @@ public class Settlement
 		{
 			foreach (var adj in MapGenerator.Terrain.GetAdjacentValues(tile))
 			{
-				if(adj == MapGenerator.Environment.Ocean || adj == MapGenerator.Environment.River || adj == MapGenerator.Environment.Road)
+				if(adj == MapGenerator.Environment.Ocean || adj == MapGenerator.Environment.River || adj.HasTrait(GroundInfo.GroundTraits.Road))
 					val += .5f;
 			}
 		}
@@ -150,7 +150,7 @@ public class Settlement
 					defensibility += .2f;
 				if (adj == MapGenerator.Environment.GetGround("Fertile") || adj == MapGenerator.Environment.GetGround("Wilderness"))
 					defensibility -= .5f;
-				if (adj == MapGenerator.Environment.Road || adj == MapGenerator.Environment.GetGround("Forest"))
+				if (adj.HasTrait(GroundInfo.GroundTraits.Road) || adj == MapGenerator.Environment.GetGround("Forest"))
 					defensibility -= 1f;
 			}
 		}

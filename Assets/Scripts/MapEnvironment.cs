@@ -46,6 +46,7 @@ public class GroundInfo
 	public Texture2D texture;
 	public List<GroundTraits> traits;
 	public List<ModelPlacementInfo> placementInfos;
+	public float difficulty;
 
 	public bool HasTrait(GroundTraits trait)
 	{
@@ -67,12 +68,12 @@ public class MapEnvironment
 
 	public GroundInfo City
 	{
-		get { return groundTypes["City"]; }
+		get { return GetFirstWithTrait(GroundInfo.GroundTraits.City); }
 	}
 
 	public GroundInfo Road
 	{
-		get { return groundTypes["Road"]; }
+		get { return GetFirstWithTrait(GroundInfo.GroundTraits.Road); }
 	}
 
 	public string displayName;
@@ -82,5 +83,15 @@ public class MapEnvironment
 	public GroundInfo GetGround(string type)
 	{
 		return groundTypes[type];
+	}
+
+	public GroundInfo GetFirstWithTrait(GroundInfo.GroundTraits trait)
+	{
+		foreach (var groundType in groundTypes)
+		{
+			if (groundType.Value.traits.Contains(trait))
+				return groundType.Value;
+		}
+		return null;
 	}
 }
