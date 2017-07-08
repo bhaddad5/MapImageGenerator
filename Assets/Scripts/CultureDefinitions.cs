@@ -255,6 +255,13 @@ public static class CultureDefinitions
 		{
 			{GroundInfo.GroundTraits.City, new List<ModelPlacementInfo>(){
 				new ModelPlacementInfo("DwarfHouse", "ScatteredBordered", 20, 25),
+			} },
+			{GroundInfo.GroundTraits.MediumCity, new List<ModelPlacementInfo>(){
+				new ModelPlacementInfo("DwarfWall", "CityWalls", 4, 4),
+				new ModelPlacementInfo("DwarfGate", "CityGates", 4, 4),
+				new ModelPlacementInfo("DwarfTower", "Corners", 4, 4),
+			} },
+			{GroundInfo.GroundTraits.LargeCity, new List<ModelPlacementInfo>(){
 				new ModelPlacementInfo("DwarfWall", "CityWalls", 4, 4),
 				new ModelPlacementInfo("DwarfGate", "CityGates", 4, 4),
 				new ModelPlacementInfo("DwarfTower", "Corners", 4, 4),

@@ -44,6 +44,17 @@ public class Settlement
 			cityTiles.Add(expansionTiles.TopValue());
 			MapGenerator.Terrain.Set(expansionTiles.TopValue(), MapGenerator.Environment.GetFirstWithTrait(GroundInfo.GroundTraits.City));
 		}
+
+		var traits = GetCityTraits();
+		foreach (Int2 tile in cityTiles)
+		{
+			if(traits.Contains(CityTrait.Large))
+				MapGenerator.Terrain.Set(tile, MapGenerator.Environment.GetFirstWithTrait(GroundInfo.GroundTraits.LargeCity));
+			if (traits.Contains(CityTrait.Medium))
+				MapGenerator.Terrain.Set(tile, MapGenerator.Environment.GetFirstWithTrait(GroundInfo.GroundTraits.MediumCity));
+			if (traits.Contains(CityTrait.Small))
+				MapGenerator.Terrain.Set(tile, MapGenerator.Environment.GetFirstWithTrait(GroundInfo.GroundTraits.SmallCity));
+		}
 	}
 
 	private SortedDupList<Int2> GetPossibleExpnasionTiles()

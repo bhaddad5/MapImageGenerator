@@ -72,11 +72,30 @@
 			]
 		},
 		{
-			"GroundType":"City",
+			"GroundType":"SmallCity",
 			"Difficulty":0.05,
 			"Texture":"Midlands/City.png",
 			"StoredTraits":[
-				"City"
+				"City",
+				"SmallCity"
+			]
+		},
+		{
+			"GroundType":"MediumCity",
+			"Difficulty":0.05,
+			"Texture":"Midlands/City.png",
+			"StoredTraits":[
+				"City",
+				"MediumCity"
+			]
+		},
+		{
+			"GroundType":"LargeCity",
+			"Difficulty":0.05,
+			"Texture":"Midlands/City.png",
+			"StoredTraits":[
+				"City",
+				"LargeCity"
 			]
 		},
 		{
@@ -144,11 +163,30 @@
 			]
 		},
 		{
-			"GroundType":"City",
+			"GroundType":"SmallCity",
 			"Difficulty":0.05,
 			"Texture":"Midlands/City.png",
 			"StoredTraits":[
-				"City"
+				"City",
+				"SmallCity"
+			]
+		},
+		{
+			"GroundType":"MediumCity",
+			"Difficulty":0.05,
+			"Texture":"Midlands/City.png",
+			"StoredTraits":[
+				"City",
+				"MediumCity"
+			]
+		},
+		{
+			"GroundType":"LargeCity",
+			"Difficulty":0.05,
+			"Texture":"Midlands/City.png",
+			"StoredTraits":[
+				"City",
+				"LargeCity"
 			]
 		},
 		{

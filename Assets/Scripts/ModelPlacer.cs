@@ -78,11 +78,11 @@ public class ModelPlacer
 			
 	}
 
-	
 
 
 
 
+	//TODO: START NUKE
 
 
 	private void PlaceForestTile(Int2 tile, Culture culture)
@@ -255,6 +255,9 @@ public class ModelPlacer
 
 		PlaceObjectsOnTileWithBorder(tile, Random.Range(20, 25), lookup.TownHouse);
 	}
+
+	//TODO: END NUKE
+
 
 
 	private void PlaceWallsOnEdges(Int2 tile, GameObject wall)

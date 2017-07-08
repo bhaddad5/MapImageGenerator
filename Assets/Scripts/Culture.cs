@@ -210,7 +210,8 @@ public class Culture
 		float value = 0;
 		foreach (GroundInfo.GroundTraits trait in MapGenerator.Terrain.Get(tile).traits)
 		{
-			value += tileValues[trait];
+			if(tileValues.ContainsKey(trait))
+				value += tileValues[trait];
 		}
 		return value;
 	}

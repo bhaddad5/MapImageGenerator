@@ -41,6 +41,9 @@ public class GroundInfo
 		Muddy,
 		Hunting,
 		City,
+		SmallCity,
+		MediumCity,
+		LargeCity,
 		Road,
 		Forest
 	}
@@ -75,7 +78,8 @@ public class GroundInfo
 		float defense = 0;
 		foreach (GroundTraits trait in traits)
 		{
-			defense += Defense[trait];
+			if(Defense.ContainsKey(trait))
+				defense += Defense[trait];
 		}
 		return defense;
 	}
