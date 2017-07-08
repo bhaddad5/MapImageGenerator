@@ -7,14 +7,88 @@ public class InitialMapGenerator
 	protected Map2D<float> Heights;
 	protected Map2D<GroundInfo> Terrain;
 
-	protected bool IsCoastline(Int2 tile)
+	public void DefaultFill(string defaultTerrain)
 	{
-		foreach (Int2 neighbor in Heights.GetAdjacentPoints(tile))
+		Terrain.FillMap(MapGenerator.Environment.groundTypes[defaultTerrain]);
+	}
+
+	public void FillInOceans(string ocean)
+	{
+		foreach (Int2 point in Heights.GetMapPoints())
 		{
-			if (Heights.Get(neighbor).Equals(0))
-				return true;
+			if (Heights.Get(point) < Globals.MinGroundHeight)
+				Terrain.Set(point, MapGenerator.Environment.groundTypes[ocean]);
 		}
-		return false;
+	}
+
+	public void FillInSeaLevel(string seaLevel)
+	{
+		foreach (Int2 point in Heights.GetMapPoints())
+		{
+			if (IsSeaLevel(point))
+				Terrain.Set(point, MapGenerator.Environment.groundTypes[seaLevel]);
+		}
+	}
+
+	public void FillInMountains(string mountain)
+	{
+		foreach (Int2 point in Heights.GetMapPoints())
+		{
+			if (Heights.Get(point) >= Globals.MountainHeight)
+				Terrain.Set(point, MapGenerator.Environment.groundTypes[mountain]);
+		}
+	}
+
+	public void EncourageStartTerrainAlongMountains(string terrain)
+	{
+		foreach (Int2 point in Heights.GetMapPoints())
+		{
+			if(IsSeaLevel(point) && Helpers.Odds(0.1f) && BordersMountain(point))
+				Terrain.Set(point, MapGenerator.Environment.groundTypes[terrain]);
+		}
+	}
+
+	public void EncourageStartTerrainAlongOcean(string terrain)
+	{
+		foreach (Int2 point in Heights.GetMapPoints())
+		{
+			if (IsSeaLevel(point) && Helpers.Odds(0.1f) && BordersOcean(point))
+				Terrain.Set(point, MapGenerator.Environment.groundTypes[terrain]);
+		}
+	}
+
+	public void RandomlyStartTerrain(string terrain)
+	{
+		foreach (Int2 point in Heights.GetMapPoints())
+		{
+			if (IsSeaLevel(point) && Helpers.Odds(0.01f))
+				Terrain.Set(point, MapGenerator.Environment.groundTypes[terrain]);
+		}
+	}
+
+	public void ExpandSimmilarTerrainTypes(int numPasses)
+	{
+		for (int i = 0; i < numPasses; i++)
+		{
+			foreach (Int2 point in Terrain.GetMapPoints())
+			{
+				if (IsSeaLevel(point))
+				{
+					var adjacentVals = GetAdjacentSeaLevelTypes(point);
+					if (adjacentVals.Count > 0 && Helpers.Odds(0.7f))
+						Terrain.Set(point, adjacentVals[Random.Range(0, adjacentVals.Count - 1)]);
+				}
+				
+			}
+		}
+	}
+
+
+
+
+	private bool IsSeaLevel(Int2 point)
+	{
+		return Heights.Get(point) < Globals.MountainHeight && Heights.Get(point) >= Globals.MinGroundHeight;
 	}
 
 	protected bool BordersMountain(Int2 tile)
@@ -26,6 +100,33 @@ public class InitialMapGenerator
 		}
 		return false;
 	}
+
+	protected bool BordersOcean(Int2 tile)
+	{
+		foreach (Int2 neighbor in Heights.GetAdjacentPoints(tile))
+		{
+			if (Heights.Get(neighbor).Equals(0))
+				return true;
+		}
+		return false;
+	}
+
+	private List<GroundInfo> GetAdjacentSeaLevelTypes(Int2 point)
+	{
+		var res = new List<GroundInfo>();
+		foreach (Int2 adjacent in Terrain.GetAdjacentPoints(point))
+		{
+			if(IsSeaLevel(adjacent))
+				res.Add(Terrain.Get(adjacent));
+		}
+		return res;
+	}
+
+	//END NEW WORK
+
+
+
+
 
 	protected void RandomizeCoastline(int numPasses, bool randomizeMountains)
 	{
@@ -40,7 +141,7 @@ public class InitialMapGenerator
 
 	private void TryRandomizeCoastTile(Int2 tile, bool randomizeMountains)
 	{
-		if (IsCoastline(tile) && (randomizeMountains || !BordersMountain(tile)))
+		if (BordersOcean(tile) && (randomizeMountains || !BordersMountain(tile)))
 		{
 			if (Helpers.Odds(0.4f))
 				Heights.Set(tile, 0f);

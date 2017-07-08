@@ -119,15 +119,11 @@ public class UndergroundGenerator : InitialMapGenerator, IMapGenerator
 
 	private void MakeTerrain()
 	{
-		Terrain.FillMap(MapGenerator.Environment.groundTypes["CaveWall"]);
-
-		foreach (Int2 point in Heights.GetMapPoints())
-		{
-			float height = Heights.Get(point);
-			if (height < Globals.MinGroundHeight)
-				Terrain.Set(point, MapGenerator.Environment.groundTypes["Ocean"]);
-			if(height >= Globals.MinGroundHeight && height < Globals.MountainHeight)
-				Terrain.Set(point, MapGenerator.Environment.groundTypes["CaveFloor"]);
-		}
+		DefaultFill("CaveWall");
+		FillInOceans("Ocean");
+		FillInSeaLevel("CaveFloor");
+		EncourageStartTerrainAlongMountains("MushroomForest");
+		RandomlyStartTerrain("MushroomForest");
+		ExpandSimmilarTerrainTypes(3);
 	}
 }

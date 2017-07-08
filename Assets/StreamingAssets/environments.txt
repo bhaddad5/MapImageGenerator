@@ -134,11 +134,22 @@
 			]
 		},
 		{
+			"GroundType":"MushroomForest",
+			"Texture":"Underground/CaveFloor.png",
+			"Difficulty":0.2,
+			"DefaultModelPlacement":[
+				{"model":"GiantMushroom","placementMode":"Scattered","min":7,"max":10}
+			],
+			"StoredTraits":[
+				"Forest"
+			]
+		},
+		{
 			"GroundType":"CaveFloor",
 			"Texture":"Underground/CaveFloor.png",
 			"Difficulty":0.2,
 			"DefaultModelPlacement":[
-				
+			
 			],
 			"StoredTraits":[
 				"Hunting"

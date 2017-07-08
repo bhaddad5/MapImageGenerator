@@ -42,7 +42,7 @@ public static class LookupDefinitions
 			{"AngloWoodenWall", "Models/Anglo/WoodenWall" },
 			{"AngloWoodenGate", "Models/Anglo/WoodenGate" },
 			{"AngloBridge", "Models/Anglo/Bridge" },
-			
+			{"GiantMushroom", "Models/Cave/GiantMushroom" },
 		}
 	};
 }
