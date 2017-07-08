@@ -79,7 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\ExternalAssets\Standard Assets\Environment\Water (Basic)\Scripts\WaterBasic.cs" />
-    <Compile Include="Assets\Models\ModelLookup.cs" />
     <Compile Include="Assets\Scripts\Culture.cs" />
     <Compile Include="Assets\Scripts\CultureDefinitions.cs" />
     <Compile Include="Assets\Scripts\DataParsers\CultureParser.cs" />
@@ -97,6 +96,7 @@
     <Compile Include="Assets\Scripts\MapGenerators\UndergroundGenerator.cs" />
     <Compile Include="Assets\Scripts\MeshBuilder.cs" />
     <Compile Include="Assets\Scripts\MeshSplitter.cs" />
+    <Compile Include="Assets\Scripts\ModelLookup.cs" />
     <Compile Include="Assets\Scripts\ModelPlacer.cs" />
     <Compile Include="Assets\Scripts\RegionTile.cs" />
     <Compile Include="Assets\Scripts\RegionsGen.cs" />

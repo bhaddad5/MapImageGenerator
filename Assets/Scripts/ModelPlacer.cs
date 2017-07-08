@@ -85,14 +85,14 @@ public class ModelPlacer
 	//TODO: START NUKE
 
 
-	private void PlaceForestTile(Int2 tile, Culture culture)
+	/*private void PlaceForestTile(Int2 tile, Culture culture)
 	{
 		if (culture == CultureDefinitions.Anglo)
 		{
 			if (Helpers.Odds(0.05f))
 				PlaceObjectsOnTile(tile, 1, lookup.Hovel);
 		}
-		/*else if (culture == CultureDefinitions.Dwarf)
+		else if (culture == CultureDefinitions.Dwarf)
 		{
 			if (Helpers.Odds(0.05f))
 				PlaceObjectsOnTile(tile, 1, lookup.DwarfHouse);
@@ -101,7 +101,7 @@ public class ModelPlacer
 		{
 			if (Helpers.Odds(0.1f))
 				PlaceObjectsOnTile(tile, 1, lookup.OrcHut);
-		}*/
+		}
 	}
 
 	private void PlaceSwampTile(Int2 tile, Culture culture)
@@ -111,7 +111,7 @@ public class ModelPlacer
 			if (Helpers.Odds(0.03f))
 				PlaceObjectsOnTile(tile, 1, lookup.Hovel);
 		}
-		/*else if (culture == CultureDefinitions.Dwarf)
+		else if (culture == CultureDefinitions.Dwarf)
 		{
 
 		}
@@ -119,7 +119,7 @@ public class ModelPlacer
 		{
 			if (Helpers.Odds(0.1f))
 				PlaceObjectsOnTile(tile, 1, lookup.OrcHut);
-		}*/
+		}
 	}
 
 	private void PlaceWildernessTile(Int2 tile, Culture culture)
@@ -129,7 +129,7 @@ public class ModelPlacer
 			if (Helpers.Odds(0.1f))
 				PlaceObjectsOnTile(tile, 1, lookup.Hovel);
 		}
-		/*else if (culture == CultureDefinitions.Dwarf)
+		else if (culture == CultureDefinitions.Dwarf)
 		{
 			if (Helpers.Odds(0.15f))
 				PlaceObjectsOnTile(tile, 1, lookup.DwarfHouse);
@@ -138,7 +138,7 @@ public class ModelPlacer
 		{
 			if (Helpers.Odds(0.1f))
 				PlaceObjectsOnTile(tile, 1, lookup.OrcHut);
-		}*/
+		}
 	}
 
 	private void PlaceFarmTile(Int2 tile, Culture culture)
@@ -149,7 +149,7 @@ public class ModelPlacer
 			if (Helpers.Odds(0.4f))
 				PlaceObjectsOnTile(tile, 1, lookup.Hovel);
 		}
-		/*else if(culture == CultureDefinitions.Dwarf)
+		else if(culture == CultureDefinitions.Dwarf)
 		{
 			PlaceObjectsOnTile(tile, Random.Range(10, 15), lookup.WheatField);
 			if (Helpers.Odds(0.15f))
@@ -159,7 +159,7 @@ public class ModelPlacer
 		{
 			if (Helpers.Odds(0.1f))
 				PlaceObjectsOnTile(tile, 1, lookup.OrcHut);
-		}*/
+		}
 	}
 
 	private void PlaceRoadTile(Int2 tile, Culture culture)
@@ -254,7 +254,7 @@ public class ModelPlacer
 		PlaceTurretsOnCorners(tile, lookup.Turret);
 
 		PlaceObjectsOnTileWithBorder(tile, Random.Range(20, 25), lookup.TownHouse);
-	}
+	}*/
 
 	//TODO: END NUKE
 

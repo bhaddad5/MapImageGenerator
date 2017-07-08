@@ -27,7 +27,7 @@
 			"Texture":"Midlands/Wilderness.png",
 			"Difficulty":0.2,
 			"DefaultModelPlacement":[
-				{"model":"PineTree","placementMode":"Scattered","min":0,"max":3}
+				{"model":"Pine","placementMode":"Scattered","min":0,"max":3}
 			],
 			"StoredTraits":[
 				"Hunting"
@@ -38,7 +38,7 @@
 			"Texture":"Midlands/Forest.png",
 			"Difficulty":0.25,
 			"DefaultModelPlacement":[
-				{"model":"PineTree","placementMode":"Scattered","min":7,"max":10}
+				{"model":"Pine","placementMode":"Scattered","min":7,"max":10}
 			],
 			"StoredTraits":[
 				"Hunting",

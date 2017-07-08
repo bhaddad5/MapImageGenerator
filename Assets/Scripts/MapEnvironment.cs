@@ -24,8 +24,7 @@ public class ModelPlacementInfo
 	{
 		min = mi;
 		max = ma;
-		//TODO: KILL ASAP!!!
-		Model = GameObject.Find("ModelLookup").GetComponent<ModelLookup>().LookupModel(model);
+		Model = LookupDefinitions.Lookup.LookupModel(model);
 		Mode = (PlacementMode)System.Enum.Parse(typeof(PlacementMode), mode);
 	}
 }

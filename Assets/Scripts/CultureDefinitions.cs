@@ -141,6 +141,21 @@ public static class CultureDefinitions
 		},
 		tileModelPlacement = new Dictionary<GroundInfo.GroundTraits, List<ModelPlacementInfo>>()
 		{
+			{GroundInfo.GroundTraits.SmallCity, new List<ModelPlacementInfo>(){
+				new ModelPlacementInfo("AngloHovel", "Scattered", 20, 25),
+			} },
+			{GroundInfo.GroundTraits.MediumCity, new List<ModelPlacementInfo>(){
+				new ModelPlacementInfo("AngloHovel", "ScatteredBordered", 10, 15),
+				new ModelPlacementInfo("AngloTownHouse", "ScatteredBordered", 10, 12),
+				new ModelPlacementInfo("AngloWoodenWall", "CityWalls", 4, 4),
+				new ModelPlacementInfo("AngloWoodenGate", "CityGates", 4, 4),
+			} },
+			{GroundInfo.GroundTraits.LargeCity, new List<ModelPlacementInfo>(){
+				new ModelPlacementInfo("AngloStoneWall", "CityWalls", 4, 4),
+				new ModelPlacementInfo("AngloStoneGate", "CityGates", 4, 4),
+				new ModelPlacementInfo("AngloStoneTurret", "Corners", 4, 4),
+				new ModelPlacementInfo("AngloTownHouse", "ScatteredBordered", 20, 25),
+			} }
 		}
 	};
 

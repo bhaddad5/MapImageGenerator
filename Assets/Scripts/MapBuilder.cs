@@ -37,14 +37,14 @@ public class MapBuilder : MonoBehaviour
 
 		List<CulturePrevelance> cultures = new List<CulturePrevelance>()
 		{
-			//new CulturePrevelance(CultureDefinitions.Anglo, CulturePrevelance.Prevelance.Dominant),
+			new CulturePrevelance(CultureDefinitions.Anglo, CulturePrevelance.Prevelance.Occasional),
 			new CulturePrevelance(CultureDefinitions.Orc, CulturePrevelance.Prevelance.Occasional),
 			new CulturePrevelance(CultureDefinitions.Dwarf, CulturePrevelance.Prevelance.Dominant),
 		};
 
 		var environments = EnvironmentParser.LoadEnvironments();
 
-		StartCoroutine(BuildMap(width, height, cultures, environments[1]));
+		StartCoroutine(BuildMap(width, height, cultures, environments[0]));
 	}
 
 	public IEnumerator BuildMap(int width, int height, List<CulturePrevelance> cultures, MapEnvironment mapEnvironment)
