@@ -7,6 +7,7 @@ using System.Linq;
 
 public class MapBuilder : MonoBehaviour
 {
+	public Dropdown EnvironmentSelection;
 	public InputField sizeX;
 	public InputField sizeY;
 	public Text displayText;
@@ -20,10 +21,29 @@ public class MapBuilder : MonoBehaviour
 
 	public ModelLookup ModelLookup;
 
+	private List<MapEnvironment> environments;
+
 	// Use this for initialization
 	void Start ()
 	{
-		RebuildMap();
+		//RebuildMap();
+		environments = EnvironmentParser.LoadEnvironments();
+		foreach (MapEnvironment environment in environments)
+		{
+			EnvironmentSelection.options.Add(new Dropdown.OptionData(environment.displayName));
+		}
+	}
+
+	private MapEnvironment GetSelectedEnvironment(string selectedString)
+	{
+		if (selectedString == "Random")
+			return environments[Random.Range(0, environments.Count - 1)];
+		foreach (MapEnvironment environment in environments)
+		{
+			if (environment.displayName == selectedString)
+				return environment;
+		}
+		return null;
 	}
 
 	public void RebuildMap()
@@ -39,12 +59,10 @@ public class MapBuilder : MonoBehaviour
 		{
 			new CulturePrevelance(CultureDefinitions.Anglo, CulturePrevelance.Prevelance.Occasional),
 			new CulturePrevelance(CultureDefinitions.Orc, CulturePrevelance.Prevelance.Occasional),
-			new CulturePrevelance(CultureDefinitions.Dwarf, CulturePrevelance.Prevelance.Dominant),
+			new CulturePrevelance(CultureDefinitions.Dwarf, CulturePrevelance.Prevelance.Occasional),
 		};
 
-		var environments = EnvironmentParser.LoadEnvironments();
-
-		StartCoroutine(BuildMap(width, height, cultures, environments[0]));
+		StartCoroutine(BuildMap(width, height, cultures, GetSelectedEnvironment(EnvironmentSelection.options[EnvironmentSelection.value].text)));
 	}
 
 	public IEnumerator BuildMap(int width, int height, List<CulturePrevelance> cultures, MapEnvironment mapEnvironment)
