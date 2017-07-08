@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class ModelPlacer
 {
-	ModelLookup lookup;
 	Transform objectParent;
 
-	public void PlaceModels(ModelLookup lu, Transform par)
+	public void PlaceModels(Transform par)
 	{
-		lookup = lu;
 		objectParent = par;
 		foreach (Int2 tile in MapGenerator.Terrain.GetMapPoints())
 		{

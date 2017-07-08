@@ -19,8 +19,6 @@ public class MapBuilder : MonoBehaviour
 
 	public GameObject SettlementInfoPrefab;
 
-	public ModelLookup ModelLookup;
-
 	private List<MapEnvironment> environments;
 
 	// Use this for initialization
@@ -125,7 +123,7 @@ public class MapBuilder : MonoBehaviour
 		yield return null;
 
 		ModelPlacer mp = new ModelPlacer();
-		mp.PlaceModels(ModelLookup, terrainMeshDisplay.transform);
+		mp.PlaceModels(terrainMeshDisplay.transform);
 
 		displayText.text = "Displaying Heraldry";
 		yield return null;
