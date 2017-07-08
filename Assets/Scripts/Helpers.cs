@@ -39,6 +39,11 @@ public static class Helpers
 	{
 		return UnityEngine.Random.Range(0, 1f) < percentChance;
 	}
+
+	public static float Randomize(float average)
+	{
+		return UnityEngine.Random.Range(average * 0.75f, average * 1.25f);
+	}
 }
 
 public class Int2

@@ -7,12 +7,155 @@ public class InitialMapGenerator
 	protected Map2D<float> Heights;
 	protected Map2D<GroundInfo> Terrain;
 
-	public void DefaultFill(string defaultTerrain)
+
+	//HEIGHTS
+	public void HeightsDefaultFill(float height)
+	{
+		Heights.FillMap(height);
+	}
+
+	public void HeightRandomlyPlace(float height, float occurancesPer80Square)
+	{
+		int numPlacements = (int)Random.Range(occurancesPer80Square / 2, occurancesPer80Square + occurancesPer80Square / 2);
+		for (int i = 0; i < numPlacements; i++)
+		{
+			Int2 randPos = new Int2(Random.Range(0, Heights.Width - 1), Random.Range(0, Heights.Height - 1));
+			Heights.Set(randPos, height);
+		}
+	}
+
+	public void HeightRandomlyPlaceAlongLine(float height, float occurancesPer80Square, float avgLineLength, float spacing)
+	{
+		int numPlacements = (int)Random.Range(occurancesPer80Square / 2, occurancesPer80Square + occurancesPer80Square / 2);
+		for (int i = 0; i < numPlacements; i++)
+		{
+			Int2 randPos = new Int2(Random.Range(0, Heights.Width - 1), Random.Range(0, Heights.Height - 1));
+			PlaceHeightAlongVector(randPos, height, new Int2(Random.Range(-1, 1), Random.Range(-1, 1)),
+				Helpers.Randomize(avgLineLength), spacing);
+		}
+	}
+
+	private void PlaceHeightAlongVector(Int2 startPos, float height, Int2 direction, float length, float spacing)
+	{
+		Int2 currPixel = startPos;
+		for (int k = 0; k < (int)length; k++)
+		{
+			Heights.Set(currPixel, height);
+			currPixel = GetNextPixelInDirection(currPixel, direction, 3);
+			if (!Heights.PosInBounds(currPixel))
+				return;
+		}
+	}
+
+	protected Int2 GetNextPixelInDirection(Int2 currPoint, Int2 direction, int distBetweenPixles)
+	{
+		Int2[] potentials = new Int2[10];
+		potentials[0] = currPoint + nextDirection(direction, 0) * distBetweenPixles;
+		potentials[1] = currPoint + nextDirection(direction, 0) * distBetweenPixles;
+		potentials[2] = currPoint + nextDirection(direction, 0) * distBetweenPixles;
+		potentials[3] = currPoint + nextDirection(direction, 0) * distBetweenPixles;
+		potentials[4] = currPoint + nextDirection(direction, 1) * distBetweenPixles;
+		potentials[5] = currPoint + nextDirection(direction, 1) * distBetweenPixles;
+		potentials[6] = currPoint + nextDirection(direction, 2) * distBetweenPixles;
+		potentials[7] = currPoint + nextDirection(direction, -1) * distBetweenPixles;
+		potentials[8] = currPoint + nextDirection(direction, -1) * distBetweenPixles;
+		potentials[9] = currPoint + nextDirection(direction, -2) * distBetweenPixles;
+
+		return potentials[Random.Range(0, 9)];
+	}
+
+	private Int2 nextDirection(Int2 dir, int forwardOrBack)
+	{
+		List<Int2> dirs = new List<Int2> { new Int2(-1, -1), new Int2(-1, 0), new Int2(-1, 1), new Int2(0, 1), new Int2(1, 1), new Int2(1, 0), new Int2(1, -1), new Int2(0, -1), };
+		int index = dirs.IndexOf(dir) + forwardOrBack;
+		if (index >= dirs.Count)
+			index = index - dirs.Count;
+		if (index < 0)
+			index = dirs.Count + index;
+		return dirs[index];
+	}
+
+	public void HeightRandomlyExpandLevelFromItselfOrLevel(float height, float adjacentExpansionHeight, float avgExpansion)
+	{
+		Map2D<float> newHeights = new Map2D<float>(Heights);
+		foreach (Int2 point in Heights.GetMapPoints())
+		{
+			if (Heights.Get(point).Equals(height) || (HeightBordersLevel(point, adjacentExpansionHeight) && !Heights.Get(point).Equals(adjacentExpansionHeight)))
+				HeightExpandFromPoint(point, height, Helpers.Randomize(avgExpansion), newHeights, adjacentExpansionHeight);
+		}
+
+		Heights = newHeights;
+	}
+
+	public void HeightRandomlyExpandLevel(float height, float avgExpansion)
+	{
+		Map2D<float> newHeights = new Map2D<float>(Heights);
+		foreach (Int2 point in Heights.GetMapPoints())
+		{
+			if (Heights.Get(point).Equals(height))
+				HeightExpandFromPoint(point, height, Helpers.Randomize(avgExpansion), newHeights);
+		}
+
+		Heights = newHeights;
+	}
+
+	private void HeightExpandFromPoint(Int2 point, float height, float numExpansionsLevels, Map2D<float> newHeights, float ignoreLevel = -1)
+	{
+		SortedDupList<Int2> HeightFrontier = new SortedDupList<Int2>();
+		HeightFrontier.Insert(point, numExpansionsLevels);
+		while (HeightFrontier.Count > 0)
+		{
+			Int2 currPos = HeightFrontier.TopValue();
+			float currStrength = HeightFrontier.TopKey();
+			HeightFrontier.Pop();
+			newHeights.Set(currPos, height);
+			foreach (Int2 pos in Heights.GetAdjacentPoints(currPos))
+			{
+				if (!HeightFrontier.ContainsValue(pos) && !Heights.Get(pos).Equals(ignoreLevel) && currStrength > 0)
+				{
+					HeightFrontier.Insert(pos, currStrength - 1);
+				}
+			}
+		}
+	}
+
+	public void HeightRandomizeLevelEdges(float height, int numPasses)
+	{
+		Map2D<float> newHeights = new Map2D<float>(Heights);
+		for (int i = 0; i < numPasses; i++)
+		{
+			foreach (Int2 point in Heights.GetMapPoints())
+			{
+				if (HeightBordersLevel(point, height))
+				{
+					if (Helpers.Odds(0.4f))
+						newHeights.Set(point, height);
+				}
+			}
+		}
+		Heights = newHeights;
+	}
+
+	private bool HeightBordersLevel(Int2 tile, float height)
+	{
+		foreach (Int2 neighbor in Heights.GetAdjacentPoints(tile))
+		{
+			if (Heights.Get(neighbor).Equals(height))
+				return true;
+		}
+		return false;
+	}
+
+
+
+
+	//TERRAIN
+	public void TerrainDefaultFill(string defaultTerrain)
 	{
 		Terrain.FillMap(MapGenerator.Environment.groundTypes[defaultTerrain]);
 	}
 
-	public void FillInOceans(string ocean)
+	public void TerrainFillInOceans(string ocean)
 	{
 		foreach (Int2 point in Heights.GetMapPoints())
 		{
@@ -21,7 +164,7 @@ public class InitialMapGenerator
 		}
 	}
 
-	public void FillInSeaLevel(string seaLevel)
+	public void TerrainFillInSeaLevel(string seaLevel)
 	{
 		foreach (Int2 point in Heights.GetMapPoints())
 		{
@@ -30,7 +173,7 @@ public class InitialMapGenerator
 		}
 	}
 
-	public void FillInMountains(string mountain)
+	public void TerrainFillInMountains(string mountain)
 	{
 		foreach (Int2 point in Heights.GetMapPoints())
 		{
@@ -39,7 +182,7 @@ public class InitialMapGenerator
 		}
 	}
 
-	public void EncourageStartTerrainAlongMountains(string terrain)
+	public void TerrainEncourageStartAlongMountains(string terrain)
 	{
 		foreach (Int2 point in Heights.GetMapPoints())
 		{
@@ -48,7 +191,7 @@ public class InitialMapGenerator
 		}
 	}
 
-	public void EncourageStartTerrainAlongOcean(string terrain)
+	public void TerrainEncourageStartAlongOcean(string terrain)
 	{
 		foreach (Int2 point in Heights.GetMapPoints())
 		{
@@ -57,7 +200,7 @@ public class InitialMapGenerator
 		}
 	}
 
-	public void RandomlyStartTerrain(string terrain)
+	public void TerrainRandomlyStart(string terrain)
 	{
 		foreach (Int2 point in Heights.GetMapPoints())
 		{
@@ -66,7 +209,7 @@ public class InitialMapGenerator
 		}
 	}
 
-	public void ExpandSimmilarTerrainTypes(int numPasses)
+	public void TerrainExpandSimmilarTypes(int numPasses)
 	{
 		for (int i = 0; i < numPasses; i++)
 		{
@@ -128,6 +271,33 @@ public class InitialMapGenerator
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	protected void RandomizeCoastline(int numPasses, bool randomizeMountains)
 	{
 		for (int i = 0; i < numPasses; i++)
@@ -148,31 +318,5 @@ public class InitialMapGenerator
 		}
 	}
 
-	protected Int2 GetNextPixelInDirection(Int2 currPoint, Int2 direction, int distBetweenPixles)
-	{
-		Int2[] potentials = new Int2[10];
-		potentials[0] = currPoint + nextDirection(direction, 0) * distBetweenPixles;
-		potentials[1] = currPoint + nextDirection(direction, 0) * distBetweenPixles;
-		potentials[2] = currPoint + nextDirection(direction, 0) * distBetweenPixles;
-		potentials[3] = currPoint + nextDirection(direction, 0) * distBetweenPixles;
-		potentials[4] = currPoint + nextDirection(direction, 1) * distBetweenPixles;
-		potentials[5] = currPoint + nextDirection(direction, 1) * distBetweenPixles;
-		potentials[6] = currPoint + nextDirection(direction, 2) * distBetweenPixles;
-		potentials[7] = currPoint + nextDirection(direction, -1) * distBetweenPixles;
-		potentials[8] = currPoint + nextDirection(direction, -1) * distBetweenPixles;
-		potentials[9] = currPoint + nextDirection(direction, -2) * distBetweenPixles;
-
-		return potentials[Random.Range(0, 9)];
-	}
-
-	private Int2 nextDirection(Int2 dir, int forwardOrBack)
-	{
-		List<Int2> dirs = new List<Int2> { new Int2(-1, -1), new Int2(-1, 0), new Int2(-1, 1), new Int2(0, 1), new Int2(1, 1), new Int2(1, 0), new Int2(1, -1), new Int2(0, -1), };
-		int index = dirs.IndexOf(dir) + forwardOrBack;
-		if (index >= dirs.Count)
-			index = index - dirs.Count;
-		if (index < 0)
-			index = dirs.Count + index;
-		return dirs[index];
-	}
+	
 }

@@ -12,17 +12,20 @@ public class CameraControls : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void Update ()
+	void Update()
 	{
+		float tiltChange = 0f;
+		if (Input.GetKey(KeyCode.Alpha1))
+			tiltChange = 1f;
+		if (Input.GetKey(KeyCode.Alpha2))
+			tiltChange = -1f;
+
+		transform.eulerAngles += new Vector3(tiltChange, 0, 0);
+
 		if (Input.GetKey(KeyCode.Q))
 			transform.eulerAngles += new Vector3(0, -1f, 0);
 		if (Input.GetKey(KeyCode.E))
 			transform.eulerAngles += new Vector3(0, 1f, 0);
-
-		if (Input.GetKey(KeyCode.Alpha1))
-			transform.eulerAngles += new Vector3(1f, 0, 0);
-		if (Input.GetKey(KeyCode.Alpha2))
-			transform.eulerAngles += new Vector3(-1f, 0, 0);
 
 		Vector3 camFlatForward = transform.forward;
 		camFlatForward.y = 0;
