@@ -16,7 +16,7 @@ public class InitialMapGenerator
 
 	public void HeightRandomlyPlace(float height, float occurancesPer80Square)
 	{
-		int numPlacements = (int)Random.Range(occurancesPer80Square / 2, occurancesPer80Square + occurancesPer80Square / 2);
+		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
 		for (int i = 0; i < numPlacements; i++)
 		{
 			Int2 randPos = new Int2(Random.Range(0, Heights.Width - 1), Random.Range(0, Heights.Height - 1));
@@ -24,14 +24,24 @@ public class InitialMapGenerator
 		}
 	}
 
-	public void HeightRandomlyPlaceAlongLine(float height, float occurancesPer80Square, float avgLineLength, float spacing)
+	public void HeightRandomlyPlaceNotInWater(float height, float occurancesPer80Square)
 	{
-		int numPlacements = (int)Random.Range(occurancesPer80Square / 2, occurancesPer80Square + occurancesPer80Square / 2);
+		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
 		for (int i = 0; i < numPlacements; i++)
 		{
 			Int2 randPos = new Int2(Random.Range(0, Heights.Width - 1), Random.Range(0, Heights.Height - 1));
-			PlaceHeightAlongVector(randPos, height, new Int2(Random.Range(-1, 1), Random.Range(-1, 1)),
-				Helpers.Randomize(avgLineLength), spacing);
+			if(Heights.Get(randPos) > 0)
+				Heights.Set(randPos, height);
+		}
+	}
+
+	public void HeightRandomlyPlaceAlongLine(float height, float occurancesPer80Square, float minLength, float maxLength, float spacing)
+	{
+		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
+		for (int i = 0; i < numPlacements; i++)
+		{
+			Int2 randPos = new Int2(Random.Range(0, Heights.Width - 1), Random.Range(0, Heights.Height - 1));
+			PlaceHeightAlongVector(randPos, height, new Int2(Random.Range(-1, 1), Random.Range(-1, 1)), Random.Range(minLength, maxLength), spacing);
 		}
 	}
 
@@ -41,7 +51,7 @@ public class InitialMapGenerator
 		for (int k = 0; k < (int)length; k++)
 		{
 			Heights.Set(currPixel, height);
-			currPixel = GetNextPixelInDirection(currPixel, direction, 3);
+			currPixel = GetNextPixelInDirection(currPixel, direction, (int)spacing);
 			if (!Heights.PosInBounds(currPixel))
 				return;
 		}
@@ -75,13 +85,13 @@ public class InitialMapGenerator
 		return dirs[index];
 	}
 
-	public void HeightRandomlyExpandLevelFromItselfOrLevel(float height, float adjacentExpansionHeight, float avgExpansion)
+	public void HeightRandomlyExpandLevelFromItselfOrLevel(float height, float adjacentExpansionHeight, float minExpansion, float maxExpansion)
 	{
 		Map2D<float> newHeights = new Map2D<float>(Heights);
 		foreach (Int2 point in Heights.GetMapPoints())
 		{
 			if (Heights.Get(point).Equals(height) || (HeightBordersLevel(point, adjacentExpansionHeight) && !Heights.Get(point).Equals(adjacentExpansionHeight)))
-				HeightExpandFromPoint(point, height, Helpers.Randomize(avgExpansion), newHeights, adjacentExpansionHeight);
+				HeightExpandFromPoint(point, height, Random.Range(minExpansion, maxExpansion), newHeights, adjacentExpansionHeight);
 		}
 
 		Heights = newHeights;
@@ -144,6 +154,56 @@ public class InitialMapGenerator
 				return true;
 		}
 		return false;
+	}
+
+	public void HeightBlendUp(int numPasses)
+	{
+		for (int i = 0; i < numPasses; i++)
+		{
+			foreach (Int2 point in Heights.GetMapPoints())
+			{
+				float avg = NeighborAverageHeightAbove(point);
+				if (Heights.Get(point) > 0 && (Heights.Get(point) > Globals.MinGroundHeight || avg > Globals.MinGroundHeight))
+				{
+					if(avg > Heights.Get(point))
+						Heights.Set(point, (Heights.Get(point) + avg) / 2);
+				}
+			}
+		}
+	}
+
+	private float NeighborAverageHeightAbove(Int2 pixle)
+	{
+		float sum = 0f;
+		var points = Heights.GetAdjacentValues(pixle);
+		int count = 0;
+		foreach (var pt in points)
+		{
+			if (pt > Heights.Get(pixle))
+			{
+				sum += pt;
+				count++;
+			}
+		}
+		return sum / count;
+	}
+
+	public void HeightSetEdges(float edgeHeight)
+	{
+		for (int i = 0; i < Heights.Width; i++)
+		{
+			Heights.Set(new Int2(i, 0), edgeHeight);
+			Heights.Set(new Int2(i, 1), edgeHeight);
+			Heights.Set(new Int2(i, Heights.Height - 2), edgeHeight);
+			Heights.Set(new Int2(i, Heights.Height - 1), edgeHeight);
+		}
+		for (int i = 0; i < Heights.Height; i++)
+		{
+			Heights.Set(new Int2(0, i), edgeHeight);
+			Heights.Set(new Int2(1, i), edgeHeight);
+			Heights.Set(new Int2(Heights.Width - 2, i), edgeHeight);
+			Heights.Set(new Int2(Heights.Width - 1, i), edgeHeight);
+		}
 	}
 
 

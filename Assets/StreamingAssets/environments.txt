@@ -67,6 +67,9 @@
 			"GroundType":"Fertile",
 			"Difficulty":0.15,
 			"Texture":"Midlands/Fertile.png",
+			"DefaultModelPlacement":[
+				{"model":"WheatField","placementMode":"Scattered","min":7,"max":10}
+			],
 			"StoredTraits":[
 				"Fertile"
 			]

@@ -22,9 +22,10 @@ public class UndergroundGenerator : InitialMapGenerator, IMapGenerator
 		HeightRandomlyPlace(0f, 21f);
 		HeightRandomlyExpandLevel(0f, 2);
 		HeightRandomizeLevelEdges(0f, 2);
-		HeightRandomlyPlaceAlongLine(Globals.MinGroundHeight, 25, 10, 3);
-		HeightRandomlyExpandLevelFromItselfOrLevel(Globals.MinGroundHeight, 0, 2);
+		HeightRandomlyPlaceAlongLine(Globals.MinGroundHeight, 25, 5, 15, 3);
+		HeightRandomlyExpandLevelFromItselfOrLevel(Globals.MinGroundHeight, 0, 1, 3);
 		HeightRandomlyPlace(1f, 150f);
+		HeightSetEdges(1f);
 	}
 	
 	private void MakeTerrain()

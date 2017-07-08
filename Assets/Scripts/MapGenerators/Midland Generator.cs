@@ -18,37 +18,22 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 
 	private void MakeHeights()
 	{
-		int pixelsPerRange = 700;
-		int avgNumOfRanges = (Heights.Width * Heights.Height) / pixelsPerRange;
+		HeightsDefaultFill(0f);
+		HeightRandomlyPlaceAlongLine(1f, 9, 4, 50, 3);
+		HeightRandomlyExpandLevelFromItselfOrLevel(Globals.MinGroundHeight, 1f, 1, 10);
+		HeightRandomlyPlaceNotInWater(.2f, 200);
+		HeightBlendUp(2);
+		HeightSetEdges(0f);
+		HeightRandomizeLevelEdges(0f, 2);
 
-		int pixelsPerHill = 25;
-		int avgNumHills = (Heights.Width * Heights.Height) / pixelsPerHill;
+		
 
-		GenerateMountainRanges(Random.Range(avgNumOfRanges / 2, avgNumOfRanges + avgNumOfRanges / 2));
-		GenerateHills(Random.Range(avgNumHills / 2, avgNumHills + avgNumHills / 2));
+		//GenerateMountainRanges(Random.Range(avgNumOfRanges / 2, avgNumOfRanges + avgNumOfRanges / 2));
+		/*GenerateHills(Random.Range(avgNumHills / 2, avgNumHills + avgNumHills / 2));
 		ZeroOutEdges();
 		RandomizeCoastline(3, false);
 		BlendHeightMap();
-		CreateRivers();
-	}
-
-	private void MakeTerrain()
-	{
-		foreach (var point in Terrain.GetMapPoints())
-		{
-			if (Heights.Get(point) < Globals.MinGroundHeight)
-			{
-				int numLandBorders = NumLandBorders(point);
-				if (numLandBorders >= 6)
-					Terrain.Set(point, MapGenerator.Environment.groundTypes["River"]);
-				else Terrain.Set(point, MapGenerator.Environment.groundTypes["Ocean"]);
-			}
-			else if (Heights.Get(point) >= Globals.MountainHeight)
-				Terrain.Set(point, MapGenerator.Environment.groundTypes["Mountain"]);
-			else Terrain.Set(point, MapGenerator.Environment.groundTypes["Wilderness"]);
-		}
-
-		FillInLandTextures();
+		CreateRivers();*/
 	}
 
 	private void GenerateMountainRanges(int numOfRanges)
@@ -339,6 +324,32 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 				landBorders++;
 		}
 		return landBorders;
+	}
+
+
+
+
+
+
+
+
+	private void MakeTerrain()
+	{
+		foreach (var point in Terrain.GetMapPoints())
+		{
+			if (Heights.Get(point) < Globals.MinGroundHeight)
+			{
+				int numLandBorders = NumLandBorders(point);
+				if (numLandBorders >= 6)
+					Terrain.Set(point, MapGenerator.Environment.groundTypes["River"]);
+				else Terrain.Set(point, MapGenerator.Environment.groundTypes["Ocean"]);
+			}
+			else if (Heights.Get(point) >= Globals.MountainHeight)
+				Terrain.Set(point, MapGenerator.Environment.groundTypes["Mountain"]);
+			else Terrain.Set(point, MapGenerator.Environment.groundTypes["Wilderness"]);
+		}
+
+		FillInLandTextures();
 	}
 
 	private void FillInLandTextures()

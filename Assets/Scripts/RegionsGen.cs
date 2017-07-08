@@ -5,15 +5,16 @@ using System.Linq;
 class RegionsGen
 {
 	public static Map2D<RegionTile> Map;
-	public static List<Kingdom> Kingdoms = new List<Kingdom>();
+	public static List<Kingdom> Kingdoms;
 	public int Width { get { return Map.Width; } }
 	public int Height { get { return Map.Height; } }
 
 	public RegionsGen(List<MapBuilder.CulturePrevelance> cultures)
 	{
 		StartFillMap();
+		Kingdoms = new List<Kingdom>();
 
-		foreach(var culture in cultures)
+		foreach (var culture in cultures)
 		{
 			var settlementLocations = GetSettlementLocations(culture.culture, culture.numSettlements);
 
