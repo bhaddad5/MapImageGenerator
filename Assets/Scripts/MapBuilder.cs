@@ -157,15 +157,35 @@ public class MapBuilder : MonoBehaviour
 	private List<Material> GetMapMaterials(List<GroundInfo> groundTypes)
 	{
 		var mats = new List<Material>() {FlushGroundInfoToMat(groundTypes)};
+		List<GroundInfo> gtToFlush = new List<GroundInfo>();
+		firstFlush = true;
+		for (int i = 0; i < groundTypes.Count; i++)
+		{
+			gtToFlush.Add(groundTypes[i]);
+			if (gtToFlush.Count >= 5)
+			{
+				mats.Add(FlushGroundInfoToMat(gtToFlush));
+				gtToFlush.Clear();
+			}
+		}
+		if(gtToFlush.Count > 0)
+			mats.Add(FlushGroundInfoToMat(gtToFlush));
+
 		return mats;
 	}
 
+	private bool firstFlush = false;
 	private Material FlushGroundInfoToMat(List<GroundInfo> groundInfo)
 	{
-		Material mat = new Material(Shader.Find("Custom/GroundShader"));
+		Material mat;
+		if (firstFlush)
+			mat = new Material(Shader.Find("Custom/GroundShader"));
+		else mat = new Material(Shader.Find("Custom/GroundShaderOverlay"));
+
+		firstFlush = false;
 		mat.SetTexture("_LookupTex", MapGenerator.GetTerrainTexture());
 		mat.SetFloat("_LookupWidth", MapGenerator.GetTerrainTexture().width);
-		for (int i = 0; i < 10 && i < groundInfo.Count; i++)
+		for (int i = 0; i < 5 && i < groundInfo.Count; i++)
 		{
 			mat.SetVector("_Color" + i, groundInfo[i].lookupColor);
 			mat.SetTexture("_Tex" + i, groundInfo[i].texture);

@@ -12,16 +12,6 @@
 		_Tex3("Texture3 (RGB)", 2D) = "white" {}
 		_Color4("Color4", Vector) = (1,1,1)
 		_Tex4("Texture4 (RGB)", 2D) = "white" {}
-		_Color5("Color0", Vector) = (1,1,1)
-		_Tex5("Texture0 (RGB)", 2D) = "white" {}
-		_Color6("Color1", Vector) = (1,1,1)
-		_Tex6("Texture1 (RGB)", 2D) = "white" {}
-		_Color7("Color2", Vector) = (1,1,1)
-		_Tex7("Texture2 (RGB)", 2D) = "white" {}
-		_Color8("Color3", Vector) = (1,1,1)
-		_Tex8("Texture3 (RGB)", 2D) = "white" {}
-		_Color9("Color4", Vector) = (1,1,1)
-		_Tex9("Texture4 (RGB)", 2D) = "white" {}
 	}
 	SubShader {
 		Tags { "RenderType" = "Opaque" }
@@ -46,16 +36,6 @@
 		sampler2D _Tex3;
 		float3 _Color4;
 		sampler2D _Tex4;
-		float3 _Color5;
-		sampler2D _Tex5;
-		float3 _Color6;
-		sampler2D _Tex6;
-		float3 _Color7;
-		sampler2D _Tex7;
-		float3 _Color8;
-		sampler2D _Tex8;
-		float3 _Color9;
-		sampler2D _Tex9;
 
 		struct Input {
 			float2 uv_LookupTex;
@@ -91,16 +71,6 @@
 				c = tex2D(_Tex3, uv * textureScale);
 			if (ColorEquals(lookup, _Color4))
 				c = tex2D(_Tex4, uv * textureScale);
-			if (ColorEquals(lookup, _Color5))
-				c = tex2D(_Tex5, uv * textureScale);
-			if (ColorEquals(lookup, _Color6))
-				c = tex2D(_Tex6, uv * textureScale);
-			if (ColorEquals(lookup, _Color7))
-				c = tex2D(_Tex7, uv * textureScale);
-			if (ColorEquals(lookup, _Color8))
-				c = tex2D(_Tex8, uv * textureScale);
-			if (ColorEquals(lookup, _Color9))
-				c = tex2D(_Tex9, uv * textureScale);
 			return c;
 		}
 

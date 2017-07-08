@@ -109,6 +109,7 @@
     <None Include="Assets\ExternalAssets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
     <None Include="Assets\MapDisplay\BordersShader.shader" />
     <None Include="Assets\MapDisplay\GroundShader.shader" />
+    <None Include="Assets\MapDisplay\GroundShaderOverlay.shader" />
     <None Include="Assets\StreamingAssets\environments.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
