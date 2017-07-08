@@ -33,8 +33,10 @@ public class UndergroundGenerator : InitialMapGenerator, IMapGenerator
 		TerrainDefaultFill("CaveWall");
 		TerrainFillInOceans("Ocean");
 		TerrainFillInSeaLevel("CaveFloor");
-		TerrainEncourageStartAlongMountains("MushroomForest");
-		TerrainRandomlyStart("MushroomForest");
-		TerrainExpandSimmilarTypes(3);
+		TerrainEncourageStartAlongMountains("MushroomForest", 0.1f);
+		TerrainRandomlyStart("MushroomForest", 0.02f);
+		TerrainExpandSimmilarTypes(2, "MushroomForest");
+
+		TerrainRandomlyStart("MushroomForest", 0.02f);
 	}
 }

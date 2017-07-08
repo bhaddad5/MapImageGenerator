@@ -55,7 +55,7 @@ public class MapBuilder : MonoBehaviour
 
 		List<CulturePrevelance> cultures = new List<CulturePrevelance>()
 		{
-			//new CulturePrevelance(CultureDefinitions.Anglo, CulturePrevelance.Prevelance.Occasional),
+			new CulturePrevelance(CultureDefinitions.Anglo, CulturePrevelance.Prevelance.Dominant),
 			new CulturePrevelance(CultureDefinitions.Orc, CulturePrevelance.Prevelance.Occasional),
 			new CulturePrevelance(CultureDefinitions.Dwarf, CulturePrevelance.Prevelance.Occasional),
 		};
