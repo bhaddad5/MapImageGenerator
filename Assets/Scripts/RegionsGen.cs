@@ -9,10 +9,17 @@ class RegionsGen
 	public int Width { get { return Map.Width; } }
 	public int Height { get { return Map.Height; } }
 
+	private Culture defaultCulture;
+
 	public RegionsGen(List<CulturePrevelance> cultures)
 	{
-		StartFillMap();
 		Kingdoms = new List<Kingdom>();
+
+		if (cultures.Count == 0)
+			return;
+		defaultCulture = cultures[0].culture;
+
+		StartFillMap();
 
 		foreach (var culture in cultures)
 		{
@@ -44,26 +51,9 @@ class RegionsGen
 		}
 	}
 
-	private void PrintStrengths()
-	{
-		float humanTotal = 0;
-		float orcTotal = 0;
-		float DwarfTotal = 0;
-		foreach (var Kingdom in Kingdoms)
-		{
-			if (Kingdom.culture == CultureDefinitions.Anglo)
-				humanTotal += Kingdom.Strength();
-			if (Kingdom.culture == CultureDefinitions.Dwarf)
-				DwarfTotal += Kingdom.Strength();
-			if (Kingdom.culture == CultureDefinitions.Orc)
-				orcTotal += Kingdom.Strength();
-		}
-		Debug.Log(humanTotal + ", " + DwarfTotal + " , " + orcTotal);
-	}
-
 	private void StartFillMap()
 	{
-		Kingdom noMansLand = new Kingdom(CultureDefinitions.Anglo, new Int2(0, 0));
+		Kingdom noMansLand = new Kingdom(defaultCulture, new Int2(0, 0));
 		Map = new Map2D<RegionTile>(MapGenerator.Terrain.Width, MapGenerator.Terrain.Height);
 		foreach(var pixel in Map.GetMapPoints())
 		{
@@ -73,7 +63,7 @@ class RegionsGen
 
 	private void EndFillMap()
 	{
-		Kingdom Ocean = new Kingdom(CultureDefinitions.Anglo, new Int2(0, 0));
+		Kingdom Ocean = new Kingdom(defaultCulture, new Int2(0, 0));
 		foreach (var pixel in Map.GetMapPoints())
 		{
 			if(MapGenerator.Terrain.Get(pixel) == MapGenerator.Environment.Ocean ||
