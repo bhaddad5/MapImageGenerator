@@ -12,6 +12,7 @@ public class ModelPlacementInfo
 		CityWalls,
 		CityGates,
 		Corners,
+		Bridge,
 	}
 
 	public PlacementMode Mode;

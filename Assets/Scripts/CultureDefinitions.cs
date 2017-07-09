@@ -141,6 +141,9 @@ public static class CultureDefinitions
 		},
 		tileModelPlacement = new Dictionary<GroundInfo.GroundTraits, List<ModelPlacementInfo>>()
 		{
+			{GroundInfo.GroundTraits.Road, new List<ModelPlacementInfo>(){
+				new ModelPlacementInfo("AngloBridge", "Bridge", 20, 25),
+			} },
 			{GroundInfo.GroundTraits.SmallCity, new List<ModelPlacementInfo>(){
 				new ModelPlacementInfo("AngloHovel", "Scattered", 20, 25),
 			} },
@@ -268,6 +271,9 @@ public static class CultureDefinitions
 		},
 		tileModelPlacement = new Dictionary<GroundInfo.GroundTraits, List<ModelPlacementInfo>>()
 		{
+			{GroundInfo.GroundTraits.Road, new List<ModelPlacementInfo>(){
+				new ModelPlacementInfo("AngloBridge", "Bridge", 20, 25),
+			} },
 			{GroundInfo.GroundTraits.City, new List<ModelPlacementInfo>(){
 				new ModelPlacementInfo("DwarfHouse", "ScatteredBordered", 20, 25),
 			} },
@@ -381,6 +387,9 @@ public static class CultureDefinitions
 		},
 		tileModelPlacement = new Dictionary<GroundInfo.GroundTraits, List<ModelPlacementInfo>>()
 		{
+			{GroundInfo.GroundTraits.Road, new List<ModelPlacementInfo>(){
+				new ModelPlacementInfo("AngloBridge", "Bridge", 20, 25),
+			} },
 			{GroundInfo.GroundTraits.City, new List<ModelPlacementInfo>(){
 				new ModelPlacementInfo("OrcHut", "ScatteredBordered", 20, 25),
 				new ModelPlacementInfo("OrcWall", "CityWalls", 4, 4),

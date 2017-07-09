@@ -19,8 +19,8 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 	private void MakeHeights()
 	{
 		HeightsDefaultFill(0f);
-		HeightRandomlyPlaceAlongLine(1f, 9, 4, 50, 3);
-		HeightRandomlyExpandLevelFromItselfOrLevel(Globals.MinGroundHeight, 1f, 1, 10);
+		HeightRandomlyPlaceAlongLine(1f, 6, 4, 50, 3);
+		HeightRandomlyExpandLevelFromItselfOrLevel(Globals.MinGroundHeight, 1f, 1, 20);
 		HeightBlendUp(2);
 		HeightRandomlyPlaceNotInWater(.2f, 500);
 		HeightBlendUp(1);
@@ -44,6 +44,6 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 		TerrainExpandSimmilarTypes(3, "Swamp");
 		TerrainEncourageStartAlongOcean("Fertile", 0.15f);
 		TerrainRandomlyStart("Fertile", 0.05f);
-		TerrainExpandSimmilarTypes(4, "Fertile");
+		TerrainExpandSimmilarTypes(5, "Fertile");
 	}
 }

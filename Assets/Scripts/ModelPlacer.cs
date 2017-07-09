@@ -19,23 +19,6 @@ public class ModelPlacer
 	{
 		PlaceEnvironmentObjectsOnTile(tile, MapGenerator.Terrain.Get(tile).placementInfos);
 		PlaceCultureObjectsOnTile(tile, RegionsGen.Map.Get(tile).settlement.kingdom.culture, MapGenerator.Terrain.Get(tile).traits);
-
-		//if (MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.City))
-		//	PlaceCityTile(tile, RegionsGen.Map.Get(tile).settlement.kingdom.culture);
-
-		/*Culture culture = RegionsGen.Map.Get(tile).settlement.kingdom.culture;
-		if (MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.City))
-			PlaceCityTile(tile, culture);
-		if (MapGenerator.Terrain.Get(tile) == MapGenerator.Environment.GetGround("Forest"))
-			PlaceForestTile(tile, culture);
-		if (MapGenerator.Terrain.Get(tile) == MapGenerator.Environment.GetGround("Swamp"))
-			PlaceSwampTile(tile, culture);
-		if (MapGenerator.Terrain.Get(tile) == MapGenerator.Environment.GetGround("Wilderness"))
-			PlaceWildernessTile(tile, culture);
-		if (MapGenerator.Terrain.Get(tile) == MapGenerator.Environment.GetGround("Fertile"))
-			PlaceFarmTile(tile, culture);
-		if (MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.Road))
-			PlaceRoadTile(tile, culture);*/
 	}
 
 	private void PlaceEnvironmentObjectsOnTile(Int2 tile, List<ModelPlacementInfo> infos)
@@ -73,188 +56,9 @@ public class ModelPlacer
 			PlaceWallsOnEdges(tile, obj);
 		if(mode == ModelPlacementInfo.PlacementMode.CityGates)
 			PlaceGatesOnEdges(tile, obj);
-			
+		if (mode == ModelPlacementInfo.PlacementMode.Bridge)
+			PlaceBridgeOnTile(tile, obj);
 	}
-
-
-
-
-
-	//TODO: START NUKE
-
-
-	/*private void PlaceForestTile(Int2 tile, Culture culture)
-	{
-		if (culture == CultureDefinitions.Anglo)
-		{
-			if (Helpers.Odds(0.05f))
-				PlaceObjectsOnTile(tile, 1, lookup.Hovel);
-		}
-		else if (culture == CultureDefinitions.Dwarf)
-		{
-			if (Helpers.Odds(0.05f))
-				PlaceObjectsOnTile(tile, 1, lookup.DwarfHouse);
-		}
-		else if (culture == CultureDefinitions.Orc)
-		{
-			if (Helpers.Odds(0.1f))
-				PlaceObjectsOnTile(tile, 1, lookup.OrcHut);
-		}
-	}
-
-	private void PlaceSwampTile(Int2 tile, Culture culture)
-	{
-		if (culture == CultureDefinitions.Anglo)
-		{
-			if (Helpers.Odds(0.03f))
-				PlaceObjectsOnTile(tile, 1, lookup.Hovel);
-		}
-		else if (culture == CultureDefinitions.Dwarf)
-		{
-
-		}
-		if (culture == CultureDefinitions.Orc)
-		{
-			if (Helpers.Odds(0.1f))
-				PlaceObjectsOnTile(tile, 1, lookup.OrcHut);
-		}
-	}
-
-	private void PlaceWildernessTile(Int2 tile, Culture culture)
-	{
-		if (culture == CultureDefinitions.Anglo)
-		{
-			if (Helpers.Odds(0.1f))
-				PlaceObjectsOnTile(tile, 1, lookup.Hovel);
-		}
-		else if (culture == CultureDefinitions.Dwarf)
-		{
-			if (Helpers.Odds(0.15f))
-				PlaceObjectsOnTile(tile, 1, lookup.DwarfHouse);
-		}
-		else if (culture == CultureDefinitions.Orc)
-		{
-			if (Helpers.Odds(0.1f))
-				PlaceObjectsOnTile(tile, 1, lookup.OrcHut);
-		}
-	}
-
-	private void PlaceFarmTile(Int2 tile, Culture culture)
-	{
-		if (culture == CultureDefinitions.Anglo)
-		{
-			PlaceObjectsOnTile(tile, Random.Range(10, 15), lookup.WheatField);
-			if (Helpers.Odds(0.4f))
-				PlaceObjectsOnTile(tile, 1, lookup.Hovel);
-		}
-		else if(culture == CultureDefinitions.Dwarf)
-		{
-			PlaceObjectsOnTile(tile, Random.Range(10, 15), lookup.WheatField);
-			if (Helpers.Odds(0.15f))
-				PlaceObjectsOnTile(tile, 1, lookup.DwarfHouse);
-		}
-		else if (culture == CultureDefinitions.Orc)
-		{
-			if (Helpers.Odds(0.1f))
-				PlaceObjectsOnTile(tile, 1, lookup.OrcHut);
-		}
-	}
-
-	private void PlaceRoadTile(Int2 tile, Culture culture)
-	{
-		if(MapGenerator.Heights.Get(tile) < Globals.MinGroundHeight)
-		{
-			foreach(var t in MapGenerator.Terrain.GetAdjacentPoints(tile))
-			{
-				if(MapGenerator.Terrain.Get(t).HasTrait(GroundInfo.GroundTraits.Road) ||
-				   MapGenerator.Terrain.Get(t).HasTrait(GroundInfo.GroundTraits.City))
-				{
-					if (MapGenerator.Heights.Get(t) >= Globals.MinGroundHeight)
-					{
-						Vector3 rot = new Vector3();
-						if (t.Y != tile.Y)
-							rot = new Vector3(0, 90f, 0);
-						SpawnObjectAtPos(GetCenterPlacementTrans(tile, rot, true), lookup.Bridge);
-						break;
-					}
-				}
-			}
-		}
-	}
-
-	private void PlaceCityTile(Int2 tile, Culture culture)
-	{
-		Settlement sett = GetSettlementFromTile(tile);
-		List<Settlement.CityTrait> traits = sett.GetCityTraits();
-		if (culture == CultureDefinitions.Anglo)
-		{
-			if (traits.Contains(Settlement.CityTrait.Small))
-				PlaceSmallAngloCity(tile);
-			if (traits.Contains(Settlement.CityTrait.Medium))
-				PlaceMediumAngloCity(tile);
-			if (traits.Contains(Settlement.CityTrait.Large))
-				PlaceLargeAngloCity(tile);
-		}
-	}
-
-	private Settlement GetSettlementFromTile(Int2 tile)
-	{
-		foreach(var kingdom in RegionsGen.Kingdoms)
-		{
-			foreach(var sett in kingdom.settlements)
-			{
-				foreach(Int2 t in sett.cityTiles)
-				{
-					if (t.Equals(tile))
-						return sett;
-				}
-			}
-		}
-		return null;
-	}
-
-	private void PlaceSmallAngloCity(Int2 tile)
-	{
-		PlaceObjectsOnTile(tile, Random.Range(20, 25), lookup.Hovel);
-	}
-
-	private void PlaceMediumAngloCity(Int2 tile)
-	{
-		foreach (Int2 pt in MapGenerator.Terrain.GetAdjacentPoints(tile))
-		{
-			if (TileIsRoad(pt))
-			{
-				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, true), lookup.WoodenGate);
-			}
-			else if (TileIsCityBorder(pt))
-			{
-				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, true), lookup.WoodenWall);
-			}
-		}
-
-		PlaceObjectsOnTileWithBorder(tile, Random.Range(10, 13), lookup.Hovel);
-		PlaceObjectsOnTileWithBorder(tile, Random.Range(5, 8), lookup.TownHouse);
-	}
-
-	private void PlaceLargeAngloCity(Int2 tile)
-	{
-		foreach(Int2 pt in MapGenerator.Terrain.GetAdjacentPoints(tile))
-		{
-			if (TileIsRoad(pt))
-			{
-				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, true), lookup.Gates);
-			}
-			else if(TileIsCityBorder(pt))
-			{
-				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, true), lookup.Wall);
-			}
-		}
-		PlaceTurretsOnCorners(tile, lookup.Turret);
-
-		PlaceObjectsOnTileWithBorder(tile, Random.Range(20, 25), lookup.TownHouse);
-	}*/
-
-	//TODO: END NUKE
 
 
 
@@ -301,6 +105,28 @@ public class ModelPlacer
 			TileIsCityBorder(tile + new Int2(0, t.Y - tile.Y)))
 			{
 				SpawnObjectAtPos(GetPlacementBetweenTileCenters(tile, t, true), turret);
+			}
+		}
+	}
+
+	private void PlaceBridgeOnTile(Int2 tile, GameObject bridge)
+	{
+		if (MapGenerator.Heights.Get(tile) < Globals.MinGroundHeight)
+		{
+			foreach (var t in MapGenerator.Terrain.GetAdjacentPoints(tile))
+			{
+				if (MapGenerator.Terrain.Get(t).HasTrait(GroundInfo.GroundTraits.Road) ||
+				    MapGenerator.Terrain.Get(t).HasTrait(GroundInfo.GroundTraits.City))
+				{
+					if (MapGenerator.Heights.Get(t) >= Globals.MinGroundHeight)
+					{
+						Vector3 rot = new Vector3();
+						if (t.Y != tile.Y)
+							rot = new Vector3(0, 90f, 0);
+						SpawnObjectAtPos(GetCenterPlacementTrans(tile, rot, true), bridge);
+						break;
+					}
+				}
 			}
 		}
 	}
