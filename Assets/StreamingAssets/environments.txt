@@ -61,7 +61,7 @@
 		},
 		{
 		"GroundType":"Mountain",
-		"Difficulty":0.6,
+		"Difficulty":50,
 		"Texture":"Midlands/Mountains.png",
 		"StoredTraits":[
 			"Rocky",

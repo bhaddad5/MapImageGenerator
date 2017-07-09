@@ -75,7 +75,7 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Raising Mountains";
 		yield return null;
 
-		MapGenerator mapGenerator = new MapGenerator(width, height, mapEnvironment.HeightGenerator, mapEnvironment);
+		MapGenerator.SetUpMapGenerator(width, height, mapEnvironment.HeightGenerator, mapEnvironment);
 		
 		displayText.text = "Forging Kingdoms";
 		yield return null;

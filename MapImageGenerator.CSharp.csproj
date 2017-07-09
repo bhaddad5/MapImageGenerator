@@ -80,7 +80,6 @@
   <ItemGroup>
     <Compile Include="Assets\ExternalAssets\Standard Assets\Environment\Water (Basic)\Scripts\WaterBasic.cs" />
     <Compile Include="Assets\Scripts\Culture.cs" />
-    <Compile Include="Assets\Scripts\CultureDefinitions.cs" />
     <Compile Include="Assets\Scripts\DataParsers\CultureParser.cs" />
     <Compile Include="Assets\Scripts\DataParsers\EnvironmentParser.cs" />
     <Compile Include="Assets\Scripts\Globals.cs" />
