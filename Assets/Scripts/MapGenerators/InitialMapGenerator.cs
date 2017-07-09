@@ -1,12 +1,68 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class InitialMapGenerator
 {
 	protected Map2D<float> Heights;
 	protected Map2D<GroundInfo> Terrain;
+
+
+	public void ExecuteApiCommands(string[] commands)
+	{
+		foreach (string command in commands)
+		{
+			ExecuteApiCommand(command);
+		}
+	}
+
+	private void ExecuteApiCommand(string cmd)
+	{
+		string[] split = cmd.Split(' ');
+		ReplaceWellKnownValues(split);
+		
+		if (split[0] == "HeightsDefaultFill")
+			HeightsDefaultFill(Single.Parse(split[1]));
+		if (split[0] == "HeightRandomlyPlace")
+			HeightRandomlyPlace(Single.Parse(split[1]), Single.Parse(split[2]));
+		if (split[0] == "HeightRandomlyExpandLevel")
+			HeightRandomlyExpandLevel(Single.Parse(split[1]), Single.Parse(split[2]));
+		if (split[0] == "HeightRandomizeLevelEdges")
+			HeightRandomizeLevelEdges(Single.Parse(split[1]), Int32.Parse(split[2]));
+		if (split[0] == "HeightRandomlyPlaceAlongLine")
+			HeightRandomlyPlaceAlongLine(Single.Parse(split[1]), Single.Parse(split[2]), Single.Parse(split[3]), Single.Parse(split[4]), Single.Parse(split[5]));
+		if (split[0] == "HeightRandomlyExpandLevelFromItselfOrLevel")
+			HeightRandomlyExpandLevelFromItselfOrLevel(Single.Parse(split[1]), Single.Parse(split[2]), Single.Parse(split[3]), Single.Parse(split[4]));
+		if (split[0] == "HeightSetEdges")
+			HeightSetEdges(Single.Parse(split[1]));
+		if (split[0] == "TerrainDefaultFill")
+			TerrainDefaultFill(split[1]);
+		if (split[0] == "TerrainFillInOceans")
+			TerrainFillInOceans(split[1]);
+		if (split[0] == "TerrainFillInSeaLevel")
+			TerrainFillInSeaLevel(split[1]);
+		if (split[0] == "TerrainFillInMountains")
+			TerrainFillInMountains(split[1]);
+		if (split[0] == "TerrainEncourageStartAlongMountains")
+			TerrainEncourageStartAlongMountains(split[1], Single.Parse(split[2]));
+		if (split[0] == "TerrainRandomlyStart")
+			TerrainRandomlyStart(split[1], Single.Parse(split[2]));
+		if (split[0] == "TerrainExpandSimmilarTypes")
+			TerrainExpandSimmilarTypes(Int32.Parse(split[1]), split[2]);
+	}
+
+	private void ReplaceWellKnownValues(string[] strs)
+	{
+		for (int i = 0; i < strs.Length; i++)
+		{
+			if(strs[i] == "MinGroundHeight")
+				strs[i] = Globals.MinGroundHeight.ToString();
+			if (strs[i] == "MountainHeight")
+				strs[i] = Globals.MountainHeight.ToString();
+		}
+	}
 
 
 	//HEIGHTS

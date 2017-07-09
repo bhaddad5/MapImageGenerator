@@ -83,19 +83,23 @@ public class StoredCulturePrevelance
 [Serializable]
 public class StoredEnvironment
 {
-	public string displayName;
+	public string EnvironmentId;
+	public string DisplayName;
+	public string[] MapBuildingCommands = new string[0];
 	public StoredCulturePrevelance[] Cultures = new StoredCulturePrevelance[0];
-	public StoredGroundDisplayInfo[] groundTypes = new StoredGroundDisplayInfo[0];
+	public StoredGroundDisplayInfo[] GroundTypes = new StoredGroundDisplayInfo[0];
 
 	public MapEnvironment ToEnvironment()
 	{
 		MapEnvironment env = new MapEnvironment();
-		env.displayName = displayName;
-		
+		env.EnvironmentId = EnvironmentId;
+		env.DisplayName = DisplayName;
+		env.MapBuildingCommands = MapBuildingCommands;
+
 		//TEMP:
-		if(env.displayName == "Midlands")
+		if (env.EnvironmentId == "Anglo")
 			env.HeightGenerator = new MidlandGenerator();
-		else if(env.displayName == "Underground")
+		else if(env.EnvironmentId == "Underground")
 			env.HeightGenerator = new UndergroundGenerator();
 
 		foreach (StoredCulturePrevelance culturePrevelance in Cultures)
@@ -110,7 +114,7 @@ public class StoredEnvironment
 			env.Cultures.Add(new CulturePrevelance() {culture =  culture, numPlacementsPer80Square = culturePrevelance.avgSettlementsPer80Square});
 		}
 
-		foreach (StoredGroundDisplayInfo groundType in groundTypes)
+		foreach (StoredGroundDisplayInfo groundType in GroundTypes)
 		{
 			GroundInfo info = groundType.ToDisplayInfo();
 			env.groundTypes[groundType.GroundType] = info;

@@ -1,11 +1,12 @@
 {
-	"displayName":"Midlands",
+	"EnvironmentId":"Anglo",
+	"DisplayName":"The Midlands",
 	"Cultures":[
 		{"cultureId":"Anglo",	"avgSettlementsPer80Square":50},
 		{"cultureId":"Dwarf",	"avgSettlementsPer80Square":35},
 		{"cultureId":"Orc",	"avgSettlementsPer80Square":35}
 	],
-	"groundTypes":[
+	"GroundTypes":[
 		{
 		"GroundType":"Ocean",
 		"Texture":"Midlands/Sand.png",
@@ -118,12 +119,30 @@
 }
 |
 {
-	"displayName":"Underground",
+	"EnvironmentId":"Underground",
+	"DisplayName":"The Under Realms",
+	"MapBuildingCommands":[
+		"HeightsDefaultFill 1",
+		"HeightRandomlyPlace 0 21",
+		"HeightRandomlyExpandLevel 0 2",
+		"HeightRandomizeLevelEdges 0 2",
+		"HeightRandomlyPlaceAlongLine MinGroundHeight 25 5 15 3",
+		"HeightRandomlyExpandLevelFromItselfOrLevel MinGroundHeight 0 1 3",
+		"HeightRandomlyPlace 1 150",
+		"HeightSetEdges 1",
+		"TerrainDefaultFill CaveWall",
+		"TerrainFillInOceans Ocean",
+		"TerrainFillInSeaLevel CaveFloor",
+		"TerrainEncourageStartAlongMountains MushroomForest 0.1",
+		"TerrainRandomlyStart MushroomForest 0.02",
+		"TerrainExpandSimmilarTypes 2 MushroomForest",
+		"TerrainRandomlyStart MushroomForest 0.02"
+	],
 	"Cultures":[
 		{"cultureId":"Dwarf",	"avgSettlementsPer80Square":40},
 		{"cultureId":"Orc",	"avgSettlementsPer80Square":40}
 	],
-	"groundTypes":[
+	"GroundTypes":[
 		{
 		"GroundType":"Ocean",
 		"Texture":"Underground/CaveWall.png",

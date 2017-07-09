@@ -28,8 +28,9 @@ public class MapBuilder : MonoBehaviour
 		environments = EnvironmentParser.LoadEnvironments();
 		foreach (MapEnvironment environment in environments)
 		{
-			EnvironmentSelection.options.Add(new Dropdown.OptionData(environment.displayName));
+			EnvironmentSelection.options.Add(new Dropdown.OptionData(environment.DisplayName));
 		}
+		EnvironmentSelection.value = 1;
 	}
 
 	private MapEnvironment GetSelectedEnvironment(string selectedString)
@@ -38,7 +39,7 @@ public class MapBuilder : MonoBehaviour
 			return environments[Random.Range(0, environments.Count - 1)];
 		foreach (MapEnvironment environment in environments)
 		{
-			if (environment.displayName == selectedString)
+			if (environment.DisplayName == selectedString)
 				return environment;
 		}
 		return null;

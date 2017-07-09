@@ -93,30 +93,16 @@ public class CulturePrevelance
 
 public class MapEnvironment
 {
-	public GroundInfo Ocean
-	{
-		get { return groundTypes["Ocean"]; }
-	}
-
-	public GroundInfo River
-	{
-		get { return groundTypes["River"]; }
-	}
-
-	public GroundInfo City
-	{
-		get { return GetFirstWithTrait(GroundInfo.GroundTraits.City); }
-	}
-
-	public GroundInfo Road
-	{
-		get { return GetFirstWithTrait(GroundInfo.GroundTraits.Road); }
-	}
-
-	public string displayName;
+	public string EnvironmentId;
+	public string DisplayName;
+	public string[] MapBuildingCommands = new string[0];
 	public List<CulturePrevelance> Cultures = new List<CulturePrevelance>();
 	public Dictionary<string, GroundInfo> groundTypes = new Dictionary<string, GroundInfo>();
 	public IMapGenerator HeightGenerator;
+
+	public GroundInfo Ocean { get { return groundTypes["Ocean"]; } }
+	public GroundInfo River { get { return groundTypes["River"]; } }
+	public GroundInfo Road { get { return GetFirstWithTrait(GroundInfo.GroundTraits.Road); } }
 
 	public GroundInfo GetGround(string type)
 	{
