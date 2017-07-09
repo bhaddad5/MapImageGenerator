@@ -1,0 +1,9 @@
+{
+	"Models":[
+		{"ModelId":"Pine", "ModelPath":"Models/Nature/Pine.obj"},
+		{"ModelId":"WheatField", "ModelPath":"Models/Nature/WheatField.obj"},
+		{"ModelId":"Rushes", "ModelPath":"Models/Nature/Rushes.obj"},
+		{"ModelId":"Willow", "ModelPath":"Models/Nature/Willow.obj"},
+		{"ModelId":"GiantMushroom", "ModelPath":"Models/Cave/GiantMushroom.obj"}
+	]
+}

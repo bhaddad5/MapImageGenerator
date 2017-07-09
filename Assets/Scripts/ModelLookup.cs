@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ModelLookup
+/*public class ModelLookup
 {
 	public Dictionary<string, string> Lookup = new Dictionary<string, string>();
 
@@ -14,11 +14,16 @@ public class ModelLookup
 			Debug.Log(str);
 		return g;
 	}
-}
+}*/
 
-public static class LookupDefinitions
+public static class ModelLookup
 {
-	public static ModelLookup Lookup = new ModelLookup()
+	public static Dictionary<string, GameObject> Models = new Dictionary<string, GameObject>();
+
+
+
+
+	/*public static ModelLookup Lookup = new ModelLookup()
 	{
 		Lookup =  new Dictionary<string, string>()
 		{
@@ -44,5 +49,5 @@ public static class LookupDefinitions
 			{"AngloBridge", "Models/Anglo/Bridge" },
 			{"GiantMushroom", "Models/Cave/GiantMushroom" },
 		}
-	};
+	};*/
 }

@@ -229,6 +229,7 @@ public class ModelPlacer
 		if (trans.valid)
 		{
 			GameObject newObj = GameObject.Instantiate(obj, objectParent);
+			newObj.SetActive(true);
 			newObj.transform.position = trans.pos;
 			newObj.transform.eulerAngles = trans.rot;
 		}

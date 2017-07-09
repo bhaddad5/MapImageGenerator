@@ -25,7 +25,15 @@ public class ModelPlacementInfo
 	{
 		min = mi;
 		max = ma;
-		Model = LookupDefinitions.Lookup.LookupModel(model);
+
+
+		//TMP!!!
+		if(ModelLookup.Models.ContainsKey(model))
+			Model = ModelLookup.Models[model];
+
+		if(Model == null)
+			Debug.Log(model);
+
 		Mode = (PlacementMode)System.Enum.Parse(typeof(PlacementMode), mode);
 	}
 }

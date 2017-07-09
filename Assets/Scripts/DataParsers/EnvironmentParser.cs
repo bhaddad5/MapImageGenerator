@@ -11,6 +11,7 @@ public class EnvironmentParser
 
 	public static List<MapEnvironment> LoadEnvironments()
 	{
+		ModelsParser.ParseModels();
 		ParsedCultures = CultureParser.LoadCultures();
 
 		var LoadedEnvironments = new List<MapEnvironment>();
