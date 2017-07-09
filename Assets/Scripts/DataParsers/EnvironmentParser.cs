@@ -75,6 +75,10 @@ public class EnvironmentParser
 		CultureParser parser = new CultureParser();
 		parser.TmpConvertCultureToJson(CultureDefinitions.Anglo);
 
+		List<Culture> cultures = CultureParser.LoadCultures();
+
+		CultureDefinitions.Anglo = cultures[0];
+
 		var LoadedEnvironments = new List<MapEnvironment>();
 
 		string environmentsFile = File.ReadAllText(Application.streamingAssetsPath + "/environments.txt");

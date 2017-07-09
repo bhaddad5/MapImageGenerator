@@ -67,25 +67,25 @@
 		{"storedString":"New %n","prevelance":1,"conditions":[]}
 	],
 	"KingdomTitles":[
-		{"storedString":"Kingdom of %n","prevelance":1,"conditions":["Landlocked"]},
-		{"storedString":"Kingdom of %n","prevelance":1,"conditions":["Small"]},
-		{"storedString":"Empire of %n","prevelance":1,"conditions":["Small"]},
-		{"storedString":"The %n Empire","prevelance":1,"conditions":["Small"]},
-		{"storedString":"Crown of %n","prevelance":1,"conditions":["Landlocked"]},
-		{"storedString":"Principality of %n","prevelance":1,"conditions":["Landlocked"]},
-		{"storedString":"Principality of %n","prevelance":1,"conditions":["Port"]},
-		{"storedString":"Grand Barony of %n","prevelance":1,"conditions":["Landlocked"]}
-		,{"storedString":"Barony of %n","prevelance":1,"conditions":["Landlocked"]},
-		{"storedString":"Barony of %n","prevelance":1,"conditions":["Port"]},
-		{"storedString":"Dukedom of %n","prevelance":1,"conditions":["Port"]},
-		{"storedString":"The %n Prices","prevelance":1,"conditions":["Landlocked"]},
-		{"storedString":"Trade Princes of %n","prevelance":1,"conditions":["Landlocked","Medium"]},
-		{"storedString":"Trade Princes of %n","prevelance":1,"conditions":["Port","Medium"]},
-		{"storedString":"Trade Council of %n","prevelance":1,"conditions":["Port","Medium"]},
-		{"storedString":"Trade Council of %n","prevelance":1,"conditions":["Mountains","Medium"]},
-		{"storedString":"Council of %n","prevelance":1,"conditions":["Mountains"]},
-		{"storedString":"Free City of %n","prevelance":1,"conditions":["Mountains"]},
-		{"storedString":"%n","prevelance":1,"conditions":["Mountains"]}
+		{"storedString":"Kingdom of %n","prevelance":1,"conditions":["Medium"]},
+		{"storedString":"Kingdom of %n","prevelance":1,"conditions":["Large"]},
+		{"storedString":"Empire of %n","prevelance":1,"conditions":["Large"]},
+		{"storedString":"The %n Empire","prevelance":1,"conditions":["Large"]},
+		{"storedString":"Crown of %n","prevelance":1,"conditions":["Medium"]},
+		{"storedString":"Principality of %n","prevelance":1,"conditions":["Medium"]},
+		{"storedString":"Principality of %n","prevelance":1,"conditions":["Small"]},
+		{"storedString":"Grand Barony of %n","prevelance":1,"conditions":["Medium"]},
+		{"storedString":"Barony of %n","prevelance":1,"conditions":["Medium"]},
+		{"storedString":"Barony of %n","prevelance":1,"conditions":["Small"]},
+		{"storedString":"Dukedom of %n","prevelance":1,"conditions":["Small"]},
+		{"storedString":"The %n Prices","prevelance":1,"conditions":["Medium"]},
+		{"storedString":"Trade Princes of %n","prevelance":1,"conditions":["Medium","CapitolPort"]},
+		{"storedString":"Trade Princes of %n","prevelance":1,"conditions":["Small","CapitolPort"]},
+		{"storedString":"Trade Council of %n","prevelance":1,"conditions":["Small","CapitolPort"]},
+		{"storedString":"Trade Council of %n","prevelance":1,"conditions":["OneCity","CapitolPort"]},
+		{"storedString":"Council of %n","prevelance":1,"conditions":["OneCity"]},
+		{"storedString":"Free City of %n","prevelance":1,"conditions":["OneCity"]},
+		{"storedString":"%n","prevelance":1,"conditions":["OneCity"]}
 	],
 	"HeraldryOverlayImage":"Anglo/Heraldry/Overlay",
 	"HeraldryBackgrounds":[
@@ -108,15 +108,15 @@
 		{"storedString":"Anglo/Heraldry/Symbols/Horse","prevelance":1,"conditions":[]}
 	],
 	"GroundPropertyValues":[
-		{"groundType":"Water","groundValue":0.0},
-		{"groundType":"Impassable","groundValue":0.0},
-		{"groundType":"Muddy","groundValue":0.10000000149011612},
-		{"groundType":"Rocky","groundValue":0.10000000149011612},
-		{"groundType":"Hunting","groundValue":0.15000000596046449},
-		{"groundType":"Forest","groundValue":0.10000000149011612},
-		{"groundType":"Fertile","groundValue":0.4000000059604645},
-		{"groundType":"City","groundValue":5.0},
-		{"groundType":"Road","groundValue":3.0}
+		{"groundTrait":"Water","groundValue":0.0},
+		{"groundTrait":"Impassable","groundValue":0.0},
+		{"groundTrait":"Muddy","groundValue":0.10000000149011612},
+		{"groundTrait":"Rocky","groundValue":0.10000000149011612},
+		{"groundTrait":"Hunting","groundValue":0.15000000596046449},
+		{"groundTrait":"Forest","groundValue":0.10000000149011612},
+		{"groundTrait":"Fertile","groundValue":0.4000000059604645},
+		{"groundTrait":"City","groundValue":5.0},
+		{"groundTrait":"Road","groundValue":3.0}
 	],
 	"ModelPlacementByTraitCultureInfos":[
 		{
@@ -144,7 +144,7 @@
 			{"model":"AngloStoneWall","placementMode":"CityWalls","min":4,"max":4},
 			{"model":"AngloStoneGate","placementMode":"CityGates","min":4,"max":4},
 			{"model":"AngloStoneTurret","placementMode":"Corners","min":4,"max":4}
-		]},
+		]}
 	]
 }
 	
