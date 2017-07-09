@@ -120,8 +120,8 @@
 {
 	"displayName":"Underground",
 	"Cultures":[
-		{"cultureName":"Dwarf",	"avgSettlementsPer80Square":30},
-		{"cultureName":"Orc",	"avgSettlementsPer80Square":30}
+		{"cultureName":"Dwarf",	"avgSettlementsPer80Square":40},
+		{"cultureName":"Orc",	"avgSettlementsPer80Square":40}
 	],
 	"groundTypes":[
 		{
