@@ -1,9 +1,9 @@
 {
 	"displayName":"Midlands",
 	"Cultures":[
-		{"cultureId":"Anglo",	"avgSettlementsPer80Square":35},
-		{"cultureId":"Dwarf",	"avgSettlementsPer80Square":20},
-		{"cultureId":"Orc",	"avgSettlementsPer80Square":20}
+		{"cultureId":"Anglo",	"avgSettlementsPer80Square":50},
+		{"cultureId":"Dwarf",	"avgSettlementsPer80Square":35},
+		{"cultureId":"Orc",	"avgSettlementsPer80Square":35}
 	],
 	"groundTypes":[
 		{
@@ -13,6 +13,14 @@
 		"StoredTraits":[
 			"Water",
 			"Impassable"
+		]
+		},
+		{
+		"GroundType":"Road",
+		"Difficulty":0.05,
+		"Texture":"Midlands/Road.png",
+		"StoredTraits":[
+			"Road"
 		]
 		},
 		{
@@ -105,14 +113,6 @@
 			"City",
 			"LargeCity"
 		]
-		},
-		{
-		"GroundType":"Road",
-		"Difficulty":0.05,
-		"Texture":"Midlands/Road.png",
-		"StoredTraits":[
-			"Road"
-		]
 		}
 	]
 }
@@ -131,6 +131,14 @@
 		"StoredTraits":[
 			"Water",
 			"Impassable"
+		]
+		},
+		{
+		"GroundType":"Road",
+		"Difficulty":0.05,
+		"Texture":"Midlands/Road.png",
+		"StoredTraits":[
+			"Road"
 		]
 		},
 		{
@@ -211,14 +219,6 @@
 			"City",
 			"LargeCity"
 		]
-		},
-		{
-		"GroundType":"Road",
-		"Difficulty":0.05,
-		"Texture":"Midlands/Road.png",
-		"StoredTraits":[
-			"Road"
-		]
-	}
+		}
 	]
 }
