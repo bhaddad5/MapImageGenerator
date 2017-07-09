@@ -132,6 +132,7 @@ public class StoredCultureModelPlacementByTrait
 [Serializable]
 public class StoredCulture
 {
+	public string CultureId;
 	public string CultureName;
 	public StoredStringOption[] SettlementPrefixes = new StoredStringOption[0];
 	public StoredStringOption[] SettlementSuffixes = new StoredStringOption[0];
@@ -149,6 +150,7 @@ public class StoredCulture
 	public Culture ToCulture()
 	{
 		Culture c = new Culture();
+		c.CultureId = CultureId;
 		c.CultureName = CultureName;
 		c.heraldryOverlay = HeraldryOverlayImage;
 

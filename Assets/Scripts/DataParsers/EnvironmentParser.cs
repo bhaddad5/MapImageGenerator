@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class EnvironmentParser
 {
+	public static List<Culture> ParsedCultures;
+
 	public static List<MapEnvironment> LoadEnvironments()
 	{
 		/*StoredEnvironment store = new StoredEnvironment();
@@ -72,12 +74,7 @@ public class EnvironmentParser
 		string str = JsonUtility.ToJson(store);
 		Debug.Log(str);*/
 
-		CultureParser parser = new CultureParser();
-		parser.TmpConvertCultureToJson(CultureDefinitions.Anglo);
-
-		List<Culture> cultures = CultureParser.LoadCultures();
-
-		CultureDefinitions.Anglo = cultures[0];
+		ParsedCultures = CultureParser.LoadCultures();
 
 		var LoadedEnvironments = new List<MapEnvironment>();
 
@@ -142,7 +139,7 @@ public class StoredGroundDisplayInfo
 [Serializable]
 public class StoredCulturePrevelance
 {
-	public string cultureName;
+	public string cultureId;
 	public int avgSettlementsPer80Square;
 }
 
@@ -166,12 +163,12 @@ public class StoredEnvironment
 
 		foreach (StoredCulturePrevelance culturePrevelance in Cultures)
 		{
-			//TMP
-			var culture = CultureDefinitions.Anglo;
-			if (culturePrevelance.cultureName == "Dwarf")
-				culture = CultureDefinitions.Dwarf;
-			if (culturePrevelance.cultureName == "Orc")
-				culture = CultureDefinitions.Orc;
+			Culture culture = new Culture();
+			foreach (Culture parsedCulture in EnvironmentParser.ParsedCultures)
+			{
+				if (culturePrevelance.cultureId == parsedCulture.CultureId)
+					culture = parsedCulture;
+			}
 
 			env.Cultures.Add(new CulturePrevelance() {culture =  culture, numPlacementsPer80Square = culturePrevelance.avgSettlementsPer80Square});
 		}

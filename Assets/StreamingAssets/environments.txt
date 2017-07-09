@@ -1,9 +1,9 @@
 {
 	"displayName":"Midlands",
 	"Cultures":[
-		{"cultureName":"Anglo",	"avgSettlementsPer80Square":35},
-		{"cultureName":"Dwarf",	"avgSettlementsPer80Square":20},
-		{"cultureName":"Orc",	"avgSettlementsPer80Square":20}
+		{"cultureId":"Anglo",	"avgSettlementsPer80Square":35},
+		{"cultureId":"Dwarf",	"avgSettlementsPer80Square":20},
+		{"cultureId":"Orc",	"avgSettlementsPer80Square":20}
 	],
 	"groundTypes":[
 		{
@@ -120,8 +120,8 @@
 {
 	"displayName":"Underground",
 	"Cultures":[
-		{"cultureName":"Dwarf",	"avgSettlementsPer80Square":40},
-		{"cultureName":"Orc",	"avgSettlementsPer80Square":40}
+		{"cultureId":"Dwarf",	"avgSettlementsPer80Square":40},
+		{"cultureId":"Orc",	"avgSettlementsPer80Square":40}
 	],
 	"groundTypes":[
 		{

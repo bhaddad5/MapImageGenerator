@@ -72,6 +72,7 @@ public class HeraldryOption
 
 public class Culture
 {
+	public string CultureId;
 	public string CultureName;
 
 	public List<SettlementNameOption> prefixes;
