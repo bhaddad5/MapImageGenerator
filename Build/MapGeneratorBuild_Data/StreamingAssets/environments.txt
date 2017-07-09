@@ -1,163 +1,269 @@
 {
-	"displayName":"Midlands",
-	"groundTypes":[
+	"EnvironmentId":"Anglo",
+	"DisplayName":"The Midlands",
+	"MapBuildingCommands":[
+		"HeightsDefaultFill 0",
+		"HeightRandomlyPlaceAlongLine 1 6 4 50 3",
+		"HeightRandomlyExpandLevelFromItselfOrLevel MinGroundHeight 1 1 20",
+		"HeightBlendUp 2",
+		"HeightRandomlyPlaceNotInWater .2 500",
+		"HeightBlendUp 1",
+		"HeightRandomizeLevelEdges 0 2",
+		"CreateRivers 10 20",
+		
+		"TerrainDefaultFill Wilderness",
+		"TerrainFillInOceans Ocean",
+		"TerrainFillInMountains Mountain",
+		"TerrainFillInRivers River",
+		"TerrainEncourageStartAlongMountains Forest 0.15",
+		"TerrainExpandSimmilarTypes 6 Forest",
+		"TerrainRandomlyStart Forest 0.05",
+		"TerrainExpandSimmilarTypes 3 Forest",
+		"TerrainEncourageStartAlongOcean Fertile 0.15",
+		"TerrainRandomlyStart Fertile 0.05",
+		"TerrainExpandSimmilarTypes 5 Fertile",
+		"TerrainEncourageStartAlongOcean Swamp 0.05",
+		"TerrainRandomlyStart Swamp 0.02",
+		"TerrainExpandSimmilarTypes 3 Swamp"
+	],
+	"Cultures":[
+		{"cultureId":"Anglo",	"avgSettlementsPer80Square":50},
+		{"cultureId":"Dwarf",	"avgSettlementsPer80Square":35},
+		{"cultureId":"Orc",	"avgSettlementsPer80Square":35}
+	],
+	"GroundTypes":[
 		{
-			"GroundType":"Ocean",
-			"Texture":"Midlands/Sand.png",
-			"Difficulty":0.1,
-			"StoredTraits":[
-				"Water",
-				"Impassable"
-			]
+		"GroundType":"Ocean",
+		"Texture":"Midlands/Sand.png",
+		"Difficulty":0.1,
+		"StoredTraits":[
+			"Water",
+			"Impassable"
+		]
 		},
 		{
-			"GroundType":"Swamp",
-			"Texture":"Midlands/Swamp.png",
-			"Difficulty":0.35,
-			"DefaultModelPlacement":[
-				{"model":"Willow","placementMode":"Scattered","min":2,"max":3},
-				{"model":"Rushes","placementMode":"Scattered","min":5,"max":7}
-			],
-			"StoredTraits":[
-				"Muddy"
-			]
+		"GroundType":"Road",
+		"Difficulty":0.05,
+		"Texture":"Midlands/Road.png",
+		"StoredTraits":[
+			"Road"
+		]
 		},
 		{
-			"GroundType":"Wilderness",
-			"Texture":"Midlands/Wilderness.png",
-			"Difficulty":0.2,
-			"DefaultModelPlacement":[
-				{"model":"PineTree","placementMode":"Scattered","min":0,"max":3}
-			],
-			"StoredTraits":[
-				"Hunting"
-			]
+		"GroundType":"Swamp",
+		"Texture":"Midlands/Swamp.png",
+		"Difficulty":0.35,
+		"DefaultModelPlacement":[
+			{"model":"Willow","placementMode":"Scattered","min":2,"max":3},
+			{"model":"Rushes","placementMode":"Scattered","min":5,"max":7}
+		],
+		"StoredTraits":[
+			"Muddy"
+		]
 		},
 		{
-			"GroundType":"Forest",
-			"Texture":"Midlands/Forest.png",
-			"Difficulty":0.25,
-			"DefaultModelPlacement":[
-				{"model":"PineTree","placementMode":"Scattered","min":7,"max":10}
-			],
-			"StoredTraits":[
-				"Hunting",
-				"Forest"
-			]
+		"GroundType":"Wilderness",
+		"Texture":"Midlands/Wilderness.png",
+		"Difficulty":0.2,
+		"DefaultModelPlacement":[
+			{"model":"Pine","placementMode":"Scattered","min":0,"max":3}
+		],
+		"StoredTraits":[
+			"Hunting"
+		]
+	},
+		{
+		"GroundType":"Forest",
+		"Texture":"Midlands/Forest.png",
+		"Difficulty":0.25,
+		"DefaultModelPlacement":[
+			{"model":"Pine","placementMode":"Scattered","min":7,"max":10}
+		],
+		"StoredTraits":[
+			"Hunting",
+			"Forest"
+		]
 		},
 		{
-			"GroundType":"River",
-			"Difficulty":0.5,
-			"Texture":"Midlands/Fertile.png",
-			"StoredTraits":[
-				"Water",
-				"Impassable"
-			]
+		"GroundType":"River",
+		"Difficulty":0.5,
+		"Texture":"Midlands/Fertile.png",
+		"StoredTraits":[
+			"Water",
+			"Impassable"
+		]
 		},
 		{
-			"GroundType":"Mountain",
-			"Difficulty":0.6,
-			"Texture":"Midlands/Mountains.png",
-			"StoredTraits":[
-				"Rocky",
-				"Impassable"
-			]
+		"GroundType":"Mountain",
+		"Difficulty":50,
+		"Texture":"Midlands/Mountains.png",
+		"StoredTraits":[
+			"Rocky",
+			"Impassable"
+		]
 		},
 		{
-			"GroundType":"Fertile",
-			"Difficulty":0.15,
-			"Texture":"Midlands/Fertile.png",
-			"StoredTraits":[
-				"Fertile"
-			]
+		"GroundType":"Fertile",
+		"Difficulty":0.15,
+		"Texture":"Midlands/Fertile.png",
+		"DefaultModelPlacement":[
+			{"model":"WheatField","placementMode":"Scattered","min":7,"max":10}
+		],
+		"StoredTraits":[
+			"Fertile"
+		]
 		},
 		{
-			"GroundType":"City",
-			"Difficulty":0.05,
-			"Texture":"Midlands/City.png",
-			"StoredTraits":[
-				"City"
-			]
+		"GroundType":"SmallCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/City.png",
+		"StoredTraits":[
+			"City",
+			"SmallCity"
+		]
 		},
 		{
-			"GroundType":"Road",
-			"Difficulty":0.05,
-			"Texture":"Midlands/Road.png",
-			"StoredTraits":[
-				"Road"
-			]
+		"GroundType":"MediumCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/City.png",
+		"StoredTraits":[
+			"City",
+			"MediumCity"
+		]
+		},
+		{
+		"GroundType":"LargeCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/City.png",
+		"StoredTraits":[
+			"City",
+			"LargeCity"
+		]
 		}
 	]
 }
 |
 {
-	"displayName":"Underground",
-	"groundTypes":[
+	"EnvironmentId":"Underground",
+	"DisplayName":"The Under Realms",
+	"MapBuildingCommands":[
+		"HeightsDefaultFill 1",
+		"HeightRandomlyPlace 0 21",
+		"HeightRandomlyExpandLevel 0 2",
+		"HeightRandomizeLevelEdges 0 2",
+		"HeightRandomlyPlaceAlongLine MinGroundHeight 25 5 15 3",
+		"HeightRandomlyExpandLevelFromItselfOrLevel MinGroundHeight 0 1 3",
+		"HeightRandomlyPlace 1 150",
+		"HeightSetEdges 1",
+		
+		"TerrainDefaultFill CaveWall",
+		"TerrainFillInOceans Ocean",
+		"TerrainFillInSeaLevel CaveFloor",
+		"TerrainEncourageStartAlongMountains MushroomForest 0.1",
+		"TerrainRandomlyStart MushroomForest 0.02",
+		"TerrainExpandSimmilarTypes 2 MushroomForest",
+		"TerrainRandomlyStart MushroomForest 0.02"
+	],
+	"Cultures":[
+		{"cultureId":"Dwarf",	"avgSettlementsPer80Square":40},
+		{"cultureId":"Orc",	"avgSettlementsPer80Square":40}
+	],
+	"GroundTypes":[
 		{
-			"GroundType":"Ocean",
-			"Texture":"Underground/CaveWall.png",
-			"Difficulty":0.1,
-			"StoredTraits":[
-				"Water",
-				"Impassable"
-			]
+		"GroundType":"Ocean",
+		"Texture":"Underground/CaveWall.png",
+		"Difficulty":0.1,
+		"StoredTraits":[
+			"Water",
+			"Impassable"
+		]
 		},
 		{
-			"GroundType":"MushroomSwamp",
-			"Texture":"Midlands/Swamp.png",
-			"Difficulty":0.35,
-			"DefaultModelPlacement":[
-				
-			],
-			"StoredTraits":[
-				"Muddy",
-				"Forest"
-			]
+		"GroundType":"Road",
+		"Difficulty":0.05,
+		"Texture":"Midlands/Road.png",
+		"StoredTraits":[
+			"Road"
+		]
 		},
 		{
-			"GroundType":"CaveFloor",
-			"Texture":"Underground/CaveFloor.png",
-			"Difficulty":0.2,
-			"DefaultModelPlacement":[
-				
-			],
-			"StoredTraits":[
-				"Hunting"
-			]
+		"GroundType":"MushroomSwamp",
+		"Texture":"Midlands/Swamp.png",
+		"Difficulty":0.35,
+		"DefaultModelPlacement":[
+			
+		],
+		"StoredTraits":[
+			"Muddy",
+			"Forest"
+		]
 		},
 		{
-			"GroundType":"CaveWall",
-			"Difficulty":50,
-			"Texture":"Underground/CaveWall.png",
-			"StoredTraits":[
-				"Rocky",
-				"Impassable"
-			]
+		"GroundType":"MushroomForest",
+		"Texture":"Underground/CaveFloor.png",
+		"Difficulty":0.2,
+		"DefaultModelPlacement":[
+			{"model":"GiantMushroom","placementMode":"Scattered","min":7,"max":10}
+		],
+		"StoredTraits":[
+			"Forest"
+		]
 		},
 		{
-			"GroundType":"River",
-			"Difficulty":0.5,
-			"Texture":"Underground/CaveWall.png",
-			"StoredTraits":[
-				"Water",
-				"Impassable"
-			]
+		"GroundType":"CaveFloor",
+		"Texture":"Underground/CaveFloor.png",
+		"Difficulty":0.2,
+		"DefaultModelPlacement":[
+		
+		],
+		"StoredTraits":[
+			"Hunting"
+		]
 		},
 		{
-			"GroundType":"City",
-			"Difficulty":0.05,
-			"Texture":"Midlands/City.png",
-			"StoredTraits":[
-				"City"
-			]
+		"GroundType":"CaveWall",
+		"Difficulty":50,
+		"Texture":"Underground/CaveWall.png",
+		"StoredTraits":[
+			"Rocky",
+			"Impassable"
+		]
 		},
 		{
-			"GroundType":"Road",
-			"Difficulty":0.05,
-			"Texture":"Midlands/Road.png",
-			"StoredTraits":[
-				"Road"
-			]
+		"GroundType":"River",
+		"Difficulty":0.5,
+		"Texture":"Underground/CaveWall.png",
+		"StoredTraits":[
+			"Water",
+			"Impassable"
+		]
+		},
+		{
+		"GroundType":"SmallCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/City.png",
+		"StoredTraits":[
+			"City",
+			"SmallCity"
+		]
+		},
+		{
+		"GroundType":"MediumCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/City.png",
+		"StoredTraits":[
+			"City",
+			"MediumCity"
+		]
+		},
+		{
+		"GroundType":"LargeCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/City.png",
+		"StoredTraits":[
+			"City",
+			"LargeCity"
+		]
 		}
 	]
 }

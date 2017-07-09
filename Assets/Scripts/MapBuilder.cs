@@ -183,44 +183,8 @@ public class MapBuilder : MonoBehaviour
 		return mat;
 	}
 
-	
-
-	/*public class CulturePrevelance
+	public void QuitApp()
 	{
-		public enum Prevelance
-		{
-			SingleColony,
-			Scattered,
-			Occasional,
-			Dominant
-		}
-
-		public Culture culture;
-		public int numSettlements;
-		Prevelance prevelance;
-
-		public CulturePrevelance(Culture c, Prevelance p)
-		{
-			culture = c;
-			prevelance = p;
-		}
-
-		public void SetNumSettlements(int landPixleCount)
-		{
-			if (prevelance == Prevelance.SingleColony)
-				numSettlements = 1;
-			if (prevelance == Prevelance.Scattered)
-			{
-				numSettlements = landPixleCount / 380;
-			}
-			if (prevelance == Prevelance.Occasional)
-			{
-				numSettlements = landPixleCount / 240;
-			}
-			if (prevelance == Prevelance.Dominant)
-			{
-				numSettlements = landPixleCount / 180;
-			}
-		}
-	}*/
+		Application.Quit();
+	}
 }

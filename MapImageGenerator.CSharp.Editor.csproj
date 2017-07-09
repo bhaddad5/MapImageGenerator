@@ -123,6 +123,7 @@
     <Compile Include="Assets\Editor\Tests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\ExternalAssets\OBJImport\readme.txt" />
     <None Include="Assets\ExternalAssets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
     <None Include="Assets\MapDisplay\BordersShader.shader" />
     <None Include="Assets\MapDisplay\GroundShader.shader" />

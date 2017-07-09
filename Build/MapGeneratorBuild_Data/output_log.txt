@@ -15,14 +15,24 @@ Platform assembly: C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGen
 Loading C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.052 seconds
+- Completed reload, in  0.016 seconds
 Platform assembly: C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\Bert Haddad\Documents\MapImageGenerator\Build\MapGeneratorBuild_Data\Managed\System.dll (this message is harmless)
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 3840x2160 60Hz; virtual: 3840x2160 at 0,0
 <RI> Initialized touch support.
-UnloadTime: 50.846180 ms
+UnloadTime: 0.780837 ms
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 2e0c -> priority: 1 
-  Thread -> id: 2ad0 -> priority: 1 
+  Thread -> id: 1980 -> priority: 1 
+  Thread -> id: e0c -> priority: 1 
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Material:Internal_CreateWithShader (UnityEngine.Material,UnityEngine.Shader)
+  at UnityEngine.Material..ctor (UnityEngine.Shader shader) [0x00000] in <filename unknown>:0 
+  at MapBuilder.FlushGroundInfoToMat (System.Collections.Generic.List`1 groundInfo) [0x00000] in <filename unknown>:0 
+  at MapBuilder.GetMapMaterials (System.Collections.Generic.List`1 groundTypes) [0x00000] in <filename unknown>:0 
+  at MapBuilder+<BuildMap>c__Iterator0.MoveNext () [0x00000] in <filename unknown>:0 
+  at UnityEngine.SetupCoroutine.InvokeMoveNext (IEnumerator enumerator, IntPtr returnValueAddress) [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+

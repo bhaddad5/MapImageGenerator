@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>5.6.0f3</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -80,6 +78,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ExternalAssets\OBJImport\OBJLoader.cs" />
+    <Compile Include="Assets\ExternalAssets\OBJImport\TextureLoader.cs" />
     <Compile Include="Assets\ExternalAssets\Standard Assets\Environment\Water (Basic)\Scripts\WaterBasic.cs" />
     <Compile Include="Assets\Scripts\Culture.cs" />
     <Compile Include="Assets\Scripts\DataParsers\CultureParser.cs" />
@@ -87,11 +87,11 @@
     <Compile Include="Assets\Scripts\Globals.cs" />
     <Compile Include="Assets\Scripts\Helpers\Helpers.cs" />
     <Compile Include="Assets\Scripts\Helpers\Map2D.cs" />
-    <Compile Include="Assets\Scripts\MapGeneratorApi.cs" />
     <Compile Include="Assets\Scripts\Kingdom.cs" />
     <Compile Include="Assets\Scripts\MapBuilder.cs" />
     <Compile Include="Assets\Scripts\MapEnvironment.cs" />
     <Compile Include="Assets\Scripts\MapGenerator.cs" />
+    <Compile Include="Assets\Scripts\MapGeneratorApi.cs" />
     <Compile Include="Assets\Scripts\MeshConstructor.cs" />
     <Compile Include="Assets\Scripts\MeshSplitter.cs" />
     <Compile Include="Assets\Scripts\ModelLookup.cs" />
@@ -104,6 +104,7 @@
     <Compile Include="Assets\SettlementDisplay\SettlementInfoController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\ExternalAssets\OBJImport\readme.txt" />
     <None Include="Assets\ExternalAssets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
     <None Include="Assets\MapDisplay\BordersShader.shader" />
     <None Include="Assets\MapDisplay\GroundShader.shader" />
