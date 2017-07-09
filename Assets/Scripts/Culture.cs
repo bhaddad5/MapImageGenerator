@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SettlementNameOption
 {
@@ -48,23 +51,14 @@ public class KingdomNameOption
 public class HeraldryOption
 {
 	public Texture2D image;
-	public List<Settlement.CityTrait> constraints = new List<Settlement.CityTrait>();
+	public List<Settlement.CityTrait> constraints;
 	public int prevelance;
 
-	//TMP
-	public string imagePath;
-
-	public HeraldryOption(string imageName, int odds = 1)
+	public HeraldryOption(string imagePath, List<Settlement.CityTrait> constr, int odds = 1)
 	{
-		imagePath = imageName;
-		image = (Texture2D)Resources.Load(imageName, typeof(Texture2D));
-		prevelance = odds;
-	}
-
-	public HeraldryOption(string imageName, List<Settlement.CityTrait> constr, int odds = 1)
-	{
-		imagePath = imageName;
-		image = (Texture2D)Resources.Load(imageName, typeof(Texture2D));
+		Byte[] file = File.ReadAllBytes(Application.streamingAssetsPath + "/" + imagePath);
+		image = new Texture2D(2, 2);
+		image.LoadImage(file);
 		prevelance = odds;
 		constraints = constr;
 	}
@@ -81,7 +75,7 @@ public class Culture
 
 	public List<KingdomNameOption> kingdomTitles;
 
-	public string heraldryOverlay;
+	public Texture2D heraldryOverlay;
 	public List<HeraldryOption> heraldryBackground;
 	public List<HeraldryOption> heraldryForeground;
 
@@ -174,7 +168,7 @@ public class Culture
 
 		Texture2D final = new Texture2D(imageSize, imageSize);
 		final.SetPixels(finalHeraldry);
-		final = ImageHelpers.AlphaBlend(final, GetOverlay());
+		final = ImageHelpers.AlphaBlend(final, heraldryOverlay);
 		final.Apply();
 		return final;
 	}
@@ -217,16 +211,6 @@ public class Culture
 				value += tileValues[trait];
 		}
 		return value;
-	}
-
-	private Texture2D overlay;
-	public Texture2D GetOverlay()
-	{
-		if(overlay == null)
-		{
-			overlay = (Texture2D)Resources.Load(heraldryOverlay, typeof(Texture2D));
-		}
-		return overlay;
 	}
 
 	public float TileAreaValue(Int2 pos, bool includeDiag = false)

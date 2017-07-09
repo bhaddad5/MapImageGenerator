@@ -84,7 +84,10 @@ public class StoredCulture
 		Culture c = new Culture();
 		c.CultureId = CultureId;
 		c.CultureName = CultureName;
-		c.heraldryOverlay = HeraldryOverlayImage;
+
+		Byte[] file = File.ReadAllBytes(Application.streamingAssetsPath + "/" + HeraldryOverlayImage);
+		c.heraldryOverlay = new Texture2D(2, 2);
+		c.heraldryOverlay.LoadImage(file);
 
 		c.prefixes = new List<SettlementNameOption>();
 		foreach (StoredStringOption option in SettlementPrefixes)

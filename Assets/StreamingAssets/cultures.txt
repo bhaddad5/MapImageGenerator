@@ -88,25 +88,25 @@
 		{"storedString":"Free City of %n","prevelance":1,"conditions":["OneCity"]},
 		{"storedString":"%n","prevelance":1,"conditions":["OneCity"]}
 	],
-	"HeraldryOverlayImage":"Anglo/Heraldry/Overlay",
-	"HeraldryBackgrounds":[
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_0","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_1","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_2","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_3","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_4","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_5","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_5","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_Ocean","prevelance":1,"conditions":["Port"]}
-	],
+	"HeraldryOverlayImage":"Anglo/Heraldry/Overlay.png",
 	"HeraldryForegrounds":[
 		
-		{"storedString":"Anglo/Heraldry/Symbols/Blank","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Symbols/Dragon","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Symbols/EagleHead","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Symbols/Feather","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Symbols/Gryphon","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Symbols/Horse","prevelance":1,"conditions":[]}
+		{"storedString":"Anglo/Heraldry/Symbols/Blank.png","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Symbols/Dragon.png","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Symbols/EagleHead.png","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Symbols/Feather.png","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Symbols/Gryphon.png","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Symbols/Horse.png","prevelance":1,"conditions":[]}
+	],
+	"HeraldryBackgrounds":[
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_0.png","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_1.png","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_2.png","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_3.png","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_4.png","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_5.png","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_5.png","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_Ocean.png","prevelance":1,"conditions":["Port"]}
 	],
 	"GroundPropertyValues":[
 		{"groundTrait":"Water","groundValue":0.0},
@@ -209,19 +209,19 @@
 		{"storedString":"%n","prevelance":1,"conditions":["Medium"]},
 		{"storedString":"The Empire of %n","prevelance":1,"conditions":["Large"]}
 	],
-	"HeraldryOverlayImage":"Dwarf/Heraldry/Overlay",
+	"HeraldryOverlayImage":"Dwarf/Heraldry/Overlay.png",
 	"HeraldryForegrounds":[
-		{"storedString":"Dwarf/Heraldry/Symbols/Anvil","prevelance":1,"conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Symbols/Dragon","prevelance":1,"conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Symbols/DragonSkull","prevelance":1,"conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Symbols/AleHorn","prevelance":1,"conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Symbols/Helmet","prevelance":1,"conditions":[]}
+		{"storedString":"Dwarf/Heraldry/Symbols/Anvil.png","prevelance":1,"conditions":[]},
+		{"storedString":"Dwarf/Heraldry/Symbols/Dragon.png","prevelance":1,"conditions":[]},
+		{"storedString":"Dwarf/Heraldry/Symbols/DragonSkull.png","prevelance":1,"conditions":[]},
+		{"storedString":"Dwarf/Heraldry/Symbols/AleHorn.png","prevelance":1,"conditions":[]},
+		{"storedString":"Dwarf/Heraldry/Symbols/Helmet.png","prevelance":1,"conditions":[]}
 	],
 	"HeraldryBackgrounds":[
-		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_0","prevelance":1,"conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_1","prevelance":1,"conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_2","prevelance":1,"conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_3","prevelance":1,"conditions":[]}
+		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_0.png","prevelance":1,"conditions":[]},
+		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_1.png","prevelance":1,"conditions":[]},
+		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_2.png","prevelance":1,"conditions":[]},
+		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_3.png","prevelance":1,"conditions":[]}
 	],
 	"GroundPropertyValues":[
 		{"groundTrait":"Water","groundValue":0.0},
@@ -312,16 +312,17 @@
 		{"storedString":"Shamans of %n","prevelance":1,"conditions":["OneCity"]},
 		{"storedString":"%n Empire","prevelance":1,"conditions":["Large"]}
 	],
-	"HeraldryOverlayImage":"Orc/Heraldry/Overlay","HeraldryForegrounds":[
-		{"storedString":"Orc/Heraldry/Symbols/DragonFace","prevelance":1,"conditions":[]},
-		{"storedString":"Orc/Heraldry/Symbols/Dragon","prevelance":1,"conditions":[]},
-		{"storedString":"Orc/Heraldry/Symbols/Skull","prevelance":1,"conditions":[]}
+	"HeraldryOverlayImage":"Orc/Heraldry/Overlay.png",
+	"HeraldryForegrounds":[
+		{"storedString":"Orc/Heraldry/Symbols/DragonFace.png","prevelance":1,"conditions":[]},
+		{"storedString":"Orc/Heraldry/Symbols/Dragon.png","prevelance":1,"conditions":[]},
+		{"storedString":"Orc/Heraldry/Symbols/Skull.png","prevelance":1,"conditions":[]}
 	],
 	"HeraldryBackgrounds":[
-		{"storedString":"Orc/Heraldry/Backgrounds/Orc_Background_0","prevelance":1,"conditions":[]},
-		{"storedString":"Orc/Heraldry/Backgrounds/Orc_Background_1","prevelance":1,"conditions":[]},
-		{"storedString":"Orc/Heraldry/Backgrounds/Orc_Background_2","prevelance":1,"conditions":[]},
-		{"storedString":"Orc/Heraldry/Backgrounds/Orc_Background_3","prevelance":1,"conditions":[]}
+		{"storedString":"Orc/Heraldry/Backgrounds/Orc_Background_0.png","prevelance":1,"conditions":[]},
+		{"storedString":"Orc/Heraldry/Backgrounds/Orc_Background_1.png","prevelance":1,"conditions":[]},
+		{"storedString":"Orc/Heraldry/Backgrounds/Orc_Background_2.png","prevelance":1,"conditions":[]},
+		{"storedString":"Orc/Heraldry/Backgrounds/Orc_Background_3.png","prevelance":1,"conditions":[]}
 	],
 	"GroundPropertyValues":[
 		{"groundTrait":"Water","groundValue":0.0},
