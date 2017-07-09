@@ -11,8 +11,8 @@ public class MapGenerator
 	public static void SetUpMapGenerator(int width, int height, MapEnvironment env)
 	{
 		Environment = env;
-		InitialMapGenerator generator = new InitialMapGenerator();
-		var maps = generator.GenerateMaps(width, height, env);
+		MapGeneratorApi generatorApi = new MapGeneratorApi();
+		var maps = generatorApi.GenerateMaps(width, height, env);
 		Heights = maps.heights;
 		Terrain = maps.terrain;
 	}

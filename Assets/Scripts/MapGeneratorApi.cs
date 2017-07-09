@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Random = UnityEngine.Random;
 
-public class InitialMapGenerator
+public class MapGeneratorApi
 {
 	protected Map2D<float> Heights;
 	protected Map2D<GroundInfo> Terrain;

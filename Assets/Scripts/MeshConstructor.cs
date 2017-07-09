@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-class MeshBuilder
+class MeshConstructor
 {
 	private List<UnityEngine.Mesh> builtMeshes = new List<UnityEngine.Mesh>();
-	public MeshBuilder()
+	public MeshConstructor()
 	{
 		BuildMeshes();
 	}
