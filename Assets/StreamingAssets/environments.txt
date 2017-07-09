@@ -1,6 +1,32 @@
 {
 	"EnvironmentId":"Anglo",
 	"DisplayName":"The Midlands",
+	"MapBuildingCommands":[
+		"HeightsDefaultFill 0",
+		"HeightRandomlyPlaceAlongLine 1 6 4 50 3",
+		"HeightRandomlyExpandLevelFromItselfOrLevel MinGroundHeight 1 1 20",
+		"HeightBlendUp 2",
+		"HeightRandomlyPlaceNotInWater .2 500",
+		"HeightBlendUp 1",
+		"HeightSetEdges 0",
+		"HeightRandomizeLevelEdges 0 2",
+		"CreateRivers 10 20",
+		
+		"TerrainDefaultFill Wilderness",
+		"TerrainFillInOceans Ocean",
+		"TerrainFillInMountains Mountain",
+		"TerrainFillInRivers River",
+		"TerrainEncourageStartAlongMountains Forest 0.15",
+		"TerrainExpandSimmilarTypes 6 Forest",
+		"TerrainRandomlyStart Forest 0.05",
+		"TerrainExpandSimmilarTypes 3 Forest",
+		"TerrainEncourageStartAlongOcean Fertile 0.15",
+		"TerrainRandomlyStart Fertile 0.05",
+		"TerrainExpandSimmilarTypes 5 Fertile",
+		"TerrainEncourageStartAlongOcean Swamp 0.05",
+		"TerrainRandomlyStart Swamp 0.02",
+		"TerrainExpandSimmilarTypes 3 Swamp"
+	],
 	"Cultures":[
 		{"cultureId":"Anglo",	"avgSettlementsPer80Square":50},
 		{"cultureId":"Dwarf",	"avgSettlementsPer80Square":35},
@@ -130,6 +156,7 @@
 		"HeightRandomlyExpandLevelFromItselfOrLevel MinGroundHeight 0 1 3",
 		"HeightRandomlyPlace 1 150",
 		"HeightSetEdges 1",
+		
 		"TerrainDefaultFill CaveWall",
 		"TerrainFillInOceans Ocean",
 		"TerrainFillInSeaLevel CaveFloor",

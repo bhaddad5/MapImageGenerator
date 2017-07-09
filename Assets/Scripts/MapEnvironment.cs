@@ -98,7 +98,6 @@ public class MapEnvironment
 	public string[] MapBuildingCommands = new string[0];
 	public List<CulturePrevelance> Cultures = new List<CulturePrevelance>();
 	public Dictionary<string, GroundInfo> groundTypes = new Dictionary<string, GroundInfo>();
-	public IMapGenerator HeightGenerator;
 
 	public GroundInfo Ocean { get { return groundTypes["Ocean"]; } }
 	public GroundInfo River { get { return groundTypes["River"]; } }

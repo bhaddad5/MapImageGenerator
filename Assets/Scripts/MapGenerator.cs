@@ -8,9 +8,10 @@ public class MapGenerator
 	public static Map2D<GroundInfo> Terrain;
 	public static MapEnvironment Environment;
 
-	public static void SetUpMapGenerator(int width, int height, IMapGenerator generator, MapEnvironment env)
+	public static void SetUpMapGenerator(int width, int height, MapEnvironment env)
 	{
 		Environment = env;
+		InitialMapGenerator generator = new InitialMapGenerator();
 		var maps = generator.GenerateMaps(width, height, env);
 		Heights = maps.heights;
 		Terrain = maps.terrain;
@@ -57,5 +58,17 @@ public class MapGenerator
 				numTiles++;
 		}
 		return numTiles;
+	}
+}
+
+public class Map
+{
+	public Map2D<float> heights;
+	public Map2D<GroundInfo> terrain;
+
+	public Map(Map2D<float> h, Map2D<GroundInfo> ter)
+	{
+		heights = h;
+		terrain = ter;
 	}
 }

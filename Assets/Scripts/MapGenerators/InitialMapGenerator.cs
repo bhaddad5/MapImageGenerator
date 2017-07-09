@@ -9,6 +9,15 @@ public class InitialMapGenerator
 	protected Map2D<float> Heights;
 	protected Map2D<GroundInfo> Terrain;
 
+	public Map GenerateMaps(int width, int height, MapEnvironment env)
+	{
+		MapGenerator.Environment = env;
+		Heights = new Map2D<float>(width, height);
+		Terrain = new Map2D<GroundInfo>(width, height);
+		ExecuteApiCommands(env.MapBuildingCommands);
+
+		return new Map(Heights, Terrain);
+	}
 
 	public void ExecuteApiCommands(string[] commands)
 	{
@@ -27,6 +36,8 @@ public class InitialMapGenerator
 			HeightsDefaultFill(Single.Parse(split[1]));
 		if (split[0] == "HeightRandomlyPlace")
 			HeightRandomlyPlace(Single.Parse(split[1]), Single.Parse(split[2]));
+		if (split[0] == "HeightRandomlyPlaceNotInWater")
+			HeightRandomlyPlaceNotInWater(Single.Parse(split[1]), Single.Parse(split[2]));
 		if (split[0] == "HeightRandomlyExpandLevel")
 			HeightRandomlyExpandLevel(Single.Parse(split[1]), Single.Parse(split[2]));
 		if (split[0] == "HeightRandomizeLevelEdges")
@@ -37,16 +48,26 @@ public class InitialMapGenerator
 			HeightRandomlyExpandLevelFromItselfOrLevel(Single.Parse(split[1]), Single.Parse(split[2]), Single.Parse(split[3]), Single.Parse(split[4]));
 		if (split[0] == "HeightSetEdges")
 			HeightSetEdges(Single.Parse(split[1]));
+		if (split[0] == "HeightBlendUp")
+			HeightBlendUp(Int32.Parse(split[1]));
+		if (split[0] == "CreateRivers")
+			CreateRivers(Int32.Parse(split[1]), Int32.Parse(split[2]));
+
+
 		if (split[0] == "TerrainDefaultFill")
 			TerrainDefaultFill(split[1]);
 		if (split[0] == "TerrainFillInOceans")
 			TerrainFillInOceans(split[1]);
+		if (split[0] == "TerrainFillInRivers")
+			TerrainFillInRivers(split[1]);
 		if (split[0] == "TerrainFillInSeaLevel")
 			TerrainFillInSeaLevel(split[1]);
 		if (split[0] == "TerrainFillInMountains")
 			TerrainFillInMountains(split[1]);
 		if (split[0] == "TerrainEncourageStartAlongMountains")
 			TerrainEncourageStartAlongMountains(split[1], Single.Parse(split[2]));
+		if (split[0] == "TerrainEncourageStartAlongOcean")
+			TerrainEncourageStartAlongOcean(split[1], Single.Parse(split[2]));
 		if (split[0] == "TerrainRandomlyStart")
 			TerrainRandomlyStart(split[1], Single.Parse(split[2]));
 		if (split[0] == "TerrainExpandSimmilarTypes")

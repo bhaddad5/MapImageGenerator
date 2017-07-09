@@ -96,12 +96,6 @@ public class StoredEnvironment
 		env.DisplayName = DisplayName;
 		env.MapBuildingCommands = MapBuildingCommands;
 
-		//TEMP:
-		if (env.EnvironmentId == "Anglo")
-			env.HeightGenerator = new MidlandGenerator();
-		else if(env.EnvironmentId == "Underground")
-			env.HeightGenerator = new UndergroundGenerator();
-
 		foreach (StoredCulturePrevelance culturePrevelance in Cultures)
 		{
 			Culture culture = new Culture();
