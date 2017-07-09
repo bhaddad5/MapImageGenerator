@@ -16,7 +16,7 @@ class RegionsGen
 
 		foreach (var culture in cultures)
 		{
-			float portionAtSeaLevel = (Map.Width * Map.Height) / (float)MapGenerator.SeaLevelPixelCount();
+			float portionAtSeaLevel = (float)MapGenerator.SeaLevelPixelCount() / (float)(Map.Width * Map.Height);
 			var settlementLocations = GetSettlementLocations(culture.culture, (int)(culture.numPlacementsPer80Square * portionAtSeaLevel));
 
 			for (int i = settlementLocations.Count - 1; i >= 0; i--)
