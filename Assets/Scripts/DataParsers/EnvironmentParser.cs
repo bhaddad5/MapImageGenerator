@@ -72,6 +72,9 @@ public class EnvironmentParser
 		string str = JsonUtility.ToJson(store);
 		Debug.Log(str);*/
 
+		CultureParser parser = new CultureParser();
+		parser.TmpConvertCultureToJson(CultureDefinitions.Anglo);
+
 		var LoadedEnvironments = new List<MapEnvironment>();
 
 		string environmentsFile = File.ReadAllText(Application.streamingAssetsPath + "/environments.txt");

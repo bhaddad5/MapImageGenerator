@@ -48,17 +48,22 @@ public class KingdomNameOption
 public class HeraldryOption
 {
 	public Texture2D image;
-	public List<Settlement.CityTrait> constraints;
+	public List<Settlement.CityTrait> constraints = new List<Settlement.CityTrait>();
 	public int prevelance;
+
+	//TMP
+	public string imagePath;
 
 	public HeraldryOption(string imageName, int odds = 1)
 	{
+		imagePath = imageName;
 		image = (Texture2D)Resources.Load(imageName, typeof(Texture2D));
 		prevelance = odds;
 	}
 
 	public HeraldryOption(string imageName, List<Settlement.CityTrait> constr, int odds = 1)
 	{
+		imagePath = imageName;
 		image = (Texture2D)Resources.Load(imageName, typeof(Texture2D));
 		prevelance = odds;
 		constraints = constr;
@@ -68,9 +73,6 @@ public class HeraldryOption
 public class Culture
 {
 	public string CultureName;
-
-	public float AttackMultiplier;
-	public float DefenseMultiplier;
 
 	public List<SettlementNameOption> prefixes;
 	public List<SettlementNameOption> suffixes;

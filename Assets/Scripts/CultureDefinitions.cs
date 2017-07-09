@@ -7,8 +7,6 @@ public static class CultureDefinitions
 	public static Culture Anglo = new Culture()
 	{
 		CultureName = "Humans",
-		AttackMultiplier = 1f,
-		DefenseMultiplier = 1f,
 		prefixes = new List<SettlementNameOption>()
 		{
 			new SettlementNameOption("Lunn"),
@@ -167,8 +165,6 @@ public static class CultureDefinitions
 	public static Culture Dwarf = new Culture()
 	{
 		CultureName = "Dwarves",
-		AttackMultiplier = 1f,
-		DefenseMultiplier = 1f,
 		prefixes = new List<SettlementNameOption>()
 		{
 			new SettlementNameOption("Daz"),
@@ -295,8 +291,6 @@ public static class CultureDefinitions
 	public static Culture Orc = new Culture()
 	{
 		CultureName = "Orcs",
-		AttackMultiplier = 1f,
-		DefenseMultiplier = 1f,
 		prefixes = new List<SettlementNameOption>()
 		{
 			new SettlementNameOption("Org"),

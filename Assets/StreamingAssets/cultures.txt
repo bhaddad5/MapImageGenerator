@@ -1,0 +1,179 @@
+{
+	"CultureName":"Humans",
+	"SettlementPrefixes":[
+		{
+		"storedString":"Lunn","prevelance":1,"conditions":[]},
+		{"storedString":"Berry","prevelance":1,"conditions":[]},
+		{"storedString":"Mannin","prevelance":1,"conditions":[]},
+		{"storedString":"Hetten","prevelance":1,"conditions":[]},
+		{"storedString":"Stok","prevelance":1,"conditions":[]},
+		{"storedString":"Rusk","prevelance":1,"conditions":[]},
+		{"storedString":"An","prevelance":1,"conditions":[]},
+		{"storedString":"Ewer","prevelance":1,"conditions":[]},
+		{"storedString":"How","prevelance":1,"conditions":[]},
+		{"storedString":"Setter","prevelance":1,"conditions":[]},
+		{"storedString":"Somer","prevelance":1,"conditions":[]},
+		{"storedString":"Wend","prevelance":1,"conditions":[]},
+		{"storedString":"Torrent","prevelance":1,"conditions":[]},
+		{"storedString":"Comb","prevelance":1,"conditions":[]},
+		{"storedString":"Slak","prevelance":1,"conditions":[]},
+		{"storedString":"Brix","prevelance":1,"conditions":[]},
+		{"storedString":"Bux","prevelance":1,"conditions":[]},
+		{"storedString":"Win","prevelance":1,"conditions":[]},
+		{"storedString":"Fur","prevelance":1,"conditions":[]},
+		{"storedString":"Hather","prevelance":1,"conditions":[]}
+	],
+	"SettlementSuffixes":[
+		{"storedString":"","prevelance":1,"conditions":[]},
+		{"storedString":"ton","prevelance":1,"conditions":[]},
+		{"storedString":"moor","prevelance":1,"conditions":[]},
+		{"storedString":"mont","prevelance":1,"conditions":["Mountains"]},
+		{"storedString":"rent","prevelance":1,"conditions":[]},
+		{"storedString":"eter","prevelance":1,"conditions":[]},
+		{"storedString":"by","prevelance":1,"conditions":[]},
+		{"storedString":"nall","prevelance":1,"conditions":[]},
+		{"storedString":"ford","prevelance":1,"conditions":["River"]},
+		{"storedString":"brook","prevelance":1,"conditions":["River"]},
+		{"storedString":"field","prevelance":1,"conditions":["Fertile"]},
+		{"storedString":"ham","prevelance":1,"conditions":[]},
+		{"storedString":"dun","prevelance":1,"conditions":[]},
+		{"storedString":"wick","prevelance":1,"conditions":[]},
+		{"storedString":"well","prevelance":1,"conditions":[]},
+		{"storedString":"light","prevelance":1,"conditions":[]},
+		{"storedString":"sor","prevelance":1,"conditions":[]},
+		{"storedString":"ley","prevelance":1,"conditions":[]},
+		{"storedString":"end","prevelance":1,"conditions":[]}
+	],
+	"SettlementAreaInfo":[
+		{"storedString":"%n","prevelance":2,"conditions":[]},
+		{"storedString":"Port %n","prevelance":3,"conditions":["Port","Large"]},
+		{"storedString":"%n Harbor","prevelance":3,"conditions":["Port","Medium"]},
+		{"storedString":"%n Anchorage","prevelance":3,"conditions":["Port","Small"]},
+		{"storedString":"%n Mountain","prevelance":1,"conditions":["Mountains"]},
+		{"storedString":"Mount %n","prevelance":1,"conditions":["Mountains"]},
+		{"storedString":"%nshire","prevelance":1,"conditions":["Fertile","Landlocked","Small"]},
+		{"storedString":"%n Vale","prevelance":1,"conditions":["Fertile","Landlocked","Small"]},
+		{"storedString":"Vale %n","prevelance":1,"conditions":["Fertile","Landlocked","Small"]},
+		{"storedString":"%n Castle","prevelance":1,"conditions":["Large"]},
+		{"storedString":"Castle %n","prevelance":1,"conditions":["Large"]},
+		{"storedString":"%n Hold","prevelance":1,"conditions":["Medium"]},
+		{"storedString":"%n Hall","prevelance":1,"conditions":["Medium"]},
+		{"storedString":"%n Stead","prevelance":1,"conditions":["Small"]},
+		{"storedString":"%n Ford","prevelance":1,"conditions":["River"]},
+		{"storedString":"%n Bridge","prevelance":1,"conditions":["River"]},
+		{"storedString":"%n Bend","prevelance":1,"conditions":["Small","River"]},
+		{"storedString":"%n Mill","prevelance":1,"conditions":["Small","Fertile"]},
+		{"storedString":"%n Heath","prevelance":1,"conditions":["Small"]},
+		{"storedString":"New %n","prevelance":1,"conditions":[]}
+	],
+	"KingdomTitles":[
+		{"storedString":"Kingdom of %n","prevelance":1,"conditions":["Landlocked"]},
+		{"storedString":"Kingdom of %n","prevelance":1,"conditions":["Small"]},
+		{"storedString":"Empire of %n","prevelance":1,"conditions":["Small"]},
+		{"storedString":"The %n Empire","prevelance":1,"conditions":["Small"]},
+		{"storedString":"Crown of %n","prevelance":1,"conditions":["Landlocked"]},
+		{"storedString":"Principality of %n","prevelance":1,"conditions":["Landlocked"]},
+		{"storedString":"Principality of %n","prevelance":1,"conditions":["Port"]},
+		{"storedString":"Grand Barony of %n","prevelance":1,"conditions":["Landlocked"]}
+		,{"storedString":"Barony of %n","prevelance":1,"conditions":["Landlocked"]},
+		{"storedString":"Barony of %n","prevelance":1,"conditions":["Port"]},
+		{"storedString":"Dukedom of %n","prevelance":1,"conditions":["Port"]},
+		{"storedString":"The %n Prices","prevelance":1,"conditions":["Landlocked"]},
+		{"storedString":"Trade Princes of %n","prevelance":1,"conditions":["Landlocked","Medium"]},
+		{"storedString":"Trade Princes of %n","prevelance":1,"conditions":["Port","Medium"]},
+		{"storedString":"Trade Council of %n","prevelance":1,"conditions":["Port","Medium"]},
+		{"storedString":"Trade Council of %n","prevelance":1,"conditions":["Mountains","Medium"]},
+		{"storedString":"Council of %n","prevelance":1,"conditions":["Mountains"]},
+		{"storedString":"Free City of %n","prevelance":1,"conditions":["Mountains"]},
+		{"storedString":"%n","prevelance":1,"conditions":["Mountains"]}
+	],
+	"HeraldryOverlayImage":"Anglo/Heraldry/Overlay",
+	"HeraldryBackgrounds":[
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_0","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_1","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_2","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_3","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_4","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_5","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_5","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_Ocean","prevelance":1,"conditions":["Port"]}
+	],
+	"HeraldryForegrounds":[
+		
+		{"storedString":"Anglo/Heraldry/Symbols/Blank","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Symbols/Dragon","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Symbols/EagleHead","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Symbols/Feather","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Symbols/Gryphon","prevelance":1,"conditions":[]},
+		{"storedString":"Anglo/Heraldry/Symbols/Horse","prevelance":1,"conditions":[]}
+	],
+	"GroundPropertyValues":[
+		{"groundType":"Water","groundValue":0.0},
+		{"groundType":"Impassable","groundValue":0.0},
+		{"groundType":"Muddy","groundValue":0.10000000149011612},
+		{"groundType":"Rocky","groundValue":0.10000000149011612},
+		{"groundType":"Hunting","groundValue":0.15000000596046449},
+		{"groundType":"Forest","groundValue":0.10000000149011612},
+		{"groundType":"Fertile","groundValue":0.4000000059604645},
+		{"groundType":"City","groundValue":5.0},
+		{"groundType":"Road","groundValue":3.0}
+	],
+	"ModelPlacementByTraitCultureInfos":[
+		{
+		"TerrainTrait":"Road",
+		"ModelPlacementInfos":[
+			{"model":"AngloBridge","placementMode":"Bridge","min":1,"max":1}
+		]},
+		{
+		"TerrainTrait":"SmallCity",
+		"ModelPlacementInfos":[
+			{"model":"AngloHovel","placementMode":"Scattered","min":20,"max":25}
+		]},
+		{
+		"TerrainTrait":"MediumCity",
+		"ModelPlacementInfos":[
+			{"model":"AngloHovel","placementMode":"ScatteredBordered","min":10,"max":15},
+			{"model":"AngloTownHouse","placementMode":"ScatteredBordered","min":10,"max":12},
+			{"model":"AngloWoodenWall","placementMode":"CityWalls","min":4,"max":4},
+			{"model":"AngloWoodenGate","placementMode":"CityGates","min":4,"max":4}
+		]},
+		{
+		"TerrainTrait":"LargeCity",
+		"ModelPlacementInfos":[
+			{"model":"AngloTownHouse","placementMode":"ScatteredBordered","min":20,"max":25},
+			{"model":"AngloStoneWall","placementMode":"CityWalls","min":4,"max":4},
+			{"model":"AngloStoneGate","placementMode":"CityGates","min":4,"max":4},
+			{"model":"AngloStoneTurret","placementMode":"Corners","min":4,"max":4}
+		]},
+	]
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

@@ -390,8 +390,8 @@ class RegionsGen
 			Settlement closestSett = kingdom.ClosestEnemySettlement();
 			if (closestSett != null)
 			{
-				float attackPower = kingdom.Strength() * Random.Range(.75f, 1.25f) * kingdom.culture.AttackMultiplier;
-				float defenderPower = (closestSett.kingdom.Strength() + closestSett.GetSettlementDefensibility()) * Random.Range(.75f, 1.25f) * closestSett.kingdom.culture.DefenseMultiplier;
+				float attackPower = kingdom.Strength() * Random.Range(.75f, 1.25f);
+				float defenderPower = (closestSett.kingdom.Strength() + closestSett.GetSettlementDefensibility()) * Random.Range(.75f, 1.25f);
 
 				if (attackPower > defenderPower)
 				{
