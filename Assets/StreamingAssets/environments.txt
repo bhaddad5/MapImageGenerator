@@ -1,5 +1,10 @@
 {
 	"displayName":"Midlands",
+	"Cultures":[
+		{"cultureName":"Anglo",	"avgSettlementsPer80Square":10},
+		{"cultureName":"Dwarf",	"avgSettlementsPer80Square":6},
+		{"cultureName":"Orc",	"avgSettlementsPer80Square":6}
+	],
 	"groundTypes":[
 		{
 			"GroundType":"Ocean",
@@ -114,6 +119,10 @@
 |
 {
 	"displayName":"Underground",
+	"Cultures":[
+		{"cultureName":"Dwarf",	"avgSettlementsPer80Square":10},
+		{"cultureName":"Orc",	"avgSettlementsPer80Square":10}
+	],
 	"groundTypes":[
 		{
 			"GroundType":"Ocean",

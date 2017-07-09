@@ -48,13 +48,12 @@ public class MapGenerator
 		return terrainMapImage;
 	}
 
-	public int LandPixelCount()
+	public static int SeaLevelPixelCount()
 	{
 		int numTiles = 0;
-		foreach (var tile in Terrain.GetMapValues())
+		foreach (var tile in Heights.GetMapValues())
 		{
-			if (tile != Environment.Ocean &&
-			    tile != Environment.River)
+			if (tile >= Globals.MinGroundHeight && tile < Globals.MountainHeight)
 				numTiles++;
 		}
 		return numTiles;

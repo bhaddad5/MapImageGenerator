@@ -133,10 +133,18 @@ public class StoredGroundDisplayInfo
 }
 
 [Serializable]
+public class StoredCulturePrevelance
+{
+	public string cultureName;
+	public int avgSettlementsPer80Square;
+}
+
+[Serializable]
 public class StoredEnvironment
 {
 	public string displayName;
-	public StoredGroundDisplayInfo[] groundTypes;
+	public StoredCulturePrevelance[] Cultures = new StoredCulturePrevelance[0];
+	public StoredGroundDisplayInfo[] groundTypes = new StoredGroundDisplayInfo[0];
 
 	public MapEnvironment ToEnvironment()
 	{
@@ -148,6 +156,19 @@ public class StoredEnvironment
 			env.HeightGenerator = new MidlandGenerator();
 		else if(env.displayName == "Underground")
 			env.HeightGenerator = new UndergroundGenerator();
+
+		foreach (StoredCulturePrevelance culturePrevelance in Cultures)
+		{
+			//TMP
+			var culture = CultureDefinitions.Anglo;
+			if (culturePrevelance.cultureName == "Dwarf")
+				culture = CultureDefinitions.Dwarf;
+			if (culturePrevelance.cultureName == "Orc")
+				culture = CultureDefinitions.Orc;
+
+			env.Cultures.Add(new CulturePrevelance() {culture =  culture, numPlacementsPer80Square = culturePrevelance.avgSettlementsPer80Square});
+		}
+
 		foreach (StoredGroundDisplayInfo groundType in groundTypes)
 		{
 			GroundInfo info = groundType.ToDisplayInfo();

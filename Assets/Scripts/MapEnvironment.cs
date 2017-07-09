@@ -84,6 +84,12 @@ public class GroundInfo
 	}
 }
 
+public class CulturePrevelance
+{
+	public Culture culture;
+	public int numPlacementsPer80Square;
+}
+
 public class MapEnvironment
 {
 	public GroundInfo Ocean
@@ -107,6 +113,7 @@ public class MapEnvironment
 	}
 
 	public string displayName;
+	public List<CulturePrevelance> Cultures = new List<CulturePrevelance>();
 	public Dictionary<string, GroundInfo> groundTypes = new Dictionary<string, GroundInfo>();
 	public IMapGenerator HeightGenerator;
 

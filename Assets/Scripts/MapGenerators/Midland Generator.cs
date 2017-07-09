@@ -21,8 +21,9 @@ public class MidlandGenerator : InitialMapGenerator, IMapGenerator
 		HeightsDefaultFill(0f);
 		HeightRandomlyPlaceAlongLine(1f, 9, 4, 50, 3);
 		HeightRandomlyExpandLevelFromItselfOrLevel(Globals.MinGroundHeight, 1f, 1, 10);
-		HeightRandomlyPlaceNotInWater(.2f, 200);
 		HeightBlendUp(2);
+		HeightRandomlyPlaceNotInWater(.2f, 500);
+		HeightBlendUp(1);
 		HeightSetEdges(0f);
 		HeightRandomizeLevelEdges(0f, 2);
 		CreateRivers(10, 20);

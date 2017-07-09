@@ -53,17 +53,10 @@ public class MapBuilder : MonoBehaviour
 		if(sizeY.text != "")
 			height = int.Parse(sizeY.text);
 
-		List<CulturePrevelance> cultures = new List<CulturePrevelance>()
-		{
-			new CulturePrevelance(CultureDefinitions.Anglo, CulturePrevelance.Prevelance.Dominant),
-			new CulturePrevelance(CultureDefinitions.Orc, CulturePrevelance.Prevelance.Occasional),
-			new CulturePrevelance(CultureDefinitions.Dwarf, CulturePrevelance.Prevelance.Occasional),
-		};
-
-		StartCoroutine(BuildMap(width, height, cultures, GetSelectedEnvironment(EnvironmentSelection.options[EnvironmentSelection.value].text)));
+		StartCoroutine(BuildMap(width, height, GetSelectedEnvironment(EnvironmentSelection.options[EnvironmentSelection.value].text)));
 	}
 
-	public IEnumerator BuildMap(int width, int height, List<CulturePrevelance> cultures, MapEnvironment mapEnvironment)
+	public IEnumerator BuildMap(int width, int height, MapEnvironment mapEnvironment)
 	{
 		terrainMeshDisplay.transform.localPosition = Vector3.zero;
 		for (int i = 0; i < terrainMeshDisplay.transform.childCount; i++)
@@ -87,11 +80,7 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Forging Kingdoms";
 		yield return null;
 
-		int landPixelCount = mapGenerator.LandPixelCount();
-		foreach (var culture in cultures)
-			culture.SetNumSettlements(landPixelCount);
-
-		RegionsGen regionsMap = new RegionsGen(cultures);
+		RegionsGen regionsMap = new RegionsGen(mapEnvironment.Cultures);
 
 		displayText.text = "Artificing Lands";
 		yield return null;
@@ -195,7 +184,7 @@ public class MapBuilder : MonoBehaviour
 
 	
 
-	public class CulturePrevelance
+	/*public class CulturePrevelance
 	{
 		public enum Prevelance
 		{
@@ -232,5 +221,5 @@ public class MapBuilder : MonoBehaviour
 				numSettlements = landPixleCount / 180;
 			}
 		}
-	}
+	}*/
 }

@@ -281,7 +281,7 @@ public class InitialMapGenerator
 					endTile = shortestTile;
 					break;
 				}
-				else if (Heights.Get(neighbor) <= Heights.Get(shortestTile) + 0.03f)
+				else if (Heights.Get(neighbor) <= Heights.Get(shortestTile) + 0.02f)
 				{
 					checkedTiles.Set(neighbor, checkedTiles.Get(shortestTile) - 1);
 					nextRiverTiles.Insert(neighbor, checkedTiles.Get(shortestTile) - 1);

@@ -9,14 +9,15 @@ class RegionsGen
 	public int Width { get { return Map.Width; } }
 	public int Height { get { return Map.Height; } }
 
-	public RegionsGen(List<MapBuilder.CulturePrevelance> cultures)
+	public RegionsGen(List<CulturePrevelance> cultures)
 	{
 		StartFillMap();
 		Kingdoms = new List<Kingdom>();
 
 		foreach (var culture in cultures)
 		{
-			var settlementLocations = GetSettlementLocations(culture.culture, culture.numSettlements);
+			float portionAtSeaLevel = (Map.Width * Map.Height) / (float)MapGenerator.SeaLevelPixelCount();
+			var settlementLocations = GetSettlementLocations(culture.culture, (int)(culture.numPlacementsPer80Square * portionAtSeaLevel));
 
 			for (int i = settlementLocations.Count - 1; i >= 0; i--)
 			{
