@@ -146,7 +146,7 @@ public class MapBuilder : MonoBehaviour
 
 	private List<Material> GetMapMaterials(List<GroundInfo> groundTypes)
 	{
-		var mats = new List<Material>() {FlushGroundInfoToMat(groundTypes)};
+		var mats = new List<Material>();
 		List<GroundInfo> gtToFlush = new List<GroundInfo>();
 		firstFlush = true;
 		for (int i = 0; i < groundTypes.Count; i++)

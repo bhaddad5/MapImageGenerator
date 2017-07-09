@@ -8,7 +8,6 @@
 		"HeightBlendUp 2",
 		"HeightRandomlyPlaceNotInWater .2 500",
 		"HeightBlendUp 1",
-		"HeightSetEdges 0",
 		"HeightRandomizeLevelEdges 0 2",
 		"CreateRivers 10 20",
 		
