@@ -11,69 +11,6 @@ public class EnvironmentParser
 
 	public static List<MapEnvironment> LoadEnvironments()
 	{
-		/*StoredEnvironment store = new StoredEnvironment();
-		store.displayName = "Midlands";
-		store.groundTypes = new []
-		{
-			new StoredGroundDisplayInfo()
-			{
-				GroundType = "Ocean",
-				Texture = "Midlands/Sand.png",
-				StoredTraits = new []
-				{
-					"Water",
-					"Impassable"
-				}
-			},
-			new StoredGroundDisplayInfo()
-			{
-				GroundType = "Swamp",
-				Texture = "Midlands/Swamp.png",
-				DefaultModelPlacement = new []
-				{
-					new StoredModelPlacementInfo()
-					{
-						max = 1,
-						min = 1,
-						model = "Willow",
-						placementMode = "Scattered"
-					},
-					new StoredModelPlacementInfo()
-					{
-						max = 1,
-						min = 1,
-						model = "Rushes",
-						placementMode = "Scattered"
-					},
-				},
-				StoredTraits = new []
-				{
-					"Muddy",
-				}
-			},
-			new StoredGroundDisplayInfo()
-			{
-				GroundType = "Wilderness",
-				Texture = "Midlands/Wilderness.png",
-				DefaultModelPlacement = new []
-				{
-					new StoredModelPlacementInfo()
-					{
-						max = 1,
-						min = 1,
-						model = "PineTree",
-						placementMode = "Scattered"
-					},
-				},
-				StoredTraits = new []
-				{
-					"Hunting"
-				}
-			},
-		};
-		string str = JsonUtility.ToJson(store);
-		Debug.Log(str);*/
-
 		ParsedCultures = CultureParser.LoadCultures();
 
 		var LoadedEnvironments = new List<MapEnvironment>();
