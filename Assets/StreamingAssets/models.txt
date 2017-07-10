@@ -5,6 +5,7 @@
 		{"ModelId":"Rushes", "ModelPath":"Models/Nature/Rushes.obj", "UnlitTransparent":true},
 		{"ModelId":"Willow", "ModelPath":"Models/Nature/Willow.obj", "UnlitTransparent":true},
 		{"ModelId":"GiantMushroom", "ModelPath":"Models/Cave/GiantMushroom.obj"},
+		{"ModelId":"DwarfMushroom", "ModelPath":"Models/Cave/DwarfMushroom.obj"},
 		
 		{"ModelId":"AngloBridge", "ModelPath":"Models/Anglo/Bridge/Bridge.obj"},
 		{"ModelId":"AngloHovel", "ModelPath":"Models/Anglo/Hovel/hovel.obj"},

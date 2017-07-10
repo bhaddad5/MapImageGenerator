@@ -162,7 +162,9 @@
 		"TerrainEncourageStartAlongMountains MushroomForest 0.1",
 		"TerrainRandomlyStart MushroomForest 0.02",
 		"TerrainExpandSimmilarTypes 2 MushroomForest",
-		"TerrainRandomlyStart MushroomForest 0.02"
+		"TerrainRandomlyStart MushroomForest 0.02",
+		"TerrainEncourageStartAlongOcean MushroomSwamp 0.1",
+		"TerrainExpandSimmilarTypes 2 MushroomSwamp"
 	],
 	"Cultures":[
 		{"cultureId":"Dwarf",	"avgSettlementsPer80Square":40},
@@ -188,10 +190,10 @@
 		},
 		{
 		"GroundType":"MushroomSwamp",
-		"Texture":"Midlands/Swamp.png",
+		"Texture":"Underground/MushroomSwamp.png",
 		"Difficulty":0.35,
 		"DefaultModelPlacement":[
-			
+			{"model":"DwarfMushroom","placementMode":"Scattered","min":7,"max":10}
 		],
 		"StoredTraits":[
 			"Muddy",
