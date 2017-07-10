@@ -23,6 +23,7 @@ public class StoredModelEntry
 {
 	public string ModelId;
 	public string ModelPath;
+	public bool UnlitTransparent;
 }
 
 public class StoredModels
@@ -38,6 +39,14 @@ public class StoredModels
 			{
 				mr.gameObject.AddComponent<BoxCollider>();
 				mr.gameObject.layer = LayerMask.NameToLayer("PlacedModel");
+				if (entry.UnlitTransparent)
+					mr.material.shader = Shader.Find("Unlit/Transparent Cutout");
+				else
+				{
+					mr.material.shader = Shader.Find("Standard");
+					mr.material.SetFloat("_Glossieness", 0);
+					mr.material.SetFloat("_Metallic", 0);
+				}
 			}
 			ModelLookup.Models[entry.ModelId] = g;
 			g.SetActive(false);

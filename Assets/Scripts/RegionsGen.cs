@@ -66,8 +66,7 @@ class RegionsGen
 		Kingdom Ocean = new Kingdom(defaultCulture, new Int2(0, 0));
 		foreach (var pixel in Map.GetMapPoints())
 		{
-			if(MapGenerator.Terrain.Get(pixel) == MapGenerator.Environment.Ocean ||
-			   MapGenerator.Terrain.Get(pixel) == MapGenerator.Environment.River)
+			if(MapGenerator.Terrain.Get(pixel) == MapGenerator.Environment.Ocean)
 				Map.Set(pixel, new RegionTile(Ocean.settlements[0]));
 		}
 	}

@@ -85,8 +85,10 @@
 		{"storedString":"Trade Council of %n","prevelance":1,"conditions":["Small","CapitolPort"]},
 		{"storedString":"Trade Council of %n","prevelance":1,"conditions":["OneCity","CapitolPort"]},
 		{"storedString":"Council of %n","prevelance":1,"conditions":["OneCity"]},
-		{"storedString":"Free City of %n","prevelance":1,"conditions":["OneCity"]},
-		{"storedString":"%n","prevelance":1,"conditions":["OneCity"]}
+		{"storedString":"Free City of %n","prevelance":1,"conditions":["OneCity", "Large"]},
+		{"storedString":"%n","prevelance":1,"conditions":["OneCity"]},
+		{"storedString":"Holy Order of %n","prevelance":1,"conditions":[]},
+		{"storedString":"Holy Diocese of %n","prevelance":1,"conditions":[]}
 	],
 	"HeraldryOverlayImage":"Anglo/Heraldry/Overlay.png",
 	"HeraldryForegrounds":[
@@ -118,6 +120,12 @@
 		{"groundTrait":"Fertile","groundValue":0.4000000059604645},
 		{"groundTrait":"City","groundValue":5.0},
 		{"groundTrait":"Road","groundValue":3.0}
+	],
+	"ModelPlacementByTraitCultureInfos":[
+		{"TerrainTrait":"Road",
+		"ModelPlacementInfos":[
+			{"model":"AngloBridge","placementMode":"Bridge","min":1,"max":1}
+		]}
 	]
 }
 |
@@ -209,6 +217,28 @@
 		{"groundTrait":"Fertile","groundValue":0.2},
 		{"groundTrait":"City","groundValue":6.0},
 		{"groundTrait":"Road","groundValue":3.0}
+	],
+	"ModelPlacementByTraitCultureInfos":[
+		{"TerrainTrait":"Road",
+		"ModelPlacementInfos":[
+			{"model":"DwarfBridge","placementMode":"Bridge","min":1,"max":1}
+		]},
+		{"TerrainTrait":"City",
+		"ModelPlacementInfos":[
+			{"model":"DwarfHouse","placementMode":"ScatteredBordered","min":15,"max":20}
+		]},
+		{"TerrainTrait":"MediumCity",
+		"ModelPlacementInfos":[
+			{"model":"DwarfWall","placementMode":"CityWalls","min":4,"max":4},
+			{"model":"DwarfGates","placementMode":"CityGates","min":4,"max":4},
+			{"model":"DwarfTower","placementMode":"Corners","min":4,"max":4}
+		]},
+		{"TerrainTrait":"LargeCity",
+		"ModelPlacementInfos":[
+			{"model":"DwarfWall","placementMode":"CityWalls","min":4,"max":4},
+			{"model":"DwarfGates","placementMode":"CityGates","min":4,"max":4},
+			{"model":"DwarfTower","placementMode":"Corners","min":4,"max":4}
+		]}
 	]
 }
 |
@@ -288,5 +318,18 @@
 		{"groundTrait":"Fertile","groundValue":0.15000000596046449},
 		{"groundTrait":"City","groundValue":4.0},
 		{"groundTrait":"Road","groundValue":2.0}
+	],
+	"ModelPlacementByTraitCultureInfos":[
+		{"TerrainTrait":"Road",
+		"ModelPlacementInfos":[
+			{"model":"OrcBridge","placementMode":"Bridge","min":1,"max":1}
+		]},
+		{"TerrainTrait":"City",
+		"ModelPlacementInfos":[
+			{"model":"OrcHut","placementMode":"Scattered","min":20,"max":25},
+			{"model":"OrcWoodenWall","placementMode":"CityWalls","min":4,"max":4},
+			{"model":"OrcWoodenGate","placementMode":"CityGates","min":4,"max":4},
+			{"model":"OrcWoodenTower","placementMode":"Corners","min":4,"max":4}
+		]}
 	]
 }
