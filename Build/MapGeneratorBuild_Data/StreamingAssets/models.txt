@@ -4,7 +4,16 @@
 		{"ModelId":"WheatField", "ModelPath":"Models/Nature/WheatField.obj", "UnlitTransparent":true},
 		{"ModelId":"Rushes", "ModelPath":"Models/Nature/Rushes.obj", "UnlitTransparent":true},
 		{"ModelId":"Willow", "ModelPath":"Models/Nature/Willow.obj", "UnlitTransparent":true},
+		
 		{"ModelId":"GiantMushroom", "ModelPath":"Models/Cave/GiantMushroom.obj"},
+		{"ModelId":"DwarfMushroom", "ModelPath":"Models/Cave/DwarfMushroom.obj"},
+		
+		{"ModelId":"Palm", "ModelPath":"Desert/Models/Palm.obj", "UnlitTransparent":true},
+		
+		{"ModelId":"EgyptianHovel", "ModelPath":"Egyptian/Models/hovel.obj"},
+		{"ModelId":"EgyptianWall", "ModelPath":"Egyptian/Models/EgyptianWall.obj"},
+		{"ModelId":"EgyptianGate", "ModelPath":"Egyptian/Models/EgyptianGate.obj"},
+		{"ModelId":"EgyptianTower", "ModelPath":"Egyptian/Models/EgyptianTower.obj"},
 		
 		{"ModelId":"AngloBridge", "ModelPath":"Models/Anglo/Bridge/Bridge.obj"},
 		{"ModelId":"AngloHovel", "ModelPath":"Models/Anglo/Hovel/hovel.obj"},
