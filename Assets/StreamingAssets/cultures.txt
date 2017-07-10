@@ -424,16 +424,21 @@
 		{"groundTrait":"Road","groundValue":2.0}
 	],
 	"ModelPlacementByTraitCultureInfos":[
-		{"TerrainTrait":"Road",
-		"ModelPlacementInfos":[
-			{"model":"OrcBridge","placementMode":"Bridge","min":1,"max":1}
-		]},
 		{"TerrainTrait":"City",
 		"ModelPlacementInfos":[
-			{"model":"OrcHut","placementMode":"Scattered","min":20,"max":25},
-			{"model":"OrcWoodenWall","placementMode":"CityWalls","min":4,"max":4},
-			{"model":"OrcWoodenGate","placementMode":"CityGates","min":4,"max":4},
-			{"model":"OrcWoodenTower","placementMode":"Corners","min":4,"max":4}
+			{"model":"EgyptianHovel","placementMode":"ScatteredBordered","min":20,"max":25}
+		]},
+		{"TerrainTrait":"MediumCity",
+		"ModelPlacementInfos":[
+			{"model":"EgyptianWall","placementMode":"CityWalls","min":4,"max":4},
+			{"model":"EgyptianGate","placementMode":"CityGates","min":4,"max":4},
+			{"model":"EgyptianTower","placementMode":"Corners","min":4,"max":4}
+		]},
+		{"TerrainTrait":"LargeCity",
+		"ModelPlacementInfos":[
+			{"model":"EgyptianWall","placementMode":"CityWalls","min":4,"max":4},
+			{"model":"EgyptianGate","placementMode":"CityGates","min":4,"max":4},
+			{"model":"EgyptianTower","placementMode":"Corners","min":4,"max":4}
 		]}
 	]
 }

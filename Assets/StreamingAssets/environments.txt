@@ -80,7 +80,7 @@
 		{
 		"GroundType":"SmallCity",
 		"Difficulty":0.05,
-		"Texture":"Midlands/City.png",
+		"Texture":"Desert/Terrain/Desert Road.png",
 		"StoredTraits":[
 			"City",
 			"SmallCity"
@@ -89,7 +89,7 @@
 		{
 		"GroundType":"MediumCity",
 		"Difficulty":0.05,
-		"Texture":"Midlands/City.png",
+		"Texture":"Desert/Terrain/Desert Road.png",
 		"StoredTraits":[
 			"City",
 			"MediumCity"
@@ -98,7 +98,7 @@
 		{
 		"GroundType":"LargeCity",
 		"Difficulty":0.05,
-		"Texture":"Midlands/City.png",
+		"Texture":"Desert/Terrain/Desert Road.png",
 		"StoredTraits":[
 			"City",
 			"LargeCity"
