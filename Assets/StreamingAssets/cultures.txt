@@ -1,6 +1,6 @@
 {
 	"CultureId":"Anglo",
-	"CultureName":"Humans",
+	"CultureName":"Midlander",
 	"SettlementPrefixes":[
 		{
 		"storedString":"Lunn","prevelance":1,"conditions":[]},
@@ -334,6 +334,92 @@
 		{"groundTrait":"Hunting","groundValue":0.25},
 		{"groundTrait":"Forest","groundValue":0.15000000596046449},
 		{"groundTrait":"Fertile","groundValue":0.15000000596046449},
+		{"groundTrait":"City","groundValue":4.0},
+		{"groundTrait":"Road","groundValue":2.0}
+	],
+	"ModelPlacementByTraitCultureInfos":[
+		{"TerrainTrait":"Road",
+		"ModelPlacementInfos":[
+			{"model":"OrcBridge","placementMode":"Bridge","min":1,"max":1}
+		]},
+		{"TerrainTrait":"City",
+		"ModelPlacementInfos":[
+			{"model":"OrcHut","placementMode":"Scattered","min":20,"max":25},
+			{"model":"OrcWoodenWall","placementMode":"CityWalls","min":4,"max":4},
+			{"model":"OrcWoodenGate","placementMode":"CityGates","min":4,"max":4},
+			{"model":"OrcWoodenTower","placementMode":"Corners","min":4,"max":4}
+		]}
+	]
+}
+|
+{
+	"CultureId":"Egypt",
+	"CultureName":"Kheman",
+	"SettlementPrefixes":[
+		{"storedString":"Men","prevelance":1,"conditions":[]},
+		{"storedString":"Mem","prevelance":1,"conditions":[]},
+		{"storedString":"Khem","prevelance":1,"conditions":[]},
+		{"storedString":"Yam","prevelance":1,"conditions":[]},
+		{"storedString":"Ra","prevelance":1,"conditions":[]},
+		{"storedString":"Khi","prevelance":1,"conditions":[]},
+		{"storedString":"Ptkhe","prevelance":1,"conditions":[]},
+		{"storedString":"Khas","prevelance":1,"conditions":[]},
+		{"storedString":"Theb","prevelance":1,"conditions":[]},
+		{"storedString":"Giz","prevelance":1,"conditions":[]}
+	],
+	"SettlementSuffixes":[
+		{"storedString":"u","prevelance":1,"conditions":[]},
+		{"storedString":"nefer","prevelance":4,"conditions":[]},
+		{"storedString":"qote","prevelance":4,"conditions":[]},
+		{"storedString":"as","prevelance":1,"conditions":[]},
+		{"storedString":"isdun","prevelance":1,"conditions":[]},
+		{"storedString":"is","prevelance":1,"conditions":[]},
+		{"storedString":"ese","prevelance":1,"conditions":[]},
+		{"storedString":"ru","prevelance":1,"conditions":[]},
+		{"storedString":"phis","prevelance":1,"conditions":[]},
+		{"storedString":"ha","prevelance":4,"conditions":[]}
+	],
+	"SettlementAreaInfo":[
+		{"storedString":"%n","prevelance":4,"conditions":[]},
+		{"storedString":"%n Village","prevelance":1,"conditions":["Small"]},
+		{"storedString":"Temple of %n","prevelance":1,"conditions":["Medium"]},
+		{"storedString":"%n Fortress","prevelance":1,"conditions":["Medium"]},
+		{"storedString":"Great Temple of %n","prevelance":1,"conditions":["Large"]},
+		{"storedString":"Port %n","prevelance":1,"conditions":["Port"]},
+		{"storedString":"Catacombs of %n","prevelance":1,"conditions":["Mountains"]},
+		{"storedString":"Tombs of %n","prevelance":1,"conditions":["Mountains"]}
+	],
+	"KingdomTitles":[
+		{"storedString":"Priests of %n","prevelance":1,"conditions":[]},
+		{"storedString":"%n Niwt","prevelance":1,"conditions":["OneCity"]},
+		{"storedString":"Sepat of %n","prevelance":1,"conditions":["Small"]},
+		{"storedString":"Kingdom of %n","prevelance":4,"conditions":[]},
+		{"storedString":"The %n Empire","prevelance":4,"conditions":["Large"]}
+		
+	],
+	"HeraldryOverlayImage":"Egyptian/Heraldry/Overlay.png",
+	"HeraldryForegrounds":[
+		{"storedString":"Egyptian/Heraldry/Symbols/Ankh.png","prevelance":1,"conditions":[]},
+		{"storedString":"Egyptian/Heraldry/Symbols/Bird.png","prevelance":1,"conditions":[]},
+		{"storedString":"Egyptian/Heraldry/Symbols/Crown.png","prevelance":1,"conditions":[]},
+		{"storedString":"Egyptian/Heraldry/Symbols/Feathers.png","prevelance":1,"conditions":[]},
+		{"storedString":"Egyptian/Heraldry/Symbols/Lion.png","prevelance":1,"conditions":[]},
+		{"storedString":"Egyptian/Heraldry/Symbols/Snake.png","prevelance":1,"conditions":[]},
+		{"storedString":"Egyptian/Heraldry/Symbols/Crook.png","prevelance":1,"conditions":[]},
+		{"storedString":"Egyptian/Heraldry/Symbols/Owl.png","prevelance":1,"conditions":[]}
+		
+	],
+	"HeraldryBackgrounds":[
+		{"storedString":"Egyptian/Heraldry/Backgrounds/Egypt_Back_0.png","prevelance":1,"conditions":[]}
+	],
+	"GroundPropertyValues":[
+		{"groundTrait":"Water","groundValue":0.0},
+		{"groundTrait":"Impassable","groundValue":0.0},
+		{"groundTrait":"Muddy","groundValue":0.2},
+		{"groundTrait":"Rocky","groundValue":0.1},
+		{"groundTrait":"Hunting","groundValue":0.15},
+		{"groundTrait":"Forest","groundValue":0.25},
+		{"groundTrait":"Fertile","groundValue":0.6},
 		{"groundTrait":"City","groundValue":4.0},
 		{"groundTrait":"Road","groundValue":2.0}
 	],

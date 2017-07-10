@@ -19,7 +19,7 @@
 		"TerrainExpandSimmilarTypes 4 DesertFarms"
 	],
 	"Cultures":[
-		
+		{"cultureId":"Egypt",	"avgSettlementsPer80Square":60}
 	],
 	"GroundTypes":[
 		{
@@ -34,7 +34,7 @@
 		{
 		"GroundType":"Road",
 		"Difficulty":0.05,
-		"Texture":"Midlands/Road.png",
+		"Texture":"Desert/Terrain/Desert Road.png",
 		"StoredTraits":[
 			"Road"
 		]
@@ -46,33 +46,6 @@
 		"StoredTraits":[
 			"Water",
 			"Impassable"
-		]
-		},
-		{
-		"GroundType":"SmallCity",
-		"Difficulty":0.05,
-		"Texture":"Midlands/City.png",
-		"StoredTraits":[
-			"City",
-			"SmallCity"
-		]
-		},
-		{
-		"GroundType":"MediumCity",
-		"Difficulty":0.05,
-		"Texture":"Midlands/City.png",
-		"StoredTraits":[
-			"City",
-			"MediumCity"
-		]
-		},
-		{
-		"GroundType":"LargeCity",
-		"Difficulty":0.05,
-		"Texture":"Midlands/City.png",
-		"StoredTraits":[
-			"City",
-			"LargeCity"
 		]
 		},
 		{
@@ -102,6 +75,33 @@
 		"StoredTraits":[
 			"Rocky",
 			"Impassable"
+		]
+		},
+		{
+		"GroundType":"SmallCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/City.png",
+		"StoredTraits":[
+			"City",
+			"SmallCity"
+		]
+		},
+		{
+		"GroundType":"MediumCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/City.png",
+		"StoredTraits":[
+			"City",
+			"MediumCity"
+		]
+		},
+		{
+		"GroundType":"LargeCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/City.png",
+		"StoredTraits":[
+			"City",
+			"LargeCity"
 		]
 		}
 	]
