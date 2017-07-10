@@ -1,4 +1,113 @@
 {
+	"EnvironmentId":"Desert",
+	"DisplayName":"Sal-hadar Desert",
+	"MapBuildingCommands":[
+		"HeightsDefaultFill MinGroundHeight",
+		"HeightRandomlyPlaceAlongLine 1 10 5 15 3",
+		"HeightRandomlyPlace .3 400",
+		"HeightBlendUp 2",
+		"HeightRandomlyPlace 0 4",
+		"HeightRandomlyExpandLevel 0 3",
+		"CreateRivers 10 25",
+		"HeightRandomlyPlace 0 21",
+		"HeightRandomizeLevelEdges 0 1",
+		
+		"TerrainDefaultFill SandyDesert",
+		"TerrainFillInOceans Ocean",
+		"TerrainFillInMountains DesertMountains",
+		"TerrainEncourageStartAlongOcean DesertFarms 0.7",
+		"TerrainExpandSimmilarTypes 4 DesertFarms"
+	],
+	"Cultures":[
+		
+	],
+	"GroundTypes":[
+		{
+		"GroundType":"Ocean",
+		"Texture":"Desert/Desert Farms.png",
+		"Difficulty":0.1,
+		"StoredTraits":[
+			"Water",
+			"Impassable"
+		]
+		},
+		{
+		"GroundType":"Road",
+		"Difficulty":0.05,
+		"Texture":"Midlands/Road.png",
+		"StoredTraits":[
+			"Road"
+		]
+		},
+		{
+		"GroundType":"River",
+		"Difficulty":0.5,
+		"Texture":"Desert/Desert Farms.png",
+		"StoredTraits":[
+			"Water",
+			"Impassable"
+		]
+		},
+		{
+		"GroundType":"SmallCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/City.png",
+		"StoredTraits":[
+			"City",
+			"SmallCity"
+		]
+		},
+		{
+		"GroundType":"MediumCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/City.png",
+		"StoredTraits":[
+			"City",
+			"MediumCity"
+		]
+		},
+		{
+		"GroundType":"LargeCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/City.png",
+		"StoredTraits":[
+			"City",
+			"LargeCity"
+		]
+		},
+		{
+		"GroundType":"SandyDesert",
+		"Texture":"Desert/Desert Sand.png",
+		"Difficulty":0.35,
+		"DefaultModelPlacement":[
+		],
+		"StoredTraits":[
+		]
+		},
+		{
+		"GroundType":"DesertFarms",
+		"Texture":"Desert/Desert Farms.png",
+		"Difficulty":0.2,
+		"DefaultModelPlacement":[
+		
+		],
+		"StoredTraits":[
+			"Fertile"
+		]
+		},
+		{
+		"GroundType":"DesertMountains",
+		"Difficulty":50,
+		"Texture":"Desert/Desert Mountains.png",
+		"StoredTraits":[
+			"Rocky",
+			"Impassable"
+		]
+		}
+	]
+}
+|
+{
 	"EnvironmentId":"Anglo",
 	"DisplayName":"The Midlands",
 	"MapBuildingCommands":[

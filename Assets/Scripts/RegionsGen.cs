@@ -14,6 +14,7 @@ class RegionsGen
 	public RegionsGen(List<CulturePrevelance> cultures)
 	{
 		Kingdoms = new List<Kingdom>();
+		Map = new Map2D<RegionTile>(MapGenerator.Terrain.Width, MapGenerator.Terrain.Height);
 
 		if (cultures.Count == 0)
 			return;
@@ -54,7 +55,6 @@ class RegionsGen
 	private void StartFillMap()
 	{
 		Kingdom noMansLand = new Kingdom(defaultCulture, new Int2(0, 0));
-		Map = new Map2D<RegionTile>(MapGenerator.Terrain.Width, MapGenerator.Terrain.Height);
 		foreach(var pixel in Map.GetMapPoints())
 		{
 			Map.Set(pixel, new RegionTile(noMansLand.settlements[0]));

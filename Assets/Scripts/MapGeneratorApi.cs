@@ -538,7 +538,7 @@ public class MapGeneratorApi
 	{
 		foreach (Int2 neighbor in Heights.GetAdjacentPoints(tile))
 		{
-			if (Heights.Get(neighbor).Equals(0))
+			if (Heights.Get(neighbor) < Globals.MinGroundHeight)
 				return true;
 		}
 		return false;
