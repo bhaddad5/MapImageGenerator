@@ -40,16 +40,26 @@ public class StoredModels
 				mr.gameObject.AddComponent<BoxCollider>();
 				mr.gameObject.layer = LayerMask.NameToLayer("PlacedModel");
 				if (entry.UnlitTransparent)
-					mr.material.shader = Shader.Find("Unlit/Transparent Cutout");
+				{
+					SetShaders(mr, "Unlit/Transparent Cutout");
+				}
 				else
 				{
-					mr.material.shader = Shader.Find("Standard");
-					mr.material.SetFloat("_Glossieness", 0);
-					mr.material.SetFloat("_Metallic", 0);
+					SetShaders(mr, "Standard");
 				}
 			}
 			ModelLookup.Models[entry.ModelId] = g;
 			g.SetActive(false);
+		}
+	}
+
+	private void SetShaders(MeshRenderer mr, string shader)
+	{
+		foreach (Material material in mr.materials)
+		{
+			material.shader = Shader.Find(shader);
+			material.SetFloat("_Glossieness", 0);
+			material.SetFloat("_Metallic", 0);
 		}
 	}
 }

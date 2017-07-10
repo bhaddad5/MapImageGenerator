@@ -22,12 +22,12 @@
 		"TerrainEncourageStartAlongOcean Fertile 0.15",
 		"TerrainRandomlyStart Fertile 0.05",
 		"TerrainExpandSimmilarTypes 5 Fertile",
-		"TerrainEncourageStartAlongOcean Swamp 0.05",
-		"TerrainRandomlyStart Swamp 0.02",
+		"TerrainEncourageStartAlongOcean Swamp 0.02",
+		"TerrainRandomlyStart Swamp 0.005",
 		"TerrainExpandSimmilarTypes 3 Swamp"
 	],
 	"Cultures":[
-		{"cultureId":"Anglo",	"avgSettlementsPer80Square":50},
+		{"cultureId":"Anglo",	"avgSettlementsPer80Square":45},
 		{"cultureId":"Dwarf",	"avgSettlementsPer80Square":35},
 		{"cultureId":"Orc",	"avgSettlementsPer80Square":35}
 	],
@@ -107,7 +107,7 @@
 		"Difficulty":0.15,
 		"Texture":"Midlands/Fertile.png",
 		"DefaultModelPlacement":[
-			{"model":"WheatField","placementMode":"Scattered","min":7,"max":10}
+			{"model":"WheatField","placementMode":"Scattered","min":2,"max":4}
 		],
 		"StoredTraits":[
 			"Fertile"

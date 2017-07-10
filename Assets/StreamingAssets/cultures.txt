@@ -125,6 +125,24 @@
 		{"TerrainTrait":"Road",
 		"ModelPlacementInfos":[
 			{"model":"AngloBridge","placementMode":"Bridge","min":1,"max":1}
+		]},
+		{"TerrainTrait":"SmallCity",
+		"ModelPlacementInfos":[
+			{"model":"AngloHovel","placementMode":"Scattered","min":20,"max":25}
+		]},
+		{"TerrainTrait":"MediumCity",
+		"ModelPlacementInfos":[
+			{"model":"AngloHovel","placementMode":"ScatteredBordered","min":10,"max":15},
+			{"model":"AngloTownHouse","placementMode":"ScatteredBordered","min":10,"max":12},
+			{"model":"AngloWoodenWall","placementMode":"CityWalls","min":4,"max":4},
+			{"model":"AngloWoodenGates","placementMode":"CityGates","min":4,"max":4}
+		]},
+		{"TerrainTrait":"LargeCity",
+		"ModelPlacementInfos":[
+			{"model":"AngloTownHouse","placementMode":"ScatteredBordered","min":20,"max":25},
+			{"model":"AngloStoneWall","placementMode":"CityWalls","min":4,"max":4},
+			{"model":"AngloStoneGates","placementMode":"CityGates","min":4,"max":4},
+			{"model":"AngloStoneTower","placementMode":"Corners","min":4,"max":4}
 		]}
 	]
 }
