@@ -109,7 +109,6 @@
     <None Include="Assets\ExternalAssets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
     <None Include="Assets\MapDisplay\BordersShader.shader" />
     <None Include="Assets\MapDisplay\GroundShader.shader" />
-    <None Include="Assets\MapDisplay\GroundShaderOverlay.shader" />
     <None Include="Assets\StreamingAssets\cultures.txt" />
     <None Include="Assets\StreamingAssets\environments.txt" />
     <None Include="Assets\StreamingAssets\models.txt" />

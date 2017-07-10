@@ -146,9 +146,12 @@ public class MapBuilder : MonoBehaviour
 
 	private List<Material> GetMapMaterials(List<GroundInfo> groundTypes)
 	{
-		var mats = new List<Material>();
+		var mats = new List<Material>() {new Material(Shader.Find("Standard"))};
+
+		//TMP:
+		mats[0].color = Color.black;
+
 		List<GroundInfo> gtToFlush = new List<GroundInfo>();
-		firstFlush = true;
 		for (int i = 0; i < groundTypes.Count; i++)
 		{
 			gtToFlush.Add(groundTypes[i]);
@@ -164,15 +167,10 @@ public class MapBuilder : MonoBehaviour
 		return mats;
 	}
 
-	private bool firstFlush = false;
 	private Material FlushGroundInfoToMat(List<GroundInfo> groundInfo)
 	{
-		Material mat;
-		if (firstFlush)
-			mat = new Material(Shader.Find("Custom/GroundShader"));
-		else mat = new Material(Shader.Find("Custom/GroundShaderOverlay"));
+		var mat = new Material(Shader.Find("Custom/GroundShader"));
 
-		firstFlush = false;
 		mat.SetTexture("_LookupTex", MapGenerator.GetTerrainTexture());
 		mat.SetFloat("_LookupWidth", MapGenerator.GetTerrainTexture().width);
 		for (int i = 0; i < 5 && i < groundInfo.Count; i++)
