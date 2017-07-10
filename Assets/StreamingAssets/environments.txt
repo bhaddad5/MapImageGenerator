@@ -24,7 +24,7 @@
 	"GroundTypes":[
 		{
 		"GroundType":"Ocean",
-		"Texture":"Desert/Desert Farms.png",
+		"Texture":"Desert/Terrain/Desert Farms.png",
 		"Difficulty":0.1,
 		"StoredTraits":[
 			"Water",
@@ -42,7 +42,7 @@
 		{
 		"GroundType":"River",
 		"Difficulty":0.5,
-		"Texture":"Desert/Desert Farms.png",
+		"Texture":"Desert/Terrain/Desert Farms.png",
 		"StoredTraits":[
 			"Water",
 			"Impassable"
@@ -77,7 +77,7 @@
 		},
 		{
 		"GroundType":"SandyDesert",
-		"Texture":"Desert/Desert Sand.png",
+		"Texture":"Desert/Terrain/Desert Sand.png",
 		"Difficulty":0.35,
 		"DefaultModelPlacement":[
 		],
@@ -86,10 +86,10 @@
 		},
 		{
 		"GroundType":"DesertFarms",
-		"Texture":"Desert/Desert Farms.png",
+		"Texture":"Desert/Terrain/Desert Farms.png",
 		"Difficulty":0.2,
 		"DefaultModelPlacement":[
-		
+			{"model":"Palm","placementMode":"Scattered","min":0,"max":3}
 		],
 		"StoredTraits":[
 			"Fertile"
@@ -98,7 +98,7 @@
 		{
 		"GroundType":"DesertMountains",
 		"Difficulty":50,
-		"Texture":"Desert/Desert Mountains.png",
+		"Texture":"Desert/Terrain/Desert Mountains.png",
 		"StoredTraits":[
 			"Rocky",
 			"Impassable"
