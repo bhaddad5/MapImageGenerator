@@ -114,7 +114,7 @@ public class Kingdom
 
 	public void AddSettlement(Settlement sett)
 	{
-		if (sett.cityTiles.Count > settlements[0].cityTiles.Count + 1)
+		if (sett.cityTiles.Count > settlements[0].cityTiles.Count)
 			settlements.Insert(0, sett);
 		else settlements.Add(sett);
 	}
