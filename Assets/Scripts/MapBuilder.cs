@@ -147,9 +147,9 @@ public class MapBuilder : MonoBehaviour
 	private List<Material> GetMapMaterials(List<GroundInfo> groundTypes)
 	{
 		var mats = new List<Material>() {new Material(Shader.Find("Standard"))};
-
-		//TMP:
+		
 		mats[0].color = Color.black;
+		mats[0].SetFloat("_Glossiness", 0f);
 
 		List<GroundInfo> gtToFlush = new List<GroundInfo>();
 		for (int i = 0; i < groundTypes.Count; i++)
