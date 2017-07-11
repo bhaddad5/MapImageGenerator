@@ -153,7 +153,7 @@ public class ModelPlacer
 			p.y = 3f;
 			if (Physics.Raycast(new Ray(p, Vector3.down), out hit, 10f, layerMask))
 			{
-				if (Vector3.Angle(hit.normal, Vector3.up) > 45f)
+				if (Vector3.Angle(hit.normal, Vector3.up) > 60f)
 					return;
 
 				if (forcePlacement ||

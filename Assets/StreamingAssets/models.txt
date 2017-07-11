@@ -1,12 +1,12 @@
 {
 	"Models":[
-		{"ModelId":"Pine", "ModelPath":"Models/Nature/Pine.obj", "UnlitTransparent":true},
-		{"ModelId":"WheatField", "ModelPath":"Models/Nature/WheatField.obj", "UnlitTransparent":true},
-		{"ModelId":"Rushes", "ModelPath":"Models/Nature/Rushes.obj", "UnlitTransparent":true},
-		{"ModelId":"Willow", "ModelPath":"Models/Nature/Willow.obj", "UnlitTransparent":true},
+		{"ModelId":"Pine", "ModelPath":"Midlands/Models/Pine.obj", "UnlitTransparent":true},
+		{"ModelId":"WheatField", "ModelPath":"Midlands/Models/WheatField.obj", "UnlitTransparent":true},
+		{"ModelId":"Rushes", "ModelPath":"Midlands/Models/Rushes.obj", "UnlitTransparent":true},
+		{"ModelId":"Willow", "ModelPath":"Midlands/Models/Willow.obj", "UnlitTransparent":true},
 		
-		{"ModelId":"GiantMushroom", "ModelPath":"Models/Cave/GiantMushroom.obj"},
-		{"ModelId":"DwarfMushroom", "ModelPath":"Models/Cave/DwarfMushroom.obj"},
+		{"ModelId":"GiantMushroom", "ModelPath":"Underground/Models/GiantMushroom.obj"},
+		{"ModelId":"DwarfMushroom", "ModelPath":"Underground/Models/DwarfMushroom.obj"},
 		
 		{"ModelId":"Palm", "ModelPath":"Desert/Models/Palm.obj", "UnlitTransparent":true},
 		
