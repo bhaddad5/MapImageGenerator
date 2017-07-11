@@ -264,7 +264,7 @@ public class ModelPlacer
 
 	private PlacementTrans GetCenterPlacementTrans(Int2 myTile, Vector3 rot, GameObject g, bool forcePlacement = false)
 	{
-		return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y + 0.5f), rot, g);
+		return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y + 0.5f), rot, g, forcePlacement);
 	}
 
 	private void SpawnObjectAtPos(PlacementTrans trans, GameObject obj)
