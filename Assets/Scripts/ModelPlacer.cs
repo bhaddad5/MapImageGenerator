@@ -70,7 +70,7 @@ public class ModelPlacer
 		{
 			if (TileIsCityBorder(pt) && !TileIsRoad(pt))
 			{
-				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, true), wall);
+				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, wall, true), wall);
 			}
 		}
 	}
@@ -81,7 +81,7 @@ public class ModelPlacer
 		{
 			if (TileIsRoad(pt))
 			{
-				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, true), gate);
+				SpawnObjectAtPos(GetEdgePlacementTrans(tile, pt, gate, true), gate);
 			}
 		}
 	}
@@ -106,7 +106,7 @@ public class ModelPlacer
 			TileIsCityBorder(tile + new Int2(t.X - tile.X, 0)) ||
 			TileIsCityBorder(tile + new Int2(0, t.Y - tile.Y)))
 			{
-				SpawnObjectAtPos(GetPlacementBetweenTileCenters(tile, t, true), turret);
+				SpawnObjectAtPos(GetPlacementBetweenTileCenters(tile, t, turret, true), turret);
 			}
 		}
 	}
@@ -125,7 +125,7 @@ public class ModelPlacer
 						Vector3 rot = new Vector3();
 						if (t.Y != tile.Y)
 							rot = new Vector3(0, 90f, 0);
-						SpawnObjectAtPos(GetCenterPlacementTrans(tile, rot, true), bridge);
+						SpawnObjectAtPos(GetCenterPlacementTrans(tile, rot, bridge, true), bridge);
 						break;
 					}
 				}
@@ -143,7 +143,7 @@ public class ModelPlacer
 		public Vector3 rot;
 		public bool valid = false;
 
-		public PlacementTrans(Vector3 p, Vector3 r, bool forcePlacement = false)
+		public PlacementTrans(Vector3 p, Vector3 r, GameObject g, bool forcePlacement = false)
 		{
 			RaycastHit hit;
 
@@ -156,74 +156,115 @@ public class ModelPlacer
 				if (Vector3.Angle(hit.normal, Vector3.up) > 60f)
 					return;
 
-				if (forcePlacement ||
-					(hit.collider.gameObject.layer != LayerMask.NameToLayer("Ocean") &&
-					hit.collider.gameObject.layer != LayerMask.NameToLayer("PlacedModel")))
-				{
-					pos = hit.point;
-					rot = r;
-					valid = true;
-				}
+				if (!forcePlacement && !ClearDownwardRaycasts(g, p))
+					return;
+
+				pos = hit.point;
+				rot = r;
+				valid = true;
 			}
+		}
+
+		private bool ClearDownwardRaycasts(GameObject g, Vector3 pos)
+		{
+			Bounds b = GetHierarchyBounds(g);
+			RaycastHit hit;
+			if (Physics.Raycast(new Ray(pos, Vector3.down), out hit))
+			{
+				if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Default"))
+					return false;
+			}
+			if (Physics.Raycast(new Ray(pos + b.extents, Vector3.down), out hit))
+			{
+				if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Default"))
+					return false;
+			}
+			if (Physics.Raycast(new Ray(pos - b.extents, Vector3.down), out hit))
+			{
+				if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Default"))
+					return false;
+			}
+			if (Physics.Raycast(new Ray(pos + new Vector3(-b.extents.x, b.extents.y, b.extents.z), Vector3.down), out hit))
+			{
+				if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Default"))
+					return false;
+			}
+			if (Physics.Raycast(new Ray(pos + new Vector3(b.extents.x, b.extents.y, -b.extents.z), Vector3.down), out hit))
+			{
+				if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Default"))
+					return false;
+			}
+
+			return true;
+		}
+
+		private Bounds GetHierarchyBounds(GameObject g)
+		{
+			Bounds b = new Bounds();
+			foreach (MeshRenderer mr in g.GetComponentsInChildren<MeshRenderer>())
+			{
+				b.Encapsulate(mr.bounds);
+			}
+			return b;
 		}
 	}
 
-	private PlacementTrans GetPlacementBetweenTileCenters(Int2 tile1, Int2 tile2, bool forcePlacement = false)
+	private PlacementTrans GetPlacementBetweenTileCenters(Int2 tile1, Int2 tile2, GameObject g, bool forcePlacement = false)
 	{
-		return new PlacementTrans(new Vector3(tile1.X + ((tile2.X - tile1.X) / 2f) + .5f, 2f, tile1.Y + ((tile2.Y - tile1.Y) / 2f) + .5f), Vector3.zero, forcePlacement);
+		return new PlacementTrans(new Vector3(tile1.X + ((tile2.X - tile1.X) / 2f) + .5f, 2f, tile1.Y + ((tile2.Y - tile1.Y) / 2f) + .5f), Vector3.zero, g, forcePlacement);
 	}
 
 	private void PlaceObjectsOnTile(Int2 tile, int num, GameObject objToPlace, bool forcePlacement = false)
 	{
 		for (int i = 0; i < num; i++)
-			SpawnObjectAtPos(GetRandomPlacementTrans(tile, forcePlacement), objToPlace);
+			SpawnObjectAtPos(GetRandomPlacementTrans(tile, objToPlace, forcePlacement), objToPlace);
 	}
 
-	private PlacementTrans GetRandomPlacementTrans(Int2 myTile, bool forcePlacement = false)
+	private PlacementTrans GetRandomPlacementTrans(Int2 myTile, GameObject g, bool forcePlacement = false)
 	{
 		Vector3 rot = new Vector3(0, Random.Range(0, 360f), 0);
-		return GetRandomPlacementTrans(myTile, rot, forcePlacement);
+		return GetRandomPlacementTrans(myTile, rot, g, forcePlacement);
 	}
 
-	private PlacementTrans GetRandomPlacementTrans(Int2 myTile, Vector3 rot, bool forcePlacement = false)
+	private PlacementTrans GetRandomPlacementTrans(Int2 myTile, Vector3 rot, GameObject g, bool forcePlacement = false)
 	{
-		return new PlacementTrans(new Vector3(Random.Range(myTile.X, myTile.X + 1f), 3f, Random.Range(myTile.Y, myTile.Y + 1f)), rot, forcePlacement);
+		return new PlacementTrans(new Vector3(Random.Range(myTile.X, myTile.X + 1f), 3f, Random.Range(myTile.Y, myTile.Y + 1f)), rot, g, forcePlacement);
 	}
 
 	private void PlaceObjectsOnTileWithBorder(Int2 tile, int num, GameObject objToPlace, bool forcePlacement = false)
 	{
 		for (int i = 0; i < num; i++)
-			SpawnObjectAtPos(GetRandomPlacementTransWithBorder(tile, forcePlacement), objToPlace);
+			SpawnObjectAtPos(GetRandomPlacementTransWithBorder(tile, objToPlace, forcePlacement), objToPlace);
 	}
 
-	private PlacementTrans GetRandomPlacementTransWithBorder(Int2 myTile, bool forcePlacement = false)
+	private PlacementTrans GetRandomPlacementTransWithBorder(Int2 myTile, GameObject g, bool forcePlacement = false)
 	{
 		Vector3 rot = new Vector3(0, Random.Range(0, 360f), 0);
-		return GetRandomPlacementTransWithBorder(myTile, rot, forcePlacement);
+		return GetRandomPlacementTransWithBorder(myTile, rot, g, forcePlacement);
 	}
 
-	private PlacementTrans GetRandomPlacementTransWithBorder(Int2 myTile, Vector3 rot, bool forcePlacement = false)
+	private PlacementTrans GetRandomPlacementTransWithBorder(Int2 myTile, Vector3 rot, GameObject g, bool forcePlacement = false)
 	{
 		float border = 0.15f;
-		return new PlacementTrans(new Vector3(Random.Range(myTile.X + border, myTile.X + 1f - border), 3f, Random.Range(myTile.Y + border, myTile.Y + 1f - border)), rot, forcePlacement);
+		return new PlacementTrans(new Vector3(Random.Range(myTile.X + border, myTile.X + 1f - border), 3f, Random.Range(myTile.Y + border, myTile.Y + 1f - border)), rot, g, forcePlacement);
 	}
 
-	private PlacementTrans GetEdgePlacementTrans(Int2 myTile, Int2 edgeTile, bool forcePlacement = false)
+	private PlacementTrans GetEdgePlacementTrans(Int2 myTile, Int2 edgeTile, GameObject g, bool forcePlacement = false)
 	{
 		if ((edgeTile - myTile).Equals(new Int2(0, -1)))
-			return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y), new Vector3(0, -90f, 0), forcePlacement);
+			return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y), new Vector3(0, -90f, 0), g, forcePlacement);
 		if ((edgeTile - myTile).Equals(new Int2(0, 1)))
-			return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y + 1), new Vector3(0, 90f, 0), forcePlacement);
+			return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y + 1), new Vector3(0, 90f, 0), g, forcePlacement);
 		if ((edgeTile - myTile).Equals(new Int2(1, 0)))
-			return new PlacementTrans(new Vector3(myTile.X + 1, 2f, myTile.Y + .5f), new Vector3(0, 180, 0), forcePlacement);
+			return new PlacementTrans(new Vector3(myTile.X + 1, 2f, myTile.Y + .5f), new Vector3(0, 180, 0), g, forcePlacement);
 		if ((edgeTile - myTile).Equals(new Int2(-1, 0)))
-			return new PlacementTrans(new Vector3(myTile.X, 2f, myTile.Y + .5f), new Vector3(0, 0, 0), forcePlacement);
+			return new PlacementTrans(new Vector3(myTile.X, 2f, myTile.Y + .5f), new Vector3(0, 0, 0), g, forcePlacement);
 		return null;
 	}
 
-	private PlacementTrans GetCenterPlacementTrans(Int2 myTile, Vector3 rot, bool forcePlacement = false)
+	private PlacementTrans GetCenterPlacementTrans(Int2 myTile, Vector3 rot, GameObject g, bool forcePlacement = false)
 	{
-		return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y + 0.5f), rot);
+		return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y + 0.5f), rot, g);
 	}
 
 	private void SpawnObjectAtPos(PlacementTrans trans, GameObject obj)

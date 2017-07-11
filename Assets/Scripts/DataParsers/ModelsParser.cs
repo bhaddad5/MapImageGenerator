@@ -37,7 +37,7 @@ public class StoredModels
 			GameObject g = OBJLoader.LoadOBJFile(Application.streamingAssetsPath + "/" + entry.ModelPath);
 			foreach (MeshRenderer mr in g.GetComponentsInChildren<MeshRenderer>())
 			{
-				mr.gameObject.AddComponent<BoxCollider>();
+				mr.gameObject.AddComponent<MeshCollider>();
 				mr.gameObject.layer = LayerMask.NameToLayer("PlacedModel");
 				if (entry.UnlitTransparent)
 				{
