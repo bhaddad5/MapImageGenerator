@@ -15,26 +15,26 @@
 		{"ModelId":"EgyptianGate", "ModelPath":"Egyptian/Models/EgyptianGate.obj"},
 		{"ModelId":"EgyptianTower", "ModelPath":"Egyptian/Models/EgyptianTower.obj"},
 		
-		{"ModelId":"AngloBridge", "ModelPath":"Models/Anglo/Bridge/Bridge.obj"},
-		{"ModelId":"AngloHovel", "ModelPath":"Models/Anglo/Hovel/hovel.obj"},
-		{"ModelId":"AngloTownHouse", "ModelPath":"Models/Anglo/Hovel/House.obj"},
-		{"ModelId":"AngloWoodenWall", "ModelPath":"Models/Anglo/WoodenWall/WoodenWall.obj"},
-		{"ModelId":"AngloWoodenGates", "ModelPath":"Models/Anglo/WoodenWall/WoodenGate.obj"},
-		{"ModelId":"AngloStoneWall", "ModelPath":"Models/Anglo/Castle/wall.obj"},
-		{"ModelId":"AngloStoneGates", "ModelPath":"Models/Anglo/Castle/gates.obj"},
-		{"ModelId":"AngloStoneTower", "ModelPath":"Models/Anglo/Castle/turret.obj"},
+		{"ModelId":"AngloBridge", "ModelPath":"Anglo/Models/Bridge/Bridge.obj"},
+		{"ModelId":"AngloHovel", "ModelPath":"Anglo/Models/Hovel/hovel.obj"},
+		{"ModelId":"AngloTownHouse", "ModelPath":"Anglo/Models/Hovel/House.obj"},
+		{"ModelId":"AngloWoodenWall", "ModelPath":"Anglo/Models/WoodenWall/WoodenWall.obj"},
+		{"ModelId":"AngloWoodenGates", "ModelPath":"Anglo/Models/WoodenWall/WoodenGate.obj"},
+		{"ModelId":"AngloStoneWall", "ModelPath":"Anglo/Models/Castle/wall.obj"},
+		{"ModelId":"AngloStoneGates", "ModelPath":"Anglo/Models/Castle/gates.obj"},
+		{"ModelId":"AngloStoneTower", "ModelPath":"Anglo/Models/Castle/turret.obj"},
 		
-		{"ModelId":"DwarfHouse", "ModelPath":"Models/Dwarves/Dwarf House.obj"},
-		{"ModelId":"DwarfGates", "ModelPath":"Models/Dwarves/Dwarf Gates.obj"},
-		{"ModelId":"DwarfWall", "ModelPath":"Models/Dwarves/Dwarf Wall.obj"},
-		{"ModelId":"DwarfTower", "ModelPath":"Models/Dwarves/Dwarf Tower.obj"},
-		{"ModelId":"DwarfBridge", "ModelPath":"Models/Dwarves/Dwarf Bridge.obj"},
+		{"ModelId":"DwarfHouse", "ModelPath":"Dwarf/Models/Dwarf House.obj"},
+		{"ModelId":"DwarfGates", "ModelPath":"Dwarf/Models/Dwarf Gates.obj"},
+		{"ModelId":"DwarfWall", "ModelPath":"Dwarf/Models/Dwarf Wall.obj"},
+		{"ModelId":"DwarfTower", "ModelPath":"Dwarf/Models/Dwarf Tower.obj"},
+		{"ModelId":"DwarfBridge", "ModelPath":"Dwarf/Models/Dwarf Bridge.obj"},
 		
-		{"ModelId":"OrcHut", "ModelPath":"Models/Orcs/OrcHovel/OrcHut.obj"},
-		{"ModelId":"OrcWoodenGate", "ModelPath":"Models/Orcs/OrcWoodenWall/WoodenGate.obj"},
-		{"ModelId":"OrcWoodenWall", "ModelPath":"Models/Orcs/OrcWoodenWall/WoodenWall.obj"},
-		{"ModelId":"OrcWoodenTower", "ModelPath":"Models/Orcs/OrcWoodenWall/OrcTower.obj"},
-		{"ModelId":"OrcBridge", "ModelPath":"Models/Orcs/OrcWoodenWall/OrcBridge.obj"}
+		{"ModelId":"OrcHut", "ModelPath":"Orc/Models/OrcHovel/OrcHut.obj"},
+		{"ModelId":"OrcWoodenGate", "ModelPath":"Orc/Models/OrcWoodenWall/WoodenGate.obj"},
+		{"ModelId":"OrcWoodenWall", "ModelPath":"Orc/Models/OrcWoodenWall/WoodenWall.obj"},
+		{"ModelId":"OrcWoodenTower", "ModelPath":"Orc/Models/OrcWoodenWall/OrcTower.obj"},
+		{"ModelId":"OrcBridge", "ModelPath":"Orc/Models/OrcWoodenWall/OrcBridge.obj"}
 		
 	]
 }

@@ -130,7 +130,7 @@
 		"TerrainExpandSimmilarTypes 3 Forest",
 		"TerrainEncourageStartAlongOcean Fertile 0.15",
 		"TerrainRandomlyStart Fertile 0.05",
-		"TerrainExpandSimmilarTypes 5 Fertile",
+		"TerrainExpandSimmilarTypes 4 Fertile",
 		"TerrainEncourageStartAlongOcean Swamp 0.02",
 		"TerrainRandomlyStart Swamp 0.005",
 		"TerrainExpandSimmilarTypes 3 Swamp"
