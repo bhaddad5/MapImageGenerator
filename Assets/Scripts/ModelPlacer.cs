@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class ModelPlacer
@@ -11,15 +12,15 @@ public class ModelPlacer
 		objectParent = par;
 		foreach (Int2 tile in MapGenerator.Terrain.GetMapPoints())
 		{
-			HandleTile(tile);
+			if (RegionsGen.Map.Get(tile) != null)
+				PlaceCultureObjectsOnTile(tile, RegionsGen.Map.Get(tile).settlement.kingdom.culture, MapGenerator.Terrain.Get(tile).traits);
 		}
-	}
+		foreach (Int2 tile in MapGenerator.Terrain.GetMapPoints())
+		{
+			PlaceEnvironmentObjectsOnTile(tile, MapGenerator.Terrain.Get(tile).placementInfos);
+		}
 
-	private void HandleTile(Int2 tile)
-	{
-		PlaceEnvironmentObjectsOnTile(tile, MapGenerator.Terrain.Get(tile).placementInfos);
-		if(RegionsGen.Map.Get(tile) != null)
-			PlaceCultureObjectsOnTile(tile, RegionsGen.Map.Get(tile).settlement.kingdom.culture, MapGenerator.Terrain.Get(tile).traits);
+		CombineAllMeshes();
 	}
 
 	private void PlaceEnvironmentObjectsOnTile(Int2 tile, List<ModelPlacementInfo> infos)
@@ -233,6 +234,87 @@ public class ModelPlacer
 			newObj.SetActive(true);
 			newObj.transform.position = trans.pos;
 			newObj.transform.eulerAngles = trans.rot;
+		}
+	}
+
+
+
+
+
+	private void CombineAllMeshes()
+	{
+		MeshFilter[] meshFilters = objectParent.GetComponentsInChildren<MeshFilter>();
+
+		List<MeshCombine> combines = new List<MeshCombine>();
+		int i = 0;
+		while (i < meshFilters.Length)
+		{
+			bool foundMeshCombine = false;
+			foreach (MeshCombine combine in combines)
+			{
+				if (combine.CanAddVerts(meshFilters[i]))
+				{
+					combine.AddVerts(meshFilters[i]);
+					foundMeshCombine = true;
+					break;
+				}
+			}
+			if(!foundMeshCombine)
+				combines.Add(new MeshCombine(meshFilters[i]));
+
+			GameObject.Destroy(meshFilters[i].gameObject);
+			i++;
+		}
+
+		foreach (MeshCombine combine in combines)
+		{
+			GameObject newMeshPar = new GameObject("NewMeshPar");
+			newMeshPar.AddComponent<MeshFilter>().mesh = new Mesh();
+			newMeshPar.GetComponent<MeshFilter>().mesh.CombineMeshes(combine.combines.ToArray());
+			newMeshPar.AddComponent<MeshRenderer>().materials = combine.mats;
+			newMeshPar.transform.SetParent(objectParent);
+		}
+
+	}
+
+	private class MeshCombine
+	{
+		public Material[] mats;
+		public List<CombineInstance> combines = new List<CombineInstance>();
+		private int verts = 0;
+
+		public bool CanAddVerts(MeshFilter mf)
+		{
+			return MatsEquivilant(mf.GetComponent<MeshRenderer>().sharedMaterials) && verts + mf.sharedMesh.vertices.Length < 60000;
+		}
+
+		private bool MatsEquivilant(Material[] newMats)
+		{
+			if (mats.Length != newMats.Length)
+				return false;
+			int i = 0;
+			foreach (Material mat in mats)
+			{
+				if (mat != newMats[i])
+					return false;
+				i++;
+			}
+			return true;
+		}
+
+		public void AddVerts(MeshFilter mf)
+		{
+			CombineInstance i = new CombineInstance();
+			i.mesh = mf.sharedMesh;
+			i.transform = mf.transform.localToWorldMatrix;
+			combines.Add(i);
+			verts += i.mesh.vertexCount;
+		}
+
+		public MeshCombine(MeshFilter mf)
+		{
+			mats = mf.GetComponent<MeshRenderer>().sharedMaterials;
+			AddVerts(mf);
 		}
 	}
 }

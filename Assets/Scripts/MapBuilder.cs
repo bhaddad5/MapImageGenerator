@@ -20,6 +20,7 @@ public class MapBuilder : MonoBehaviour
 	public GameObject SettlementInfoPrefab;
 
 	private List<MapEnvironment> environments;
+	private GameObject objectParent;
 
 	// Use this for initialization
 	void Start ()
@@ -65,6 +66,11 @@ public class MapBuilder : MonoBehaviour
 			Destroy(terrainMeshDisplay.transform.GetChild(i).gameObject);
 		}
 		transform.localPosition = Vector3.zero;
+
+		if(objectParent != null)
+			Destroy(objectParent);
+		objectParent = new GameObject("objectParent");
+		objectParent.transform.SetParent(transform);
 
 		waterPlane.SetActive(true);
 		waterPlane.transform.localScale = new Vector3(width / 10, 1, height / 10);
@@ -113,7 +119,7 @@ public class MapBuilder : MonoBehaviour
 		yield return null;
 
 		ModelPlacer mp = new ModelPlacer();
-		mp.PlaceModels(terrainMeshDisplay.transform);
+		mp.PlaceModels(objectParent.transform);
 
 		displayText.text = "Displaying Heraldry";
 		yield return null;
