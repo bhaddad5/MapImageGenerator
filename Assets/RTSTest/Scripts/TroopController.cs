@@ -34,9 +34,15 @@ public class TroopController : MonoBehaviour
 			Vector3 newDir = Quaternion.Euler(0, i * 45, 0) * desiredDir;
 			Vector3 newPos = GetNewPos(newDir);
 
-			int layerMask = 1 << LayerMask.NameToLayer("Terrain");
+			//) 
+			int layerMask = (1 << LayerMask.NameToLayer("Terrain")) | (1 << LayerMask.NameToLayer("Unit"));
 			Collider[] coll = Physics.OverlapSphere(newPos + new Vector3(0, 0.05f, 0), radius, layerMask);
-			if (coll.Length == 0)
+			var enemy = OverlapEnemy(coll);
+			if (enemy != null)
+			{
+				return transform.position;
+			}
+			if (!OverlapTerrain(coll))
 			{
 				if(i > 0)
 					aroundDir = -aroundDir;
@@ -45,6 +51,31 @@ public class TroopController : MonoBehaviour
 				
 		}
 		return GetNewPos(desiredDir);
+	}
+
+	private TroopController OverlapEnemy(Collider[] coll)
+	{
+		foreach (Collider collider in coll)
+		{
+			if (collider.gameObject.layer == LayerMask.NameToLayer("Unit"))
+			{
+				var tc = collider.gameObject.GetComponentInParent<TroopController>();
+				if (tc.unit != unit)
+					return tc;
+			}
+		}
+		return null;
+	}
+
+	private bool OverlapTerrain(Collider[] coll)
+	{
+		foreach (Collider collider in coll)
+		{
+			int x = LayerMask.NameToLayer("Terrain");
+			if (collider.gameObject.layer == x)
+				return true;
+		}
+		return false;
 	}
 
 	private Vector3 GetNewPos(Vector3 dir)
