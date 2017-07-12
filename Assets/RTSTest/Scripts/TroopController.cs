@@ -6,6 +6,7 @@ using UnityEngine;
 public class TroopController : MonoBehaviour
 {
 	public float speed = 0.02f;
+	public UnitController unit;
 
 	private float radius = 0.01f;
 
@@ -32,7 +33,8 @@ public class TroopController : MonoBehaviour
 			Vector3 newDir = Quaternion.Euler(0, i * 45, 0) * desiredDir;
 			Vector3 newPos = GetNewPos(newDir);
 
-			Collider[] coll = Physics.OverlapSphere(newPos + new Vector3(0, 0.05f, 0), radius);
+			int layerMask = 1 << LayerMask.NameToLayer("Terrain");
+			Collider[] coll = Physics.OverlapSphere(newPos + new Vector3(0, 0.05f, 0), radius, layerMask);
 			if (coll.Length == 0)
 			{
 				return newPos;

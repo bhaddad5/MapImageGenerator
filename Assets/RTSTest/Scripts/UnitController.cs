@@ -18,6 +18,7 @@ public class UnitController : MonoBehaviour
 		while (i < numTroops)
 		{
 			troops.Add(Instantiate(troopPrefab).GetComponent<TroopController>());
+			troops[i].unit = this;
 			i++;
 		}
 	}
