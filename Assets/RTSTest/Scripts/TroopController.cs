@@ -25,10 +25,11 @@ public class TroopController : MonoBehaviour
 		
 	}
 
+	private int aroundDir = 1;
 	private Vector3 TestGetNewPos(Vector3 targetPos)
 	{
 		Vector3 desiredDir = transform.position.FromTo(targetPos);
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < 8; i = i + aroundDir)
 		{
 			Vector3 newDir = Quaternion.Euler(0, i * 45, 0) * desiredDir;
 			Vector3 newPos = GetNewPos(newDir);
@@ -37,6 +38,8 @@ public class TroopController : MonoBehaviour
 			Collider[] coll = Physics.OverlapSphere(newPos + new Vector3(0, 0.05f, 0), radius, layerMask);
 			if (coll.Length == 0)
 			{
+				if(i > 0)
+					aroundDir = -aroundDir;
 				return newPos;
 			}
 				

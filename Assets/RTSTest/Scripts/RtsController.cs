@@ -25,8 +25,11 @@ public class RtsController : MonoBehaviour
 			{
 				if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
 				{
-					SelectedUnit.transform.LookAt(hit.point);
-					SelectedUnit.transform.position = hit.point;
+					if (SelectedUnit != null)
+					{
+						SelectedUnit.transform.LookAt(hit.point);
+						SelectedUnit.transform.position = hit.point;
+					}
 				}
 			}
 		}
