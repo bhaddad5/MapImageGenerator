@@ -44,6 +44,16 @@ public static class Helpers
 	{
 		return UnityEngine.Random.Range(average * 0.75f, average * 1.25f);
 	}
+
+	public static Vector3 FromTo(this Vector3 from, Vector3 to)
+	{
+		return to - from;
+	}
+
+	public static Vector2 FromTo(this Vector2 from, Vector2 to)
+	{
+		return to - from;
+	}
 }
 
 public class Int2
