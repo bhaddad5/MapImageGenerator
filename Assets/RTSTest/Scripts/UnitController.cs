@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class UnitController : MonoBehaviour
 {
 	public int numTroops;
 	public GameObject troopPrefab;
+	public float speed;
 
 	private List<TroopController> troops = new List<TroopController>();
 

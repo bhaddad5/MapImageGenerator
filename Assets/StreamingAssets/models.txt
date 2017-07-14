@@ -30,7 +30,7 @@
 		{"ModelId":"DwarfTower", "ModelPath":"Dwarf/Models/Dwarf Tower.obj"},
 		{"ModelId":"DwarfBridge", "ModelPath":"Dwarf/Models/Dwarf Bridge.obj"},
 		
-		{"ModelId":"OrcHut", "ModelPath":"Orc/Models/OrcHovel/OrcHut.obj"},
+		{"ModelId":"OrcHut", "ModelPath":"Orc/Models/OrcWoodenWall/OrcHut.obj"},
 		{"ModelId":"OrcWoodenGate", "ModelPath":"Orc/Models/OrcWoodenWall/WoodenGate.obj"},
 		{"ModelId":"OrcWoodenWall", "ModelPath":"Orc/Models/OrcWoodenWall/WoodenWall.obj"},
 		{"ModelId":"OrcWoodenTower", "ModelPath":"Orc/Models/OrcWoodenWall/OrcTower.obj"},

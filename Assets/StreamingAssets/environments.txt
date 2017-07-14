@@ -1,4 +1,113 @@
 {
+	"EnvironmentId":"Jungle",
+	"DisplayName":"Tel-odo Jungles",
+	"MapBuildingCommands":[
+		"HeightsDefaultFill 0",
+		"HeightRandomlyPlaceAlongLine 1 10 5 15 3",
+		"HeightRandomlyExpandLevelFromItselfOrLevel MinGroundHeight 1 1 30",
+		"HeightRandomlyPlace .3 400",
+		"HeightBlendUp 2",
+		"HeightRandomlyPlace 0 4",
+		"HeightRandomlyExpandLevel 0 3",
+		"CreateRivers 10 25",
+		
+		"TerrainDefaultFill DeepJungle",
+		"TerrainFillInOceans Ocean",
+		"TerrainFillInMountains JungleMountains",
+		"TerrainEncourageStartAlongOcean JungleFarms 0.7",
+		"TerrainExpandSimmilarTypes 4 JungleFarms"
+	],
+	"Cultures":[
+		{"cultureId":"Egypt",	"avgSettlementsPer80Square":60}
+	],
+	"GroundTypes":[
+		{
+		"GroundType":"Ocean",
+		"Texture":"Midlands/Terrain/Sand.png",
+		"Difficulty":0.1,
+		"StoredTraits":[
+			"Water",
+			"Impassable"
+		]
+		},
+		{
+		"GroundType":"Road",
+		"Difficulty":0.05,
+		"Texture":"Midlands/Terrain/Sand.png",
+		"StoredTraits":[
+			"Road"
+		]
+		},
+		{
+		"GroundType":"River",
+		"Difficulty":0.5,
+		"Texture":"Midlands/Terrain/Sand.png",
+		"StoredTraits":[
+			"Water",
+			"Impassable"
+		]
+		},
+		{
+		"GroundType":"DeepJungle",
+		"Texture":"Jungle/Terrain/Jungle Forest Floor.png",
+		"Difficulty":0.35,
+		"DefaultModelPlacement":[
+			{"model":"Palm","placementMode":"Scattered","min":10,"max":20}
+		],
+		"StoredTraits":[
+		]
+		},
+		{
+		"GroundType":"JungleFarms",
+		"Texture":"Jungle/Terrain/Jungle Farms.png",
+		"Difficulty":0.2,
+		"DefaultModelPlacement":[
+			{"model":"Palm","placementMode":"Scattered","min":0,"max":3}
+		],
+		"StoredTraits":[
+			"Fertile"
+		]
+		},
+		{
+		"GroundType":"JungleMountains",
+		"Difficulty":50,
+		"Texture":"Midlands/Terrain/Mountains.png",
+		"StoredTraits":[
+			"Rocky",
+			"Impassable"
+		]
+		},
+		{
+		"GroundType":"SmallCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/Terrain/Sand.png",
+		"StoredTraits":[
+			"City",
+			"SmallCity"
+		]
+		},
+		{
+		"GroundType":"MediumCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/Terrain/Sand.png",
+		"StoredTraits":[
+			"City",
+			"MediumCity"
+		]
+		},
+		{
+		"GroundType":"LargeCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/Terrain/Sand.png",
+		"StoredTraits":[
+			"City",
+			"LargeCity"
+		]
+		}
+	]
+}
+|
+{
 	"EnvironmentId":"Desert",
 	"DisplayName":"Sal-hadar Desert",
 	"MapBuildingCommands":[
