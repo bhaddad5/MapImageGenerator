@@ -8,7 +8,7 @@ public class SceneGraph
 	public static Map2D<SceneNode> Graph;
 	public static Map2D<float> HeightGraph;
 
-	public static void Setup(int width, int height, List<BoxCollider> obstacles)
+	public static void Setup(int width, int height, List<RtsModelPlacement> modelPlacers)
 	{
 		Graph = new Map2D<SceneNode>(width, height);
 		HeightGraph = new Map2D<float>(width, height);
@@ -20,9 +20,14 @@ public class SceneGraph
 
 		for (int i = 0; i < 10; i++)
 		{
-			Int2 point = Int2.Random(Random.Range(0, width - 1), Random.Range(0, height - 1));
+			Int2 point = Int2.Random(0, width);
 			HeightGraph.Set(point, Random.Range(5f, 7f));
 			BlendDownFromPoint(point);
+		}
+
+		foreach (RtsModelPlacement modelPlacer in modelPlacers)
+		{
+			PlaceModels(modelPlacer);
 		}
 	}
 
@@ -53,9 +58,35 @@ public class SceneGraph
 		}
 	}
 
+	private static void PlaceModels(RtsModelPlacement placer)
+	{
+		int numToPlace = (int) Helpers.Randomize(placer.placementsPer400Square);
+		for (int i = 0; i < numToPlace; i++)
+		{
+			PlaceModel(placer.objToPlace);
+		}
+	}
+
+	private static void PlaceModel(GameObject obj)
+	{
+		Vector3 pos = new Vector3(Random.Range(0, HeightGraph.Width), 0, Random.Range(0, HeightGraph.Height));
+		pos = HeightAdjustedPos(pos);
+	}
+
 	public static Vector3 HeightAdjustedPos(Vector3 pos)
 	{
-		pos.y = HeightGraph.Get(new Int2((int)pos.x, (int)pos.z));
+		float fractionX = pos.x % 1f;
+		int integerX = (int) pos.x;
+		float fractionZ = pos.z % 1f;
+		int integerZ = (int)pos.z;
+		float interpolatedValue = (1 - fractionX) *
+		                    ((1 - fractionZ) * HeightGraph.Get(new Int2(integerX, integerZ)) +
+		                     fractionZ * HeightGraph.Get(new Int2(integerX, integerZ + 1))) +
+		                    fractionX *
+		                    ((1 - fractionZ) * HeightGraph.Get(new Int2(integerX + 1, integerZ)) +
+		                     fractionZ * HeightGraph.Get(new Int2(integerX + 1, integerZ + 1)));
+
+		pos.y = interpolatedValue;
 		return pos;
 	}
 }
@@ -70,4 +101,10 @@ public class SceneNode
 	{
 		passable = pass;
 	}
+}
+
+public class RtsModelPlacement
+{
+	public float placementsPer400Square;
+	public GameObject objToPlace;
 }

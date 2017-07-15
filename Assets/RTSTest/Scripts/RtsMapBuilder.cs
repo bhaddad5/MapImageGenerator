@@ -8,7 +8,7 @@ public class RtsMapBuilder : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
-		SceneGraph.Setup(400, 400, new List<BoxCollider>());
+		SceneGraph.Setup(400, 400, new List<RtsModelPlacement>());
 
 		List<Mesh> meshes = MeshConstructor.BuildMeshes(SceneGraph.HeightGraph, 1, 1);
 
