@@ -96,6 +96,11 @@ public class Int2
 	{
 		return X + ", " + Y;
 	}
+
+	public static Int2 Random(int min, int max)
+	{
+		return new Int2(UnityEngine.Random.Range(min, max), UnityEngine.Random.Range(min, max));
+	}
 }
 
 public class SortedDupList<T>

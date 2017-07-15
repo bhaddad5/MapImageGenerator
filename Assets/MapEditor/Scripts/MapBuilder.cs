@@ -92,7 +92,8 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Artificing Lands";
 		yield return null;
 
-		MeshConstructor meshConstructor = new MeshConstructor();
+		MapMeshBuilder meshConstructor = new MapMeshBuilder();
+		List<Mesh> mapMeshes = meshConstructor.BuildMapMeshes();
 
 		displayText.text = "Presenting World";
 		yield return null;
@@ -103,7 +104,7 @@ public class MapBuilder : MonoBehaviour
 		List<Material> mapMats = GetMapMaterials(mapEnvironment.groundTypes.Values.ToList());
 
 		int meshNum = 0;
-		foreach(Mesh m in meshConstructor.GetBuiltMeshes())
+		foreach(Mesh m in mapMeshes)
 		{
 			GameObject g = new GameObject("Mesh"+meshNum);
 			g.transform.SetParent(terrainMeshDisplay.transform);
