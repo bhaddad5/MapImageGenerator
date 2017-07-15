@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SceneGraph
 {
@@ -82,10 +84,11 @@ public class SceneGraph
 
 	private static void BlockSceneNodes(BoxCollider coll)
 	{
-		Vector3 min = coll.transform.position + coll.center - coll.size;
-		Vector3 max = coll.transform.position + coll.center + coll.size;
-		Int2 minTile = new Int2((int)min.x, (int)min.z);
-		Int2 maxTile = new Int2((int) max.x + 1, (int) max.z + 1);
+		Vector3 min = coll.transform.TransformPoint(coll.center - coll.size);
+		Vector3 max = coll.transform.TransformPoint(coll.center + coll.size);
+
+		Int2 minTile = new Int2((int)Mathf.Min(min.x, max.x), (int)Mathf.Min(min.z, max.z));
+		Int2 maxTile = new Int2((int)Mathf.Max(min.x, max.x), (int)Mathf.Max(min.z, max.z));
 
 		for (int i = minTile.X; i < maxTile.X; i++)
 		{
@@ -104,11 +107,11 @@ public class SceneGraph
 		float fractionZ = pos.z % 1f;
 		int integerZ = (int)pos.z;
 		float interpolatedValue = (1 - fractionX) *
-		                    ((1 - fractionZ) * HeightGraph.Get(new Int2(integerX, integerZ)) +
-		                     fractionZ * HeightGraph.Get(new Int2(integerX, integerZ + 1))) +
+		                    ((1 - fractionZ) * HeightGraph.GetOrDefault(new Int2(integerX, integerZ), 0) +
+		                     fractionZ * HeightGraph.GetOrDefault(new Int2(integerX, integerZ + 1), 0)) +
 		                    fractionX *
-		                    ((1 - fractionZ) * HeightGraph.Get(new Int2(integerX + 1, integerZ)) +
-		                     fractionZ * HeightGraph.Get(new Int2(integerX + 1, integerZ + 1)));
+		                    ((1 - fractionZ) * HeightGraph.GetOrDefault(new Int2(integerX + 1, integerZ), 0) +
+		                     fractionZ * HeightGraph.GetOrDefault(new Int2(integerX + 1, integerZ + 1), 0));
 
 		pos.y = interpolatedValue;
 		return pos;
@@ -116,7 +119,7 @@ public class SceneGraph
 
 	public static bool PosIsPassable(Vector3 pos)
 	{
-		return PassableGraph.Get(new Int2((int) pos.x, (int) pos.z));
+		return PassableGraph.GetOrDefault(new Int2((int) pos.x, (int) pos.z), false);
 	}
 }
 

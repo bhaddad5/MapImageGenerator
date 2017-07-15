@@ -142,6 +142,13 @@ public class Map2D<T>
 		return map[point.X][point.Y];
 	}
 
+	public T GetOrDefault(Int2 point, T defaultVal)
+	{
+		if (PosInBounds(point))
+			return Get(point);
+		else return defaultVal;
+	}
+
 	public void Set(Int2 point, T val)
 	{
 		map[point.X][point.Y] = val;

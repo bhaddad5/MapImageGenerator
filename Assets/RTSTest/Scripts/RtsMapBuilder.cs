@@ -7,10 +7,11 @@ public class RtsMapBuilder : MonoBehaviour
 	public Texture2D placeholderTex;
 
 	public GameObject TmpTree;
+	public GameObject TmpHovel;
 
 	// Use this for initialization
 	void Start () {
-		SceneGraph.Setup(400, 400, new List<RtsModelPlacement>() {new RtsModelPlacement(200, TmpTree) });
+		SceneGraph.Setup(400, 400, new List<RtsModelPlacement>() {new RtsModelPlacement(200, TmpTree), new RtsModelPlacement(50, TmpHovel) });
 
 		List<Mesh> meshes = MeshConstructor.BuildMeshes(SceneGraph.HeightGraph, 1, 1);
 
