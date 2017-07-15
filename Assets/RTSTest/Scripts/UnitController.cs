@@ -7,12 +7,13 @@ public class UnitController : MonoBehaviour
 {
 	public int numTroops;
 	public GameObject troopPrefab;
-	public float speed;
+	
 
 	private List<TroopController> troops = new List<TroopController>();
 
+	private float speed = 2f;
 	private int numLines = 3;
-	private float spacing = 0.2f;
+	private float spacing = 2f;
 
 	void Start()
 	{
@@ -35,7 +36,9 @@ public class UnitController : MonoBehaviour
 
 		Vector3 localOffset = new Vector3(myColumn * spacing - offset.x, 0, myLine * spacing - offset.z);
 
-		return transform.position - Quaternion.Euler(transform.eulerAngles) * localOffset;
+		Vector3 desiredPos = transform.position - Quaternion.Euler(transform.eulerAngles) * localOffset;
+		desiredPos.y = SceneGraph.HeightGraph.Get(new Int2((int)desiredPos.x, (int)desiredPos.z));
+		return desiredPos;
 	}
 	
 	// Update is called once per frame

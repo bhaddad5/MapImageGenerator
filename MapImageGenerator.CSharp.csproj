@@ -105,6 +105,7 @@
     <Compile Include="Assets\MapEditor\Scripts\UserInteractions\LightController.cs" />
     <Compile Include="Assets\MapEditor\SettlementDisplay\SettlementInfoController.cs" />
     <Compile Include="Assets\RTSTest\Scripts\RtsController.cs" />
+    <Compile Include="Assets\RTSTest\Scripts\RtsMapBuilder.cs" />
     <Compile Include="Assets\RTSTest\Scripts\SceneGraph.cs" />
     <Compile Include="Assets\RTSTest\Scripts\TroopController.cs" />
     <Compile Include="Assets\RTSTest\Scripts\UnitController.cs" />

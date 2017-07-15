@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class TroopController : MonoBehaviour
 {
-	public float speed = 0.02f;
-	public UnitController unit;
+	private float speed = .2f;
+	public UnitController unit { get; set; }
 
 	private float radius = 0.01f;
 
