@@ -25,28 +25,55 @@ public class TroopController : MonoBehaviour
 		
 	}
 
+	private Vector3 lastGoodVec = Vector3.zero;
 	private Vector3 TestGetNewPos(Vector3 targetPos)
 	{
 		Vector3 desiredDir = transform.position.FromTo(targetPos);
-		for (int i = 0; i < 8; i = i + 1)
+		if (TryDir(desiredDir))
+		{
+			lastGoodVec = desiredDir;
+			return GetNewPos(desiredDir);
+		}
+
+		SortedDupList<Vector3> dirsToTry = new SortedDupList<Vector3>();
+		dirsToTry.Insert(Vector3.forward, Vector3.Dot(lastGoodVec, Vector3.forward));
+		dirsToTry.Insert(-Vector3.forward, Vector3.Dot(lastGoodVec, -Vector3.forward));
+		dirsToTry.Insert(Vector3.right, Vector3.Dot(lastGoodVec, Vector3.right));
+		dirsToTry.Insert(-Vector3.right, Vector3.Dot(lastGoodVec, -Vector3.right));
+
+		foreach (var pair in dirsToTry.GetList())
+		{
+			if (TryDir(pair.Value))
+			{
+				lastGoodVec = pair.Value;
+				return GetNewPos(pair.Value);
+			}
+		}
+
+
+		/*for (int i = 0; i < 8; i = i + 1)
 		{
 			Vector3 newDir = Quaternion.Euler(0, i * 45, 0) * desiredDir;
-			Vector3 newPos = GetNewPos(newDir);
+			//Vector3 newPos = GetNewPos(newDir);
 
 			int layerMask = (1 << LayerMask.NameToLayer("Terrain")) | (1 << LayerMask.NameToLayer("Unit"));
 			Collider[] coll = Physics.OverlapSphere(newPos + new Vector3(0, 0.05f, 0), radius, layerMask);
-			/*var enemy = OverlapEnemy(coll);
-			if (enemy != null)
-			{
-				return transform.position;
-			}*/
 			if (SceneGraph.PosIsPassable(newPos))
 			{
 				return newPos;
 			}
 				
-		}
+		}*/
+		lastGoodVec = desiredDir;
 		return GetNewPos(desiredDir);
+	}
+
+	private bool TryDir(Vector3 dir)
+	{
+		Vector3 newPos = GetNewPos(dir);
+		return SceneGraph.PosIsPassable(newPos);
+
+
 	}
 
 	private TroopController OverlapEnemy(Collider[] coll)
