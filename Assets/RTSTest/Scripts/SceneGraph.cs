@@ -5,17 +5,17 @@ using UnityEngine;
 
 public class SceneGraph
 {
-	public static Map2D<SceneNode> Graph;
+	public static Map2D<bool> PassableGraph;
 	public static Map2D<float> HeightGraph;
 
 	public static void Setup(int width, int height, List<RtsModelPlacement> modelPlacers)
 	{
-		Graph = new Map2D<SceneNode>(width, height);
+		PassableGraph = new Map2D<bool>(width, height);
 		HeightGraph = new Map2D<float>(width, height);
 
-		foreach (Int2 point in Graph.GetMapPoints())
+		foreach (Int2 point in PassableGraph.GetMapPoints())
 		{
-			Graph.Set(point, new SceneNode(true));
+			PassableGraph.Set(point, true);
 		}
 
 		for (int i = 0; i < 10; i++)
@@ -69,8 +69,32 @@ public class SceneGraph
 
 	private static void PlaceModel(GameObject obj)
 	{
-		Vector3 pos = new Vector3(Random.Range(0, HeightGraph.Width), 0, Random.Range(0, HeightGraph.Height));
+		Vector3 pos = new Vector3(Random.Range(0f, HeightGraph.Width), 0f, Random.Range(0, HeightGraph.Height));
 		pos = HeightAdjustedPos(pos);
+		GameObject spawned = GameObject.Instantiate(obj);
+		spawned.transform.position = pos;
+
+		foreach (BoxCollider collider in spawned.GetComponentsInChildren<BoxCollider>())
+		{
+			BlockSceneNodes(collider);
+		}
+	}
+
+	private static void BlockSceneNodes(BoxCollider coll)
+	{
+		Vector3 min = coll.transform.position + coll.center - coll.size;
+		Vector3 max = coll.transform.position + coll.center + coll.size;
+		Int2 minTile = new Int2((int)min.x, (int)min.z);
+		Int2 maxTile = new Int2((int) max.x + 1, (int) max.z + 1);
+
+		for (int i = minTile.X; i < maxTile.X; i++)
+		{
+			for (int j = minTile.Y; j < maxTile.Y; j++)
+			{
+				if(PassableGraph.PosInBounds(new Int2(i, j)))
+					PassableGraph.Set(new Int2(i, j), false);
+			}
+		}
 	}
 
 	public static Vector3 HeightAdjustedPos(Vector3 pos)
@@ -89,17 +113,10 @@ public class SceneGraph
 		pos.y = interpolatedValue;
 		return pos;
 	}
-}
 
-public class SceneNode
-{
-	public bool passable;
-	public SceneNode left;
-	public SceneNode right;
-
-	public SceneNode(bool pass)
+	public static bool PosIsPassable(Vector3 pos)
 	{
-		passable = pass;
+		return PassableGraph.Get(new Int2((int) pos.x, (int) pos.z));
 	}
 }
 
@@ -107,4 +124,10 @@ public class RtsModelPlacement
 {
 	public float placementsPer400Square;
 	public GameObject objToPlace;
+
+	public RtsModelPlacement(float num, GameObject o)
+	{
+		placementsPer400Square = num;
+		objToPlace = o;
+	}
 }

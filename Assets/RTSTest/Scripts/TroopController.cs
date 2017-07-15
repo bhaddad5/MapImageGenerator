@@ -25,26 +25,23 @@ public class TroopController : MonoBehaviour
 		
 	}
 
-	private int aroundDir = 1;
 	private Vector3 TestGetNewPos(Vector3 targetPos)
 	{
 		Vector3 desiredDir = transform.position.FromTo(targetPos);
-		for (int i = 0; i < 8; i = i + aroundDir)
+		for (int i = 0; i < 8; i = i + 1)
 		{
 			Vector3 newDir = Quaternion.Euler(0, i * 45, 0) * desiredDir;
 			Vector3 newPos = GetNewPos(newDir);
 
 			int layerMask = (1 << LayerMask.NameToLayer("Terrain")) | (1 << LayerMask.NameToLayer("Unit"));
 			Collider[] coll = Physics.OverlapSphere(newPos + new Vector3(0, 0.05f, 0), radius, layerMask);
-			var enemy = OverlapEnemy(coll);
+			/*var enemy = OverlapEnemy(coll);
 			if (enemy != null)
 			{
 				return transform.position;
-			}
-			if (!OverlapTerrain(coll))
+			}*/
+			if (SceneGraph.PosIsPassable(newPos))
 			{
-				if(i > 0)
-					aroundDir = -aroundDir;
 				return newPos;
 			}
 				
