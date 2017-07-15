@@ -28,8 +28,10 @@ public class SceneGraph
 
 	private static void BlendDownFromPoint(Int2 point)
 	{
+		Map2D<bool> done = new Map2D<bool>(HeightGraph.Width, HeightGraph.Height);
 		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
 		frontierTiles.Insert(point, HeightGraph.Get(point));
+		done.Set(point, true);
 
 		float heightDiff = 0.1f;
 
@@ -41,18 +43,20 @@ public class SceneGraph
 				continue;
 			foreach (Int2 adjacentPoint in HeightGraph.GetAdjacentPoints(currPoint))
 			{
-				if (HeightGraph.Get(adjacentPoint)  <= 0)
+				if (!done.Get(adjacentPoint) && HeightGraph.Get(adjacentPoint) < currHeight)
 				{
 					HeightGraph.Set(adjacentPoint, currHeight - heightDiff);
 					frontierTiles.Insert(adjacentPoint, currHeight - heightDiff);
+					done.Set(adjacentPoint, true);
 				}
 			}
 		}
 	}
 
-	public static void ExpandBlendDown()
+	public static Vector3 HeightAdjustedPos(Vector3 pos)
 	{
-		
+		pos.y = HeightGraph.Get(new Int2((int)pos.x, (int)pos.z));
+		return pos;
 	}
 }
 

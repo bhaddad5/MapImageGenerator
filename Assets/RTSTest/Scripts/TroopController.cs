@@ -14,12 +14,12 @@ public class TroopController : MonoBehaviour
 	{
 		if (transform.position.FromTo(pos).magnitude < speed)
 		{
-			transform.position = pos;
+			transform.position = SceneGraph.HeightAdjustedPos(pos);
 			transform.eulerAngles = rot;
 		}
 		else
 		{
-			transform.position = TestGetNewPos(pos);
+			transform.position = SceneGraph.HeightAdjustedPos(TestGetNewPos(pos));
 			transform.LookAt(pos);
 		}
 		
