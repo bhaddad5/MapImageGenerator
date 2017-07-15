@@ -37,6 +37,10 @@ public class UnitController : MonoBehaviour
 		Vector3 localOffset = new Vector3(myColumn * spacing - offset.x, 0, myLine * spacing - offset.z);
 
 		Vector3 desiredPos = transform.position - Quaternion.Euler(transform.eulerAngles) * localOffset;
+
+		if (!SceneGraph.PosIsPassable(desiredPos))
+			desiredPos = SceneGraph.ClosestPassable(desiredPos);
+
 		return SceneGraph.HeightAdjustedPos(desiredPos);
 	}
 	

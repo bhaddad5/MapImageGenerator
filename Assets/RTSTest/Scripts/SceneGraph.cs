@@ -121,6 +121,28 @@ public class SceneGraph
 	{
 		return PassableGraph.GetOrDefault(new Int2((int) pos.x, (int) pos.z), false);
 	}
+
+	public static Vector3 ClosestPassable(Vector3 pos)
+	{
+		Map2D<bool> visited = new Map2D<bool>(HeightGraph.Width, HeightGraph.Height);
+		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
+		frontierTiles.Insert(new Int2((int)pos.x, (int)pos.z), 0);
+		while (frontierTiles.Count > 0)
+		{
+			Int2 currPos = frontierTiles.Pop();
+			visited.Set(currPos, true);
+			if (PassableGraph.Get(currPos))
+			{
+				return new Vector3(currPos.X + (pos.x%1), pos.y, currPos.Y + (pos.z%1));
+			}
+			foreach (Int2 adjacentPoint in HeightGraph.GetAdjacentPoints(currPos))
+			{
+				if(!visited.Get(adjacentPoint))
+					frontierTiles.Insert(adjacentPoint, 0);
+			}
+		}
+		return pos;
+	}
 }
 
 public class RtsModelPlacement
