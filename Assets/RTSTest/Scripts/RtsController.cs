@@ -55,7 +55,7 @@ public class RtsController : MonoBehaviour
 	{
 		if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
 		{
-			if (SelectedUnit != null)
+			if (SelectedUnit != null && Vector3.Magnitude(downPos.FromTo(hit.point)) > 2f)
 			{
 				Vector3 desiredPos = (downPos + hit.point) / 2;
 				Vector3 desiredAngle = Quaternion.AngleAxis(-90, Vector3.up) * downPos.FromTo(hit.point);

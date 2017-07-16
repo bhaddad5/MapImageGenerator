@@ -10,17 +10,27 @@ public class TroopController : MonoBehaviour
 
 	private float radius = 0.01f;
 
+	private Animator anim;
+
+	void Awake()
+	{
+		anim = GetComponent<Animator>();
+	}
+
+
 	public void MoveTowardsDesiredPos(Vector3 pos, Vector3 rot)
 	{
 		if (transform.position.FromTo(pos).magnitude < speed)
 		{
 			transform.position = SceneGraph.HeightAdjustedPos(pos);
 			transform.eulerAngles = rot;
+			anim.SetFloat("Speed", 0);
 		}
 		else
 		{
 			transform.position = SceneGraph.HeightAdjustedPos(TestGetNewPos(pos));
 			transform.LookAt(pos);
+			anim.SetFloat("Speed", speed);
 		}
 		
 	}
