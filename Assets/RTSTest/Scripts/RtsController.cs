@@ -36,7 +36,7 @@ public class RtsController : MonoBehaviour
 		}
 	}
 
-	Vector2 downPos;
+	Vector3 downPos;
 	private void HandleRightDown(RaycastHit hit)
 	{
 		if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
@@ -46,7 +46,7 @@ public class RtsController : MonoBehaviour
 				SelectedUnit.transform.LookAt(hit.point);
 				SelectedUnit.transform.position = hit.point;
 
-				downPos = Input.mousePosition;
+				downPos = hit.point;
 			}
 		}
 	}
@@ -57,6 +57,13 @@ public class RtsController : MonoBehaviour
 		{
 			if (SelectedUnit != null)
 			{
+				Vector3 desiredPos = (downPos + hit.point) / 2;
+				Vector3 desiredAngle = Quaternion.AngleAxis(-90, Vector3.up) * downPos.FromTo(hit.point);
+				float dist = Vector3.Magnitude(downPos.FromTo(hit.point));
+
+				SelectedUnit.transform.position = desiredPos;
+				SelectedUnit.transform.LookAt(SelectedUnit.transform.position + desiredAngle);
+				SelectedUnit.numColumns = (int)(dist / SelectedUnit.spacing);
 			}
 		}
 	}

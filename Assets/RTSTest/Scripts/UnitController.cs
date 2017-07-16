@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.VR.WSA.Persistence;
 
 public class UnitController : MonoBehaviour
 {
@@ -13,12 +14,16 @@ public class UnitController : MonoBehaviour
 	private List<TroopController> troops = new List<TroopController>();
 	private List<GameObject> troopMarkers = new List<GameObject>();
 
-	private float speed = 2f;
-	private int numColumns = 12;
-	private float spacing = 2f;
+	public int numColumns { get; set; }
+	public float speed { get; set; }
+	public float spacing { get; set; }
 
 	void Start()
 	{
+		numColumns = 20;
+		speed = 2f;
+		spacing = 2f;
+
 		int i = 0;
 		while (i < numTroops)
 		{
@@ -31,11 +36,14 @@ public class UnitController : MonoBehaviour
 
 	private Vector3 GetDesiredPos(int index)
 	{
+		if (numColumns == 0)
+			numColumns = 1;
+
 		int numTroopsInColumn = troops.Count / numColumns;
 		int myColumn = index / numTroopsInColumn;
 		int myLine = index % numTroopsInColumn;
 
-		Vector3 offset = new Vector3(((troops.Count % numTroopsInColumn) / 2f) * spacing, 0, (numTroopsInColumn /2f) * spacing);
+		Vector3 offset = new Vector3(((numTroopsInColumn) / 2f) * spacing, 0, ((troops.Count % numTroopsInColumn) /2f) * spacing);
 
 		Vector3 localOffset = new Vector3(myColumn * spacing - offset.x, 0, myLine * spacing - offset.z);
 
