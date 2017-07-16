@@ -15,22 +15,48 @@ public class RtsController : MonoBehaviour
 		{
 			if (Input.GetMouseButtonDown(0))
 			{
-				if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Unit"))
-				{
-					SelectedUnit = hit.collider.gameObject.GetComponentInParent<TroopController>().unit;
-				}
+				HandleLeftDown(hit);
 			}
 
 			if (Input.GetMouseButtonDown(1))
 			{
-				if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
-				{
-					if (SelectedUnit != null)
-					{
-						SelectedUnit.transform.LookAt(hit.point);
-						SelectedUnit.transform.position = hit.point;
-					}
-				}
+				HandleRightDown(hit);
+			}
+
+			if (Input.GetMouseButton(1))
+				HandleRightDrag(hit);
+		}
+	}
+
+	private void HandleLeftDown(RaycastHit hit)
+	{
+		if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Unit"))
+		{
+			SelectedUnit = hit.collider.gameObject.GetComponentInParent<TroopController>().unit;
+		}
+	}
+
+	Vector2 downPos;
+	private void HandleRightDown(RaycastHit hit)
+	{
+		if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+		{
+			if (SelectedUnit != null)
+			{
+				SelectedUnit.transform.LookAt(hit.point);
+				SelectedUnit.transform.position = hit.point;
+
+				downPos = Input.mousePosition;
+			}
+		}
+	}
+
+	private void HandleRightDrag(RaycastHit hit)
+	{
+		if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+		{
+			if (SelectedUnit != null)
+			{
 			}
 		}
 	}

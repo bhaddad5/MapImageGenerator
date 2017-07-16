@@ -126,7 +126,12 @@ public class SceneGraph
 	{
 		Map2D<bool> visited = new Map2D<bool>(HeightGraph.Width, HeightGraph.Height);
 		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
-		frontierTiles.Insert(new Int2((int)pos.x, (int)pos.z), 0);
+		Int2 startPos = new Int2((int) pos.x, (int) pos.z);
+
+		startPos.X = Math.Min(Math.Max(startPos.X, 0), HeightGraph.Width-1);
+		startPos.Y = Math.Min(Math.Max(startPos.Y, 0), HeightGraph.Height - 1);
+
+		frontierTiles.Insert(startPos, 0);
 		while (frontierTiles.Count > 0)
 		{
 			Int2 currPos = frontierTiles.Pop();
@@ -137,7 +142,7 @@ public class SceneGraph
 			}
 			foreach (Int2 adjacentPoint in HeightGraph.GetAdjacentPoints(currPos))
 			{
-				if(!visited.Get(adjacentPoint))
+				if(HeightGraph.PosInBounds(adjacentPoint) && !visited.Get(adjacentPoint))
 					frontierTiles.Insert(adjacentPoint, 0);
 			}
 		}
