@@ -12,20 +12,24 @@ public class UnitController : MonoBehaviour
 
 	public float attack = 1f;
 	public float defense = 1f;
-	
+	public float speed = 2f;
+	public float spacing = 2f;
+
 
 	private List<TroopController> troops = new List<TroopController>();
 	private List<GameObject> troopMarkers = new List<GameObject>();
 
-	public int numColumns { get; set; }
-	public float speed { get; set; }
-	public float spacing { get; set; }
+	public float desiredWidth { get; set; }
+	private Vector3 desiredPos;
+	private Vector3 desiredRot;
+
+	public float currMoveSpeed { get; set; }
 
 	void Start()
 	{
-		numColumns = 20;
-		speed = 2f;
-		spacing = 2f;
+		desiredPos = transform.position;
+
+		desiredWidth = 10;
 
 		int i = 0;
 		while (i < numTroops)
@@ -37,12 +41,13 @@ public class UnitController : MonoBehaviour
 		}
 	}
 
-	private Vector3 GetDesiredPos(int index)
+	private Vector3 GetDesiredPos(int index, Vector3 unitPos, Vector3 unitRot)
 	{
-		if (numColumns == 0)
-			numColumns = 1;
+		int numColumns = Mathf.Max(4, (int)(desiredWidth / spacing));
 
 		int numTroopsInColumn = troops.Count / numColumns;
+		if (numTroopsInColumn == 0)
+			numTroopsInColumn = troops.Count;
 		int myColumn = index / numTroopsInColumn;
 		int myLine = index % numTroopsInColumn;
 
@@ -50,25 +55,47 @@ public class UnitController : MonoBehaviour
 
 		Vector3 localOffset = new Vector3(myColumn * spacing - offset.x, 0, myLine * spacing - offset.z);
 
-		Vector3 desiredPos = transform.position - Quaternion.Euler(transform.eulerAngles) * localOffset;
+		Vector3 desiredPos = unitPos - Quaternion.Euler(unitRot) * localOffset;
 
 		if (!SceneGraph.PosIsPassable(desiredPos))
 			desiredPos = SceneGraph.ClosestPassable(desiredPos);
 
 		return SceneGraph.HeightAdjustedPos(desiredPos);
 	}
+
+	public void SetDesiredUnitPos(Vector3 givenPos, Vector3 givenRot)
+	{
+		desiredPos = SceneGraph.HeightAdjustedPos(SceneGraph.ClosestPassable(givenPos));
+		desiredRot = givenRot;
+
+		int i = 0;
+		foreach (GameObject marker in troopMarkers)
+		{
+			Vector3 pos = GetDesiredPos(i, desiredPos, givenRot);
+			troopMarkers[i].transform.position = pos;
+			troopMarkers[i].transform.eulerAngles = givenRot;
+
+			i++;
+		}
+	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
+		Vector3 startPos = transform.position;
+		transform.position = Vector3.MoveTowards(transform.position, desiredPos, speed);
+		transform.LookAt(desiredPos);
+		currMoveSpeed = startPos.FromTo(transform.position).magnitude;
+		if (currMoveSpeed < 0.001f)
+		{
+			transform.eulerAngles = desiredRot;
+		}
+
 		int i = 0;
 		foreach (TroopController troop in troops)
 		{
-			Vector3 pos = GetDesiredPos(i);
+			Vector3 pos = GetDesiredPos(i, transform.position, transform.eulerAngles);
 			troop.MoveTowardsDesiredPos(pos, transform.eulerAngles);
-			troopMarkers[i].transform.position = pos;
-			troopMarkers[i].transform.eulerAngles = transform.eulerAngles;
-
 			i++;
 		}
 	}
@@ -76,6 +103,5 @@ public class UnitController : MonoBehaviour
 	public void LoseTroop(TroopController troop)
 	{
 		troops.Remove(troop);
-		troopMarkers.RemoveAt(0);
 	}
 }

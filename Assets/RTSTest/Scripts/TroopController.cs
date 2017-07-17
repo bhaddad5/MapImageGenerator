@@ -15,6 +15,15 @@ public class TroopController : MonoBehaviour
 	void Awake()
 	{
 		anim = GetComponent<Animator>();
+
+		AnimationClip clip = anim.runtimeAnimatorController.animationClips[3];
+
+		AnimationEvent evt;
+		evt = new AnimationEvent();
+		evt.time = .5f;
+		evt.functionName = "ExecuteAttack";
+
+		clip.AddEvent(evt);
 	}
 
 
@@ -24,13 +33,13 @@ public class TroopController : MonoBehaviour
 		{
 			transform.position = SceneGraph.HeightAdjustedPos(pos);
 			transform.eulerAngles = rot;
-			anim.SetFloat("Speed", 0);
+			anim.SetFloat("Speed", unit.currMoveSpeed);
 		}
 		else
 		{
 			transform.position = SceneGraph.HeightAdjustedPos(TestGetNewPos(pos));
 			transform.LookAt(pos);
-			anim.SetFloat("Speed", speed);
+			anim.SetFloat("Speed", unit.currMoveSpeed + speed);
 		}
 
 		HandleEnemyInteraction();
@@ -95,7 +104,7 @@ public class TroopController : MonoBehaviour
 
 				if (!nowFighting && troop.unit != unit)
 				{
-					troop.RecieveAttack(this);
+					currEnemy = troop;
 					transform.LookAt(troop.transform);
 					nowFighting = true;
 				}
@@ -123,21 +132,16 @@ public class TroopController : MonoBehaviour
 		return overlappingUnits;
 	}
 
-	public float lastAttackTime = 0;
-	public float attackTimeout = 2f;
-	public void RecieveAttack(TroopController enemyTroop)
+	private TroopController currEnemy;
+	public void ExecuteAttack()
 	{
-		if (Time.time > lastAttackTime + attackTimeout)
-		{
-			lastAttackTime = Time.time;
-			HandleAttack(enemyTroop);
-		}
+		currEnemy.RecieveAttack(this);
 	}
 
-	public void HandleAttack(TroopController enemyTroop)
+	public void RecieveAttack(TroopController enemyTroop)
 	{
-		float adjustedDefense = unit.defense * 3f;
-		float totalOdds = enemyTroop.unit.attack + unit.defense * 3f;
+		float adjustedDefense = unit.defense * 20f;
+		float totalOdds = enemyTroop.unit.attack + adjustedDefense;
 		if (Helpers.Odds(enemyTroop.unit.attack / totalOdds))
 			DestroyTroop();
 	}

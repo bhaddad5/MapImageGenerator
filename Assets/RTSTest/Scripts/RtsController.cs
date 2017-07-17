@@ -44,9 +44,6 @@ public class RtsController : MonoBehaviour
 		{
 			if (SelectedUnit != null)
 			{
-				SelectedUnit.transform.LookAt(hit.point);
-				SelectedUnit.transform.position = hit.point;
-
 				downPos = hit.point;
 			}
 		}
@@ -58,13 +55,18 @@ public class RtsController : MonoBehaviour
 		{
 			if (SelectedUnit != null && Vector3.Magnitude(downPos.FromTo(hit.point)) > 2f)
 			{
-				Vector3 desiredPos = (downPos + hit.point) / 2;
+				Vector3 desiredPos = hit.point;
 				Vector3 desiredAngle = Quaternion.AngleAxis(-90, Vector3.up) * downPos.FromTo(hit.point);
 				float dist = Vector3.Magnitude(downPos.FromTo(hit.point));
 
-				SelectedUnit.transform.position = desiredPos;
+				Vector3 tmp = SelectedUnit.transform.eulerAngles;
 				SelectedUnit.transform.LookAt(SelectedUnit.transform.position + desiredAngle);
-				SelectedUnit.numColumns = (int)(dist / SelectedUnit.spacing);
+				Vector3 desiredRot = SelectedUnit.transform.eulerAngles;
+				SelectedUnit.transform.eulerAngles = tmp;
+
+				SelectedUnit.SetDesiredUnitPos(desiredPos, desiredRot);
+				
+				SelectedUnit.desiredWidth = dist;
 			}
 		}
 	}
