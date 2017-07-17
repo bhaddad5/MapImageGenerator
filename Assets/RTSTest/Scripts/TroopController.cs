@@ -12,18 +12,24 @@ public class TroopController : MonoBehaviour
 
 	private Animator anim;
 
+	public static bool Set = false;
+
 	void Awake()
 	{
 		anim = GetComponent<Animator>();
 
-		AnimationClip clip = anim.runtimeAnimatorController.animationClips[3];
+		if (!Set)
+		{
+			AnimationClip clip = anim.runtimeAnimatorController.animationClips[3];
 
-		AnimationEvent evt;
-		evt = new AnimationEvent();
-		evt.time = .5f;
-		evt.functionName = "ExecuteAttack";
+			AnimationEvent evt;
+			evt = new AnimationEvent();
+			evt.time = .5f;
+			evt.functionName = "ExecuteAttack";
 
-		clip.AddEvent(evt);
+			clip.AddEvent(evt);
+			Set = true;
+		}
 	}
 
 
@@ -140,7 +146,7 @@ public class TroopController : MonoBehaviour
 
 	public void RecieveAttack(TroopController enemyTroop)
 	{
-		float adjustedDefense = unit.defense * 20f;
+		float adjustedDefense = unit.defense * 8f;
 		float totalOdds = enemyTroop.unit.attack + adjustedDefense;
 		if (Helpers.Odds(enemyTroop.unit.attack / totalOdds))
 			DestroyTroop();
