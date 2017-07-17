@@ -8,7 +8,7 @@ public class TroopController : MonoBehaviour
 	private float speed = .2f;
 	public UnitController unit { get; set; }
 
-	private float radius = 0.01f;
+	private float radius = 1f;
 
 	private Animator anim;
 
@@ -32,7 +32,8 @@ public class TroopController : MonoBehaviour
 			transform.LookAt(pos);
 			anim.SetFloat("Speed", speed);
 		}
-		
+
+		HandleEnemyInteraction();
 	}
 
 	private Vector3 lastGoodVec = Vector3.zero;
@@ -59,21 +60,6 @@ public class TroopController : MonoBehaviour
 				return GetNewPos(pair.Value);
 			}
 		}
-
-
-		/*for (int i = 0; i < 8; i = i + 1)
-		{
-			Vector3 newDir = Quaternion.Euler(0, i * 45, 0) * desiredDir;
-			//Vector3 newPos = GetNewPos(newDir);
-
-			int layerMask = (1 << LayerMask.NameToLayer("Terrain")) | (1 << LayerMask.NameToLayer("Unit"));
-			Collider[] coll = Physics.OverlapSphere(newPos + new Vector3(0, 0.05f, 0), radius, layerMask);
-			if (SceneGraph.PosIsPassable(newPos))
-			{
-				return newPos;
-			}
-				
-		}*/
 		lastGoodVec = desiredDir;
 		return GetNewPos(desiredDir);
 	}
@@ -86,33 +72,49 @@ public class TroopController : MonoBehaviour
 
 	}
 
-	private TroopController OverlapEnemy(Collider[] coll)
+	private Vector3 GetNewPos(Vector3 dir)
 	{
+		return transform.position + dir.normalized * speed;
+	}
+
+	private bool currFighting = false;
+	private void HandleEnemyInteraction()
+	{
+		bool nowFighting = false;
+
+		int layerMask = (1 << LayerMask.NameToLayer("Unit"));
+		Collider[] coll = Physics.OverlapSphere(transform.position + new Vector3(0, 0.05f, 0), radius, layerMask);
+		var otherTroops = OverlapUnit(coll);
+		if (otherTroops.Count > 0)
+		{
+			foreach (TroopController troop in otherTroops)
+			{
+				if (troop.unit != unit)
+				{
+					transform.LookAt(troop.transform);
+					nowFighting = true;
+				}
+			}
+		}
+
+		if (nowFighting != currFighting)
+		{
+			currFighting = nowFighting;
+			anim.SetBool("Fighting", nowFighting);
+		}
+	}
+
+	private List<TroopController> OverlapUnit(Collider[] coll)
+	{
+		List<TroopController> overlappingUnits = new List<TroopController>();
 		foreach (Collider collider in coll)
 		{
 			if (collider.gameObject.layer == LayerMask.NameToLayer("Unit"))
 			{
-				var tc = collider.gameObject.GetComponentInParent<TroopController>();
-				if (tc.unit != unit)
-					return tc;
+				var tc = collider.gameObject.GetComponent<TroopController>();
+				overlappingUnits.Add(tc);
 			}
 		}
-		return null;
-	}
-
-	private bool OverlapTerrain(Collider[] coll)
-	{
-		foreach (Collider collider in coll)
-		{
-			int x = LayerMask.NameToLayer("Terrain");
-			if (collider.gameObject.layer == x)
-				return true;
-		}
-		return false;
-	}
-
-	private Vector3 GetNewPos(Vector3 dir)
-	{
-		return transform.position + dir.normalized * speed;
+		return overlappingUnits;
 	}
 }
