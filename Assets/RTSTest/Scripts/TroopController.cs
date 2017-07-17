@@ -35,6 +35,14 @@ public class TroopController : MonoBehaviour
 
 	public void MoveTowardsDesiredPos(Vector3 pos, Vector3 rot)
 	{
+		HandleEnemyInteraction();
+
+		if (currFighting && unit.HasTarget())
+		{
+			anim.SetFloat("Speed", 0);
+			return;
+		}
+
 		if (transform.position.FromTo(pos).magnitude < speed)
 		{
 			transform.position = SceneGraph.HeightAdjustedPos(pos);
@@ -47,8 +55,6 @@ public class TroopController : MonoBehaviour
 			transform.LookAt(pos);
 			anim.SetFloat("Speed", unit.currMoveSpeed + speed);
 		}
-
-		HandleEnemyInteraction();
 	}
 
 	private Vector3 lastGoodVec = Vector3.zero;

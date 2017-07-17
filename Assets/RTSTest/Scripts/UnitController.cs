@@ -22,6 +22,7 @@ public class UnitController : MonoBehaviour
 	public float desiredWidth { get; set; }
 	private Vector3 desiredPos;
 	private Vector3 desiredRot;
+	private UnitController targetUnit = null;
 
 	public float currMoveSpeed { get; set; }
 
@@ -63,7 +64,7 @@ public class UnitController : MonoBehaviour
 		return SceneGraph.HeightAdjustedPos(desiredPos);
 	}
 
-	public void SetDesiredUnitPos(Vector3 givenPos, Vector3 givenRot)
+	public void SetDesiredUnitPos(Vector3 givenPos, Vector3 givenRot, bool target = false)
 	{
 		desiredPos = SceneGraph.HeightAdjustedPos(SceneGraph.ClosestPassable(givenPos));
 		desiredRot = givenRot;
@@ -77,11 +78,33 @@ public class UnitController : MonoBehaviour
 
 			i++;
 		}
+
+		if (!target)
+		{
+			targetUnit = null;
+		}
+	}
+
+	public void SetTarget(UnitController enemyUnit)
+	{
+		targetUnit = enemyUnit;
+	}
+
+	public bool HasTarget()
+	{
+		return targetUnit != null;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
+		if (targetUnit != null)
+		{
+			SetDesiredUnitPos(targetUnit.transform.position, transform.eulerAngles, true);
+		}
+
+		
+
 		Vector3 startPos = transform.position;
 		transform.position = Vector3.MoveTowards(transform.position, desiredPos, speed);
 		transform.LookAt(desiredPos);
@@ -95,6 +118,7 @@ public class UnitController : MonoBehaviour
 		foreach (TroopController troop in troops)
 		{
 			Vector3 pos = GetDesiredPos(i, transform.position, transform.eulerAngles);
+
 			troop.MoveTowardsDesiredPos(pos, transform.eulerAngles);
 			i++;
 		}

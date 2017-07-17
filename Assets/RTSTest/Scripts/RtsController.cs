@@ -47,6 +47,15 @@ public class RtsController : MonoBehaviour
 				downPos = hit.point;
 			}
 		}
+
+		if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Unit"))
+		{
+			var unitHit = hit.collider.GetComponent<TroopController>().unit;
+			if (SelectedUnit != null && unitHit != SelectedUnit)
+			{
+				SelectedUnit.SetTarget(unitHit);
+			}
+		}
 	}
 
 	private void HandleRightDrag(RaycastHit hit)
