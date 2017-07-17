@@ -89,6 +89,10 @@ public class TroopController : MonoBehaviour
 		{
 			foreach (TroopController troop in otherTroops)
 			{
+				float distToTroop = transform.position.FromTo(troop.transform.position).magnitude;
+				if (distToTroop < 1f)
+					transform.position -= transform.position.FromTo(troop.transform.position) * (1f-distToTroop);
+
 				if (troop.unit != unit)
 				{
 					transform.LookAt(troop.transform);

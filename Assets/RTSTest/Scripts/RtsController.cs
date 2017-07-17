@@ -5,6 +5,7 @@ using UnityEngine;
 public class RtsController : MonoBehaviour
 {
 	private UnitController SelectedUnit;
+	private BoxCollider selector;
 
 	// Update is called once per frame
 	void Update ()
