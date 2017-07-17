@@ -9,6 +9,9 @@ public class UnitController : MonoBehaviour
 	public int numTroops;
 	public GameObject troopPrefab;
 	public GameObject troopMarkerPrefab;
+
+	public float attack = 1f;
+	public float defense = 1f;
 	
 
 	private List<TroopController> troops = new List<TroopController>();
@@ -68,5 +71,11 @@ public class UnitController : MonoBehaviour
 
 			i++;
 		}
+	}
+
+	public void LoseTroop(TroopController troop)
+	{
+		troops.Remove(troop);
+		troopMarkers.RemoveAt(0);
 	}
 }

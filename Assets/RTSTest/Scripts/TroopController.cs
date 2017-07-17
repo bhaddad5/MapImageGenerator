@@ -93,8 +93,9 @@ public class TroopController : MonoBehaviour
 				if (distToTroop < 1f)
 					transform.position -= transform.position.FromTo(troop.transform.position) * (1f-distToTroop);
 
-				if (troop.unit != unit)
+				if (!nowFighting && troop.unit != unit)
 				{
+					troop.RecieveAttack(this);
 					transform.LookAt(troop.transform);
 					nowFighting = true;
 				}
@@ -120,5 +121,30 @@ public class TroopController : MonoBehaviour
 			}
 		}
 		return overlappingUnits;
+	}
+
+	public float lastAttackTime = 0;
+	public float attackTimeout = 2f;
+	public void RecieveAttack(TroopController enemyTroop)
+	{
+		if (Time.time > lastAttackTime + attackTimeout)
+		{
+			lastAttackTime = Time.time;
+			HandleAttack(enemyTroop);
+		}
+	}
+
+	public void HandleAttack(TroopController enemyTroop)
+	{
+		float adjustedDefense = unit.defense * 3f;
+		float totalOdds = enemyTroop.unit.attack + unit.defense * 3f;
+		if (Helpers.Odds(enemyTroop.unit.attack / totalOdds))
+			DestroyTroop();
+	}
+
+	public void DestroyTroop()
+	{
+		unit.LoseTroop(this);
+		GameObject.Destroy(gameObject);
 	}
 }
