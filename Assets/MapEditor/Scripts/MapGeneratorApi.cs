@@ -44,6 +44,8 @@ public class MapGeneratorApi
 			HeightRandomizeLevelEdges(Single.Parse(split[1]), Int32.Parse(split[2]));
 		if (split[0] == "HeightRandomlyPlaceAlongLine")
 			HeightRandomlyPlaceAlongLine(Single.Parse(split[1]), Single.Parse(split[2]), Single.Parse(split[3]), Single.Parse(split[4]), Single.Parse(split[5]));
+		if (split[0] == "HeightRandomlyPlaceAlongEdges")
+			HeightRandomlyPlaceAlongEdges(Single.Parse(split[1]), Single.Parse(split[2]));
 		if (split[0] == "HeightRandomlyExpandLevelFromItselfOrLevel")
 			HeightRandomlyExpandLevelFromItselfOrLevel(Single.Parse(split[1]), Single.Parse(split[2]), Single.Parse(split[3]), Single.Parse(split[4]));
 		if (split[0] == "HeightSetEdges")
@@ -109,6 +111,36 @@ public class MapGeneratorApi
 		{
 			Int2 randPos = new Int2(Random.Range(0, Heights.Width - 1), Random.Range(0, Heights.Height - 1));
 			if(Heights.Get(randPos) > 0)
+				Heights.Set(randPos, height);
+		}
+	}
+
+	public void HeightRandomlyPlaceAlongEdges(float height, float occurancesPer80Square)
+	{
+		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
+		for (int i = 0; i < numPlacements; i++)
+		{
+			Int2 randPos;
+			if (Helpers.Odds(0.5f))
+			{
+				int randX = Random.Range(0, Heights.Width - 1);
+				randPos = new Int2(randX, 0);
+				if (Helpers.Odds(0.5f))
+				{
+					randPos = new Int2(randX, Heights.Height-1);
+				}
+			}
+			else
+			{
+				int randY = Random.Range(0, Heights.Height - 1);
+				randPos = new Int2(randY, 0);
+				if (Helpers.Odds(0.5f))
+				{
+					randPos = new Int2(Heights.Width - 1, randY);
+				}
+			}
+
+			if (Heights.Get(randPos) > 0)
 				Heights.Set(randPos, height);
 		}
 	}
