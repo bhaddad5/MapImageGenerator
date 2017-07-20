@@ -442,3 +442,86 @@
 		]}
 	]
 }
+|
+{
+	"CultureId":"Aztec",
+	"CultureName":"Olmya",
+	"SettlementPrefixes":[
+		{"storedString":"Ti","prevelance":1,"conditions":[]},
+		{"storedString":"Uaxa","prevelance":1,"conditions":[]},
+		{"storedString":"Kaminal","prevelance":1,"conditions":[]},
+		{"storedString":"Ux","prevelance":1,"conditions":[]},
+		{"storedString":"Kab","prevelance":1,"conditions":[]},
+		{"storedString":"Say","prevelance":1,"conditions":[]},
+		{"storedString":"Dzibil","prevelance":1,"conditions":[]},
+		{"storedString":"Chichén","prevelance":1,"conditions":[]}
+	],
+	"SettlementSuffixes":[
+		{"storedString":"kal","prevelance":1,"conditions":[]},
+		{"storedString":"ctún","prevelance":4,"conditions":[]},
+		{"storedString":"'al","prevelance":4,"conditions":[]},
+		{"storedString":"juyú","prevelance":1,"conditions":[]},
+		{"storedString":"mal","prevelance":1,"conditions":[]},
+		{"storedString":"il","prevelance":1,"conditions":[]},
+		{"storedString":"chaltún","prevelance":1,"conditions":[]},
+		{"storedString":" Itzá","prevelance":1,"conditions":[]}
+	],
+	"SettlementAreaInfo":[
+		{"storedString":"%n","prevelance":4,"conditions":[]},
+		{"storedString":"%n Village","prevelance":1,"conditions":["Small"]},
+		{"storedString":"Temple of %n","prevelance":1,"conditions":["Medium"]},
+		{"storedString":"%n Altepetl","prevelance":1,"conditions":["Medium"]},
+		{"storedString":"Temple City of %n","prevelance":1,"conditions":["Large"]},
+		{"storedString":"Port %n","prevelance":1,"conditions":["Port"]},
+		{"storedString":"Catacombs of %n","prevelance":1,"conditions":["Mountains"]},
+		{"storedString":"Tombs of %n","prevelance":1,"conditions":["Mountains"]}
+	],
+	"KingdomTitles":[
+		{"storedString":"Priests of %n","prevelance":1,"conditions":[]},
+		{"storedString":"The Nahualli of %n","prevelance":1,"conditions":["OneCity"]},
+		{"storedString":"Kingdom of %n","prevelance":4,"conditions":[]},
+		{"storedString":"Tlahtocayotl of %n","prevelance":4,"conditions":["Large"]}
+		
+	],
+	"HeraldryOverlayImage":"Aztec/Heraldry/Overlay.png",
+	"HeraldryForegrounds":[
+		{"storedString":"Aztec/Heraldry/Symbols/Aztec_1.png","prevelance":1,"conditions":[]},
+		{"storedString":"Aztec/Heraldry/Symbols/Aztec_2.png","prevelance":1,"conditions":[]},
+		{"storedString":"Aztec/Heraldry/Symbols/Aztec_3.png","prevelance":1,"conditions":[]},
+		{"storedString":"Aztec/Heraldry/Symbols/Aztec_4.png","prevelance":1,"conditions":[]}
+		
+	],
+	"HeraldryBackgrounds":[
+		{"storedString":"Aztec/Heraldry/Backgrounds/Aztec_Back_0.png","prevelance":1,"conditions":[]},
+		{"storedString":"Aztec/Heraldry/Backgrounds/Aztec_Back_1.png","prevelance":1,"conditions":[]}
+	],
+	"GroundPropertyValues":[
+		{"groundTrait":"Water","groundValue":0.0},
+		{"groundTrait":"Impassable","groundValue":0.0},
+		{"groundTrait":"Muddy","groundValue":0.2},
+		{"groundTrait":"Rocky","groundValue":0.1},
+		{"groundTrait":"Hunting","groundValue":0.15},
+		{"groundTrait":"Forest","groundValue":0.15},
+		{"groundTrait":"Fertile","groundValue":0.6},
+		{"groundTrait":"City","groundValue":4.0},
+		{"groundTrait":"Road","groundValue":2.0}
+	],
+	"ModelPlacementByTraitCultureInfos":[
+		{"TerrainTrait":"City",
+		"ModelPlacementInfos":[
+			{"model":"AztecHovel","placementMode":"ScatteredBordered","min":20,"max":25}
+		]},
+		{"TerrainTrait":"MediumCity",
+		"ModelPlacementInfos":[
+			{"model":"AztecWall","placementMode":"CityWalls","min":4,"max":4},
+			{"model":"AztecGate","placementMode":"CityGates","min":4,"max":4},
+			{"model":"AztecTower","placementMode":"Corners","min":4,"max":4}
+		]},
+		{"TerrainTrait":"LargeCity",
+		"ModelPlacementInfos":[
+			{"model":"AztecWall","placementMode":"CityWalls","min":4,"max":4},
+			{"model":"AztecGate","placementMode":"CityGates","min":4,"max":4},
+			{"model":"AztecTower","placementMode":"Corners","min":4,"max":4}
+		]}
+	]
+}
