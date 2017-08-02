@@ -32,17 +32,86 @@ public class TroopController : MonoBehaviour
 		}
 	}
 
+	public IEnumerable SectorsToTest(Int2 startPos)
+	{
+		IEnumerable<TroopController> ctrls = new List<TroopController>();
+		
+		Int2 offset = new Int2(1, 1);
+		if (transform.position.x % SceneGraph.ForceMapPartitionSize - SceneGraph.ForceMapPartitionSize/2f <= 0)
+			offset.X = -1;
+		if (transform.position.z % SceneGraph.ForceMapPartitionSize - SceneGraph.ForceMapPartitionSize/2f <= 0)
+			offset.Y = -1;
+
+		ctrls = ctrls.Concat(SceneGraph.ForceMap.Get(startPos))
+			.Concat(SceneGraph.ForceMap.Get(startPos + new Int2(offset.X, 0)))
+			.Concat(SceneGraph.ForceMap.Get(startPos + new Int2(0, offset.Y)))
+			.Concat(SceneGraph.ForceMap.Get(startPos + offset));
+
+		return ctrls;
+	}
 
 	public void MoveTowardsDesiredPos(Vector3 pos, Vector3 rot)
 	{
-		HandleEnemyInteraction();
+		Vector3 startPos = transform.position;
+		Int2 startCell = new Int2((int)transform.position.x/10, (int)transform.position.z/10);
 
-		if (currFighting && unit.HasTarget())
+		Vector3 closestEnemyPos = Vector3.zero;
+		List<Vector3> pushingTroops = new List<Vector3>();
+		
+		float maxRange = SceneGraph.ForceMapPartitionSize;
+		float closestRange = SceneGraph.ForceMapPartitionSize + .1f;
+
+		float pushRange = 0.5f;
+		foreach (TroopController troop in SectorsToTest(startCell))
 		{
-			anim.SetFloat("Speed", 0);
-			return;
+			if (troop == this)
+				continue;
+
+			float dist = transform.position.FromTo(troop.transform.position).magnitude;
+			if (troop.unit != unit)
+			{
+				if (dist < closestRange)
+				{
+					closestRange = dist;
+					closestEnemyPos = troop.transform.position;
+				}
+			}
+			if (dist < pushRange)
+			{
+				pushingTroops.Add(troop.transform.position);
+			}
 		}
 
+		float attackRange = 1f;
+		Vector3 desiredPos = pos;
+		Vector3 desiredRot = rot;
+		if (closestRange <= maxRange)
+		{
+			desiredPos = closestEnemyPos;
+			if (closestRange <= attackRange)
+			{
+				anim.SetBool("Fighting", true);
+			}
+		}
+
+		if(closestRange > attackRange)
+			transform.position = Vector3.MoveTowards(transform.position, desiredPos, speed);
+
+		if (transform.position.FromTo(pos).magnitude < 0.001f)
+			transform.eulerAngles = desiredRot;
+		else transform.LookAt(desiredPos);
+
+		foreach (Vector3 push in pushingTroops)
+		{
+			var vecToPushingTroop = transform.position.FromTo(push);
+			transform.position += -vecToPushingTroop.normalized * (pushRange - vecToPushingTroop.magnitude);
+		}
+
+		transform.position = SceneGraph.HeightAdjustedPos(transform.position);
+
+		anim.SetFloat("Speed", startPos.FromTo(transform.position).magnitude);
+
+		/*HandleEnemyInteraction();
 		if (transform.position.FromTo(pos).magnitude < speed)
 		{
 			transform.position = SceneGraph.HeightAdjustedPos(pos);
@@ -54,7 +123,12 @@ public class TroopController : MonoBehaviour
 			transform.position = SceneGraph.HeightAdjustedPos(TestGetNewPos(pos));
 			transform.LookAt(pos);
 			anim.SetFloat("Speed", unit.currMoveSpeed + speed);
-		}
+		}*/
+
+		Int2 newPos = new Int2((int)transform.position.x / 10, (int)transform.position.z / 10);
+
+		SceneGraph.ForceMap.Get(startCell).Remove(this);
+		SceneGraph.ForceMap.Get(newPos).Add(this);
 	}
 
 	private Vector3 lastGoodVec = Vector3.zero;

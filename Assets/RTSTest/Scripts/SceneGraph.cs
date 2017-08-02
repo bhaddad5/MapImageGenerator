@@ -8,11 +8,18 @@ public class SceneGraph
 {
 	public static Map2D<bool> PassableGraph;
 	public static Map2D<float> HeightGraph;
+	public static Map2D<List<TroopController>> ForceMap;
+
+	public static int ForceMapPartitionSize = 5;
 
 	public static void Setup(int width, int height, List<RtsModelPlacement> modelPlacers)
 	{
 		PassableGraph = new Map2D<bool>(width, height);
 		HeightGraph = new Map2D<float>(width, height);
+
+		ForceMap = new Map2D<List<TroopController>>(width/ ForceMapPartitionSize, height/ ForceMapPartitionSize);
+
+		ForceMap.FillMap(new List<TroopController>());
 
 		foreach (Int2 point in PassableGraph.GetMapPoints())
 		{
