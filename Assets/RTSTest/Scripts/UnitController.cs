@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class UnitController : MonoBehaviour
 {
+	public Faction faction;
+
 	public int numTroops;
 	public GameObject troopPrefab;
 	public GameObject troopMarkerPrefab;
@@ -35,6 +37,11 @@ public class UnitController : MonoBehaviour
 		while (i < numTroops)
 		{
 			troops.Add(Instantiate(troopPrefab, transform.position, transform.rotation).GetComponent<TroopController>());
+			foreach (Renderer mr in troops[i].GetComponentsInChildren<Renderer>())
+			{
+				mr.material.mainTexture = faction.GetTroopTexture();
+			}
+
 			troopMarkers.Add(Instantiate(troopMarkerPrefab));
 			troops[i].unit = this;
 			i++;

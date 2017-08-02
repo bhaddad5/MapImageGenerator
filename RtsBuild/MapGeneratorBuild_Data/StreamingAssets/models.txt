@@ -10,10 +10,17 @@
 		
 		{"ModelId":"Palm", "ModelPath":"Desert/Models/Palm.obj", "UnlitTransparent":true},
 		
+		{"ModelId":"JungleTree", "ModelPath":"Jungle/Models/JungleTree.obj", "UnlitTransparent":true},
+		
 		{"ModelId":"EgyptianHovel", "ModelPath":"Egyptian/Models/hovel.obj"},
 		{"ModelId":"EgyptianWall", "ModelPath":"Egyptian/Models/EgyptianWall.obj"},
 		{"ModelId":"EgyptianGate", "ModelPath":"Egyptian/Models/EgyptianGate.obj"},
 		{"ModelId":"EgyptianTower", "ModelPath":"Egyptian/Models/EgyptianTower.obj"},
+		
+		{"ModelId":"AztecHovel", "ModelPath":"Aztec/Models/hovel.obj"},
+		{"ModelId":"AztecWall", "ModelPath":"Aztec/Models/Aztec Wall.obj"},
+		{"ModelId":"AztecGate", "ModelPath":"Aztec/Models/Aztec Gate.obj"},
+		{"ModelId":"AztecTower", "ModelPath":"Aztec/Models/Aztec Tower.obj"},
 		
 		{"ModelId":"AngloBridge", "ModelPath":"Anglo/Models/Bridge/Bridge.obj"},
 		{"ModelId":"AngloHovel", "ModelPath":"Anglo/Models/Hovel/hovel.obj"},
