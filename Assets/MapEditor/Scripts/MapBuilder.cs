@@ -18,6 +18,7 @@ public class MapBuilder : MonoBehaviour
 	public GameObject generatedTerrainMapInputDisplay;
 
 	public GameObject SettlementInfoPrefab;
+	public GameObject LocationInfoPrefab;
 
 	private List<MapEnvironment> environments;
 	private GameObject objectParent;
@@ -146,7 +147,7 @@ public class MapBuilder : MonoBehaviour
 				tag.transform.SetParent(terrainMeshDisplay.transform);
 				Int2 placementPos = sett.GetInfoPlacementPos();
 				tag.transform.localPosition = new Vector3(placementPos.X * tileWidth, .5f, placementPos.Y * tileWidth);
-				tag.GetComponent<SettlementInfoController>().settlement = sett;
+				tag.GetComponent<SettlementInfoDisplay>().settlement = sett;
 			}
 		}
 	}

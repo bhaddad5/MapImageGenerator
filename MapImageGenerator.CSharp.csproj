@@ -89,6 +89,7 @@
     <Compile Include="Assets\MapEditor\Scripts\Helpers\Helpers.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Helpers\Map2D.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Kingdom.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\Location.cs" />
     <Compile Include="Assets\MapEditor\Scripts\MapBuilder.cs" />
     <Compile Include="Assets\MapEditor\Scripts\MapEnvironment.cs" />
     <Compile Include="Assets\MapEditor\Scripts\MapGenerator.cs" />
@@ -103,13 +104,8 @@
     <Compile Include="Assets\MapEditor\Scripts\Settlement.cs" />
     <Compile Include="Assets\MapEditor\Scripts\UserInteractions\CameraControls.cs" />
     <Compile Include="Assets\MapEditor\Scripts\UserInteractions\LightController.cs" />
-    <Compile Include="Assets\MapEditor\SettlementDisplay\SettlementInfoController.cs" />
-    <Compile Include="Assets\RTSTest\Scripts\Faction.cs" />
-    <Compile Include="Assets\RTSTest\Scripts\RtsController.cs" />
-    <Compile Include="Assets\RTSTest\Scripts\RtsMapBuilder.cs" />
-    <Compile Include="Assets\RTSTest\Scripts\SceneGraph.cs" />
-    <Compile Include="Assets\RTSTest\Scripts\TroopController.cs" />
-    <Compile Include="Assets\RTSTest\Scripts\UnitController.cs" />
+    <Compile Include="Assets\MapEditor\SettlementDisplay\LocationInfoDisplay.cs" />
+    <Compile Include="Assets\MapEditor\SettlementDisplay\SettlementInfoDisplay.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ExternalAssets\OBJImport\readme.txt" />

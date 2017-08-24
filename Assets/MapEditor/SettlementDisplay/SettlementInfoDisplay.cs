@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettlementInfoController : MonoBehaviour
+public class SettlementInfoDisplay : MonoBehaviour
 {
 	public Text settlementName;
 	public Text kingdomName;
