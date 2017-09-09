@@ -17,6 +17,7 @@ public class EnvironmentParser
 		var LoadedEnvironments = new List<MapEnvironment>();
 
 		string environmentsFile = File.ReadAllText(Application.streamingAssetsPath + "/environments.txt");
+		environmentsFile = ParserHelpers.ClearOutComments(environmentsFile);
 		string[] environments = environmentsFile.Split(new[] { "|" }, StringSplitOptions.None);
 		foreach (string env in environments)
 		{

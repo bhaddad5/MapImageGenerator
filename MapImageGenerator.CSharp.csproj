@@ -85,6 +85,7 @@
     <Compile Include="Assets\MapEditor\Scripts\DataParsers\CultureParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\DataParsers\EnvironmentParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\DataParsers\ModelsParser.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\DataParsers\ParserHelpers.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Globals.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Helpers\Helpers.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Helpers\Map2D.cs" />

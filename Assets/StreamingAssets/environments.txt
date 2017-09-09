@@ -1,3 +1,112 @@
+//EnvironmentId: A unique ID for your environment
+//DisplayName: The displayed name of your environment
+//MapBuildingCommands: The instructions on how to build your environment
+	//HeightsDefaultFill : Fill the whole map with this height (recommended values: 0, MinGroundHeight, 1)
+	//HeightRandomlyPlaceAlongLine : Sets pixels to height along a random line (Height, Occurances Per 80x80 Square, Min Line Length, Max Line Length, Spacing Betwen Placements)
+	//HeightRandomlyPlace : Randomly sets pixels to height (Height, Occurances Per 80x80 Square)
+	//HeightBlendUp : Blends pixel heights up to smoothly border their heigher neighbirs (number of times to blend)
+	//HeightRandomlyPlaceAlongEdges : Randomly sets edge pixels to height (Height, Occurances Per 80x80 Square)
+	//HeightRandomlyExpandLevel : Expands out height level into neighbors (Height level to expand, number of times to expand)
+	//HeightRandomizeLevelEdges : Randomly expand level to give rough edge (Height level to randomly expand, number of times to randomly expand)
+	//HeightRandomlyExpandLevelFromItselfOrLevel : Randomly spreads ground from itself or from an existing height (Level to spread, Level to build off of, minimum number of times to expand, max number of times to expand)
+	//CreateRivers : Creates rivers from mountains to oceans (Min number of rivers, Max number of rivers)
+
+{
+	"EnvironmentId":"Islands",
+	"DisplayName":"Tumbota Archipelago",
+	"MapBuildingCommands":[
+		"HeightsDefaultFill 0",
+		"HeightRandomlyPlaceAlongLine 1 5 5 15 10",
+		"HeightRandomlyExpandLevelFromItselfOrLevel MinGroundHeight 1 1 1",
+		"HeightRandomlyPlace .5 40",
+		"HeightRandomlyExpandLevelFromItselfOrLevel MinGroundHeight >.4 1 1",
+		"HeightRandomizeLevelEdges MinGroundHeight 1",
+		"HeightRandomizeLevelEdges 0, 1",
+		"HeightBlendUp 2",
+		
+		"TerrainDefaultFill IslandGround",
+		"TerrainFillInOceans Ocean",
+		"TerrainFillInMountains JungleMountains"
+	],
+	"Cultures":[
+		{"cultureId":"Aztec",	"avgSettlementsPer80Square":30}
+	],
+	"GroundTypes":[
+		{
+		"GroundType":"Ocean",
+		"Texture":"Midlands/Terrain/Sand.png",
+		"Difficulty":0.1,
+		"StoredTraits":[
+			"Water",
+			"Impassable"
+		]
+		},
+		{
+		"GroundType":"Road",
+		"Difficulty":0.05,
+		"Texture":"Midlands/Terrain/Road.png",
+		"StoredTraits":[
+			"Road"
+		]
+		},
+		{
+		"GroundType":"River",
+		"Difficulty":0.5,
+		"Texture":"Midlands/Terrain/Sand.png",
+		"StoredTraits":[
+			"Water",
+			"Impassable"
+		]
+		},
+		{
+		"GroundType":"IslandGround",
+		"Texture":"Desert/Terrain/Desert Farms.png",
+		"Difficulty":0.35,
+		"DefaultModelPlacement":[
+			{"model":"Palm","placementMode":"Scattered","min":0,"max":3}
+		],
+		"StoredTraits":[
+		]
+		},
+		{
+		"GroundType":"JungleMountains",
+		"Difficulty":50,
+		"Texture":"Midlands/Terrain/Mountains.png",
+		"StoredTraits":[
+			"Rocky",
+			"Impassable"
+		]
+		},
+		{
+		"GroundType":"SmallCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/Terrain/Road.png",
+		"StoredTraits":[
+			"City",
+			"SmallCity"
+		]
+		},
+		{
+		"GroundType":"MediumCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/Terrain/Road.png",
+		"StoredTraits":[
+			"City",
+			"MediumCity"
+		]
+		},
+		{
+		"GroundType":"LargeCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/Terrain/Road.png",
+		"StoredTraits":[
+			"City",
+			"LargeCity"
+		]
+		}
+	]
+}
+|
 {
 	"EnvironmentId":"Jungle",
 	"DisplayName":"Tel-odo Jungles",

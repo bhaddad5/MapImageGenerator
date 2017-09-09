@@ -11,6 +11,7 @@ public class CultureParser
 		List<Culture> LoadedCultures = new List<Culture>();
 
 		string culturesFile = File.ReadAllText(Application.streamingAssetsPath + "/cultures.txt");
+		culturesFile = ParserHelpers.ClearOutComments(culturesFile);
 		string[] cultures = culturesFile.Split(new[] { "|" }, StringSplitOptions.None);
 		foreach (string cul in cultures)
 		{

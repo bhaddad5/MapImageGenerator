@@ -27,27 +27,66 @@ public class MapGeneratorApi
 		}
 	}
 
+	public class HeightLevel
+	{
+		public enum Comparison
+		{
+			Exact,
+			Greater,
+			Less
+		};
+
+		public float Height;
+		private Comparison comp = Comparison.Exact;
+
+		public HeightLevel(string height)
+		{
+			if (height.StartsWith(">"))
+			{
+				comp = Comparison.Greater;
+				height = height.Substring(1);
+			}
+			else if (height.StartsWith("<"))
+			{
+				comp = Comparison.Less;
+				height = height.Substring(1);
+			}
+			Height = Single.Parse(height);
+		}
+
+		public bool Compare(float level)
+		{
+			if (comp == Comparison.Exact)
+				return level.Equals(Height);
+			if (comp == Comparison.Greater)
+				return Height < level;
+			if (comp == Comparison.Less)
+				return Height > level;
+			return false;
+		}
+	}
+
 	private void ExecuteApiCommand(string cmd)
 	{
 		string[] split = cmd.Split(' ');
 		ReplaceWellKnownValues(split);
 		
 		if (split[0] == "HeightsDefaultFill")
-			HeightsDefaultFill(Single.Parse(split[1]));
+			HeightsDefaultFill(new HeightLevel(split[1]));
 		if (split[0] == "HeightRandomlyPlace")
-			HeightRandomlyPlace(Single.Parse(split[1]), Single.Parse(split[2]));
+			HeightRandomlyPlace(new HeightLevel(split[1]), Single.Parse(split[2]));
 		if (split[0] == "HeightRandomlyPlaceNotInWater")
-			HeightRandomlyPlaceNotInWater(Single.Parse(split[1]), Single.Parse(split[2]));
+			HeightRandomlyPlaceNotInWater(new HeightLevel(split[1]), Single.Parse(split[2]));
 		if (split[0] == "HeightRandomlyExpandLevel")
-			HeightRandomlyExpandLevel(Single.Parse(split[1]), Single.Parse(split[2]));
+			HeightRandomlyExpandLevel(new HeightLevel(split[1]), Single.Parse(split[2]));
 		if (split[0] == "HeightRandomizeLevelEdges")
-			HeightRandomizeLevelEdges(Single.Parse(split[1]), Int32.Parse(split[2]));
+			HeightRandomizeLevelEdges(new HeightLevel(split[1]), Int32.Parse(split[2]));
 		if (split[0] == "HeightRandomlyPlaceAlongLine")
-			HeightRandomlyPlaceAlongLine(Single.Parse(split[1]), Single.Parse(split[2]), Single.Parse(split[3]), Single.Parse(split[4]), Single.Parse(split[5]));
+			HeightRandomlyPlaceAlongLine(new HeightLevel(split[1]), Single.Parse(split[2]), Single.Parse(split[3]), Single.Parse(split[4]), Single.Parse(split[5]));
 		if (split[0] == "HeightRandomlyPlaceAlongEdges")
-			HeightRandomlyPlaceAlongEdges(Single.Parse(split[1]), Single.Parse(split[2]));
+			HeightRandomlyPlaceAlongEdges(new HeightLevel(split[1]), Single.Parse(split[2]));
 		if (split[0] == "HeightRandomlyExpandLevelFromItselfOrLevel")
-			HeightRandomlyExpandLevelFromItselfOrLevel(Single.Parse(split[1]), Single.Parse(split[2]), Single.Parse(split[3]), Single.Parse(split[4]));
+			HeightRandomlyExpandLevelFromItselfOrLevel(new HeightLevel(split[1]), new HeightLevel(split[2]), Single.Parse(split[3]), Single.Parse(split[4]));
 		if (split[0] == "HeightSetEdges")
 			HeightSetEdges(Single.Parse(split[1]));
 		if (split[0] == "HeightBlendUp")
@@ -89,33 +128,33 @@ public class MapGeneratorApi
 
 
 	//HEIGHTS
-	public void HeightsDefaultFill(float height)
+	public void HeightsDefaultFill(HeightLevel height)
 	{
-		Heights.FillMap(height);
+		Heights.FillMap(height.Height);
 	}
 
-	public void HeightRandomlyPlace(float height, float occurancesPer80Square)
+	public void HeightRandomlyPlace(HeightLevel height, float occurancesPer80Square)
 	{
 		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
 		for (int i = 0; i < numPlacements; i++)
 		{
 			Int2 randPos = new Int2(Random.Range(0, Heights.Width - 1), Random.Range(0, Heights.Height - 1));
-			Heights.Set(randPos, height);
+			Heights.Set(randPos, height.Height);
 		}
 	}
 
-	public void HeightRandomlyPlaceNotInWater(float height, float occurancesPer80Square)
+	public void HeightRandomlyPlaceNotInWater(HeightLevel height, float occurancesPer80Square)
 	{
 		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
 		for (int i = 0; i < numPlacements; i++)
 		{
 			Int2 randPos = new Int2(Random.Range(0, Heights.Width - 1), Random.Range(0, Heights.Height - 1));
 			if(Heights.Get(randPos) > 0)
-				Heights.Set(randPos, height);
+				Heights.Set(randPos, height.Height);
 		}
 	}
 
-	public void HeightRandomlyPlaceAlongEdges(float height, float occurancesPer80Square)
+	public void HeightRandomlyPlaceAlongEdges(HeightLevel height, float occurancesPer80Square)
 	{
 		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
 		for (int i = 0; i < numPlacements; i++)
@@ -141,11 +180,11 @@ public class MapGeneratorApi
 			}
 
 			if (Heights.Get(randPos) > 0)
-				Heights.Set(randPos, height);
+				Heights.Set(randPos, height.Height);
 		}
 	}
 
-	public void HeightRandomlyPlaceAlongLine(float height, float occurancesPer80Square, float minLength, float maxLength, float spacing)
+	public void HeightRandomlyPlaceAlongLine(HeightLevel height, float occurancesPer80Square, float minLength, float maxLength, float spacing)
 	{
 		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
 		for (int i = 0; i < numPlacements; i++)
@@ -155,12 +194,12 @@ public class MapGeneratorApi
 		}
 	}
 
-	private void PlaceHeightAlongVector(Int2 startPos, float height, Int2 direction, float length, float spacing)
+	private void PlaceHeightAlongVector(Int2 startPos, HeightLevel height, Int2 direction, float length, float spacing)
 	{
 		Int2 currPixel = startPos;
 		for (int k = 0; k < (int)length; k++)
 		{
-			Heights.Set(currPixel, height);
+			Heights.Set(currPixel, height.Height);
 			currPixel = GetNextPixelInDirection(currPixel, direction, (int)spacing);
 			if (!Heights.PosInBounds(currPixel))
 				return;
@@ -195,31 +234,31 @@ public class MapGeneratorApi
 		return dirs[index];
 	}
 
-	public void HeightRandomlyExpandLevelFromItselfOrLevel(float height, float adjacentExpansionHeight, float minExpansion, float maxExpansion)
+	public void HeightRandomlyExpandLevelFromItselfOrLevel(HeightLevel height, HeightLevel adjacentExpansionHeight, float minExpansion, float maxExpansion)
 	{
 		Map2D<float> newHeights = new Map2D<float>(Heights);
 		foreach (Int2 point in Heights.GetMapPoints())
 		{
-			if (Heights.Get(point).Equals(height) || (HeightBordersLevel(point, adjacentExpansionHeight) && !Heights.Get(point).Equals(adjacentExpansionHeight)))
+			if (height.Compare(Heights.Get(point)) || (HeightBordersLevel(point, adjacentExpansionHeight) && !adjacentExpansionHeight.Compare(Heights.Get(point))))
 				HeightExpandFromPoint(point, height, Random.Range(minExpansion, maxExpansion), newHeights, adjacentExpansionHeight);
 		}
 
 		Heights = newHeights;
 	}
 
-	public void HeightRandomlyExpandLevel(float height, float avgExpansion)
+	public void HeightRandomlyExpandLevel(HeightLevel height, float avgExpansion)
 	{
 		Map2D<float> newHeights = new Map2D<float>(Heights);
 		foreach (Int2 point in Heights.GetMapPoints())
 		{
-			if (Heights.Get(point).Equals(height))
-				HeightExpandFromPoint(point, height, Helpers.Randomize(avgExpansion), newHeights);
+			if (height.Compare(Heights.Get(point)))
+				HeightExpandFromPoint(point, height, Helpers.Randomize(avgExpansion), newHeights, new HeightLevel("-1"));
 		}
 
 		Heights = newHeights;
 	}
 
-	private void HeightExpandFromPoint(Int2 point, float height, float numExpansionsLevels, Map2D<float> newHeights, float ignoreLevel = -1)
+	private void HeightExpandFromPoint(Int2 point, HeightLevel height, float numExpansionsLevels, Map2D<float> newHeights, HeightLevel ignoreLevel)
 	{
 		SortedDupList<Int2> HeightFrontier = new SortedDupList<Int2>();
 		HeightFrontier.Insert(point, numExpansionsLevels);
@@ -228,10 +267,10 @@ public class MapGeneratorApi
 			Int2 currPos = HeightFrontier.TopValue();
 			float currStrength = HeightFrontier.TopKey();
 			HeightFrontier.Pop();
-			newHeights.Set(currPos, height);
+			newHeights.Set(currPos, height.Height);
 			foreach (Int2 pos in Heights.GetAdjacentPoints(currPos))
 			{
-				if (!HeightFrontier.ContainsValue(pos) && !Heights.Get(pos).Equals(ignoreLevel) && currStrength > 0)
+				if (!HeightFrontier.ContainsValue(pos) && !ignoreLevel.Compare(Heights.Get(pos)) && currStrength > 0)
 				{
 					HeightFrontier.Insert(pos, currStrength - 1);
 				}
@@ -239,7 +278,7 @@ public class MapGeneratorApi
 		}
 	}
 
-	public void HeightRandomizeLevelEdges(float height, int numPasses)
+	public void HeightRandomizeLevelEdges(HeightLevel height, int numPasses)
 	{
 		Map2D<float> newHeights = new Map2D<float>(Heights);
 		for (int i = 0; i < numPasses; i++)
@@ -249,18 +288,18 @@ public class MapGeneratorApi
 				if (HeightBordersLevel(point, height))
 				{
 					if (Helpers.Odds(0.4f))
-						newHeights.Set(point, height);
+						newHeights.Set(point, height.Height);
 				}
 			}
 		}
 		Heights = newHeights;
 	}
 
-	private bool HeightBordersLevel(Int2 tile, float height)
+	private bool HeightBordersLevel(Int2 tile, HeightLevel height)
 	{
 		foreach (Int2 neighbor in Heights.GetAdjacentPoints(tile))
 		{
-			if (Heights.Get(neighbor).Equals(height))
+			if (height.Compare(Heights.Get(neighbor)))
 				return true;
 		}
 		return false;

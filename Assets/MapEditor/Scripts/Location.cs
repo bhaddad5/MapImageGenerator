@@ -5,4 +5,12 @@ using UnityEngine;
 public class Location
 {
 	public string LocationName;
+
+	public float Prevelance;
+	public List<Culture> CompatibleCultures;
+
+	public Location()
+	{
+		
+	}
 }

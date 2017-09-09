@@ -9,6 +9,7 @@ public class ModelsParser
 	public static void ParseModels()
 	{
 		string modelsFile = File.ReadAllText(Application.streamingAssetsPath + "/models.txt");
+		modelsFile = ParserHelpers.ClearOutComments(modelsFile);
 		string[] models = modelsFile.Split(new[] { "|" }, StringSplitOptions.None);
 		foreach (string md in models)
 		{
