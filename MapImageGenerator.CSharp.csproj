@@ -81,9 +81,14 @@
     <Compile Include="Assets\ExternalAssets\OBJImport\OBJLoader.cs" />
     <Compile Include="Assets\ExternalAssets\OBJImport\TextureLoader.cs" />
     <Compile Include="Assets\ExternalAssets\Standard Assets\Environment\Water (Basic)\Scripts\WaterBasic.cs" />
+    <Compile Include="Assets\MapEditor\NewMapHandler\Model\Entities\EntityModel.cs" />
+    <Compile Include="Assets\MapEditor\NewMapHandler\Model\MapModel.cs" />
+    <Compile Include="Assets\MapEditor\NewMapHandler\Model\MapTileModel.cs" />
+    <Compile Include="Assets\MapEditor\NewMapHandler\Model\TerrainModel.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Culture.cs" />
     <Compile Include="Assets\MapEditor\Scripts\DataParsers\CultureParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\DataParsers\EnvironmentParser.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\DataParsers\LocationParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\DataParsers\ModelsParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\DataParsers\ParserHelpers.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Globals.cs" />
@@ -115,6 +120,7 @@
     <None Include="Assets\MapEditor\MapDisplay\GroundShader.shader" />
     <None Include="Assets\StreamingAssets\cultures.txt" />
     <None Include="Assets\StreamingAssets\environments.txt" />
+    <None Include="Assets\StreamingAssets\locations.txt" />
     <None Include="Assets\StreamingAssets\models.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

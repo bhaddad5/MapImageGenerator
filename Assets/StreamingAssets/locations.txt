@@ -1,0 +1,21 @@
+{
+	"LocationType":"Pyramid",
+	"Model":"Pyramid",
+	"PlacementProperties":[
+		"PlaceInTerrain SandyDesert"
+	],
+	"LocationPrefixes":[
+		{"storedString":"Khufet","prevelance":1,"conditions":[]},
+		{"storedString":"Nemris","prevelance":1,"conditions":[]},
+		{"storedString":"Memnah","prevelance":1,"conditions":[]},
+		{"storedString":"Ramset","prevelance":1,"conditions":[]},
+		{"storedString":"The Snake","prevelance":1,"conditions":[]},
+		{"storedString":"The Eagle","prevelance":1,"conditions":[]},
+		{"storedString":"The Sun","prevelance":1,"conditions":[]},
+		{"storedString":"The Forgotten","prevelance":1,"conditions":[]}
+	],
+	"LocationSuffixes":[
+		{"storedString":"Pyramid of %n","prevelance":2,"conditions":[]},
+		{"storedString":"Great Pyramid of %n","prevelance":1,"conditions":[]}
+	]
+}

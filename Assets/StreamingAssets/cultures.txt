@@ -2,8 +2,7 @@
 	"CultureId":"Anglo",
 	"CultureName":"Midlander",
 	"SettlementPrefixes":[
-		{
-		"storedString":"Lunn","prevelance":1,"conditions":[]},
+		{"storedString":"Lunn","prevelance":1,"conditions":[]},
 		{"storedString":"Berry","prevelance":1,"conditions":[]},
 		{"storedString":"Mannin","prevelance":1,"conditions":[]},
 		{"storedString":"Hetten","prevelance":1,"conditions":[]},

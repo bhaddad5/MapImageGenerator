@@ -12,6 +12,8 @@
 		
 		{"ModelId":"JungleTree", "ModelPath":"Jungle/Models/JungleTree.obj", "UnlitTransparent":true},
 		
+		{"ModelId":"Pyramid", "ModelPath":"Egyptian/Models/Pyramid.obj"},
+		
 		{"ModelId":"EgyptianHovel", "ModelPath":"Egyptian/Models/hovel.obj"},
 		{"ModelId":"EgyptianWall", "ModelPath":"Egyptian/Models/EgyptianWall.obj"},
 		{"ModelId":"EgyptianGate", "ModelPath":"Egyptian/Models/EgyptianGate.obj"},

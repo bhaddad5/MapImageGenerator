@@ -12,6 +12,266 @@
 	//CreateRivers : Creates rivers from mountains to oceans (Min number of rivers, Max number of rivers)
 
 {
+	"EnvironmentId":"Desert",
+	"DisplayName":"Sal-hadar Desert",
+	"MapBuildingCommands":[
+		"HeightsDefaultFill MinGroundHeight",
+		"HeightRandomlyPlaceAlongLine 1 10 5 15 3",
+		"HeightRandomlyPlace .3 400",
+		"HeightBlendUp 2",
+		"HeightRandomlyPlace 0 4",
+		"HeightRandomlyExpandLevel 0 3",
+		"CreateRivers 10 25",
+		"HeightRandomlyPlace 0 21",
+		"HeightRandomizeLevelEdges 0 1",
+		
+		"TerrainDefaultFill SandyDesert",
+		"TerrainFillInOceans Ocean",
+		"TerrainFillInMountains DesertMountains",
+		"TerrainEncourageStartAlongOcean DesertFarms 0.7",
+		"TerrainExpandSimmilarTypes 4 DesertFarms"
+	],
+	"Cultures":[
+		{"cultureId":"Egypt",	"avgSettlementsPer80Square":60}
+	],
+	"GroundTypes":[
+		{
+		"GroundType":"Ocean",
+		"Texture":"Desert/Terrain/Desert Farms.png",
+		"Difficulty":0.1,
+		"StoredTraits":[
+			"Water",
+			"Impassable"
+		]
+		},
+		{
+		"GroundType":"Road",
+		"Difficulty":0.05,
+		"Texture":"Desert/Terrain/Desert Road.png",
+		"StoredTraits":[
+			"Road"
+		]
+		},
+		{
+		"GroundType":"River",
+		"Difficulty":0.5,
+		"Texture":"Desert/Terrain/Desert Farms.png",
+		"StoredTraits":[
+			"Water",
+			"Impassable"
+		]
+		},
+		{
+		"GroundType":"SandyDesert",
+		"Texture":"Desert/Terrain/Desert Sand.png",
+		"Difficulty":0.35,
+		"DefaultModelPlacement":[
+		],
+		"StoredTraits":[
+		]
+		},
+		{
+		"GroundType":"DesertFarms",
+		"Texture":"Desert/Terrain/Desert Farms.png",
+		"Difficulty":0.2,
+		"DefaultModelPlacement":[
+			{"model":"Palm","placementMode":"Scattered","min":0,"max":3}
+		],
+		"StoredTraits":[
+			"Fertile"
+		]
+		},
+		{
+		"GroundType":"DesertMountains",
+		"Difficulty":50,
+		"Texture":"Desert/Terrain/Desert Mountains.png",
+		"StoredTraits":[
+			"Rocky",
+			"Impassable"
+		]
+		},
+		{
+		"GroundType":"SmallCity",
+		"Difficulty":0.05,
+		"Texture":"Desert/Terrain/Desert Road.png",
+		"StoredTraits":[
+			"City",
+			"SmallCity"
+		]
+		},
+		{
+		"GroundType":"MediumCity",
+		"Difficulty":0.05,
+		"Texture":"Desert/Terrain/Desert Road.png",
+		"StoredTraits":[
+			"City",
+			"MediumCity"
+		]
+		},
+		{
+		"GroundType":"LargeCity",
+		"Difficulty":0.05,
+		"Texture":"Desert/Terrain/Desert Road.png",
+		"StoredTraits":[
+			"City",
+			"LargeCity"
+		]
+		}
+	],
+	"LocationTypes":[
+		{
+		"Location":"Pyramid",
+		"Min":10,
+		"Max":20
+		}
+	]
+}
+|
+{
+	"EnvironmentId":"Anglo",
+	"DisplayName":"The Midlands",
+	"MapBuildingCommands":[
+		"HeightsDefaultFill 0",
+		"HeightRandomlyPlaceAlongLine 1 6 4 50 3",
+		"HeightRandomlyExpandLevelFromItselfOrLevel MinGroundHeight 1 1 20",
+		"HeightBlendUp 2",
+		"HeightRandomlyPlaceNotInWater .3 400",
+		"HeightBlendUp 1",
+		"HeightRandomizeLevelEdges 0 2",
+		"CreateRivers 10 20",
+		
+		"TerrainDefaultFill Wilderness",
+		"TerrainFillInOceans Ocean",
+		"TerrainFillInMountains Mountain",
+		"TerrainFillInRivers River",
+		"TerrainEncourageStartAlongMountains Forest 0.15",
+		"TerrainExpandSimmilarTypes 6 Forest",
+		"TerrainRandomlyStart Forest 0.05",
+		"TerrainExpandSimmilarTypes 3 Forest",
+		"TerrainEncourageStartAlongOcean Fertile 0.15",
+		"TerrainRandomlyStart Fertile 0.05",
+		"TerrainExpandSimmilarTypes 4 Fertile",
+		"TerrainEncourageStartAlongOcean Swamp 0.02",
+		"TerrainRandomlyStart Swamp 0.005",
+		"TerrainExpandSimmilarTypes 3 Swamp"
+	],
+	"Cultures":[
+		{"cultureId":"Anglo",	"avgSettlementsPer80Square":45},
+		{"cultureId":"Dwarf",	"avgSettlementsPer80Square":35},
+		{"cultureId":"Orc",	"avgSettlementsPer80Square":35}
+	],
+	"GroundTypes":[
+		{
+		"GroundType":"Ocean",
+		"Texture":"Midlands/Terrain/Sand.png",
+		"Difficulty":0.1,
+		"StoredTraits":[
+			"Water",
+			"Impassable"
+		]
+		},
+		{
+		"GroundType":"Road",
+		"Difficulty":0.05,
+		"Texture":"Midlands/Terrain/Road.png",
+		"StoredTraits":[
+			"Road"
+		]
+		},
+		{
+		"GroundType":"Swamp",
+		"Texture":"Midlands/Terrain/Swamp.png",
+		"Difficulty":0.35,
+		"DefaultModelPlacement":[
+			{"model":"Willow","placementMode":"Scattered","min":2,"max":3},
+			{"model":"Rushes","placementMode":"Scattered","min":5,"max":7}
+		],
+		"StoredTraits":[
+			"Muddy"
+		]
+		},
+		{
+		"GroundType":"Wilderness",
+		"Texture":"Midlands/Terrain/Wilderness.png",
+		"Difficulty":0.2,
+		"DefaultModelPlacement":[
+			{"model":"Pine","placementMode":"Scattered","min":0,"max":3}
+		],
+		"StoredTraits":[
+			"Hunting"
+		]
+	},
+		{
+		"GroundType":"Forest",
+		"Texture":"Midlands/Terrain/Forest.png",
+		"Difficulty":0.25,
+		"DefaultModelPlacement":[
+			{"model":"Pine","placementMode":"Scattered","min":7,"max":10}
+		],
+		"StoredTraits":[
+			"Hunting",
+			"Forest"
+		]
+		},
+		{
+		"GroundType":"River",
+		"Difficulty":0.5,
+		"Texture":"Midlands/Terrain/Fertile.png",
+		"StoredTraits":[
+			"Water",
+			"Impassable"
+		]
+		},
+		{
+		"GroundType":"Mountain",
+		"Difficulty":50,
+		"Texture":"Midlands/Terrain/Mountains.png",
+		"StoredTraits":[
+			"Rocky",
+			"Impassable"
+		]
+		},
+		{
+		"GroundType":"Fertile",
+		"Difficulty":0.15,
+		"Texture":"Midlands/Terrain/Fertile.png",
+		"DefaultModelPlacement":[
+		],
+		"StoredTraits":[
+			"Fertile"
+		]
+		},
+		{
+		"GroundType":"SmallCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/Terrain/City.png",
+		"StoredTraits":[
+			"City",
+			"SmallCity"
+		]
+		},
+		{
+		"GroundType":"MediumCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/Terrain/City.png",
+		"StoredTraits":[
+			"City",
+			"MediumCity"
+		]
+		},
+		{
+		"GroundType":"LargeCity",
+		"Difficulty":0.05,
+		"Texture":"Midlands/Terrain/City.png",
+		"StoredTraits":[
+			"City",
+			"LargeCity"
+		]
+		}
+	]
+}
+|
+{
 	"EnvironmentId":"Islands",
 	"DisplayName":"Tumbota Archipelago",
 	"MapBuildingCommands":[
@@ -224,259 +484,6 @@
 		"GroundType":"LargeCity",
 		"Difficulty":0.05,
 		"Texture":"Midlands/Terrain/Road.png",
-		"StoredTraits":[
-			"City",
-			"LargeCity"
-		]
-		}
-	]
-}
-|
-{
-	"EnvironmentId":"Desert",
-	"DisplayName":"Sal-hadar Desert",
-	"MapBuildingCommands":[
-		"HeightsDefaultFill MinGroundHeight",
-		"HeightRandomlyPlaceAlongLine 1 10 5 15 3",
-		"HeightRandomlyPlace .3 400",
-		"HeightBlendUp 2",
-		"HeightRandomlyPlace 0 4",
-		"HeightRandomlyExpandLevel 0 3",
-		"CreateRivers 10 25",
-		"HeightRandomlyPlace 0 21",
-		"HeightRandomizeLevelEdges 0 1",
-		
-		"TerrainDefaultFill SandyDesert",
-		"TerrainFillInOceans Ocean",
-		"TerrainFillInMountains DesertMountains",
-		"TerrainEncourageStartAlongOcean DesertFarms 0.7",
-		"TerrainExpandSimmilarTypes 4 DesertFarms"
-	],
-	"Cultures":[
-		{"cultureId":"Egypt",	"avgSettlementsPer80Square":60}
-	],
-	"GroundTypes":[
-		{
-		"GroundType":"Ocean",
-		"Texture":"Desert/Terrain/Desert Farms.png",
-		"Difficulty":0.1,
-		"StoredTraits":[
-			"Water",
-			"Impassable"
-		]
-		},
-		{
-		"GroundType":"Road",
-		"Difficulty":0.05,
-		"Texture":"Desert/Terrain/Desert Road.png",
-		"StoredTraits":[
-			"Road"
-		]
-		},
-		{
-		"GroundType":"River",
-		"Difficulty":0.5,
-		"Texture":"Desert/Terrain/Desert Farms.png",
-		"StoredTraits":[
-			"Water",
-			"Impassable"
-		]
-		},
-		{
-		"GroundType":"SandyDesert",
-		"Texture":"Desert/Terrain/Desert Sand.png",
-		"Difficulty":0.35,
-		"DefaultModelPlacement":[
-		],
-		"StoredTraits":[
-		]
-		},
-		{
-		"GroundType":"DesertFarms",
-		"Texture":"Desert/Terrain/Desert Farms.png",
-		"Difficulty":0.2,
-		"DefaultModelPlacement":[
-			{"model":"Palm","placementMode":"Scattered","min":0,"max":3}
-		],
-		"StoredTraits":[
-			"Fertile"
-		]
-		},
-		{
-		"GroundType":"DesertMountains",
-		"Difficulty":50,
-		"Texture":"Desert/Terrain/Desert Mountains.png",
-		"StoredTraits":[
-			"Rocky",
-			"Impassable"
-		]
-		},
-		{
-		"GroundType":"SmallCity",
-		"Difficulty":0.05,
-		"Texture":"Desert/Terrain/Desert Road.png",
-		"StoredTraits":[
-			"City",
-			"SmallCity"
-		]
-		},
-		{
-		"GroundType":"MediumCity",
-		"Difficulty":0.05,
-		"Texture":"Desert/Terrain/Desert Road.png",
-		"StoredTraits":[
-			"City",
-			"MediumCity"
-		]
-		},
-		{
-		"GroundType":"LargeCity",
-		"Difficulty":0.05,
-		"Texture":"Desert/Terrain/Desert Road.png",
-		"StoredTraits":[
-			"City",
-			"LargeCity"
-		]
-		}
-	]
-}
-|
-{
-	"EnvironmentId":"Anglo",
-	"DisplayName":"The Midlands",
-	"MapBuildingCommands":[
-		"HeightsDefaultFill 0",
-		"HeightRandomlyPlaceAlongLine 1 6 4 50 3",
-		"HeightRandomlyExpandLevelFromItselfOrLevel MinGroundHeight 1 1 20",
-		"HeightBlendUp 2",
-		"HeightRandomlyPlaceNotInWater .3 400",
-		"HeightBlendUp 1",
-		"HeightRandomizeLevelEdges 0 2",
-		"CreateRivers 10 20",
-		
-		"TerrainDefaultFill Wilderness",
-		"TerrainFillInOceans Ocean",
-		"TerrainFillInMountains Mountain",
-		"TerrainFillInRivers River",
-		"TerrainEncourageStartAlongMountains Forest 0.15",
-		"TerrainExpandSimmilarTypes 6 Forest",
-		"TerrainRandomlyStart Forest 0.05",
-		"TerrainExpandSimmilarTypes 3 Forest",
-		"TerrainEncourageStartAlongOcean Fertile 0.15",
-		"TerrainRandomlyStart Fertile 0.05",
-		"TerrainExpandSimmilarTypes 4 Fertile",
-		"TerrainEncourageStartAlongOcean Swamp 0.02",
-		"TerrainRandomlyStart Swamp 0.005",
-		"TerrainExpandSimmilarTypes 3 Swamp"
-	],
-	"Cultures":[
-		{"cultureId":"Anglo",	"avgSettlementsPer80Square":45},
-		{"cultureId":"Dwarf",	"avgSettlementsPer80Square":35},
-		{"cultureId":"Orc",	"avgSettlementsPer80Square":35}
-	],
-	"GroundTypes":[
-		{
-		"GroundType":"Ocean",
-		"Texture":"Midlands/Terrain/Sand.png",
-		"Difficulty":0.1,
-		"StoredTraits":[
-			"Water",
-			"Impassable"
-		]
-		},
-		{
-		"GroundType":"Road",
-		"Difficulty":0.05,
-		"Texture":"Midlands/Terrain/Road.png",
-		"StoredTraits":[
-			"Road"
-		]
-		},
-		{
-		"GroundType":"Swamp",
-		"Texture":"Midlands/Terrain/Swamp.png",
-		"Difficulty":0.35,
-		"DefaultModelPlacement":[
-			{"model":"Willow","placementMode":"Scattered","min":2,"max":3},
-			{"model":"Rushes","placementMode":"Scattered","min":5,"max":7}
-		],
-		"StoredTraits":[
-			"Muddy"
-		]
-		},
-		{
-		"GroundType":"Wilderness",
-		"Texture":"Midlands/Terrain/Wilderness.png",
-		"Difficulty":0.2,
-		"DefaultModelPlacement":[
-			{"model":"Pine","placementMode":"Scattered","min":0,"max":3}
-		],
-		"StoredTraits":[
-			"Hunting"
-		]
-	},
-		{
-		"GroundType":"Forest",
-		"Texture":"Midlands/Terrain/Forest.png",
-		"Difficulty":0.25,
-		"DefaultModelPlacement":[
-			{"model":"Pine","placementMode":"Scattered","min":7,"max":10}
-		],
-		"StoredTraits":[
-			"Hunting",
-			"Forest"
-		]
-		},
-		{
-		"GroundType":"River",
-		"Difficulty":0.5,
-		"Texture":"Midlands/Terrain/Fertile.png",
-		"StoredTraits":[
-			"Water",
-			"Impassable"
-		]
-		},
-		{
-		"GroundType":"Mountain",
-		"Difficulty":50,
-		"Texture":"Midlands/Terrain/Mountains.png",
-		"StoredTraits":[
-			"Rocky",
-			"Impassable"
-		]
-		},
-		{
-		"GroundType":"Fertile",
-		"Difficulty":0.15,
-		"Texture":"Midlands/Terrain/Fertile.png",
-		"DefaultModelPlacement":[
-		],
-		"StoredTraits":[
-			"Fertile"
-		]
-		},
-		{
-		"GroundType":"SmallCity",
-		"Difficulty":0.05,
-		"Texture":"Midlands/Terrain/City.png",
-		"StoredTraits":[
-			"City",
-			"SmallCity"
-		]
-		},
-		{
-		"GroundType":"MediumCity",
-		"Difficulty":0.05,
-		"Texture":"Midlands/Terrain/City.png",
-		"StoredTraits":[
-			"City",
-			"MediumCity"
-		]
-		},
-		{
-		"GroundType":"LargeCity",
-		"Difficulty":0.05,
-		"Texture":"Midlands/Terrain/City.png",
 		"StoredTraits":[
 			"City",
 			"LargeCity"
