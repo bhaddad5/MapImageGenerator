@@ -54,7 +54,7 @@ public class LocationType
 
 	public Location GetLocation()
 	{
-		string name = LocationPrefixes.RandomValue().storedString.Replace("%n", LocationSuffixes.RandomValue().storedString);
-		return new Location(name, Model);
+		//string name = LocationPrefixes.RandomValue().storedString.Replace("%n", LocationSuffixes.RandomValue().storedString);
+		return new Location();
 	}
 }
