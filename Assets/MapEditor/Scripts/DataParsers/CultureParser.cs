@@ -4,22 +4,15 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class CultureParser
+public static class CultureParser
 {
-	public static List<Culture> LoadCultures()
+	public static Dictionary<string, Culture> CultureData = new Dictionary<string, Culture>();
+
+	public static void LoadCultures()
 	{
-		List<Culture> LoadedCultures = new List<Culture>();
-
-		string culturesFile = File.ReadAllText(Application.streamingAssetsPath + "/cultures.txt");
-		culturesFile = ParserHelpers.ClearOutComments(culturesFile);
-		string[] cultures = culturesFile.Split(new[] { "|" }, StringSplitOptions.None);
-		foreach (string cul in cultures)
-		{
-			StoredCulture storedCulture = JsonUtility.FromJson<StoredCulture>(cul);
-			LoadedCultures.Add(storedCulture.ToCulture());
-		}
-
-		return LoadedCultures;
+		Dictionary<string, StoredCulture> CultureTypes = ParserHelpers.ParseTypes<StoredCulture>("cultures");
+		foreach (KeyValuePair<string, StoredCulture> culture in CultureTypes)
+			CultureData[culture.Key] = culture.Value.ToCulture();
 	}
 }
 
@@ -28,7 +21,6 @@ public class CultureParser
 public class StoredStringOption
 {
 	public string storedString;
-	public int prevelance;
 	public string[] conditions = new string[0];
 
 	public List<Settlement.CityTrait> GetCityTraits()
@@ -59,13 +51,12 @@ public class StoredGroundValue
 public class StoredCultureModelPlacementByTrait
 {
 	public string TerrainTrait;
-	public StoredModelPlacementInfo[] ModelPlacementInfos;
+	public StoredModelPlacementInfo[] EntityPlacementInfos;
 }
 
 [Serializable]
-public class StoredCulture
+public class StoredCulture : ParsableData
 {
-	public string CultureId;
 	public string CultureName;
 	public StoredStringOption[] SettlementPrefixes = new StoredStringOption[0];
 	public StoredStringOption[] SettlementSuffixes = new StoredStringOption[0];
@@ -83,7 +74,7 @@ public class StoredCulture
 	public Culture ToCulture()
 	{
 		Culture c = new Culture();
-		c.CultureId = CultureId;
+		c.CultureId = Id;
 		c.CultureName = CultureName;
 
 		Byte[] file = File.ReadAllBytes(Application.streamingAssetsPath + "/" + HeraldryOverlayImage);
@@ -92,36 +83,36 @@ public class StoredCulture
 
 		c.prefixes = new List<SettlementNameOption>();
 		foreach (StoredStringOption option in SettlementPrefixes)
-			c.prefixes.Add(new SettlementNameOption(option.storedString, option.GetCityTraits(), option.prevelance));
+			c.prefixes.Add(new SettlementNameOption(option.storedString, option.GetCityTraits()));
 		c.suffixes = new List<SettlementNameOption>();
 		foreach (StoredStringOption option in SettlementSuffixes)
-			c.suffixes.Add(new SettlementNameOption(option.storedString, option.GetCityTraits(), option.prevelance));
+			c.suffixes.Add(new SettlementNameOption(option.storedString, option.GetCityTraits()));
 		c.areaInfo = new List<SettlementNameOption>();
 		foreach (StoredStringOption option in SettlementAreaInfo)
-			c.areaInfo.Add(new SettlementNameOption(option.storedString, option.GetCityTraits(), option.prevelance));
+			c.areaInfo.Add(new SettlementNameOption(option.storedString, option.GetCityTraits()));
 
 		c.kingdomTitles = new List<KingdomNameOption>();
 		foreach (StoredStringOption option in KingdomTitles)
-			c.kingdomTitles.Add(new KingdomNameOption(option.storedString, option.GetKingdomTraits(), option.prevelance));
+			c.kingdomTitles.Add(new KingdomNameOption(option.storedString, option.GetKingdomTraits()));
 
 		c.heraldryBackground = new List<HeraldryOption>();
 		foreach (StoredStringOption option in HeraldryBackgrounds)
-			c.heraldryBackground.Add(new HeraldryOption(option.storedString, option.GetCityTraits(), option.prevelance));
+			c.heraldryBackground.Add(new HeraldryOption(option.storedString, option.GetCityTraits()));
 		c.heraldryForeground = new List<HeraldryOption>();
 		foreach (StoredStringOption option in HeraldryForegrounds)
-			c.heraldryForeground.Add(new HeraldryOption(option.storedString, option.GetCityTraits(), option.prevelance));
+			c.heraldryForeground.Add(new HeraldryOption(option.storedString, option.GetCityTraits()));
 
-		c.tileValues = new Dictionary<GroundInfo.GroundTraits, float>();
+		c.tileValues = new Dictionary<TerrainInfo.GroundTraits, float>();
 		foreach (StoredGroundValue groundValue in GroundPropertyValues)
-			c.tileValues[(GroundInfo.GroundTraits) System.Enum.Parse(typeof(GroundInfo.GroundTraits), groundValue.groundTrait)] = groundValue.groundValue;
+			c.tileValues[(TerrainInfo.GroundTraits) System.Enum.Parse(typeof(TerrainInfo.GroundTraits), groundValue.groundTrait)] = groundValue.groundValue;
 
-		c.tileModelPlacement = new Dictionary<GroundInfo.GroundTraits, List<ModelPlacementInfo>>();
+		c.tileModelPlacement = new Dictionary<TerrainInfo.GroundTraits, List<ModelPlacementInfo>>();
 		foreach (StoredCultureModelPlacementByTrait placementInfo in ModelPlacementByTraitCultureInfos)
 		{
 			List<ModelPlacementInfo> modelPlacers = new List<ModelPlacementInfo>();
-			foreach (StoredModelPlacementInfo info in placementInfo.ModelPlacementInfos)
+			foreach (StoredModelPlacementInfo info in placementInfo.EntityPlacementInfos)
 				modelPlacers.Add(new ModelPlacementInfo(info.model, info.placementMode, info.min, info.max));
-			c.tileModelPlacement[(GroundInfo.GroundTraits) System.Enum.Parse(typeof(GroundInfo.GroundTraits), placementInfo.TerrainTrait)] = modelPlacers;
+			c.tileModelPlacement[(TerrainInfo.GroundTraits) System.Enum.Parse(typeof(TerrainInfo.GroundTraits), placementInfo.TerrainTrait)] = modelPlacers;
 		}
 
 		return c;

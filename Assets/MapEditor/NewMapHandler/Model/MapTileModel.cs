@@ -5,6 +5,5 @@ using System.Collections.Generic;
 public class MapTileModel
 {
 	public float Height;
-	public TerrainModel Terrain;
-	public List<EntityModel> Entities;
+	public string TerrainId;
 }

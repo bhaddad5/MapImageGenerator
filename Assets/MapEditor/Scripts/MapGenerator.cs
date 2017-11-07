@@ -5,12 +5,12 @@ using UnityEngine;
 public class MapGenerator
 {
 	public static Map2D<float> Heights;
-	public static Map2D<GroundInfo> Terrain;
-	public static MapEnvironment Environment;
+	public static Map2D<TerrainInfo> Terrain;
+	public static RealmCreationInfo RealmCreationInfo;
 
-	public static void SetUpMapGenerator(int width, int height, MapEnvironment env)
+	public static void SetUpMapGenerator(int width, int height, RealmCreationInfo env)
 	{
-		Environment = env;
+		RealmCreationInfo = env;
 		MapGeneratorApi generatorApi = new MapGeneratorApi();
 		var maps = generatorApi.GenerateMaps(width, height, env);
 		Heights = maps.heights;
@@ -64,9 +64,9 @@ public class MapGenerator
 public class Map
 {
 	public Map2D<float> heights;
-	public Map2D<GroundInfo> terrain;
+	public Map2D<TerrainInfo> terrain;
 
-	public Map(Map2D<float> h, Map2D<GroundInfo> ter)
+	public Map(Map2D<float> h, Map2D<TerrainInfo> ter)
 	{
 		heights = h;
 		terrain = ter;

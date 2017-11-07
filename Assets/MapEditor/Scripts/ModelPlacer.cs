@@ -31,9 +31,9 @@ public class ModelPlacer
 		}
 	}
 
-	private void PlaceCultureObjectsOnTile(Int2 tile, Culture culture, List<GroundInfo.GroundTraits> traits)
+	private void PlaceCultureObjectsOnTile(Int2 tile, Culture culture, List<TerrainInfo.GroundTraits> traits)
 	{
-		foreach (GroundInfo.GroundTraits trait in traits)
+		foreach (TerrainInfo.GroundTraits trait in traits)
 		{
 			if (culture.tileModelPlacement.ContainsKey(trait))
 			{
@@ -88,14 +88,14 @@ public class ModelPlacer
 
 	private bool TileIsRoad(Int2 tile)
 	{
-		return MapGenerator.Terrain.PosInBounds(tile) && MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.Road);
+		return MapGenerator.Terrain.PosInBounds(tile) && MapGenerator.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.Road);
 	}
 
 	private bool TileIsCityBorder(Int2 tile)
 	{
 		return MapGenerator.Terrain.PosInBounds(tile) &&
-		       !MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.Impassable) &&
-		       !MapGenerator.Terrain.Get(tile).HasTrait(GroundInfo.GroundTraits.City);
+		       !MapGenerator.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.Impassable) &&
+		       !MapGenerator.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.City);
 	}
 
 	private void PlaceTurretsOnCorners(Int2 tile, GameObject turret)
@@ -117,8 +117,8 @@ public class ModelPlacer
 		{
 			foreach (var t in MapGenerator.Terrain.GetAdjacentPoints(tile))
 			{
-				if (MapGenerator.Terrain.Get(t).HasTrait(GroundInfo.GroundTraits.Road) ||
-				    MapGenerator.Terrain.Get(t).HasTrait(GroundInfo.GroundTraits.City))
+				if (MapGenerator.Terrain.Get(t).HasTrait(TerrainInfo.GroundTraits.Road) ||
+				    MapGenerator.Terrain.Get(t).HasTrait(TerrainInfo.GroundTraits.City))
 				{
 					if (MapGenerator.Heights.Get(t) >= Globals.MinGroundHeight)
 					{

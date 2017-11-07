@@ -2,112 +2,112 @@
 	"CultureId":"Anglo",
 	"CultureName":"Midlander",
 	"SettlementPrefixes":[
-		{"storedString":"Lunn","prevelance":1,"conditions":[]},
-		{"storedString":"Berry","prevelance":1,"conditions":[]},
-		{"storedString":"Mannin","prevelance":1,"conditions":[]},
-		{"storedString":"Hetten","prevelance":1,"conditions":[]},
-		{"storedString":"Stok","prevelance":1,"conditions":[]},
-		{"storedString":"Rusk","prevelance":1,"conditions":[]},
-		{"storedString":"An","prevelance":1,"conditions":[]},
-		{"storedString":"Ewer","prevelance":1,"conditions":[]},
-		{"storedString":"How","prevelance":1,"conditions":[]},
-		{"storedString":"Setter","prevelance":1,"conditions":[]},
-		{"storedString":"Somer","prevelance":1,"conditions":[]},
-		{"storedString":"Wend","prevelance":1,"conditions":[]},
-		{"storedString":"Torrent","prevelance":1,"conditions":[]},
-		{"storedString":"Comb","prevelance":1,"conditions":[]},
-		{"storedString":"Slak","prevelance":1,"conditions":[]},
-		{"storedString":"Brix","prevelance":1,"conditions":[]},
-		{"storedString":"Bux","prevelance":1,"conditions":[]},
-		{"storedString":"Win","prevelance":1,"conditions":[]},
-		{"storedString":"Fur","prevelance":1,"conditions":[]},
-		{"storedString":"Hather","prevelance":1,"conditions":[]}
+		{"storedString":"Lunn","conditions":[]},
+		{"storedString":"Berry","conditions":[]},
+		{"storedString":"Mannin","conditions":[]},
+		{"storedString":"Hetten","conditions":[]},
+		{"storedString":"Stok","conditions":[]},
+		{"storedString":"Rusk","conditions":[]},
+		{"storedString":"An","conditions":[]},
+		{"storedString":"Ewer","conditions":[]},
+		{"storedString":"How","conditions":[]},
+		{"storedString":"Setter","conditions":[]},
+		{"storedString":"Somer","conditions":[]},
+		{"storedString":"Wend","conditions":[]},
+		{"storedString":"Torrent","conditions":[]},
+		{"storedString":"Comb","conditions":[]},
+		{"storedString":"Slak","conditions":[]},
+		{"storedString":"Brix","conditions":[]},
+		{"storedString":"Bux","conditions":[]},
+		{"storedString":"Win","conditions":[]},
+		{"storedString":"Fur","conditions":[]},
+		{"storedString":"Hather","conditions":[]}
 	],
 	"SettlementSuffixes":[
-		{"storedString":"","prevelance":1,"conditions":[]},
-		{"storedString":"ton","prevelance":1,"conditions":[]},
-		{"storedString":"moor","prevelance":1,"conditions":[]},
-		{"storedString":"mont","prevelance":1,"conditions":["Mountains"]},
-		{"storedString":"rent","prevelance":1,"conditions":[]},
-		{"storedString":"eter","prevelance":1,"conditions":[]},
-		{"storedString":"by","prevelance":1,"conditions":[]},
-		{"storedString":"nall","prevelance":1,"conditions":[]},
-		{"storedString":"ford","prevelance":1,"conditions":["River"]},
-		{"storedString":"brook","prevelance":1,"conditions":["River"]},
-		{"storedString":"field","prevelance":1,"conditions":["Fertile"]},
-		{"storedString":"ham","prevelance":1,"conditions":[]},
-		{"storedString":"dun","prevelance":1,"conditions":[]},
-		{"storedString":"wick","prevelance":1,"conditions":[]},
-		{"storedString":"well","prevelance":1,"conditions":[]},
-		{"storedString":"light","prevelance":1,"conditions":[]},
-		{"storedString":"sor","prevelance":1,"conditions":[]},
-		{"storedString":"ley","prevelance":1,"conditions":[]},
-		{"storedString":"end","prevelance":1,"conditions":[]}
+		{"storedString":"","conditions":[]},
+		{"storedString":"ton","conditions":[]},
+		{"storedString":"moor","conditions":[]},
+		{"storedString":"mont","conditions":["Mountains"]},
+		{"storedString":"rent","conditions":[]},
+		{"storedString":"eter","conditions":[]},
+		{"storedString":"by","conditions":[]},
+		{"storedString":"nall","conditions":[]},
+		{"storedString":"ford","conditions":["River"]},
+		{"storedString":"brook","conditions":["River"]},
+		{"storedString":"field","conditions":["Fertile"]},
+		{"storedString":"ham","conditions":[]},
+		{"storedString":"dun","conditions":[]},
+		{"storedString":"wick","conditions":[]},
+		{"storedString":"well","conditions":[]},
+		{"storedString":"light","conditions":[]},
+		{"storedString":"sor","conditions":[]},
+		{"storedString":"ley","conditions":[]},
+		{"storedString":"end","conditions":[]}
 	],
 	"SettlementAreaInfo":[
-		{"storedString":"%n","prevelance":2,"conditions":[]},
-		{"storedString":"Port %n","prevelance":3,"conditions":["Port","Large"]},
-		{"storedString":"%n Harbor","prevelance":3,"conditions":["Port","Medium"]},
-		{"storedString":"%n Anchorage","prevelance":3,"conditions":["Port","Small"]},
-		{"storedString":"%n Mountain","prevelance":1,"conditions":["Mountains"]},
-		{"storedString":"Mount %n","prevelance":1,"conditions":["Mountains"]},
-		{"storedString":"%nshire","prevelance":1,"conditions":["Fertile","Landlocked","Small"]},
-		{"storedString":"%n Vale","prevelance":1,"conditions":["Fertile","Landlocked","Small"]},
-		{"storedString":"Vale %n","prevelance":1,"conditions":["Fertile","Landlocked","Small"]},
-		{"storedString":"%n Castle","prevelance":1,"conditions":["Large"]},
-		{"storedString":"Castle %n","prevelance":1,"conditions":["Large"]},
-		{"storedString":"%n Hold","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"%n Hall","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"%n Stead","prevelance":1,"conditions":["Small"]},
-		{"storedString":"%n Ford","prevelance":1,"conditions":["River"]},
-		{"storedString":"%n Bridge","prevelance":1,"conditions":["River"]},
-		{"storedString":"%n Bend","prevelance":1,"conditions":["Small","River"]},
-		{"storedString":"%n Mill","prevelance":1,"conditions":["Small","Fertile"]},
-		{"storedString":"%n Heath","prevelance":1,"conditions":["Small"]},
-		{"storedString":"New %n","prevelance":1,"conditions":[]}
+		{"storedString":"%n","conditions":[]},
+		{"storedString":"Port %n","conditions":["Port","Large"]},
+		{"storedString":"%n Harbor","conditions":["Port","Medium"]},
+		{"storedString":"%n Anchorage","conditions":["Port","Small"]},
+		{"storedString":"%n Mountain","conditions":["Mountains"]},
+		{"storedString":"Mount %n","conditions":["Mountains"]},
+		{"storedString":"%nshire","conditions":["Fertile","Landlocked","Small"]},
+		{"storedString":"%n Vale","conditions":["Fertile","Landlocked","Small"]},
+		{"storedString":"Vale %n","conditions":["Fertile","Landlocked","Small"]},
+		{"storedString":"%n Castle","conditions":["Large"]},
+		{"storedString":"Castle %n","conditions":["Large"]},
+		{"storedString":"%n Hold","conditions":["Medium"]},
+		{"storedString":"%n Hall","conditions":["Medium"]},
+		{"storedString":"%n Stead","conditions":["Small"]},
+		{"storedString":"%n Ford","conditions":["River"]},
+		{"storedString":"%n Bridge","conditions":["River"]},
+		{"storedString":"%n Bend","conditions":["Small","River"]},
+		{"storedString":"%n Mill","conditions":["Small","Fertile"]},
+		{"storedString":"%n Heath","conditions":["Small"]},
+		{"storedString":"New %n","conditions":[]}
 	],
 	"KingdomTitles":[
-		{"storedString":"Kingdom of %n","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"Kingdom of %n","prevelance":1,"conditions":["Large"]},
-		{"storedString":"Empire of %n","prevelance":1,"conditions":["Large"]},
-		{"storedString":"The %n Empire","prevelance":1,"conditions":["Large"]},
-		{"storedString":"Crown of %n","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"Principality of %n","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"Principality of %n","prevelance":1,"conditions":["Small"]},
-		{"storedString":"Grand Barony of %n","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"Barony of %n","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"Barony of %n","prevelance":1,"conditions":["Small"]},
-		{"storedString":"Dukedom of %n","prevelance":1,"conditions":["Small"]},
-		{"storedString":"The %n Prices","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"Trade Princes of %n","prevelance":1,"conditions":["Medium","CapitolPort"]},
-		{"storedString":"Trade Princes of %n","prevelance":1,"conditions":["Small","CapitolPort"]},
-		{"storedString":"Trade Council of %n","prevelance":1,"conditions":["Small","CapitolPort"]},
-		{"storedString":"Trade Council of %n","prevelance":1,"conditions":["OneCity","CapitolPort"]},
-		{"storedString":"Council of %n","prevelance":1,"conditions":["OneCity"]},
-		{"storedString":"Free City of %n","prevelance":1,"conditions":["OneCity", "Large"]},
-		{"storedString":"%n","prevelance":1,"conditions":["OneCity"]},
-		{"storedString":"Holy Order of %n","prevelance":1,"conditions":[]},
-		{"storedString":"Holy Diocese of %n","prevelance":1,"conditions":[]}
+		{"storedString":"Kingdom of %n","conditions":["Medium"]},
+		{"storedString":"Kingdom of %n","conditions":["Large"]},
+		{"storedString":"Empire of %n","conditions":["Large"]},
+		{"storedString":"The %n Empire","conditions":["Large"]},
+		{"storedString":"Crown of %n","conditions":["Medium"]},
+		{"storedString":"Principality of %n","conditions":["Medium"]},
+		{"storedString":"Principality of %n","conditions":["Small"]},
+		{"storedString":"Grand Barony of %n","conditions":["Medium"]},
+		{"storedString":"Barony of %n","conditions":["Medium"]},
+		{"storedString":"Barony of %n","conditions":["Small"]},
+		{"storedString":"Dukedom of %n","conditions":["Small"]},
+		{"storedString":"The %n Prices","conditions":["Medium"]},
+		{"storedString":"Trade Princes of %n","conditions":["Medium","CapitolPort"]},
+		{"storedString":"Trade Princes of %n","conditions":["Small","CapitolPort"]},
+		{"storedString":"Trade Council of %n","conditions":["Small","CapitolPort"]},
+		{"storedString":"Trade Council of %n","conditions":["OneCity","CapitolPort"]},
+		{"storedString":"Council of %n","conditions":["OneCity"]},
+		{"storedString":"Free City of %n","conditions":["OneCity", "Large"]},
+		{"storedString":"%n","conditions":["OneCity"]},
+		{"storedString":"Holy Order of %n","conditions":[]},
+		{"storedString":"Holy Diocese of %n","conditions":[]}
 	],
 	"HeraldryOverlayImage":"Anglo/Heraldry/Overlay.png",
 	"HeraldryForegrounds":[
 		
-		{"storedString":"Anglo/Heraldry/Symbols/Blank.png","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Symbols/Dragon.png","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Symbols/EagleHead.png","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Symbols/Feather.png","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Symbols/Gryphon.png","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Symbols/Horse.png","prevelance":1,"conditions":[]}
+		{"storedString":"Anglo/Heraldry/Symbols/Blank.png","conditions":[]},
+		{"storedString":"Anglo/Heraldry/Symbols/Dragon.png","conditions":[]},
+		{"storedString":"Anglo/Heraldry/Symbols/EagleHead.png","conditions":[]},
+		{"storedString":"Anglo/Heraldry/Symbols/Feather.png","conditions":[]},
+		{"storedString":"Anglo/Heraldry/Symbols/Gryphon.png","conditions":[]},
+		{"storedString":"Anglo/Heraldry/Symbols/Horse.png","conditions":[]}
 	],
 	"HeraldryBackgrounds":[
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_0.png","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_1.png","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_2.png","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_3.png","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_4.png","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_5.png","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_5.png","prevelance":1,"conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_Ocean.png","prevelance":1,"conditions":["Port"]}
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_0.png","conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_1.png","conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_2.png","conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_3.png","conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_4.png","conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_5.png","conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_5.png","conditions":[]},
+		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_Ocean.png","conditions":["Port"]}
 	],
 	"GroundPropertyValues":[
 		{"groundTrait":"Water","groundValue":0.0},
@@ -150,79 +150,79 @@
 	"CultureId":"Dwarf",
 	"CultureName":"Dwarves",
 	"SettlementPrefixes":[
-		{"storedString":"Daz","prevelance":1,"conditions":[]},
-		{"storedString":"Kurz","prevelance":1,"conditions":[]},
-		{"storedString":"Inuk","prevelance":1,"conditions":[]},
-		{"storedString":"Tar","prevelance":1,"conditions":[]},
-		{"storedString":"Prak","prevelance":1,"conditions":[]},
-		{"storedString":"Wrokk","prevelance":1,"conditions":[]},
-		{"storedString":"Mentung","prevelance":1,"conditions":[]},
-		{"storedString":"Jekrat","prevelance":1,"conditions":[]},
-		{"storedString":"Kazdul","prevelance":1,"conditions":[]},
-		{"storedString":"Kazan","prevelance":1,"conditions":[]},
-		{"storedString":"Kazren","prevelance":1,"conditions":[]},
-		{"storedString":"Azorn","prevelance":1,"conditions":[]},
-		{"storedString":"Azdal","prevelance":1,"conditions":[]},
-		{"storedString":"Azlaak","prevelance":1,"conditions":[]},
-		{"storedString":"Kajar","prevelance":1,"conditions":[]},
-		{"storedString":"Draken","prevelance":1,"conditions":[]}
+		{"storedString":"Daz","conditions":[]},
+		{"storedString":"Kurz","conditions":[]},
+		{"storedString":"Inuk","conditions":[]},
+		{"storedString":"Tar","conditions":[]},
+		{"storedString":"Prak","conditions":[]},
+		{"storedString":"Wrokk","conditions":[]},
+		{"storedString":"Mentung","conditions":[]},
+		{"storedString":"Jekrat","conditions":[]},
+		{"storedString":"Kazdul","conditions":[]},
+		{"storedString":"Kazan","conditions":[]},
+		{"storedString":"Kazren","conditions":[]},
+		{"storedString":"Azorn","conditions":[]},
+		{"storedString":"Azdal","conditions":[]},
+		{"storedString":"Azlaak","conditions":[]},
+		{"storedString":"Kajar","conditions":[]},
+		{"storedString":"Draken","conditions":[]}
 	],
 	"SettlementSuffixes":[
-		{"storedString":"","prevelance":1,"conditions":[]},
-		{"storedString":"-kull","prevelance":4,"conditions":["Mountains"]},
-		{"storedString":"-kuzdal","prevelance":4,"conditions":["Mountains"]},
-		{"storedString":"-tazul","prevelance":1,"conditions":[]},
-		{"storedString":"-mikdun","prevelance":1,"conditions":[]},
-		{"storedString":"-trokk","prevelance":1,"conditions":[]},
-		{"storedString":"-pirok","prevelance":1,"conditions":[]},
-		{"storedString":"-tarmuk","prevelance":1,"conditions":[]},
-		{"storedString":"-ostrok","prevelance":1,"conditions":[]},
-		{"storedString":"-restrok","prevelance":1,"conditions":[]},
-		{"storedString":"-clarrok","prevelance":1,"conditions":[]},
-		{"storedString":"-sorrok","prevelance":1,"conditions":[]},
-		{"storedString":"-bendum","prevelance":1,"conditions":[]},
-		{"storedString":"-silrak","prevelance":4,"conditions":["Forest"]},
-		{"storedString":"-revvrok","prevelance":4,"conditions":["River"]},
-		{"storedString":"-serok","prevelance":4,"conditions":["Port"]}
+		{"storedString":"","conditions":[]},
+		{"storedString":"-kull","conditions":["Mountains"]},
+		{"storedString":"-kuzdal","conditions":["Mountains"]},
+		{"storedString":"-tazul","conditions":[]},
+		{"storedString":"-mikdun","conditions":[]},
+		{"storedString":"-trokk","conditions":[]},
+		{"storedString":"-pirok","conditions":[]},
+		{"storedString":"-tarmuk","conditions":[]},
+		{"storedString":"-ostrok","conditions":[]},
+		{"storedString":"-restrok","conditions":[]},
+		{"storedString":"-clarrok","conditions":[]},
+		{"storedString":"-sorrok","conditions":[]},
+		{"storedString":"-bendum","conditions":[]},
+		{"storedString":"-silrak","conditions":["Forest"]},
+		{"storedString":"-revvrok","conditions":["River"]},
+		{"storedString":"-serok","conditions":["Port"]}
 	],
 	"SettlementAreaInfo":[
-		{"storedString":"%n","prevelance":4,"conditions":[]},
-		{"storedString":"%n Post","prevelance":1,"conditions":["Small"]},
-		{"storedString":"%n Outpost","prevelance":1,"conditions":["Small"]},
-		{"storedString":"Kadrul %n","prevelance":1,"conditions":["Large"]},
-		{"storedString":"Nagut %n","prevelance":1,"conditions":["Port"]},
-		{"storedString":"%n Nagut","prevelance":1,"conditions":["Port"]},
-		{"storedString":"%n Mountain","prevelance":1,"conditions":["Mountains"]},
-		{"storedString":"Halls of %n","prevelance":1,"conditions":["Mountains"]},
-		{"storedString":"Mines of %n","prevelance":1,"conditions":["Mountains"]}
+		{"storedString":"%n","conditions":[]},
+		{"storedString":"%n Post","conditions":["Small"]},
+		{"storedString":"%n Outpost","conditions":["Small"]},
+		{"storedString":"Kadrul %n","conditions":["Large"]},
+		{"storedString":"Nagut %n","conditions":["Port"]},
+		{"storedString":"%n Nagut","conditions":["Port"]},
+		{"storedString":"%n Mountain","conditions":["Mountains"]},
+		{"storedString":"Halls of %n","conditions":["Mountains"]},
+		{"storedString":"Mines of %n","conditions":["Mountains"]}
 	],
 	"KingdomTitles":[
-		{"storedString":"Kingdom of %n","prevelance":1,"conditions":["Small"]},
-		{"storedString":"Kingdom of %n","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"Kingdom of %n","prevelance":1,"conditions":["Large"]},
-		{"storedString":"%n Expidition","prevelance":1,"conditions":["OneCity"]},
-		{"storedString":"Freehalls of %n","prevelance":1,"conditions":["OneCity"]},
-		{"storedString":"Guilds of %n","prevelance":1,"conditions":["OneCity"]},
-		{"storedString":"League of %n","prevelance":1,"conditions":["Small"]},
-		{"storedString":"League of %n","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"%n","prevelance":1,"conditions":["OneCity"]},
-		{"storedString":"%n","prevelance":1,"conditions":["Small"]},
-		{"storedString":"%n","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"The Empire of %n","prevelance":1,"conditions":["Large"]}
+		{"storedString":"Kingdom of %n","conditions":["Small"]},
+		{"storedString":"Kingdom of %n","conditions":["Medium"]},
+		{"storedString":"Kingdom of %n","conditions":["Large"]},
+		{"storedString":"%n Expidition","conditions":["OneCity"]},
+		{"storedString":"Freehalls of %n","conditions":["OneCity"]},
+		{"storedString":"Guilds of %n","conditions":["OneCity"]},
+		{"storedString":"League of %n","conditions":["Small"]},
+		{"storedString":"League of %n","conditions":["Medium"]},
+		{"storedString":"%n","conditions":["OneCity"]},
+		{"storedString":"%n","conditions":["Small"]},
+		{"storedString":"%n","conditions":["Medium"]},
+		{"storedString":"The Empire of %n","conditions":["Large"]}
 	],
 	"HeraldryOverlayImage":"Dwarf/Heraldry/Overlay.png",
 	"HeraldryForegrounds":[
-		{"storedString":"Dwarf/Heraldry/Symbols/Anvil.png","prevelance":1,"conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Symbols/Dragon.png","prevelance":1,"conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Symbols/DragonSkull.png","prevelance":1,"conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Symbols/AleHorn.png","prevelance":1,"conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Symbols/Helmet.png","prevelance":1,"conditions":[]}
+		{"storedString":"Dwarf/Heraldry/Symbols/Anvil.png","conditions":[]},
+		{"storedString":"Dwarf/Heraldry/Symbols/Dragon.png","conditions":[]},
+		{"storedString":"Dwarf/Heraldry/Symbols/DragonSkull.png","conditions":[]},
+		{"storedString":"Dwarf/Heraldry/Symbols/AleHorn.png","conditions":[]},
+		{"storedString":"Dwarf/Heraldry/Symbols/Helmet.png","conditions":[]}
 	],
 	"HeraldryBackgrounds":[
-		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_0.png","prevelance":1,"conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_1.png","prevelance":1,"conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_2.png","prevelance":1,"conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_3.png","prevelance":1,"conditions":[]}
+		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_0.png","conditions":[]},
+		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_1.png","conditions":[]},
+		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_2.png","conditions":[]},
+		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_3.png","conditions":[]}
 	],
 	"GroundPropertyValues":[
 		{"groundTrait":"Water","groundValue":0.0},
@@ -255,272 +255,6 @@
 			{"model":"DwarfWall","placementMode":"CityWalls","min":4,"max":4},
 			{"model":"DwarfGates","placementMode":"CityGates","min":4,"max":4},
 			{"model":"DwarfTower","placementMode":"Corners","min":4,"max":4}
-		]}
-	]
-}
-|
-{
-	"CultureId":"Orc",
-	"CultureName":"Orcs",
-	"SettlementPrefixes":[
-		{"storedString":"Org","prevelance":1,"conditions":[]},
-		{"storedString":"Trog","prevelance":1,"conditions":[]},
-		{"storedString":"Kolog","prevelance":1,"conditions":[]},
-		{"storedString":"Dolg","prevelance":1,"conditions":[]},
-		{"storedString":"Riek","prevelance":1,"conditions":[]},
-		{"storedString":"Warg","prevelance":1,"conditions":[]},
-		{"storedString":"Urg","prevelance":1,"conditions":[]},
-		{"storedString":"Prak","prevelance":1,"conditions":[]},
-		{"storedString":"Olgon","prevelance":1,"conditions":[]},
-		{"storedString":"Drak","prevelance":1,"conditions":[]}
-	],
-	"SettlementSuffixes":[
-		{"storedString":"","prevelance":1,"conditions":[]},
-		{"storedString":"uz","prevelance":4,"conditions":["Mountains"]},
-		{"storedString":"az","prevelance":4,"conditions":["Mountains"]},
-		{"storedString":"as","prevelance":1,"conditions":[]},
-		{"storedString":"isdun","prevelance":1,"conditions":[]},
-		{"storedString":"is","prevelance":1,"conditions":[]},
-		{"storedString":"lok","prevelance":1,"conditions":[]},
-		{"storedString":"dol","prevelance":1,"conditions":[]},
-		{"storedString":"tol","prevelance":1,"conditions":[]},
-		{"storedString":"sil","prevelance":4,"conditions":["Forest"]}
-	],
-	"SettlementAreaInfo":[
-		{"storedString":"%n","prevelance":4,"conditions":[]},
-		{"storedString":"%n Camp","prevelance":1,"conditions":["Small"]},
-		{"storedString":"Camp %n","prevelance":1,"conditions":["Small"]},
-		{"storedString":"%n Warcamp","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"%n Hold","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"%n Hold","prevelance":1,"conditions":["Large"]},
-		{"storedString":"%n Docks","prevelance":1,"conditions":["Port"]},
-		{"storedString":"%n Mountain","prevelance":1,"conditions":["Mountains"]},
-		{"storedString":"%n Peak","prevelance":1,"conditions":["Mountains"]},
-		{"storedString":"%n Pit","prevelance":1,"conditions":["Mountains"]}
-	],
-	"KingdomTitles":[
-		{"storedString":"Despot of %n","prevelance":1,"conditions":["Small"]},
-		{"storedString":"%n Clan","prevelance":1,"conditions":["Small"]},
-		{"storedString":"%n Clan","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"%n Clans","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"%n Tribe","prevelance":1,"conditions":["OneCity"]},
-		{"storedString":"%n Tribe","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"Clans of %n","prevelance":1,"conditions":["Large"]},
-		{"storedString":"%n Warband","prevelance":1,"conditions":["OneCity"]},
-		{"storedString":"%n","prevelance":1,"conditions":["OneCity"]},
-		{"storedString":"%n","prevelance":1,"conditions":["Small"]},
-		{"storedString":"%n","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"Shamans of %n","prevelance":1,"conditions":["OneCity"]},
-		{"storedString":"%n Empire","prevelance":1,"conditions":["Large"]}
-	],
-	"HeraldryOverlayImage":"Orc/Heraldry/Overlay.png",
-	"HeraldryForegrounds":[
-		{"storedString":"Orc/Heraldry/Symbols/DragonFace.png","prevelance":1,"conditions":[]},
-		{"storedString":"Orc/Heraldry/Symbols/Dragon.png","prevelance":1,"conditions":[]},
-		{"storedString":"Orc/Heraldry/Symbols/Skull.png","prevelance":1,"conditions":[]}
-	],
-	"HeraldryBackgrounds":[
-		{"storedString":"Orc/Heraldry/Backgrounds/Orc_Background_0.png","prevelance":1,"conditions":[]},
-		{"storedString":"Orc/Heraldry/Backgrounds/Orc_Background_1.png","prevelance":1,"conditions":[]},
-		{"storedString":"Orc/Heraldry/Backgrounds/Orc_Background_2.png","prevelance":1,"conditions":[]},
-		{"storedString":"Orc/Heraldry/Backgrounds/Orc_Background_3.png","prevelance":1,"conditions":[]}
-	],
-	"GroundPropertyValues":[
-		{"groundTrait":"Water","groundValue":0.0},
-		{"groundTrait":"Impassable","groundValue":0.0},
-		{"groundTrait":"Muddy","groundValue":0.4000000059604645},
-		{"groundTrait":"Rocky","groundValue":0.30000001192092898},
-		{"groundTrait":"Hunting","groundValue":0.25},
-		{"groundTrait":"Forest","groundValue":0.15000000596046449},
-		{"groundTrait":"Fertile","groundValue":0.15000000596046449},
-		{"groundTrait":"City","groundValue":4.0},
-		{"groundTrait":"Road","groundValue":2.0}
-	],
-	"ModelPlacementByTraitCultureInfos":[
-		{"TerrainTrait":"Road",
-		"ModelPlacementInfos":[
-			{"model":"OrcBridge","placementMode":"Bridge","min":1,"max":1}
-		]},
-		{"TerrainTrait":"City",
-		"ModelPlacementInfos":[
-			{"model":"OrcHut","placementMode":"Scattered","min":20,"max":25},
-			{"model":"OrcWoodenWall","placementMode":"CityWalls","min":4,"max":4},
-			{"model":"OrcWoodenGate","placementMode":"CityGates","min":4,"max":4},
-			{"model":"OrcWoodenTower","placementMode":"Corners","min":4,"max":4}
-		]}
-	]
-}
-|
-{
-	"CultureId":"Egypt",
-	"CultureName":"Kheman",
-	"SettlementPrefixes":[
-		{"storedString":"Men","prevelance":1,"conditions":[]},
-		{"storedString":"Mem","prevelance":1,"conditions":[]},
-		{"storedString":"Khem","prevelance":1,"conditions":[]},
-		{"storedString":"Yam","prevelance":1,"conditions":[]},
-		{"storedString":"Ra","prevelance":1,"conditions":[]},
-		{"storedString":"Khi","prevelance":1,"conditions":[]},
-		{"storedString":"Ptkhe","prevelance":1,"conditions":[]},
-		{"storedString":"Khas","prevelance":1,"conditions":[]},
-		{"storedString":"Theb","prevelance":1,"conditions":[]},
-		{"storedString":"Giz","prevelance":1,"conditions":[]}
-	],
-	"SettlementSuffixes":[
-		{"storedString":"u","prevelance":1,"conditions":[]},
-		{"storedString":"nefer","prevelance":4,"conditions":[]},
-		{"storedString":"qote","prevelance":4,"conditions":[]},
-		{"storedString":"as","prevelance":1,"conditions":[]},
-		{"storedString":"isdun","prevelance":1,"conditions":[]},
-		{"storedString":"is","prevelance":1,"conditions":[]},
-		{"storedString":"ese","prevelance":1,"conditions":[]},
-		{"storedString":"ru","prevelance":1,"conditions":[]},
-		{"storedString":"phis","prevelance":1,"conditions":[]},
-		{"storedString":"ha","prevelance":4,"conditions":[]}
-	],
-	"SettlementAreaInfo":[
-		{"storedString":"%n","prevelance":4,"conditions":[]},
-		{"storedString":"%n Village","prevelance":1,"conditions":["Small"]},
-		{"storedString":"Temple of %n","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"%n Fortress","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"Great Temple of %n","prevelance":1,"conditions":["Large"]},
-		{"storedString":"Port %n","prevelance":1,"conditions":["Port"]},
-		{"storedString":"Catacombs of %n","prevelance":1,"conditions":["Mountains"]},
-		{"storedString":"Tombs of %n","prevelance":1,"conditions":["Mountains"]}
-	],
-	"KingdomTitles":[
-		{"storedString":"Priests of %n","prevelance":1,"conditions":[]},
-		{"storedString":"%n Niwt","prevelance":1,"conditions":["OneCity"]},
-		{"storedString":"Sepat of %n","prevelance":1,"conditions":["Small"]},
-		{"storedString":"Kingdom of %n","prevelance":4,"conditions":[]},
-		{"storedString":"The %n Empire","prevelance":4,"conditions":["Large"]}
-		
-	],
-	"HeraldryOverlayImage":"Egyptian/Heraldry/Overlay.png",
-	"HeraldryForegrounds":[
-		{"storedString":"Egyptian/Heraldry/Symbols/Ankh.png","prevelance":1,"conditions":[]},
-		{"storedString":"Egyptian/Heraldry/Symbols/Bird.png","prevelance":1,"conditions":[]},
-		{"storedString":"Egyptian/Heraldry/Symbols/Crown.png","prevelance":1,"conditions":[]},
-		{"storedString":"Egyptian/Heraldry/Symbols/Feathers.png","prevelance":1,"conditions":[]},
-		{"storedString":"Egyptian/Heraldry/Symbols/Lion.png","prevelance":1,"conditions":[]},
-		{"storedString":"Egyptian/Heraldry/Symbols/Snake.png","prevelance":1,"conditions":[]},
-		{"storedString":"Egyptian/Heraldry/Symbols/Crook.png","prevelance":1,"conditions":[]},
-		{"storedString":"Egyptian/Heraldry/Symbols/Owl.png","prevelance":1,"conditions":[]}
-		
-	],
-	"HeraldryBackgrounds":[
-		{"storedString":"Egyptian/Heraldry/Backgrounds/Egypt_Back_0.png","prevelance":1,"conditions":[]}
-	],
-	"GroundPropertyValues":[
-		{"groundTrait":"Water","groundValue":0.0},
-		{"groundTrait":"Impassable","groundValue":0.0},
-		{"groundTrait":"Muddy","groundValue":0.2},
-		{"groundTrait":"Rocky","groundValue":0.1},
-		{"groundTrait":"Hunting","groundValue":0.15},
-		{"groundTrait":"Forest","groundValue":0.25},
-		{"groundTrait":"Fertile","groundValue":0.6},
-		{"groundTrait":"City","groundValue":4.0},
-		{"groundTrait":"Road","groundValue":2.0}
-	],
-	"ModelPlacementByTraitCultureInfos":[
-		{"TerrainTrait":"City",
-		"ModelPlacementInfos":[
-			{"model":"EgyptianHovel","placementMode":"ScatteredBordered","min":20,"max":25}
-		]},
-		{"TerrainTrait":"MediumCity",
-		"ModelPlacementInfos":[
-			{"model":"EgyptianWall","placementMode":"CityWalls","min":4,"max":4},
-			{"model":"EgyptianGate","placementMode":"CityGates","min":4,"max":4},
-			{"model":"EgyptianTower","placementMode":"Corners","min":4,"max":4}
-		]},
-		{"TerrainTrait":"LargeCity",
-		"ModelPlacementInfos":[
-			{"model":"EgyptianWall","placementMode":"CityWalls","min":4,"max":4},
-			{"model":"EgyptianGate","placementMode":"CityGates","min":4,"max":4},
-			{"model":"EgyptianTower","placementMode":"Corners","min":4,"max":4}
-		]}
-	]
-}
-|
-{
-	"CultureId":"Aztec",
-	"CultureName":"Olmya",
-	"SettlementPrefixes":[
-		{"storedString":"Ti","prevelance":1,"conditions":[]},
-		{"storedString":"Uaxa","prevelance":1,"conditions":[]},
-		{"storedString":"Kaminal","prevelance":1,"conditions":[]},
-		{"storedString":"Ux","prevelance":1,"conditions":[]},
-		{"storedString":"Kab","prevelance":1,"conditions":[]},
-		{"storedString":"Say","prevelance":1,"conditions":[]},
-		{"storedString":"Dzibil","prevelance":1,"conditions":[]},
-		{"storedString":"Chichén","prevelance":1,"conditions":[]}
-	],
-	"SettlementSuffixes":[
-		{"storedString":"kal","prevelance":1,"conditions":[]},
-		{"storedString":"ctún","prevelance":4,"conditions":[]},
-		{"storedString":"'al","prevelance":4,"conditions":[]},
-		{"storedString":"juyú","prevelance":1,"conditions":[]},
-		{"storedString":"mal","prevelance":1,"conditions":[]},
-		{"storedString":"il","prevelance":1,"conditions":[]},
-		{"storedString":"chaltún","prevelance":1,"conditions":[]},
-		{"storedString":" Itzá","prevelance":1,"conditions":[]}
-	],
-	"SettlementAreaInfo":[
-		{"storedString":"%n","prevelance":4,"conditions":[]},
-		{"storedString":"%n Village","prevelance":1,"conditions":["Small"]},
-		{"storedString":"Temple of %n","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"%n Altepetl","prevelance":1,"conditions":["Medium"]},
-		{"storedString":"Temple City of %n","prevelance":1,"conditions":["Large"]},
-		{"storedString":"Port %n","prevelance":1,"conditions":["Port"]},
-		{"storedString":"Catacombs of %n","prevelance":1,"conditions":["Mountains"]},
-		{"storedString":"Tombs of %n","prevelance":1,"conditions":["Mountains"]}
-	],
-	"KingdomTitles":[
-		{"storedString":"Priests of %n","prevelance":1,"conditions":[]},
-		{"storedString":"The Nahualli of %n","prevelance":1,"conditions":["OneCity"]},
-		{"storedString":"Kingdom of %n","prevelance":4,"conditions":[]},
-		{"storedString":"Tlahtocayotl of %n","prevelance":4,"conditions":["Large"]}
-		
-	],
-	"HeraldryOverlayImage":"Aztec/Heraldry/Overlay.png",
-	"HeraldryForegrounds":[
-		{"storedString":"Aztec/Heraldry/Symbols/Aztec_1.png","prevelance":1,"conditions":[]},
-		{"storedString":"Aztec/Heraldry/Symbols/Aztec_2.png","prevelance":1,"conditions":[]},
-		{"storedString":"Aztec/Heraldry/Symbols/Aztec_3.png","prevelance":1,"conditions":[]},
-		{"storedString":"Aztec/Heraldry/Symbols/Aztec_4.png","prevelance":1,"conditions":[]}
-		
-	],
-	"HeraldryBackgrounds":[
-		{"storedString":"Aztec/Heraldry/Backgrounds/Aztec_Back_0.png","prevelance":1,"conditions":[]},
-		{"storedString":"Aztec/Heraldry/Backgrounds/Aztec_Back_1.png","prevelance":1,"conditions":[]}
-	],
-	"GroundPropertyValues":[
-		{"groundTrait":"Water","groundValue":0.0},
-		{"groundTrait":"Impassable","groundValue":0.0},
-		{"groundTrait":"Muddy","groundValue":0.2},
-		{"groundTrait":"Rocky","groundValue":0.1},
-		{"groundTrait":"Hunting","groundValue":0.15},
-		{"groundTrait":"Forest","groundValue":0.15},
-		{"groundTrait":"Fertile","groundValue":0.6},
-		{"groundTrait":"City","groundValue":4.0},
-		{"groundTrait":"Road","groundValue":2.0}
-	],
-	"ModelPlacementByTraitCultureInfos":[
-		{"TerrainTrait":"City",
-		"ModelPlacementInfos":[
-			{"model":"AztecHovel","placementMode":"ScatteredBordered","min":20,"max":25}
-		]},
-		{"TerrainTrait":"MediumCity",
-		"ModelPlacementInfos":[
-			{"model":"AztecWall","placementMode":"CityWalls","min":4,"max":4},
-			{"model":"AztecGate","placementMode":"CityGates","min":4,"max":4},
-			{"model":"AztecTower","placementMode":"Corners","min":4,"max":4}
-		]},
-		{"TerrainTrait":"LargeCity",
-		"ModelPlacementInfos":[
-			{"model":"AztecWall","placementMode":"CityWalls","min":4,"max":4},
-			{"model":"AztecGate","placementMode":"CityGates","min":4,"max":4},
-			{"model":"AztecTower","placementMode":"Corners","min":4,"max":4}
 		]}
 	]
 }

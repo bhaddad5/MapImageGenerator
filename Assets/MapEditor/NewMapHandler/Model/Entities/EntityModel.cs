@@ -1,18 +1,10 @@
-﻿public class EntityModel
-{
-	public enum PlacementType
-	{
-		TopEdge,
-		BottomEdge,
-		LeftEdge,
-		RightEdge,
-		TopLeftCorner,
-		BottomLeftCorner,
-		TopRightCorner,
-		BottomRightCorner,
-		Center,
-		Scattered
-	}
+﻿using System;
+using UnityEngine;
 
-	public PlacementType Placement;
+[Serializable]
+public class EntityModel
+{
+	public Vector2 Position;
+	public float Rotation;
+	public string ModelId;
 }

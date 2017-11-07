@@ -7,13 +7,13 @@ using Random = UnityEngine.Random;
 public class MapGeneratorApi
 {
 	protected Map2D<float> Heights;
-	protected Map2D<GroundInfo> Terrain;
+	protected Map2D<TerrainInfo> Terrain;
 
-	public Map GenerateMaps(int width, int height, MapEnvironment env)
+	public Map GenerateMaps(int width, int height, RealmCreationInfo env)
 	{
-		MapGenerator.Environment = env;
+		MapGenerator.RealmCreationInfo = env;
 		Heights = new Map2D<float>(width, height);
-		Terrain = new Map2D<GroundInfo>(width, height);
+		Terrain = new Map2D<TerrainInfo>(width, height);
 		ExecuteApiCommands(env.MapBuildingCommands);
 
 		return new Map(Heights, Terrain);
@@ -488,7 +488,7 @@ public class MapGeneratorApi
 	//TERRAIN
 	public void TerrainDefaultFill(string defaultTerrain)
 	{
-		Terrain.FillMap(MapGenerator.Environment.groundTypes[defaultTerrain]);
+		Terrain.FillMap(MapGenerator.RealmCreationInfo.groundTypes[defaultTerrain]);
 	}
 
 	public void TerrainFillInOceans(string ocean)
@@ -496,7 +496,7 @@ public class MapGeneratorApi
 		foreach (Int2 point in Heights.GetMapPoints())
 		{
 			if (Heights.Get(point) < Globals.MinGroundHeight)
-				Terrain.Set(point, MapGenerator.Environment.groundTypes[ocean]);
+				Terrain.Set(point, MapGenerator.RealmCreationInfo.groundTypes[ocean]);
 		}
 	}
 
@@ -505,7 +505,7 @@ public class MapGeneratorApi
 		foreach (Int2 point in Heights.GetMapPoints())
 		{
 			if (IsSeaLevel(point))
-				Terrain.Set(point, MapGenerator.Environment.groundTypes[seaLevel]);
+				Terrain.Set(point, MapGenerator.RealmCreationInfo.groundTypes[seaLevel]);
 		}
 	}
 
@@ -514,7 +514,7 @@ public class MapGeneratorApi
 		foreach (Int2 point in Heights.GetMapPoints())
 		{
 			if (Heights.Get(point) >= Globals.MountainHeight)
-				Terrain.Set(point, MapGenerator.Environment.groundTypes[mountain]);
+				Terrain.Set(point, MapGenerator.RealmCreationInfo.groundTypes[mountain]);
 		}
 	}
 
@@ -523,7 +523,7 @@ public class MapGeneratorApi
 		foreach (var point in Terrain.GetMapPoints())
 		{
 			if (Heights.Get(point) < Globals.MinGroundHeight && NumBordersOfAtLeaseHeight(point, Globals.MinGroundHeight) >= 6)
-					Terrain.Set(point, MapGenerator.Environment.groundTypes[river]);
+					Terrain.Set(point, MapGenerator.RealmCreationInfo.groundTypes[river]);
 		}
 	}
 
@@ -537,7 +537,7 @@ public class MapGeneratorApi
 		foreach (Int2 point in Heights.GetMapPoints())
 		{
 			if(IsSeaLevel(point) && Helpers.Odds(odds) && BordersMountain(point))
-				Terrain.Set(point, MapGenerator.Environment.groundTypes[terrain]);
+				Terrain.Set(point, MapGenerator.RealmCreationInfo.groundTypes[terrain]);
 		}
 	}
 
@@ -546,7 +546,7 @@ public class MapGeneratorApi
 		foreach (Int2 point in Heights.GetMapPoints())
 		{
 			if (IsSeaLevel(point) && Helpers.Odds(odds) && BordersOcean(point))
-				Terrain.Set(point, MapGenerator.Environment.groundTypes[terrain]);
+				Terrain.Set(point, MapGenerator.RealmCreationInfo.groundTypes[terrain]);
 		}
 	}
 
@@ -555,7 +555,7 @@ public class MapGeneratorApi
 		foreach (Int2 point in Heights.GetMapPoints())
 		{
 			if (IsSeaLevel(point) && Helpers.Odds(odds))
-				Terrain.Set(point, MapGenerator.Environment.groundTypes[terrain]);
+				Terrain.Set(point, MapGenerator.RealmCreationInfo.groundTypes[terrain]);
 		}
 	}
 
@@ -564,14 +564,14 @@ public class MapGeneratorApi
 		
 		for (int i = 0; i < numPasses; i++)
 		{
-			Map2D<GroundInfo> NewTerrain = new Map2D<GroundInfo>(Terrain);
+			Map2D<TerrainInfo> NewTerrain = new Map2D<TerrainInfo>(Terrain);
 			foreach (Int2 point in Terrain.GetMapPoints())
 			{
 				if (IsSeaLevel(point))
 				{
 					var adjacentVals = GetAdjacentSeaLevelOfType(point, typeToExpand);
 					if (Helpers.Odds(0.25f * adjacentVals.Count))
-						NewTerrain.Set(point, MapGenerator.Environment.groundTypes[typeToExpand]);
+						NewTerrain.Set(point, MapGenerator.RealmCreationInfo.groundTypes[typeToExpand]);
 				}
 				
 			}
@@ -579,9 +579,9 @@ public class MapGeneratorApi
 		}
 	}
 
-	private List<GroundInfo> GetAdjacentSeaLevelOfType(Int2 point, string type)
+	private List<TerrainInfo> GetAdjacentSeaLevelOfType(Int2 point, string type)
 	{
-		var res = new List<GroundInfo>();
+		var res = new List<TerrainInfo>();
 		foreach (Int2 adjacent in Terrain.GetAdjacentPoints(point))
 		{
 			if (IsSeaLevel(adjacent) && Terrain.Get(adjacent).groundType == type)

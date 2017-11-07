@@ -11,6 +11,16 @@ public static class Helpers
 		return new Color(UnityEngine.Random.Range(0, 1f), UnityEngine.Random.Range(0, 1f), UnityEngine.Random.Range(0, 1f));
 	}
 
+	public static bool TextureContainsTransparency(this Texture2D tex)
+	{
+		foreach (Color pixel in tex.GetPixels())
+		{
+			if (pixel.a < .9f)
+				return true;
+		}
+		return false;
+	}
+
 	public static void DEBUGSphereAtPoint(Vector3 point, float scale)
 	{
 		GameObject sphere = GameObject.Instantiate(Resources.Load("DebugSphere") as GameObject);

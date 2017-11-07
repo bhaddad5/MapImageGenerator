@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 
 public class MapBuilder : MonoBehaviour
 {
@@ -20,26 +21,26 @@ public class MapBuilder : MonoBehaviour
 	public GameObject SettlementInfoPrefab;
 	public GameObject LocationInfoPrefab;
 
-	private List<MapEnvironment> environments;
+	private List<RealmCreationInfo> environments;
 	private GameObject objectParent;
 
 	// Use this for initialization
 	void Start ()
 	{
 		//RebuildMap();
-		environments = EnvironmentParser.LoadEnvironments();
-		foreach (MapEnvironment environment in environments)
+		environments = RealmParser.LoadRealms();
+		foreach (RealmCreationInfo environment in environments)
 		{
 			EnvironmentSelection.options.Add(new Dropdown.OptionData(environment.DisplayName));
 		}
 		EnvironmentSelection.value = 1;
 	}
 
-	private MapEnvironment GetSelectedEnvironment(string selectedString)
+	private RealmCreationInfo GetSelectedEnvironment(string selectedString)
 	{
 		if (selectedString == "Random")
 			return environments[Random.Range(0, environments.Count - 1)];
-		foreach (MapEnvironment environment in environments)
+		foreach (RealmCreationInfo environment in environments)
 		{
 			if (environment.DisplayName == selectedString)
 				return environment;
@@ -59,8 +60,10 @@ public class MapBuilder : MonoBehaviour
 		StartCoroutine(BuildMap(width, height, GetSelectedEnvironment(EnvironmentSelection.options[EnvironmentSelection.value].text)));
 	}
 
-	public IEnumerator BuildMap(int width, int height, MapEnvironment mapEnvironment)
+	public IEnumerator BuildMap(int width, int height, RealmCreationInfo realmCreationInfo)
 	{
+		MapModel Map = new MapModel(width, height);
+
 		terrainMeshDisplay.transform.localPosition = Vector3.zero;
 		for (int i = 0; i < terrainMeshDisplay.transform.childCount; i++)
 		{
@@ -83,12 +86,12 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Raising Mountains";
 		yield return null;
 
-		MapGenerator.SetUpMapGenerator(width, height, mapEnvironment);
+		MapGenerator.SetUpMapGenerator(width, height, realmCreationInfo);
 		
 		displayText.text = "Forging Kingdoms";
 		yield return null;
 
-		RegionsGen regionsMap = new RegionsGen(mapEnvironment.Cultures);
+		RegionsGen regionsMap = new RegionsGen(realmCreationInfo.Cultures);
 
 		displayText.text = "Artificing Lands";
 		yield return null;
@@ -102,7 +105,7 @@ public class MapBuilder : MonoBehaviour
 		generatedMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapGenerator.GetHeightMapTexture();
 		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapGenerator.GetTerrainTexture();
 
-		List<Material> mapMats = GetMapMaterials(mapEnvironment.groundTypes.Values.ToList());
+		List<Material> mapMats = GetMapMaterials(realmCreationInfo.groundTypes.Values.ToList());
 
 		int meshNum = 0;
 		foreach(Mesh m in mapMeshes)
@@ -152,14 +155,14 @@ public class MapBuilder : MonoBehaviour
 		}
 	}
 
-	private List<Material> GetMapMaterials(List<GroundInfo> groundTypes)
+	private List<Material> GetMapMaterials(List<TerrainInfo> groundTypes)
 	{
 		var mats = new List<Material>() {new Material(Shader.Find("Standard"))};
 		
 		mats[0].color = Color.black;
 		mats[0].SetFloat("_Glossiness", 0f);
 
-		List<GroundInfo> gtToFlush = new List<GroundInfo>();
+		List<TerrainInfo> gtToFlush = new List<TerrainInfo>();
 		for (int i = 0; i < groundTypes.Count; i++)
 		{
 			gtToFlush.Add(groundTypes[i]);
@@ -175,7 +178,7 @@ public class MapBuilder : MonoBehaviour
 		return mats;
 	}
 
-	private Material FlushGroundInfoToMat(List<GroundInfo> groundInfo)
+	private Material FlushGroundInfoToMat(List<TerrainInfo> groundInfo)
 	{
 		var mat = new Material(Shader.Find("Custom/GroundShader"));
 

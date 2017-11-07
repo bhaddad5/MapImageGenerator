@@ -4,57 +4,32 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class ModelsParser
+public static class ModelsParser
 {
-	public static void ParseModels()
+	public static Dictionary<string, GameObject> ModelData = new Dictionary<string, GameObject>();
+
+	public static void LoadModels()
 	{
-		string modelsFile = File.ReadAllText(Application.streamingAssetsPath + "/models.txt");
-		modelsFile = ParserHelpers.ClearOutComments(modelsFile);
-		string[] models = modelsFile.Split(new[] { "|" }, StringSplitOptions.None);
-		foreach (string md in models)
+		Dictionary<string, StoredModelEntry> ModelTypes = ParserHelpers.ParseTypes<StoredModelEntry>("models");
+
+		foreach (StoredModelEntry modelEntry in ModelTypes.Values)
 		{
-			StoredModels storedModels = JsonUtility.FromJson<StoredModels>(md);
-			storedModels.WriteTooLookup();
-		}
-	}
-}
-
-[Serializable]
-public class StoredModelEntry
-{
-	public string ModelId;
-	public string ModelPath;
-	public bool UnlitTransparent;
-}
-
-public class StoredModels
-{
-	public StoredModelEntry[] Models = new StoredModelEntry[0];
-
-	public void WriteTooLookup()
-	{
-		foreach (StoredModelEntry entry in Models)
-		{
-			GameObject g = OBJLoader.LoadOBJFile(Application.streamingAssetsPath + "/" + entry.ModelPath);
+			GameObject g = OBJLoader.LoadOBJFile(Application.streamingAssetsPath + "/" + modelEntry.ModelPath);
 			foreach (MeshRenderer mr in g.GetComponentsInChildren<MeshRenderer>())
 			{
 				mr.gameObject.AddComponent<MeshCollider>();
 				mr.gameObject.layer = LayerMask.NameToLayer("PlacedModel");
-				if (entry.UnlitTransparent)
-				{
+
+				if ((mr.material.mainTexture as Texture2D).TextureContainsTransparency())
 					SetShaders(mr, "Unlit/Transparent Cutout");
-				}
-				else
-				{
-					SetShaders(mr, "Standard");
-				}
+				else SetShaders(mr, "Standard");
 			}
-			ModelLookup.Models[entry.ModelId] = g;
+			ModelData[modelEntry.Id] = g;
 			g.SetActive(false);
 		}
 	}
 
-	private void SetShaders(MeshRenderer mr, string shader)
+	private static void SetShaders(MeshRenderer mr, string shader)
 	{
 		foreach (Material material in mr.materials)
 		{
@@ -63,4 +38,10 @@ public class StoredModels
 			material.SetFloat("_Metallic", 0);
 		}
 	}
+}
+
+[Serializable]
+public class StoredModelEntry : ParsableData
+{
+	public string ModelPath;
 }

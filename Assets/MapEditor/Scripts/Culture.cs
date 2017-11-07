@@ -79,9 +79,9 @@ public class Culture
 	public List<HeraldryOption> heraldryBackground;
 	public List<HeraldryOption> heraldryForeground;
 
-	public Dictionary<GroundInfo.GroundTraits, float> tileValues;
+	public Dictionary<TerrainInfo.GroundTraits, float> tileValues;
 
-	public Dictionary<GroundInfo.GroundTraits, List<ModelPlacementInfo>> tileModelPlacement;
+	public Dictionary<TerrainInfo.GroundTraits, List<ModelPlacementInfo>> tileModelPlacement;
 
 	public string GetKingdomName(string coreName, List<Kingdom.KingdomTrait> traits)
 	{
@@ -205,7 +205,7 @@ public class Culture
 	public float GetTileValue(Int2 tile)
 	{
 		float value = 0;
-		foreach (GroundInfo.GroundTraits trait in MapGenerator.Terrain.Get(tile).traits)
+		foreach (TerrainInfo.GroundTraits trait in MapGenerator.Terrain.Get(tile).traits)
 		{
 			if(tileValues.ContainsKey(trait))
 				value += tileValues[trait];

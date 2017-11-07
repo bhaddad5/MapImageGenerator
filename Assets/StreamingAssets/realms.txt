@@ -1,0 +1,111 @@
+//EnvironmentId: A unique ID for your environment
+//DisplayName: The displayed name of your environment
+//MapBuildingCommands: The instructions on how to build your environment
+	//HeightsDefaultFill : Fill the whole map with this height (recommended values: 0, MinGroundHeight, 1)
+	//HeightRandomlyPlaceAlongLine : Sets pixels to height along a random line (Height, Occurances Per 80x80 Square, Min Line Length, Max Line Length, Spacing Betwen Placements)
+	//HeightRandomlyPlace : Randomly sets pixels to height (Height, Occurances Per 80x80 Square)
+	//HeightBlendUp : Blends pixel heights up to smoothly border their heigher neighbirs (number of times to blend)
+	//HeightRandomlyPlaceAlongEdges : Randomly sets edge pixels to height (Height, Occurances Per 80x80 Square)
+	//HeightRandomlyExpandLevel : Expands out height level into neighbors (Height level to expand, number of times to expand)
+	//HeightRandomizeLevelEdges : Randomly expand level to give rough edge (Height level to randomly expand, number of times to randomly expand)
+	//HeightRandomlyExpandLevelFromItselfOrLevel : Randomly spreads ground from itself or from an existing height (Level to spread, Level to build off of, minimum number of times to expand, max number of times to expand)
+	//CreateRivers : Creates rivers from mountains to oceans (Min number of rivers, Max number of rivers)
+
+{
+	"EnvironmentId":"Anglo",
+	"DisplayName":"The Midlands",
+	"MapBuildingCommands":[
+		"HeightsDefaultFill 0",
+		"HeightRandomlyPlaceAlongLine 1 6 4 50 3",
+		"HeightRandomlyExpandLevelFromItselfOrLevel MinGroundHeight 1 1 20",
+		"HeightBlendUp 2",
+		"HeightRandomlyPlaceNotInWater .3 400",
+		"HeightBlendUp 1",
+		"HeightRandomizeLevelEdges 0 2",
+		"CreateRivers 10 20",
+		
+		"TerrainDefaultFill Wilderness",
+		"TerrainFillInOceans Ocean",
+		"TerrainFillInMountains Mountain",
+		"TerrainFillInRivers River",
+		"TerrainEncourageStartAlongMountains Forest 0.15",
+		"TerrainExpandSimmilarTypes 6 Forest",
+		"TerrainRandomlyStart Forest 0.05",
+		"TerrainExpandSimmilarTypes 3 Forest",
+		"TerrainEncourageStartAlongOcean Fertile 0.15",
+		"TerrainRandomlyStart Fertile 0.05",
+		"TerrainExpandSimmilarTypes 4 Fertile",
+		"TerrainEncourageStartAlongOcean Swamp 0.02",
+		"TerrainRandomlyStart Swamp 0.005",
+		"TerrainExpandSimmilarTypes 3 Swamp"
+	],
+	"Cultures":[
+		{"cultureId":"Anglo", "avgSettlementsPer80Square":45},
+		{"cultureId":"Dwarf", "avgSettlementsPer80Square":35},
+	],
+	"GroundTypes":[
+		{
+		"GroundType":"Ocean",
+		"Texture":"Midlands/Terrain/Sand.png",
+		"Difficulty":0.1,
+		"StoredTraits":[
+			"Water",
+			"Impassable"
+		]
+		},
+		{
+		"GroundType":"Swamp",
+		"Texture":"Midlands/Terrain/Swamp.png",
+		"Difficulty":0.35,
+		"DefaultModelPlacement":[
+			{"model":"Willow","min":2,"max":3},
+			{"model":"Rushes","min":5,"max":7}
+		],
+		"StoredTraits":[
+			"Muddy"
+		]
+		},
+		{
+		"GroundType":"Wilderness",
+		"Texture":"Midlands/Terrain/Wilderness.png",
+		"Difficulty":0.2,
+		"DefaultModelPlacement":[
+			{"model":"Pine","min":0,"max":3}
+		],
+		"StoredTraits":[
+			"Hunting"
+		]
+		},
+		{
+		"GroundType":"Forest",
+		"Texture":"Midlands/Terrain/Forest.png",
+		"Difficulty":0.25,
+		"DefaultModelPlacement":[
+			{"model":"Pine","min":7,"max":10}
+		],
+		"StoredTraits":[
+			"Hunting",
+			"Forest"
+		]
+		},
+		{
+		"GroundType":"Mountain",
+		"Difficulty":50,
+		"Texture":"Midlands/Terrain/Mountains.png",
+		"StoredTraits":[
+			"Rocky",
+			"Impassable"
+		]
+		},
+		{
+		"GroundType":"Fertile",
+		"Difficulty":0.15,
+		"Texture":"Midlands/Terrain/Fertile.png",
+		"DefaultModelPlacement":[
+		],
+		"StoredTraits":[
+			"Fertile"
+		]
+		}
+	]
+}
