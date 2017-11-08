@@ -88,8 +88,6 @@
     <Compile Include="Assets\MapEditor\Scripts\Kingdom.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Location.cs" />
     <Compile Include="Assets\MapEditor\Scripts\MapBuilder.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\MapGenerator.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\MapGeneratorApi.cs" />
     <Compile Include="Assets\MapEditor\Scripts\MapMeshBuilder.cs" />
     <Compile Include="Assets\MapEditor\Scripts\MeshConstructor.cs" />
     <Compile Include="Assets\MapEditor\Scripts\MeshSplitter.cs" />
@@ -100,6 +98,8 @@
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\DataParsers\ParserHelpers.cs" />
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\DataParsers\RealmParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\DataParsers\TerrainParser.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\MapGenerator.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\MapGeneratorApi.cs" />
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\Model\EntityPlacementModel.cs" />
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\Model\KingdomModel.cs" />
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\Model\MapModel.cs" />

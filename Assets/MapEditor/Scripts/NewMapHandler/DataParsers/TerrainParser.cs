@@ -39,6 +39,7 @@ public class TerrainModel : ParsableData
 	public string Texture;
 	public float Difficulty = 0.1f;
 	public string[] StoredTraits = new string[0];
+	public Color LookupColor;
 	public EntityPlacementModel[] EntityPlacements = new EntityPlacementModel[0];
 
 	public bool HasTrait(GroundTraits trait)

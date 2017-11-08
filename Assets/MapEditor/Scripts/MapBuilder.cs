@@ -30,7 +30,7 @@ public class MapBuilder : MonoBehaviour
 		LocationParser.LoadLocations();
 		TerrainParser.LoadTerrainTypes();
 
-		foreach (RealmCreationInfo environment in RealmParser.RealmsData.Values)
+		foreach (RealmModel environment in RealmParser.RealmsData.Values)
 		{
 			EnvironmentSelection.options.Add(new Dropdown.OptionData(environment.DisplayName));
 		}
@@ -44,28 +44,11 @@ public class MapBuilder : MonoBehaviour
 		StartCoroutine(BuildMap(width, height, RealmParser.RealmsData[EnvironmentSelection.options[EnvironmentSelection.value].text]));
 	}
 
-	public IEnumerator BuildMap(int width, int height, RealmCreationInfo realmCreationInfo)
+	public IEnumerator BuildMap(int width, int height, RealmModel realmCreationInfo)
 	{
 		MapModel Map = new MapModel(width, height);
 
-		terrainMeshDisplay.transform.localPosition = Vector3.zero;
-		for (int i = 0; i < terrainMeshDisplay.transform.childCount; i++)
-		{
-			Destroy(terrainMeshDisplay.transform.GetChild(i).gameObject);
-		}
-		transform.localPosition = Vector3.zero;
-
-		if(objectParent != null)
-			Destroy(objectParent);
-		objectParent = new GameObject("objectParent");
-		objectParent.transform.SetParent(transform);
-
-		waterPlane.SetActive(true);
-		waterPlane.transform.localScale = new Vector3(width / 10, 1, height / 10);
-		waterPlane.transform.parent = transform;
-		waterPlane.transform.localPosition = new Vector3(width / 2, Globals.MinGroundHeight * 2f - 0.01f, height / 2);
-
-		displayText.enabled = true;
+		
 
 		displayText.text = "Raising Mountains";
 		yield return null;
@@ -122,6 +105,29 @@ public class MapBuilder : MonoBehaviour
 
 		displayText.enabled = false;
 	}
+
+	private void DisplayMap(MapModel mapToDisplay)
+	{
+		terrainMeshDisplay.transform.localPosition = Vector3.zero;
+		for (int i = 0; i < terrainMeshDisplay.transform.childCount; i++)
+		{
+			Destroy(terrainMeshDisplay.transform.GetChild(i).gameObject);
+		}
+		transform.localPosition = Vector3.zero;
+
+		if (objectParent != null)
+			Destroy(objectParent);
+		objectParent = new GameObject("objectParent");
+		objectParent.transform.SetParent(transform);
+
+		waterPlane.SetActive(true);
+		waterPlane.transform.localScale = new Vector3(mapToDisplay.Map.Width / 10, 1, mapToDisplay.Map.Height / 10);
+		waterPlane.transform.parent = transform;
+		waterPlane.transform.localPosition = new Vector3(mapToDisplay.Map.Width / 2, Globals.MinGroundHeight * 2f - 0.01f, mapToDisplay.Map.Height / 2);
+
+		displayText.enabled = true;
+	}
+
 
 	private void AddSettlementInfoPanels(RegionsGen regionsMap)
 	{

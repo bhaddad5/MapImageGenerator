@@ -33,7 +33,7 @@ public class Settlement
 
 	public void ExpandSettlement(float regionValue)
 	{
-		MapGenerator.Terrain.Set(cityTiles[0], MapGenerator.RealmCreationInfo.GetFirstWithTrait(TerrainInfo.GroundTraits.City));
+		MapGenerator.Terrain.Set(cityTiles[0], MapGenerator.RealmModel.GetFirstWithTrait(TerrainInfo.GroundTraits.City));
 
 		float valuePerNewTile = 10;
 		while (cityTiles.Count < regionValue / valuePerNewTile)
@@ -42,18 +42,18 @@ public class Settlement
 			if (expansionTiles.Count == 0)
 				break;
 			cityTiles.Add(expansionTiles.TopValue());
-			MapGenerator.Terrain.Set(expansionTiles.TopValue(), MapGenerator.RealmCreationInfo.GetFirstWithTrait(TerrainInfo.GroundTraits.City));
+			MapGenerator.Terrain.Set(expansionTiles.TopValue(), MapGenerator.RealmModel.GetFirstWithTrait(TerrainInfo.GroundTraits.City));
 		}
 
 		var traits = GetCityTraits();
 		foreach (Int2 tile in cityTiles)
 		{
 			if(traits.Contains(CityTrait.Large))
-				MapGenerator.Terrain.Set(tile, MapGenerator.RealmCreationInfo.GetFirstWithTrait(TerrainInfo.GroundTraits.LargeCity));
+				MapGenerator.Terrain.Set(tile, MapGenerator.RealmModel.GetFirstWithTrait(TerrainInfo.GroundTraits.LargeCity));
 			if (traits.Contains(CityTrait.Medium))
-				MapGenerator.Terrain.Set(tile, MapGenerator.RealmCreationInfo.GetFirstWithTrait(TerrainInfo.GroundTraits.MediumCity));
+				MapGenerator.Terrain.Set(tile, MapGenerator.RealmModel.GetFirstWithTrait(TerrainInfo.GroundTraits.MediumCity));
 			if (traits.Contains(CityTrait.Small))
-				MapGenerator.Terrain.Set(tile, MapGenerator.RealmCreationInfo.GetFirstWithTrait(TerrainInfo.GroundTraits.SmallCity));
+				MapGenerator.Terrain.Set(tile, MapGenerator.RealmModel.GetFirstWithTrait(TerrainInfo.GroundTraits.SmallCity));
 		}
 	}
 
@@ -114,7 +114,7 @@ public class Settlement
 				traits.Add(CityTrait.Fertile);
 			if (groundInfo.traits.Contains(TerrainInfo.GroundTraits.Water))
 				traits.Add(CityTrait.Port);
-			if (neighboringTerrainTypes.Contains(MapGenerator.RealmCreationInfo.River))
+			if (neighboringTerrainTypes.Contains(MapGenerator.RealmModel.River))
 				traits.Add(CityTrait.River);
 		}
 
@@ -142,7 +142,7 @@ public class Settlement
 		{
 			foreach (var adj in MapGenerator.Terrain.GetAdjacentValues(tile))
 			{
-				if(adj == MapGenerator.RealmCreationInfo.Ocean || adj == MapGenerator.RealmCreationInfo.River || adj.HasTrait(TerrainInfo.GroundTraits.Road))
+				if(adj == MapGenerator.RealmModel.Ocean || adj == MapGenerator.RealmModel.River || adj.HasTrait(TerrainInfo.GroundTraits.Road))
 					val += .5f;
 			}
 		}

@@ -11,4 +11,20 @@ public class MapModel
 	{
 		Map = new Map2D<MapTileModel>(w, h);
 	}
+
+	public void FillMapWithHeight(float height)
+	{
+		foreach (MapTileModel mapTileModel in Map.GetMapValues())
+		{
+			mapTileModel.Height = height;
+		}
+	}
+
+	public void FillMapWithTerrain(string terrainId)
+	{
+		foreach (MapTileModel mapTileModel in Map.GetMapValues())
+		{
+			mapTileModel.TerrainId = terrainId;
+		}
+	}
 }
