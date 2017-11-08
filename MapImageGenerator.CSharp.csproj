@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>5.6.2f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -83,17 +81,7 @@
     <Compile Include="Assets\ExternalAssets\OBJImport\OBJLoader.cs" />
     <Compile Include="Assets\ExternalAssets\OBJImport\TextureLoader.cs" />
     <Compile Include="Assets\ExternalAssets\Standard Assets\Environment\Water (Basic)\Scripts\WaterBasic.cs" />
-    <Compile Include="Assets\MapEditor\NewMapHandler\Model\Entities\EntityModel.cs" />
-    <Compile Include="Assets\MapEditor\NewMapHandler\Model\KingdomModel.cs" />
-    <Compile Include="Assets\MapEditor\NewMapHandler\Model\MapModel.cs" />
-    <Compile Include="Assets\MapEditor\NewMapHandler\Model\MapTileModel.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Culture.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\DataParsers\CultureParser.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\DataParsers\LocationParser.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\DataParsers\ModelsParser.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\DataParsers\ParserHelpers.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\DataParsers\RealmParser.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\DataParsers\terrainParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Globals.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Helpers\Helpers.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Helpers\Map2D.cs" />
@@ -106,6 +94,16 @@
     <Compile Include="Assets\MapEditor\Scripts\MeshConstructor.cs" />
     <Compile Include="Assets\MapEditor\Scripts\MeshSplitter.cs" />
     <Compile Include="Assets\MapEditor\Scripts\ModelPlacer.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\DataParsers\CultureParser.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\DataParsers\LocationParser.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\DataParsers\ModelsParser.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\DataParsers\ParserHelpers.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\DataParsers\RealmParser.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\DataParsers\TerrainParser.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\Model\EntityPlacementModel.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\Model\KingdomModel.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\Model\MapModel.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\Model\MapTileModel.cs" />
     <Compile Include="Assets\MapEditor\Scripts\RegionTile.cs" />
     <Compile Include="Assets\MapEditor\Scripts\RegionsGen.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Settlement.cs" />

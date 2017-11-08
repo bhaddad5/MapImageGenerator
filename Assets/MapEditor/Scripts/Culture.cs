@@ -52,14 +52,12 @@ public class HeraldryOption
 {
 	public Texture2D image;
 	public List<Settlement.CityTrait> constraints;
-	public int prevelance;
 
-	public HeraldryOption(string imagePath, List<Settlement.CityTrait> constr, int odds = 1)
+	public HeraldryOption(string imagePath, List<Settlement.CityTrait> constr)
 	{
 		Byte[] file = File.ReadAllBytes(Application.streamingAssetsPath + "/" + imagePath);
 		image = new Texture2D(2, 2);
 		image.LoadImage(file);
-		prevelance = odds;
 		constraints = constr;
 	}
 }

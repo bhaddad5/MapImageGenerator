@@ -9,8 +9,6 @@ using JetBrains.Annotations;
 public class MapBuilder : MonoBehaviour
 {
 	public Dropdown EnvironmentSelection;
-	public InputField sizeX;
-	public InputField sizeY;
 	public Text displayText;
 
 	public GameObject terrainMeshDisplay;
@@ -21,43 +19,29 @@ public class MapBuilder : MonoBehaviour
 	public GameObject SettlementInfoPrefab;
 	public GameObject LocationInfoPrefab;
 
-	private List<RealmCreationInfo> environments;
 	private GameObject objectParent;
 
 	// Use this for initialization
 	void Start ()
 	{
-		//RebuildMap();
-		environments = RealmParser.LoadRealms();
-		foreach (RealmCreationInfo environment in environments)
+		RealmParser.LoadRealms();
+		ModelsParser.LoadModels();
+		CultureParser.LoadCultures();
+		LocationParser.LoadLocations();
+		TerrainParser.LoadTerrainTypes();
+
+		foreach (RealmCreationInfo environment in RealmParser.RealmsData.Values)
 		{
 			EnvironmentSelection.options.Add(new Dropdown.OptionData(environment.DisplayName));
 		}
 		EnvironmentSelection.value = 1;
 	}
 
-	private RealmCreationInfo GetSelectedEnvironment(string selectedString)
-	{
-		if (selectedString == "Random")
-			return environments[Random.Range(0, environments.Count - 1)];
-		foreach (RealmCreationInfo environment in environments)
-		{
-			if (environment.DisplayName == selectedString)
-				return environment;
-		}
-		return null;
-	}
-
 	public void RebuildMap()
 	{
 		int width = 80;
-		if(sizeX.text != "")
-			width = int.Parse(sizeX.text);
 		int height = 80;
-		if(sizeY.text != "")
-			height = int.Parse(sizeY.text);
-
-		StartCoroutine(BuildMap(width, height, GetSelectedEnvironment(EnvironmentSelection.options[EnvironmentSelection.value].text)));
+		StartCoroutine(BuildMap(width, height, RealmParser.RealmsData[EnvironmentSelection.options[EnvironmentSelection.value].text]));
 	}
 
 	public IEnumerator BuildMap(int width, int height, RealmCreationInfo realmCreationInfo)

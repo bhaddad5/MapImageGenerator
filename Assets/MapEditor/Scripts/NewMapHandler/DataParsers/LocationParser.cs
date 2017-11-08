@@ -21,6 +21,6 @@ public class StoredLocation : ParsableData
 	public string LocationType;
 	public string Model;
 	public string[] PlacementProperties;
-	public StoredStringOption[] LocationPrefixes = new StoredStringOption[0];
-	public StoredStringOption[] LocationSuffixes = new StoredStringOption[0];
+	public StoredStringModel[] LocationPrefixes = new StoredStringModel[0];
+	public StoredStringModel[] LocationSuffixes = new StoredStringModel[0];
 }
