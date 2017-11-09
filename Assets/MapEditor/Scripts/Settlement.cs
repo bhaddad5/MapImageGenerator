@@ -4,7 +4,7 @@ using System.Diagnostics.SymbolStore;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-
+/*
 public class Settlement
 {
 	public enum CityTrait
@@ -33,7 +33,7 @@ public class Settlement
 
 	public void ExpandSettlement(float regionValue)
 	{
-		MapGenerator.Terrain.Set(cityTiles[0], MapGenerator.RealmModel.GetFirstWithTrait(TerrainInfo.GroundTraits.City));
+		MapTextureHelpers.Terrain.Set(cityTiles[0], MapTextureHelpers.RealmModel.GetFirstWithTrait(TerrainInfo.GroundTraits.City));
 
 		float valuePerNewTile = 10;
 		while (cityTiles.Count < regionValue / valuePerNewTile)
@@ -42,18 +42,18 @@ public class Settlement
 			if (expansionTiles.Count == 0)
 				break;
 			cityTiles.Add(expansionTiles.TopValue());
-			MapGenerator.Terrain.Set(expansionTiles.TopValue(), MapGenerator.RealmModel.GetFirstWithTrait(TerrainInfo.GroundTraits.City));
+			MapTextureHelpers.Terrain.Set(expansionTiles.TopValue(), MapTextureHelpers.RealmModel.GetFirstWithTrait(TerrainInfo.GroundTraits.City));
 		}
 
 		var traits = GetCityTraits();
 		foreach (Int2 tile in cityTiles)
 		{
 			if(traits.Contains(CityTrait.Large))
-				MapGenerator.Terrain.Set(tile, MapGenerator.RealmModel.GetFirstWithTrait(TerrainInfo.GroundTraits.LargeCity));
+				MapTextureHelpers.Terrain.Set(tile, MapTextureHelpers.RealmModel.GetFirstWithTrait(TerrainInfo.GroundTraits.LargeCity));
 			if (traits.Contains(CityTrait.Medium))
-				MapGenerator.Terrain.Set(tile, MapGenerator.RealmModel.GetFirstWithTrait(TerrainInfo.GroundTraits.MediumCity));
+				MapTextureHelpers.Terrain.Set(tile, MapTextureHelpers.RealmModel.GetFirstWithTrait(TerrainInfo.GroundTraits.MediumCity));
 			if (traits.Contains(CityTrait.Small))
-				MapGenerator.Terrain.Set(tile, MapGenerator.RealmModel.GetFirstWithTrait(TerrainInfo.GroundTraits.SmallCity));
+				MapTextureHelpers.Terrain.Set(tile, MapTextureHelpers.RealmModel.GetFirstWithTrait(TerrainInfo.GroundTraits.SmallCity));
 		}
 	}
 
@@ -62,13 +62,13 @@ public class Settlement
 		SortedDupList<Int2> possibleExpansions = new SortedDupList<Int2>();
 		foreach (Int2 cityTile in cityTiles)
 		{
-			foreach (Int2 neighbor in MapGenerator.Terrain.GetAdjacentPoints(cityTile))
+			foreach (Int2 neighbor in MapTextureHelpers.Terrain.GetAdjacentPoints(cityTile))
 			{
-				var neighborType = MapGenerator.Terrain.Get(neighbor);
+				var neighborType = MapTextureHelpers.Terrain.Get(neighbor);
 				if (!possibleExpansions.ContainsValue(neighbor) &&
 					!neighborType.HasTrait(TerrainInfo.GroundTraits.City) &&
 					!neighborType.HasTrait(TerrainInfo.GroundTraits.Impassable) &&
-					RegionsGen.Map.Get(neighbor).settlement == this &&
+					RegionsGenerator.Map.Get(neighbor).settlement == this &&
 					!BordersUnfriendlyCity(neighbor))
 				{
 					possibleExpansions.Insert(neighbor, kingdom.culture.TileAreaValue(neighbor, true));
@@ -81,9 +81,9 @@ public class Settlement
 	private bool BordersUnfriendlyCity(Int2 tile)
 	{
 		bool bordersUnfriendlyCity = false;
-		foreach(var border in MapGenerator.Terrain.GetAllNeighboringPoints(tile))
+		foreach(var border in MapTextureHelpers.Terrain.GetAllNeighboringPoints(tile))
 		{
-			if(MapGenerator.Terrain.Get(border).HasTrait(TerrainInfo.GroundTraits.City))
+			if(MapTextureHelpers.Terrain.Get(border).HasTrait(TerrainInfo.GroundTraits.City))
 			{
 				if(!cityTiles.Contains(border))
 					bordersUnfriendlyCity = true;
@@ -97,7 +97,7 @@ public class Settlement
 		List<TerrainInfo> neighboringTerrainTypes = new List<TerrainInfo>();
 		foreach (Int2 tile in cityTiles)
 		{
-			foreach (var neighbor in MapGenerator.Terrain.GetAdjacentValues(tile))
+			foreach (var neighbor in MapTextureHelpers.Terrain.GetAdjacentValues(tile))
 			{
 				neighboringTerrainTypes.Add(neighbor);
 			}
@@ -114,7 +114,7 @@ public class Settlement
 				traits.Add(CityTrait.Fertile);
 			if (groundInfo.traits.Contains(TerrainInfo.GroundTraits.Water))
 				traits.Add(CityTrait.Port);
-			if (neighboringTerrainTypes.Contains(MapGenerator.RealmModel.River))
+			if (neighboringTerrainTypes.Contains(MapTextureHelpers.RealmModel.River))
 				traits.Add(CityTrait.River);
 		}
 
@@ -140,9 +140,9 @@ public class Settlement
 		float val = cityTiles.Count;
 		foreach(var tile in cityTiles)
 		{
-			foreach (var adj in MapGenerator.Terrain.GetAdjacentValues(tile))
+			foreach (var adj in MapTextureHelpers.Terrain.GetAdjacentValues(tile))
 			{
-				if(adj == MapGenerator.RealmModel.Ocean || adj == MapGenerator.RealmModel.River || adj.HasTrait(TerrainInfo.GroundTraits.Road))
+				if(adj == MapTextureHelpers.RealmModel.Ocean || adj == MapTextureHelpers.RealmModel.River || adj.HasTrait(TerrainInfo.GroundTraits.Road))
 					val += .5f;
 			}
 		}
@@ -155,7 +155,7 @@ public class Settlement
 		float defensibility = GetSettlementValue();
 		foreach (var tile in cityTiles)
 		{
-			foreach (var adj in MapGenerator.Terrain.GetAdjacentValues(tile))
+			foreach (var adj in MapTextureHelpers.Terrain.GetAdjacentValues(tile))
 				defensibility += adj.GetDefensibility();
 		}
 		return defensibility;
@@ -175,3 +175,4 @@ public class Settlement
 		return minCityTile - new Int2(0, 1);
 	}
 }
+*/

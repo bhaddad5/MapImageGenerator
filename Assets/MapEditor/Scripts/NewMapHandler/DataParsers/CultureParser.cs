@@ -21,7 +21,7 @@ public class StoredStringModel
 	public string storedString;
 	public string[] conditions = new string[0];
 
-	public List<Settlement.CityTrait> GetCityTraits()
+	/*public List<Settlement.CityTrait> GetCityTraits()
 	{
 		List<Settlement.CityTrait> traits = new List<Settlement.CityTrait>();
 		foreach (string trait in conditions)
@@ -35,14 +35,7 @@ public class StoredStringModel
 		foreach (string trait in conditions)
 			traits.Add((Kingdom.KingdomTrait)System.Enum.Parse(typeof(Kingdom.KingdomTrait), trait));
 		return traits;
-	}
-}
-
-[Serializable]
-public class StoredGroundValue
-{
-	public string groundTrait;
-	public float groundValue;
+	}*/
 }
 
 [Serializable]
@@ -65,7 +58,44 @@ public class CultureModel : ParsableData
 	public List<StoredStringModel> HeraldryForegrounds = new List<StoredStringModel>();
 	public List<StoredStringModel> HeraldryBackgrounds = new List<StoredStringModel>();
 
-	public List<StoredGroundValue> GroundPropertyValues = new List<StoredGroundValue>();
+	public Dictionary<string, float> GroundPropertyValues = new Dictionary<string, float>();
 
 	public List<StoredCultureEntityPlacementByTrait> ModelPlacementByTraitCultureInfos = new List<StoredCultureEntityPlacementByTrait>();
+
+	public float TileAreaValue(Int2 pos, MapModel Map)
+	{
+		float value = GetTileValue(pos, Map) * 2;
+
+		float oneWaterBorderValue = 3f;
+		float someWaterValue = 2f;
+		float allWaterValue = -1f;
+
+		int numWaterBorders = 0;
+		foreach (Int2 t in Map.Map.GetAdjacentPoints(pos))
+		{
+			if (Map.Map.Get(t).TerrainId == "Ocean" || Map.Map.Get(t).TerrainId == "River")
+				numWaterBorders++;
+			value += GetTileValue(t, Map);
+		}
+
+		if (numWaterBorders == 1)
+			value += oneWaterBorderValue;
+		else if (numWaterBorders > 1 && numWaterBorders < 4)
+			value += someWaterValue;
+		else if (numWaterBorders == 4)
+			value += allWaterValue;
+
+		return value;
+	}
+
+	public float GetTileValue(Int2 tile, MapModel Map)
+	{
+		float value = 0;
+		foreach (string trait in Map.Map.Get(tile).Terrain.Traits)
+		{
+			if (GroundPropertyValues.ContainsKey(trait))
+				value += GroundPropertyValues[trait];
+		}
+		return value;
+	}
 }

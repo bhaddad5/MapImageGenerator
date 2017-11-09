@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 using UnityEngine;
-
+/*
 public class Kingdom
 {
 	public enum KingdomTrait
@@ -168,5 +168,5 @@ public class Kingdom
 							   + (c1.g * 255 - c2.g * 255) * (c1.g * 255 - c2.g * 255)
 							   + (c1.b * 255 - c2.b * 255) * (c1.b * 255 - c2.b * 255));
 	}
-}
+}*/
 

@@ -2,41 +2,30 @@
 using UnityEngine;
 using System.Linq;
 
-class RegionsGen
+class RegionsGenerator
 {
-	public static Map2D<RegionTile> Map;
-	public static List<Kingdom> Kingdoms;
-	public int Width { get { return Map.Width; } }
-	public int Height { get { return Map.Height; } }
+	public MapModel Map;
 
-	private Culture defaultCulture;
-
-	public RegionsGen(List<CulturePrevelance> cultures)
+	public void GenerateRegions(MapModel map, RealmModel realm)
 	{
-		Kingdoms = new List<Kingdom>();
-		Map = new Map2D<RegionTile>(MapGenerator.Terrain.Width, MapGenerator.Terrain.Height);
-
-		if (cultures.Count == 0)
+		Map = map;
+		
+		if (realm.Cultures.Count == 0)
 			return;
-		defaultCulture = cultures[0].culture;
 
-		StartFillMap();
-
-		foreach (var culture in cultures)
+		/*foreach (StoredCulturePrevelance culture in realm.Cultures)
 		{
-			float portionAtSeaLevel = (float)MapGenerator.SeaLevelPixelCount() / (float)(Map.Width * Map.Height);
-			var settlementLocations = GetSettlementLocations(culture.culture, (int)(culture.numPlacementsPer80Square * portionAtSeaLevel));
+			float portionAtSeaLevel = (float)MapTextureHelpers.SeaLevelPixelCount(Map) / (float)(Map.Map.Width * Map.Map.Height);
+			var settlementLocations = GetSettlementLocations(culture.Culture, (int)(culture.avgSettlementsPer80Square * portionAtSeaLevel));
 
 			for (int i = settlementLocations.Count - 1; i >= 0; i--)
 			{
-				MapGenerator.Terrain.Set(settlementLocations.ValueAt(i), MapGenerator.RealmModel.GetFirstWithTrait(TerrainInfo.GroundTraits.City));
-				Kingdom r = new Kingdom(culture.culture, settlementLocations.ValueAt(i));
-				Kingdoms.Add(r);
-				ExpandRegionFromSettlement(5, r.settlements[0], settlementLocations.ValueAt(i));
+				KingdomModel kingdom = new KingdomModel();
+				kingdom.Id = settlementLocations.ValueAt(i).ToString();
+				Map.Kingdoms[kingdom.Id] = kingdom;
+				ExpandRegionFromSettlement(5, kingdom.settlements[0], settlementLocations.ValueAt(i));
 			}
 		}
-
-		EndFillMap();
 
 		CalculateRegionValues();
 
@@ -46,49 +35,30 @@ class RegionsGen
 
 		FightWars();
 
-		foreach(var kingdom in Kingdoms)
+		foreach(var kingdom in Map.Kingdoms)
 		{
 			kingdom.SetNamesAndHeraldry();
-		}
+		}*/
 	}
-
-	private void StartFillMap()
-	{
-		Kingdom noMansLand = new Kingdom(defaultCulture, new Int2(0, 0));
-		foreach(var pixel in Map.GetMapPoints())
-		{
-			Map.Set(pixel, new RegionTile(noMansLand.settlements[0]));
-		}
-	}
-
-	private void EndFillMap()
-	{
-		Kingdom Ocean = new Kingdom(defaultCulture, new Int2(0, 0));
-		foreach (var pixel in Map.GetMapPoints())
-		{
-			if(MapGenerator.Terrain.Get(pixel) == MapGenerator.RealmModel.Ocean)
-				Map.Set(pixel, new RegionTile(Ocean.settlements[0]));
-		}
-	}
-
-	private SortedDupList<Int2> GetSettlementLocations(Culture culture, int numberOfSettlements)
+	/*
+	private SortedDupList<Int2> GetSettlementLocations(CultureModel culture, int numberOfSettlements)
 	{
 		SortedDupList<Int2> regions = new SortedDupList<Int2>();
 
 		for(int i = 0; i < numberOfSettlements * 200; i++)
 		{
-			Int2 testPos = new Int2(UnityEngine.Random.Range(0, MapGenerator.Terrain.Width), UnityEngine.Random.Range(0, MapGenerator.Terrain.Height));
-			if (!MapGenerator.Terrain.Get(testPos).HasTrait(TerrainInfo.GroundTraits.Impassable) &&
+			Int2 testPos = new Int2(Random.Range(0, Map.Map.Width), Random.Range(0, Map.Map.Height));
+			if (!Map.Map.Get(testPos).Terrain.HasTrait(TerrainModel.GroundTraits.Impassable) &&
 				!TooCloseToExistingSettlement(testPos, regions) &&
-				!TooCloseToBorder(testPos, new Int2(MapGenerator.Terrain.Width, MapGenerator.Terrain.Height)))
+				!TooCloseToBorder(testPos, new Int2(Map.Map.Width, Map.Map.Height)))
 			{
-				regions.Insert(testPos, culture.TileAreaValue(testPos));
+				regions.Insert(testPos, culture.TileAreaValue(testPos, Map));
 			}
 		}
 
 		return PickUsedSettlementsFromSortedList(numberOfSettlements, regions);
 	}
-
+	
 	private SortedDupList<Int2> PickUsedSettlementsFromSortedList(int numOfSettlements, SortedDupList<Int2> regions)
 	{
 		SortedDupList<Int2> usedSettlements = new SortedDupList<Int2>();
@@ -101,7 +71,7 @@ class RegionsGen
 				break;
 			}
 
-			if (MapGenerator.Terrain.Get(regions.ValueAt(regionsIndex)).HasTrait(TerrainInfo.GroundTraits.City) ||
+			if (Map.Map.Get(regions.ValueAt(regionsIndex)).Terrain.HasTrait(TerrainInfo.GroundTraits.City) ||
 				BordersCity(regions.ValueAt(regionsIndex)))
 			{
 				regionsIndex++;
@@ -126,9 +96,9 @@ class RegionsGen
 	private bool BordersCity(Int2 tile)
 	{
 		bool bordersCity = false;
-		foreach (var border in MapGenerator.Terrain.GetAdjacentPoints(tile))
+		foreach (var border in MapTextureHelpers.Terrain.GetAdjacentPoints(tile))
 		{
-			if (MapGenerator.Terrain.Get(border).HasTrait(TerrainInfo.GroundTraits.City))
+			if (MapTextureHelpers.Terrain.Get(border).HasTrait(TerrainInfo.GroundTraits.City))
 			{
 				bordersCity = true;
 			}
@@ -158,7 +128,7 @@ class RegionsGen
 
 	private void ExpandRegionFromSettlement(float startingValue, Settlement settlement, Int2 pos)
 	{
-		TileAt(pos).TrySetRegion(settlement, startingValue - MapGenerator.Terrain.Get(pos).difficulty);
+		TileAt(pos).TrySetRegion(settlement, startingValue - MapTextureHelpers.Terrain.Get(pos).difficulty);
 
 		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
 		frontierTiles.Insert(pos, TileAt(pos).holdingStrength);
@@ -166,9 +136,9 @@ class RegionsGen
 		{
 			foreach(var neighbor in GetPossibleNeighborTiles(frontierTiles.TopValue(), settlement))
 			{
-				float strength = frontierTiles.TopKey() - MapGenerator.Terrain.Get(neighbor).difficulty;
-				if(MapGenerator.Terrain.Get(neighbor) == MapGenerator.RealmModel.Ocean &&
-					MapGenerator.Terrain.Get(frontierTiles.TopValue()) != MapGenerator.RealmModel.Ocean)
+				float strength = frontierTiles.TopKey() - MapTextureHelpers.Terrain.Get(neighbor).difficulty;
+				if(MapTextureHelpers.Terrain.Get(neighbor) == MapTextureHelpers.RealmModel.Ocean &&
+					MapTextureHelpers.Terrain.Get(frontierTiles.TopValue()) != MapTextureHelpers.RealmModel.Ocean)
 				{
 					float startOceanDifficulty = 0.35f;
 					strength = strength - startOceanDifficulty;
@@ -186,7 +156,7 @@ class RegionsGen
 	private List<Int2> GetPossibleNeighborTiles(Int2 pos, Settlement settlement)
 	{
 		List<Int2> goodNeighbors = new List<Int2>();
-		foreach (Int2 adjacent in MapGenerator.Terrain.GetAdjacentPoints(pos))
+		foreach (Int2 adjacent in MapTextureHelpers.Terrain.GetAdjacentPoints(pos))
 		{
 			if (IsPossibleNeighbor(adjacent, settlement))
 				goodNeighbors.Add(adjacent);
@@ -196,7 +166,7 @@ class RegionsGen
 
 	private bool IsPossibleNeighbor(Int2 neighbor, Settlement settlement)
 	{
-		return MapGenerator.Terrain.PosInBounds(neighbor) && TileAt(neighbor).settlement != settlement;
+		return MapTextureHelpers.Terrain.PosInBounds(neighbor) && TileAt(neighbor).settlement != settlement;
 	}
 
 	private void CalculateRegionValues()
@@ -248,13 +218,13 @@ class RegionsGen
 			distMap.Set(frontierTiles.TopValue(), frontierTiles.TopKey());
 			float currDifficulty = frontierTiles.TopKey();
 			Int2 currTile = frontierTiles.Pop();
-			foreach(var tile in MapGenerator.Terrain.GetAdjacentPoints(currTile))
+			foreach(var tile in MapTextureHelpers.Terrain.GetAdjacentPoints(currTile))
 			{
 				if (distMap.Get(tile) != 0 ||
-				    MapGenerator.Terrain.Get(tile) == MapGenerator.RealmModel.Ocean)
+				    MapTextureHelpers.Terrain.Get(tile) == MapTextureHelpers.RealmModel.Ocean)
 					continue;
 
-				if(MapGenerator.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.City))
+				if(MapTextureHelpers.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.City))
 				{
 					var sett = GetSettlementFromTile(tile);
 					if (!settlementsHit.Contains(sett))
@@ -266,7 +236,7 @@ class RegionsGen
 					}
 				}
 
-				float difficulty = MapGenerator.Terrain.Get(tile).difficulty;
+				float difficulty = MapTextureHelpers.Terrain.Get(tile).difficulty;
 				if(currDifficulty - difficulty > 0)
 				{
 					frontierTiles.Insert(tile, currDifficulty - difficulty);
@@ -278,10 +248,10 @@ class RegionsGen
 
 	private void BuildRoadBackFromTile(Int2 tile, Map2D<float> distMap)
 	{
-		if (MapGenerator.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.Road))
+		if (MapTextureHelpers.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.Road))
 			return;
-		if (!MapGenerator.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.City))
-			MapGenerator.Terrain.Set(tile, MapGenerator.RealmModel.Road);
+		if (!MapTextureHelpers.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.City))
+			MapTextureHelpers.Terrain.Set(tile, MapTextureHelpers.RealmModel.Road);
 		Int2 maxTile = tile;
 		foreach(var t in distMap.GetAdjacentPoints(tile))
 		{
@@ -309,12 +279,12 @@ class RegionsGen
 			distMap.Set(frontierTiles.TopValue(), frontierTiles.TopKey());
 			float currDifficulty = frontierTiles.TopKey();
 			Int2 currTile = frontierTiles.Pop();
-			foreach (var tile in MapGenerator.Terrain.GetAdjacentPoints(currTile))
+			foreach (var tile in MapTextureHelpers.Terrain.GetAdjacentPoints(currTile))
 			{
 				if (distMap.Get(tile) != 0)
 					continue;
 
-				if (MapGenerator.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.City))
+				if (MapTextureHelpers.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.City))
 				{
 					var sett = GetSettlementFromTile(tile);
 					if (!hitSettlements.ContainsValue(sett))
@@ -328,13 +298,13 @@ class RegionsGen
 					}
 				}
 				else {
-					var type = MapGenerator.Terrain.Get(tile);
-					var currType = MapGenerator.Terrain.Get(currTile);
-					if ((type == MapGenerator.RealmModel.Ocean && (currType == MapGenerator.RealmModel.Ocean || currType.HasTrait(TerrainInfo.GroundTraits.City))) ||
-					(type == MapGenerator.RealmModel.River && (currType == MapGenerator.RealmModel.River || currType.HasTrait(TerrainInfo.GroundTraits.City))) ||
+					var type = MapTextureHelpers.Terrain.Get(tile);
+					var currType = MapTextureHelpers.Terrain.Get(currTile);
+					if ((type == MapTextureHelpers.RealmModel.Ocean && (currType == MapTextureHelpers.RealmModel.Ocean || currType.HasTrait(TerrainInfo.GroundTraits.City))) ||
+					(type == MapTextureHelpers.RealmModel.River && (currType == MapTextureHelpers.RealmModel.River || currType.HasTrait(TerrainInfo.GroundTraits.City))) ||
 					(type.HasTrait(TerrainInfo.GroundTraits.Road) && (currType.HasTrait(TerrainInfo.GroundTraits.Road) || currType.HasTrait(TerrainInfo.GroundTraits.City))))
 					{
-						float difficulty = MapGenerator.Terrain.Get(tile).difficulty;
+						float difficulty = MapTextureHelpers.Terrain.Get(tile).difficulty;
 						if (currDifficulty - difficulty > 0)
 						{
 							frontierTiles.Insert(tile, currDifficulty - difficulty);
@@ -418,5 +388,5 @@ class RegionsGen
 	public Map2D<RegionTile> GetRegionsMap()
 	{
 		return Map;
-	}
+	}*/
 }

@@ -38,19 +38,19 @@ public class TerrainModel : ParsableData
 
 	public string Texture;
 	public float Difficulty = 0.1f;
-	public string[] StoredTraits = new string[0];
+	public string[] Traits = new string[0];
 	public Color LookupColor;
 	public EntityPlacementModel[] EntityPlacements = new EntityPlacementModel[0];
 
 	public bool HasTrait(GroundTraits trait)
 	{
-		return StoredTraits.Contains(trait.ToString());
+		return Traits.Contains(trait.ToString());
 	}
 
 	public float GetDefensibility()
 	{
 		float defense = 0;
-		foreach (string trait in StoredTraits)
+		foreach (string trait in Traits)
 		{
 			if (Defense.ContainsKey(trait))
 				defense += Defense[trait];

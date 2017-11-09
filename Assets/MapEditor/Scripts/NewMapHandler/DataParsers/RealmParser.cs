@@ -18,6 +18,7 @@ public static class RealmParser
 public class StoredCulturePrevelance
 {
 	public string cultureId;
+	public CultureModel Culture { get { return CultureParser.CultureData[cultureId]; } }
 	public int avgSettlementsPer80Square;
 }
 
@@ -25,6 +26,6 @@ public class StoredCulturePrevelance
 public class RealmModel : ParsableData
 {
 	public string DisplayName;
-	public string[] MapBuildingCommands = new string[0];
-	public StoredCulturePrevelance[] Cultures = new StoredCulturePrevelance[0];
+	public List<string> MapBuildingCommands = new List<string>();
+	public List<StoredCulturePrevelance> Cultures = new List<StoredCulturePrevelance>();
 }

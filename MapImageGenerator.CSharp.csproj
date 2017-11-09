@@ -86,7 +86,6 @@
     <Compile Include="Assets\MapEditor\Scripts\Helpers\Helpers.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Helpers\Map2D.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Kingdom.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\Location.cs" />
     <Compile Include="Assets\MapEditor\Scripts\MapBuilder.cs" />
     <Compile Include="Assets\MapEditor\Scripts\MapMeshBuilder.cs" />
     <Compile Include="Assets\MapEditor\Scripts\MeshConstructor.cs" />
@@ -98,14 +97,13 @@
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\DataParsers\ParserHelpers.cs" />
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\DataParsers\RealmParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\DataParsers\TerrainParser.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\MapGenerator.cs" />
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\MapGeneratorApi.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\MapTextureHelpers.cs" />
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\Model\EntityPlacementModel.cs" />
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\Model\KingdomModel.cs" />
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\Model\MapModel.cs" />
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\Model\MapTileModel.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\RegionTile.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\RegionsGen.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\RegionsGenerator.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Settlement.cs" />
     <Compile Include="Assets\MapEditor\Scripts\UserInteractions\CameraControls.cs" />
     <Compile Include="Assets\MapEditor\Scripts\UserInteractions\LightController.cs" />

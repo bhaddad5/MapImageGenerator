@@ -9,14 +9,14 @@ public class MapGeneratorApi
 {
 	protected MapModel Map;
 
-	public MapModel GenerateMaps(int width, int height, RealmModel realm)
+	public MapModel GenerateMap(int width, int height, RealmModel realm)
 	{
 		Map = new MapModel(width, height);
 		ExecuteApiCommands(realm.MapBuildingCommands);
 		return Map;
 	}
 
-	public void ExecuteApiCommands(string[] commands)
+	public void ExecuteApiCommands(List<string> commands)
 	{
 		foreach (string command in commands)
 		{

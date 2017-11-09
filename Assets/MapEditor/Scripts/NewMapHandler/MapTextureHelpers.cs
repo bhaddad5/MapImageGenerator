@@ -2,17 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGenerator
+public class MapTextureHelpers
 {
-	public MapModel Map;
-
-	public MapModel SetUpMapGenerator(int width, int height, RealmModel Realm)
-	{
-		MapGeneratorApi generatorApi = new MapGeneratorApi();
-		return generatorApi.GenerateMaps(width, height, Realm);
-	}
-
-	public Texture2D GetHeightMapTexture()
+	public static Texture2D GetHeightMapTexture(MapModel Map)
 	{
 		List<Color> pixels = new List<Color>();
 		foreach (MapTileModel h in Map.Map.GetMapValues())
@@ -29,7 +21,7 @@ public class MapGenerator
 		return heightMapImage;
 	}
 
-	public Texture2D GetTerrainTexture()
+	public static Texture2D GetTerrainTexture(MapModel Map)
 	{
 		List<Color> pixels = new List<Color>();
 		foreach (MapTileModel tile in Map.Map.GetMapValuesFlipped())
@@ -44,7 +36,7 @@ public class MapGenerator
 		return terrainMapImage;
 	}
 
-	public int SeaLevelPixelCount()
+	public static int SeaLevelPixelCount(MapModel Map)
 	{
 		int numTiles = 0;
 		foreach (MapTileModel tile in Map.Map.GetMapValues())

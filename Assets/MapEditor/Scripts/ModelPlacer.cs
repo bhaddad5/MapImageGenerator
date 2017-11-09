@@ -7,23 +7,22 @@ public class ModelPlacer
 {
 	Transform objectParent;
 
-	public void PlaceModels(Transform par)
+	public void PlaceModels(Transform par, MapModel Map)
 	{
 		objectParent = par;
-		foreach (Int2 tile in MapGenerator.Terrain.GetMapPoints())
+		foreach (Int2 tile in Map.Map.GetMapPoints())
 		{
-			if (RegionsGen.Map.Get(tile) != null)
-				PlaceCultureObjectsOnTile(tile, RegionsGen.Map.Get(tile).settlement.kingdom.culture, MapGenerator.Terrain.Get(tile).traits);
+			//PlaceCultureObjectsOnTile(tile, Map.Kingdoms[Map.Map.Get(tile).KingdomId].Culture, Map.Map.Get(tile).Terrain.Traits);
 		}
-		foreach (Int2 tile in MapGenerator.Terrain.GetMapPoints())
+		foreach (Int2 tile in Map.Map.GetMapPoints())
 		{
-			PlaceEnvironmentObjectsOnTile(tile, MapGenerator.Terrain.Get(tile).placementInfos);
+			//PlaceEnvironmentObjectsOnTile(tile, Map.Map.Get(tile).Entities);
 		}
 
-		CombineAllMeshes();
+		//CombineAllMeshes();
 	}
-
-	private void PlaceEnvironmentObjectsOnTile(Int2 tile, List<ModelPlacementInfo> infos)
+	/*
+	private void PlaceEnvironmentObjectsOnTile(Int2 tile, List<EntityPlacementModel> infos)
 	{
 		foreach (var info in infos)
 		{
@@ -31,9 +30,9 @@ public class ModelPlacer
 		}
 	}
 
-	private void PlaceCultureObjectsOnTile(Int2 tile, Culture culture, List<TerrainInfo.GroundTraits> traits)
+	private void PlaceCultureObjectsOnTile(Int2 tile, CultureModel culture, List<string> traits)
 	{
-		foreach (TerrainInfo.GroundTraits trait in traits)
+		foreach (string trait in traits)
 		{
 			if (culture.tileModelPlacement.ContainsKey(trait))
 			{
@@ -66,7 +65,7 @@ public class ModelPlacer
 
 	private void PlaceWallsOnEdges(Int2 tile, GameObject wall)
 	{
-		foreach (Int2 pt in MapGenerator.Terrain.GetAdjacentPoints(tile))
+		foreach (Int2 pt in MapTextureHelpers.Terrain.GetAdjacentPoints(tile))
 		{
 			if (TileIsCityBorder(pt) && !TileIsRoad(pt))
 			{
@@ -77,7 +76,7 @@ public class ModelPlacer
 
 	private void PlaceGatesOnEdges(Int2 tile, GameObject gate)
 	{
-		foreach (Int2 pt in MapGenerator.Terrain.GetAdjacentPoints(tile))
+		foreach (Int2 pt in MapTextureHelpers.Terrain.GetAdjacentPoints(tile))
 		{
 			if (TileIsRoad(pt))
 			{
@@ -88,19 +87,19 @@ public class ModelPlacer
 
 	private bool TileIsRoad(Int2 tile)
 	{
-		return MapGenerator.Terrain.PosInBounds(tile) && MapGenerator.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.Road);
+		return MapTextureHelpers.Terrain.PosInBounds(tile) && MapTextureHelpers.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.Road);
 	}
 
 	private bool TileIsCityBorder(Int2 tile)
 	{
-		return MapGenerator.Terrain.PosInBounds(tile) &&
-		       !MapGenerator.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.Impassable) &&
-		       !MapGenerator.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.City);
+		return MapTextureHelpers.Terrain.PosInBounds(tile) &&
+		       !MapTextureHelpers.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.Impassable) &&
+		       !MapTextureHelpers.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.City);
 	}
 
 	private void PlaceTurretsOnCorners(Int2 tile, GameObject turret)
 	{
-		foreach (var t in MapGenerator.Terrain.GetDiagonalPoints(tile))
+		foreach (var t in MapTextureHelpers.Terrain.GetDiagonalPoints(tile))
 		{
 			if (TileIsCityBorder(t) ||
 			TileIsCityBorder(tile + new Int2(t.X - tile.X, 0)) ||
@@ -113,14 +112,14 @@ public class ModelPlacer
 
 	private void PlaceBridgeOnTile(Int2 tile, GameObject bridge)
 	{
-		if (MapGenerator.Heights.Get(tile) < Globals.MinGroundHeight)
+		if (MapTextureHelpers.Heights.Get(tile) < Globals.MinGroundHeight)
 		{
-			foreach (var t in MapGenerator.Terrain.GetAdjacentPoints(tile))
+			foreach (var t in MapTextureHelpers.Terrain.GetAdjacentPoints(tile))
 			{
-				if (MapGenerator.Terrain.Get(t).HasTrait(TerrainInfo.GroundTraits.Road) ||
-				    MapGenerator.Terrain.Get(t).HasTrait(TerrainInfo.GroundTraits.City))
+				if (MapTextureHelpers.Terrain.Get(t).HasTrait(TerrainInfo.GroundTraits.Road) ||
+				    MapTextureHelpers.Terrain.Get(t).HasTrait(TerrainInfo.GroundTraits.City))
 				{
-					if (MapGenerator.Heights.Get(t) >= Globals.MinGroundHeight)
+					if (MapTextureHelpers.Heights.Get(t) >= Globals.MinGroundHeight)
 					{
 						Vector3 rot = new Vector3();
 						if (t.Y != tile.Y)
@@ -357,5 +356,5 @@ public class ModelPlacer
 			mats = mf.GetComponent<MeshRenderer>().sharedMaterials;
 			AddVerts(mf);
 		}
-	}
+	}*/
 }

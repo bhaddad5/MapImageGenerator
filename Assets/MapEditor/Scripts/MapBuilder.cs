@@ -41,72 +41,24 @@ public class MapBuilder : MonoBehaviour
 	{
 		int width = 80;
 		int height = 80;
-		StartCoroutine(BuildMap(width, height, RealmParser.RealmsData[EnvironmentSelection.options[EnvironmentSelection.value].text]));
+		MapModel NewMap = GenerateMap(width, height, RealmParser.RealmsData[EnvironmentSelection.options[EnvironmentSelection.value].text]);
+		StartCoroutine(DisplayMap(NewMap));
 	}
 
-	public IEnumerator BuildMap(int width, int height, RealmModel realmCreationInfo)
+	public MapModel GenerateMap(int width, int height, RealmModel realmCreationInfo)
 	{
-		MapModel Map = new MapModel(width, height);
+		displayText.enabled = true;
 
+		MapGeneratorApi generator = new MapGeneratorApi();
+		MapModel Map = generator.GenerateMap(width, height, realmCreationInfo);
 		
+		RegionsGenerator regionsGen = new RegionsGenerator();
+		regionsGen.GenerateRegions(Map, realmCreationInfo);
 
-		displayText.text = "Raising Mountains";
-		yield return null;
-
-		MapGenerator.SetUpMapGenerator(width, height, realmCreationInfo);
-		
-		displayText.text = "Forging Kingdoms";
-		yield return null;
-
-		RegionsGen regionsMap = new RegionsGen(realmCreationInfo.Cultures);
-
-		displayText.text = "Artificing Lands";
-		yield return null;
-
-		MapMeshBuilder meshConstructor = new MapMeshBuilder();
-		List<Mesh> mapMeshes = meshConstructor.BuildMapMeshes();
-
-		displayText.text = "Presenting World";
-		yield return null;
-
-		generatedMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapGenerator.GetHeightMapTexture();
-		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapGenerator.GetTerrainTexture();
-
-		List<Material> mapMats = GetMapMaterials(realmCreationInfo.groundTypes.Values.ToList());
-
-		int meshNum = 0;
-		foreach(Mesh m in mapMeshes)
-		{
-			GameObject g = new GameObject("Mesh"+meshNum);
-			g.transform.SetParent(terrainMeshDisplay.transform);
-			g.AddComponent<MeshFilter>().mesh = m;
-			g.AddComponent<MeshRenderer>();
-			g.GetComponent<MeshRenderer>().materials = mapMats.ToArray();
-			if(m.vertices.Length > 1)
-				g.AddComponent<MeshCollider>();
-			meshNum++;
-		}
-
-		displayText.text = "Seeding Forests";
-		yield return null;
-
-		ModelPlacer mp = new ModelPlacer();
-		mp.PlaceModels(objectParent.transform);
-
-		displayText.text = "Displaying Heraldry";
-		yield return null;
-
-		AddSettlementInfoPanels(regionsMap);
-
-		displayText.text = "Done";
-		yield return null;
-
-		transform.localPosition -= new Vector3(width / 2f, 0f, height / 2f);
-
-		displayText.enabled = false;
+		return Map;
 	}
 
-	private void DisplayMap(MapModel mapToDisplay)
+	private IEnumerator DisplayMap(MapModel Map)
 	{
 		terrainMeshDisplay.transform.localPosition = Vector3.zero;
 		for (int i = 0; i < terrainMeshDisplay.transform.childCount; i++)
@@ -121,63 +73,106 @@ public class MapBuilder : MonoBehaviour
 		objectParent.transform.SetParent(transform);
 
 		waterPlane.SetActive(true);
-		waterPlane.transform.localScale = new Vector3(mapToDisplay.Map.Width / 10, 1, mapToDisplay.Map.Height / 10);
+		waterPlane.transform.localScale = new Vector3(Map.Map.Width / 10, 1, Map.Map.Height / 10);
 		waterPlane.transform.parent = transform;
-		waterPlane.transform.localPosition = new Vector3(mapToDisplay.Map.Width / 2, Globals.MinGroundHeight * 2f - 0.01f, mapToDisplay.Map.Height / 2);
+		waterPlane.transform.localPosition = new Vector3(Map.Map.Width / 2, Globals.MinGroundHeight * 2f - 0.01f, Map.Map.Height / 2);
 
-		displayText.enabled = true;
+		displayText.text = "Artificing Lands";
+		yield return null;
+
+		MapMeshBuilder meshConstructor = new MapMeshBuilder();
+		List<Mesh> mapMeshes = meshConstructor.BuildMapMeshes(Map);
+
+		displayText.text = "Presenting World";
+		yield return null;
+
+		generatedMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapTextureHelpers.GetHeightMapTexture(Map);
+		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapTextureHelpers.GetTerrainTexture(Map);
+
+		List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), Map);
+
+		int meshNum = 0;
+		foreach (Mesh m in mapMeshes)
+		{
+			GameObject g = new GameObject("Mesh" + meshNum);
+			g.transform.SetParent(terrainMeshDisplay.transform);
+			g.AddComponent<MeshFilter>().mesh = m;
+			g.AddComponent<MeshRenderer>();
+			g.GetComponent<MeshRenderer>().materials = mapMats.ToArray();
+			if (m.vertices.Length > 1)
+				g.AddComponent<MeshCollider>();
+			meshNum++;
+		}
+
+		displayText.text = "Seeding Forests";
+		yield return null;
+
+		ModelPlacer mp = new ModelPlacer();
+		mp.PlaceModels(objectParent.transform, Map);
+
+		displayText.text = "Displaying Heraldry";
+		yield return null;
+
+		AddSettlementInfoPanels(Map);
+
+		displayText.text = "Done";
+		yield return null;
+
+		transform.localPosition -= new Vector3(Map.Map.Width / 2f, 0f, Map.Map.Height / 2f);
+
+		displayText.enabled = false;
 	}
 
 
-	private void AddSettlementInfoPanels(RegionsGen regionsMap)
+	private void AddSettlementInfoPanels(MapModel Map)
 	{
 		float tileWidth = 1f;
-		foreach(Kingdom r in regionsMap.GetKingdoms())
+		foreach(KingdomModel r in Map.Kingdoms.Values)
 		{
-			foreach(var sett in r.settlements)
+			/*foreach(var sett in r.settlements)
 			{
 				GameObject tag = GameObject.Instantiate(SettlementInfoPrefab);
 				tag.transform.SetParent(terrainMeshDisplay.transform);
 				Int2 placementPos = sett.GetInfoPlacementPos();
 				tag.transform.localPosition = new Vector3(placementPos.X * tileWidth, .5f, placementPos.Y * tileWidth);
 				tag.GetComponent<SettlementInfoDisplay>().settlement = sett;
-			}
+			}*/
 		}
 	}
 
-	private List<Material> GetMapMaterials(List<TerrainInfo> groundTypes)
+	private List<Material> GetMapMaterials(List<TerrainModel> groundTypes, MapModel Map)
 	{
 		var mats = new List<Material>() {new Material(Shader.Find("Standard"))};
 		
 		mats[0].color = Color.black;
 		mats[0].SetFloat("_Glossiness", 0f);
 
-		List<TerrainInfo> gtToFlush = new List<TerrainInfo>();
+		List<TerrainModel> gtToFlush = new List<TerrainModel>();
 		for (int i = 0; i < groundTypes.Count; i++)
 		{
 			gtToFlush.Add(groundTypes[i]);
 			if (gtToFlush.Count >= 5)
 			{
-				mats.Add(FlushGroundInfoToMat(gtToFlush));
+				mats.Add(FlushGroundInfoToMat(gtToFlush, Map));
 				gtToFlush.Clear();
 			}
 		}
 		if(gtToFlush.Count > 0)
-			mats.Add(FlushGroundInfoToMat(gtToFlush));
+			mats.Add(FlushGroundInfoToMat(gtToFlush, Map));
 
 		return mats;
 	}
 
-	private Material FlushGroundInfoToMat(List<TerrainInfo> groundInfo)
+	private Material FlushGroundInfoToMat(List<TerrainModel> groundInfo, MapModel Map)
 	{
 		var mat = new Material(Shader.Find("Custom/GroundShader"));
 
-		mat.SetTexture("_LookupTex", MapGenerator.GetTerrainTexture());
-		mat.SetFloat("_LookupWidth", MapGenerator.GetTerrainTexture().width);
+		mat.SetTexture("_LookupTex", MapTextureHelpers.GetTerrainTexture(Map));
+		mat.SetFloat("_LookupWidth", MapTextureHelpers.GetTerrainTexture(Map).width);
 		for (int i = 0; i < 5 && i < groundInfo.Count; i++)
 		{
-			mat.SetVector("_Color" + i, groundInfo[i].lookupColor);
-			mat.SetTexture("_Tex" + i, groundInfo[i].texture);
+			mat.SetVector("_Color" + i, groundInfo[i].LookupColor);
+			mat.SetTexture("_Tex" + i, groundInfo[i].GetTerrainTexture());
 		}
 		return mat;
 	}

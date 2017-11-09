@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class LocationInfoDisplay : MonoBehaviour
 {
 	public Text LocationNameDisplay;
-	public Location Location;
+	//public Loca Location;
 
 	void Start()
 	{
-		LocationNameDisplay.text = Location.LocationName;
+		//LocationNameDisplay.text = Location.LocationName;
 	}
 }

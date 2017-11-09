@@ -5,64 +5,7 @@ using System.IO;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class SettlementNameOption
-{
-	public List<Settlement.CityTrait> constraints;
-	public string nameChunk;
-	public int prevelance;
-
-	public SettlementNameOption(string str, List<Settlement.CityTrait> constr, int odds = 1)
-	{
-		nameChunk = str;
-		constraints = constr;
-		prevelance = odds;
-	}
-
-	public SettlementNameOption(string str, int odds = 1)
-	{
-		nameChunk = str;
-		constraints = new List<Settlement.CityTrait>();
-		prevelance = odds;
-	}
-}
-
-public class KingdomNameOption
-{
-	public List<Kingdom.KingdomTrait> constraints;
-	public string nameChunk;
-	public int prevelance;
-
-	public KingdomNameOption(string str, List<Kingdom.KingdomTrait> constr, int odds = 1)
-	{
-		nameChunk = str;
-		constraints = constr;
-		prevelance = odds;
-	}
-
-	public KingdomNameOption(string str, int odds = 1)
-	{
-		nameChunk = str;
-		constraints = new List<Kingdom.KingdomTrait>();
-		prevelance = odds;
-	}
-}
-
-
-public class HeraldryOption
-{
-	public Texture2D image;
-	public List<Settlement.CityTrait> constraints;
-
-	public HeraldryOption(string imagePath, List<Settlement.CityTrait> constr)
-	{
-		Byte[] file = File.ReadAllBytes(Application.streamingAssetsPath + "/" + imagePath);
-		image = new Texture2D(2, 2);
-		image.LoadImage(file);
-		constraints = constr;
-	}
-}
-
-public class Culture
+/*public class Culture
 {
 	public string CultureId;
 	public string CultureName;
@@ -203,7 +146,7 @@ public class Culture
 	public float GetTileValue(Int2 tile)
 	{
 		float value = 0;
-		foreach (TerrainInfo.GroundTraits trait in MapGenerator.Terrain.Get(tile).traits)
+		foreach (TerrainInfo.GroundTraits trait in MapTextureHelpers.Terrain.Get(tile).traits)
 		{
 			if(tileValues.ContainsKey(trait))
 				value += tileValues[trait];
@@ -220,16 +163,16 @@ public class Culture
 		float allWaterValue = -1f;
 
 		int numWaterBorders = 0;
-		foreach (Int2 t in MapGenerator.Terrain.GetAdjacentPoints(pos))
+		foreach (Int2 t in MapTextureHelpers.Terrain.GetAdjacentPoints(pos))
 		{
-			if (MapGenerator.Terrain.Get(t).groundType == "Ocean" || MapGenerator.Terrain.Get(t).groundType == "River")
+			if (MapTextureHelpers.Terrain.Get(t).groundType == "Ocean" || MapTextureHelpers.Terrain.Get(t).groundType == "River")
 				numWaterBorders++;
 			value += GetTileValue(t);
 		}
 
 		if (includeDiag)
 		{
-			foreach (Int2 t in MapGenerator.Terrain.GetDiagonalPoints(pos))
+			foreach (Int2 t in MapTextureHelpers.Terrain.GetDiagonalPoints(pos))
 				value += GetTileValue(t) * .8f;
 		}
 
@@ -243,7 +186,7 @@ public class Culture
 		return value;
 	}
 }
-
+*/
 public static class ImageHelpers
 {
 	public static Texture2D AlphaBlend(this Texture2D aBottom, Texture2D aTop)

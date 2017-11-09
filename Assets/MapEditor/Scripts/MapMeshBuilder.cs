@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class MapMeshBuilder
 {
+	private MapModel Map;
 	private Map2D<float> vertHeights;
 	private const int vertsPerTileAcross = 5;
 
-	public List<Mesh> BuildMapMeshes()
+	public List<Mesh> BuildMapMeshes(MapModel map)
 	{
+		Map = map;
 		float heightScaler = 1f;
 		populateVertHeights();
 		RandomizeVertHeights();
@@ -19,11 +21,11 @@ public class MapMeshBuilder
 
 	private void populateVertHeights()
 	{
-		vertHeights = new Map2D<float>(MapGenerator.Terrain.Width * vertsPerTileAcross + 1, MapGenerator.Terrain.Height * vertsPerTileAcross + 1);
+		vertHeights = new Map2D<float>(Map.Map.Width * vertsPerTileAcross + 1, Map.Map.Height * vertsPerTileAcross + 1);
 
-		foreach (var pixle in MapGenerator.Terrain.GetMapPoints())
+		foreach (var pixle in Map.Map.GetMapPoints())
 		{
-			fillHeightsForTile(pixle, MapGenerator.Heights.Get(pixle), MapGenerator.Terrain.Width, MapGenerator.Terrain.Height);
+			fillHeightsForTile(pixle, Map.Map.Get(pixle).Height, Map.Map.Width, Map.Map.Height);
 		}
 	}
 
