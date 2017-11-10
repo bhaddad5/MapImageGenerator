@@ -29,7 +29,7 @@ public class MapTextureHelpers
 		{
 			try
 			{
-				pixels.Add(tile.Terrain.LookupColor);
+				pixels.Add(tile.Terrain().LookupColor);
 			}
 			catch (Exception e)
 			{

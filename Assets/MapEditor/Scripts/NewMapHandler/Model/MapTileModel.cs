@@ -6,7 +6,11 @@ public class MapTileModel
 {
 	public float Height;
 	public string TerrainId;
-	public TerrainModel Terrain { get { return TerrainParser.TerrainData[TerrainId]; } }
+
+	public TerrainModel Terrain()
+	{
+		return TerrainParser.TerrainData[TerrainId];
+	}
 	public string KingdomId;
 	public List<EntityPlacementModel> Entities = new List<EntityPlacementModel>();
 }

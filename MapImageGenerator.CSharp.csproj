@@ -76,6 +76,9 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets\ExternalAssets\JsonDotNet\Assemblies\Standalone\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\ExternalAssets\OBJImport\OBJLoader.cs" />
@@ -111,6 +114,10 @@
     <Compile Include="Assets\MapEditor\SettlementDisplay\SettlementInfoDisplay.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\ExternalAssets\JsonDotNet\Assemblies\AOT\Newtonsoft.Json.XML" />
+    <None Include="Assets\ExternalAssets\JsonDotNet\Assemblies\Standalone\Newtonsoft.Json.XML" />
+    <None Include="Assets\ExternalAssets\JsonDotNet\Assemblies\Windows\Newtonsoft.Json.XML" />
+    <None Include="Assets\ExternalAssets\JsonDotNet\link.xml" />
     <None Include="Assets\ExternalAssets\OBJImport\readme.txt" />
     <None Include="Assets\ExternalAssets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
     <None Include="Assets\MapEditor\MapDisplay\BordersShader.shader" />

@@ -89,7 +89,7 @@ public class CultureModel : ParsableData
 	public float GetTileValue(Int2 tile, MapModel Map)
 	{
 		float value = 0;
-		foreach (string trait in Map.Map.Get(tile).Terrain.Traits)
+		foreach (string trait in Map.Map.Get(tile).Terrain().Traits)
 		{
 			if (GroundPropertyValues.ContainsKey(trait))
 				value += GroundPropertyValues[trait];

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using UnityEngine;
 
 public class Map2D<T>
 {
@@ -10,6 +11,7 @@ public class Map2D<T>
 	public int Height { get { return map[0].Length; } }
 
 	T[][] map;
+
 	public Map2D(int width, int height)
 	{
 		map = new T[width][];
@@ -163,5 +165,49 @@ public class Map2D<T>
 				Set(new Int2(i, j), val);
 			}
 		}
+	}
+
+	[Serializable]
+	public class Map2DSerializable
+	{
+		public int Width;
+		public int Height;
+		public List<T> CondensedMap = new List<T>();
+
+		public Map2DSerializable(int w, int h, T[][] map)
+		{
+			Width = w;
+			Height = h;
+			for (int i = 0; i < Width; i++)
+			{
+				for (int j = 0; j < Height; j++)
+				{
+					CondensedMap.Add(map[i][j]);
+				}
+			}
+		}
+
+		public Map2D<T> ToMap2D()
+		{
+			Map2D<T> map = new Map2D<T>(Width, Height);
+			for (int i = 0; i < Width; i++)
+			{
+				for (int j = 0; j < Height; j++)
+				{
+					map.map[i][j] = CondensedMap[i*Height + j];
+				}
+			}
+			return map;
+		}
+	}
+
+	public Map2DSerializable ToSerializable()
+	{
+		return new Map2DSerializable(Width, Height, map);
+	}
+
+	public static Map2D<T> FromSerializable(Map2DSerializable serializable)
+	{
+		return serializable.ToMap2D();
 	}
 }

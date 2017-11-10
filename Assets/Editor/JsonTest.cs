@@ -1,10 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 using NUnit.Framework;
 using UnityEditor;
 
-public class Tests
+public class JsonTests
 {
+	[MenuItem("My Menu/Test MapModel Json")]
+	public static void TestMapModelJson()
+	{
+		MapModel Map = new MapModel(5, 5);
+		Map.Kingdoms["a"] = new KingdomModel();
+
+		Debug.Log(Map.ToJson());
+	}
+
+	[MenuItem("My Menu/Test Map2D Json")]
+	public static void TestMap2DJson()
+	{
+		Map2D<MapTileModel> TestMap2D = new Map2D<MapTileModel>(5, 5);
+		foreach (Int2 mapPoint in TestMap2D.GetMapPoints())
+		{
+			TestMap2D.Set(mapPoint, new MapTileModel());
+		}
+		
+		Debug.Log(TestMap2D.ToSerializable());
+	}
+
 	[MenuItem("My Menu/Test Realm Json")]
 	public static void TestRealmJson()
 	{

@@ -21,6 +21,8 @@ public class MapBuilder : MonoBehaviour
 
 	private GameObject objectParent;
 
+	private MapModel CurrentMap;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -37,16 +39,39 @@ public class MapBuilder : MonoBehaviour
 		EnvironmentSelection.value = 1;
 	}
 
+	public void SaveMap()
+	{
+		string json = CurrentMap.ToJson();
+		Directory.CreateDirectory(Path.Combine(Application.streamingAssetsPath, "SavedMaps"));
+		string path = Path.Combine(Application.streamingAssetsPath, "SavedMaps/tempSave.realm");
+		if(File.Exists(path))
+			File.Delete(path);
+		StreamWriter sw = File.CreateText(path);
+		Debug.Log(json.Length);
+		sw.WriteLine(json);
+		sw.Close();
+	}
+
+	public void LoadMap()
+	{
+		string path = Path.Combine(Application.streamingAssetsPath, "SavedMaps/tempSave.realm");
+		if (File.Exists(path))
+		{
+			CurrentMap = MapModel.FromJson(File.ReadAllText(path));
+			StartCoroutine(DisplayMap());
+		}
+	}
+
 	public void RebuildMap()
 	{
 		int width = 20;
 		int height = 20;
-		MapModel NewMap = new MapModel(width, height);
-		StartCoroutine(GenerateMap(NewMap, RealmParser.RealmsData[EnvironmentSelection.options[EnvironmentSelection.value].text]));
-		StartCoroutine(DisplayMap(NewMap));
+		CurrentMap = new MapModel(width, height);
+		StartCoroutine(GenerateMap(RealmParser.RealmsData[EnvironmentSelection.options[EnvironmentSelection.value].text]));
+		StartCoroutine(DisplayMap());
 	}
 
-	public IEnumerator GenerateMap(MapModel Map, RealmModel realmCreationInfo)
+	public IEnumerator GenerateMap(RealmModel realmCreationInfo)
 	{
 		displayText.enabled = true;
 
@@ -54,18 +79,18 @@ public class MapBuilder : MonoBehaviour
 		yield return null;
 
 		MapGeneratorApi generator = new MapGeneratorApi();
-		generator.GenerateMap(Map, realmCreationInfo);
+		generator.GenerateMap(CurrentMap, realmCreationInfo);
 
 		displayText.text = "Forging Kingdoms";
 		yield return null;
 		
 		RegionsGenerator regionsGen = new RegionsGenerator();
-		regionsGen.GenerateRegions(Map, realmCreationInfo);
+		regionsGen.GenerateRegions(CurrentMap, realmCreationInfo);
 
 		displayText.enabled = false;
 	}
 
-	private IEnumerator DisplayMap(MapModel Map)
+	private IEnumerator DisplayMap()
 	{
 		terrainMeshDisplay.transform.localPosition = Vector3.zero;
 		for (int i = 0; i < terrainMeshDisplay.transform.childCount; i++)
@@ -80,23 +105,23 @@ public class MapBuilder : MonoBehaviour
 		objectParent.transform.SetParent(transform);
 
 		waterPlane.SetActive(true);
-		waterPlane.transform.localScale = new Vector3(Map.Map.Width / 10, 1, Map.Map.Height / 10);
+		waterPlane.transform.localScale = new Vector3(CurrentMap.Map.Width / 10, 1, CurrentMap.Map.Height / 10);
 		waterPlane.transform.parent = transform;
-		waterPlane.transform.localPosition = new Vector3(Map.Map.Width / 2, Globals.MinGroundHeight * 2f - 0.01f, Map.Map.Height / 2);
+		waterPlane.transform.localPosition = new Vector3(CurrentMap.Map.Width / 2, Globals.MinGroundHeight * 2f - 0.01f, CurrentMap.Map.Height / 2);
 
 		displayText.text = "Artificing Lands";
 		yield return null;
 
 		MapMeshBuilder meshConstructor = new MapMeshBuilder();
-		List<Mesh> mapMeshes = meshConstructor.BuildMapMeshes(Map);
+		List<Mesh> mapMeshes = meshConstructor.BuildMapMeshes(CurrentMap);
 
 		displayText.text = "Presenting World";
 		yield return null;
 
-		generatedMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapTextureHelpers.GetHeightMapTexture(Map);
-		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapTextureHelpers.GetTerrainTexture(Map);
+		generatedMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapTextureHelpers.GetHeightMapTexture(CurrentMap);
+		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapTextureHelpers.GetTerrainTexture(CurrentMap);
 
-		List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), Map);
+		List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), CurrentMap);
 
 		int meshNum = 0;
 		foreach (Mesh m in mapMeshes)
@@ -115,17 +140,17 @@ public class MapBuilder : MonoBehaviour
 		yield return null;
 
 		ModelPlacer mp = new ModelPlacer();
-		mp.PlaceModels(objectParent.transform, Map);
+		mp.PlaceModels(objectParent.transform, CurrentMap);
 
 		displayText.text = "Displaying Heraldry";
 		yield return null;
 
-		AddSettlementInfoPanels(Map);
+		AddSettlementInfoPanels(CurrentMap);
 
 		displayText.text = "Done";
 		yield return null;
 
-		transform.localPosition -= new Vector3(Map.Map.Width / 2f, 0f, Map.Map.Height / 2f);
+		transform.localPosition -= new Vector3(CurrentMap.Map.Width / 2f, 0f, CurrentMap.Map.Height / 2f);
 
 		displayText.enabled = false;
 	}
