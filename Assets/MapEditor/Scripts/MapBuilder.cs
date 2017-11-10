@@ -32,15 +32,15 @@ public class MapBuilder : MonoBehaviour
 
 		foreach (RealmModel environment in RealmParser.RealmsData.Values)
 		{
-			EnvironmentSelection.options.Add(new Dropdown.OptionData(environment.DisplayName));
+			EnvironmentSelection.options.Add(new Dropdown.OptionData(environment.Id));
 		}
 		EnvironmentSelection.value = 1;
 	}
 
 	public void RebuildMap()
 	{
-		int width = 80;
-		int height = 80;
+		int width = 20;
+		int height = 20;
 		MapModel NewMap = GenerateMap(width, height, RealmParser.RealmsData[EnvironmentSelection.options[EnvironmentSelection.value].text]);
 		StartCoroutine(DisplayMap(NewMap));
 	}
@@ -126,7 +126,6 @@ public class MapBuilder : MonoBehaviour
 
 	private void AddSettlementInfoPanels(MapModel Map)
 	{
-		float tileWidth = 1f;
 		foreach(KingdomModel r in Map.Kingdoms.Values)
 		{
 			/*foreach(var sett in r.settlements)
@@ -134,7 +133,7 @@ public class MapBuilder : MonoBehaviour
 				GameObject tag = GameObject.Instantiate(SettlementInfoPrefab);
 				tag.transform.SetParent(terrainMeshDisplay.transform);
 				Int2 placementPos = sett.GetInfoPlacementPos();
-				tag.transform.localPosition = new Vector3(placementPos.X * tileWidth, .5f, placementPos.Y * tileWidth);
+				tag.transform.localPosition = new Vector3(placementPos.X, .5f, placementPos.Y);
 				tag.GetComponent<SettlementInfoDisplay>().settlement = sett;
 			}*/
 		}

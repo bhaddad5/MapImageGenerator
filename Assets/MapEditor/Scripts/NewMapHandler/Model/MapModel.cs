@@ -10,6 +10,11 @@ public class MapModel
 	public MapModel(int w, int h)
 	{
 		Map = new Map2D<MapTileModel>(w, h);
+
+		foreach (Int2 point in Map.GetMapPoints())
+		{
+			Map.Set(point, new MapTileModel());
+		}
 	}
 
 	public void FillMapWithHeight(float height)
