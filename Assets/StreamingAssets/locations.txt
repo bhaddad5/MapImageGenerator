@@ -1,21 +1,21 @@
 {
-	"LocationType":"Pyramid",
+	"Id":"Pyramid",
 	"Model":"Pyramid",
 	"PlacementProperties":[
 		"PlaceInTerrain SandyDesert"
 	],
 	"LocationPrefixes":[
-		{"storedString":"Khufet","prevelance":1,"conditions":[]},
-		{"storedString":"Nemris","prevelance":1,"conditions":[]},
-		{"storedString":"Memnah","prevelance":1,"conditions":[]},
-		{"storedString":"Ramset","prevelance":1,"conditions":[]},
-		{"storedString":"The Snake","prevelance":1,"conditions":[]},
-		{"storedString":"The Eagle","prevelance":1,"conditions":[]},
-		{"storedString":"The Sun","prevelance":1,"conditions":[]},
-		{"storedString":"The Forgotten","prevelance":1,"conditions":[]}
+		{"storedString":"Khufet","prevelance":1},
+		{"storedString":"Nemris","prevelance":1},
+		{"storedString":"Memnah","prevelance":1},
+		{"storedString":"Ramset","prevelance":1},
+		{"storedString":"The Snake","prevelance":1},
+		{"storedString":"The Eagle","prevelance":1},
+		{"storedString":"The Sun","prevelance":1},
+		{"storedString":"The Forgotten","prevelance":1}
 	],
 	"LocationSuffixes":[
-		{"storedString":"Pyramid of %n","prevelance":2,"conditions":[]},
-		{"storedString":"Great Pyramid of %n","prevelance":1,"conditions":[]}
+		{"storedString":"Pyramid of %n","prevelance":2},
+		{"storedString":"Great Pyramid of %n","prevelance":1}
 	]
 }

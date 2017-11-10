@@ -12,7 +12,7 @@
 	//CreateRivers : Creates rivers from mountains to oceans (Min number of rivers, Max number of rivers)
 
 {
-	"EnvironmentId":"Anglo",
+	"Id":"Midland",
 	"DisplayName":"The Midlands",
 	"MapBuildingCommands":[
 		"HeightsDefaultFill 0",
@@ -41,71 +41,6 @@
 	],
 	"Cultures":[
 		{"cultureId":"Anglo", "avgSettlementsPer80Square":45},
-		{"cultureId":"Dwarf", "avgSettlementsPer80Square":35},
-	],
-	"GroundTypes":[
-		{
-		"GroundType":"Ocean",
-		"Texture":"Midlands/Terrain/Sand.png",
-		"Difficulty":0.1,
-		"StoredTraits":[
-			"Water",
-			"Impassable"
-		]
-		},
-		{
-		"GroundType":"Swamp",
-		"Texture":"Midlands/Terrain/Swamp.png",
-		"Difficulty":0.35,
-		"DefaultModelPlacement":[
-			{"model":"Willow","min":2,"max":3},
-			{"model":"Rushes","min":5,"max":7}
-		],
-		"StoredTraits":[
-			"Muddy"
-		]
-		},
-		{
-		"GroundType":"Wilderness",
-		"Texture":"Midlands/Terrain/Wilderness.png",
-		"Difficulty":0.2,
-		"DefaultModelPlacement":[
-			{"model":"Pine","min":0,"max":3}
-		],
-		"StoredTraits":[
-			"Hunting"
-		]
-		},
-		{
-		"GroundType":"Forest",
-		"Texture":"Midlands/Terrain/Forest.png",
-		"Difficulty":0.25,
-		"DefaultModelPlacement":[
-			{"model":"Pine","min":7,"max":10}
-		],
-		"StoredTraits":[
-			"Hunting",
-			"Forest"
-		]
-		},
-		{
-		"GroundType":"Mountain",
-		"Difficulty":50,
-		"Texture":"Midlands/Terrain/Mountains.png",
-		"StoredTraits":[
-			"Rocky",
-			"Impassable"
-		]
-		},
-		{
-		"GroundType":"Fertile",
-		"Difficulty":0.15,
-		"Texture":"Midlands/Terrain/Fertile.png",
-		"DefaultModelPlacement":[
-		],
-		"StoredTraits":[
-			"Fertile"
-		]
-		}
+		{"cultureId":"Dwarf", "avgSettlementsPer80Square":35}
 	]
 }

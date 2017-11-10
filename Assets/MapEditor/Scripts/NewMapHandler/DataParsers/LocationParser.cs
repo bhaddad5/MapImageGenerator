@@ -18,7 +18,6 @@ public class LocationParser
 [Serializable]
 public class StoredLocation : ParsableData
 {
-	public string LocationType;
 	public string Model;
 	public string[] PlacementProperties;
 	public StoredStringModel[] LocationPrefixes = new StoredStringModel[0];

@@ -60,8 +60,6 @@ public class CultureModel : ParsableData
 
 	public Dictionary<string, float> GroundPropertyValues = new Dictionary<string, float>();
 
-	public List<StoredCultureEntityPlacementByTrait> ModelPlacementByTraitCultureInfos = new List<StoredCultureEntityPlacementByTrait>();
-
 	public float TileAreaValue(Int2 pos, MapModel Map)
 	{
 		float value = GetTileValue(pos, Map) * 2;

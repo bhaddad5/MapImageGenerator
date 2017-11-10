@@ -1,260 +1,260 @@
 {
-	"CultureId":"Anglo",
-	"CultureName":"Midlander",
-	"SettlementPrefixes":[
-		{"storedString":"Lunn","conditions":[]},
-		{"storedString":"Berry","conditions":[]},
-		{"storedString":"Mannin","conditions":[]},
-		{"storedString":"Hetten","conditions":[]},
-		{"storedString":"Stok","conditions":[]},
-		{"storedString":"Rusk","conditions":[]},
-		{"storedString":"An","conditions":[]},
-		{"storedString":"Ewer","conditions":[]},
-		{"storedString":"How","conditions":[]},
-		{"storedString":"Setter","conditions":[]},
-		{"storedString":"Somer","conditions":[]},
-		{"storedString":"Wend","conditions":[]},
-		{"storedString":"Torrent","conditions":[]},
-		{"storedString":"Comb","conditions":[]},
-		{"storedString":"Slak","conditions":[]},
-		{"storedString":"Brix","conditions":[]},
-		{"storedString":"Bux","conditions":[]},
-		{"storedString":"Win","conditions":[]},
-		{"storedString":"Fur","conditions":[]},
-		{"storedString":"Hather","conditions":[]}
-	],
-	"SettlementSuffixes":[
-		{"storedString":"","conditions":[]},
-		{"storedString":"ton","conditions":[]},
-		{"storedString":"moor","conditions":[]},
-		{"storedString":"mont","conditions":["Mountains"]},
-		{"storedString":"rent","conditions":[]},
-		{"storedString":"eter","conditions":[]},
-		{"storedString":"by","conditions":[]},
-		{"storedString":"nall","conditions":[]},
-		{"storedString":"ford","conditions":["River"]},
-		{"storedString":"brook","conditions":["River"]},
-		{"storedString":"field","conditions":["Fertile"]},
-		{"storedString":"ham","conditions":[]},
-		{"storedString":"dun","conditions":[]},
-		{"storedString":"wick","conditions":[]},
-		{"storedString":"well","conditions":[]},
-		{"storedString":"light","conditions":[]},
-		{"storedString":"sor","conditions":[]},
-		{"storedString":"ley","conditions":[]},
-		{"storedString":"end","conditions":[]}
-	],
-	"SettlementAreaInfo":[
-		{"storedString":"%n","conditions":[]},
-		{"storedString":"Port %n","conditions":["Port","Large"]},
-		{"storedString":"%n Harbor","conditions":["Port","Medium"]},
-		{"storedString":"%n Anchorage","conditions":["Port","Small"]},
-		{"storedString":"%n Mountain","conditions":["Mountains"]},
-		{"storedString":"Mount %n","conditions":["Mountains"]},
-		{"storedString":"%nshire","conditions":["Fertile","Landlocked","Small"]},
-		{"storedString":"%n Vale","conditions":["Fertile","Landlocked","Small"]},
-		{"storedString":"Vale %n","conditions":["Fertile","Landlocked","Small"]},
-		{"storedString":"%n Castle","conditions":["Large"]},
-		{"storedString":"Castle %n","conditions":["Large"]},
-		{"storedString":"%n Hold","conditions":["Medium"]},
-		{"storedString":"%n Hall","conditions":["Medium"]},
-		{"storedString":"%n Stead","conditions":["Small"]},
-		{"storedString":"%n Ford","conditions":["River"]},
-		{"storedString":"%n Bridge","conditions":["River"]},
-		{"storedString":"%n Bend","conditions":["Small","River"]},
-		{"storedString":"%n Mill","conditions":["Small","Fertile"]},
-		{"storedString":"%n Heath","conditions":["Small"]},
-		{"storedString":"New %n","conditions":[]}
-	],
-	"KingdomTitles":[
-		{"storedString":"Kingdom of %n","conditions":["Medium"]},
-		{"storedString":"Kingdom of %n","conditions":["Large"]},
-		{"storedString":"Empire of %n","conditions":["Large"]},
-		{"storedString":"The %n Empire","conditions":["Large"]},
-		{"storedString":"Crown of %n","conditions":["Medium"]},
-		{"storedString":"Principality of %n","conditions":["Medium"]},
-		{"storedString":"Principality of %n","conditions":["Small"]},
-		{"storedString":"Grand Barony of %n","conditions":["Medium"]},
-		{"storedString":"Barony of %n","conditions":["Medium"]},
-		{"storedString":"Barony of %n","conditions":["Small"]},
-		{"storedString":"Dukedom of %n","conditions":["Small"]},
-		{"storedString":"The %n Prices","conditions":["Medium"]},
-		{"storedString":"Trade Princes of %n","conditions":["Medium","CapitolPort"]},
-		{"storedString":"Trade Princes of %n","conditions":["Small","CapitolPort"]},
-		{"storedString":"Trade Council of %n","conditions":["Small","CapitolPort"]},
-		{"storedString":"Trade Council of %n","conditions":["OneCity","CapitolPort"]},
-		{"storedString":"Council of %n","conditions":["OneCity"]},
-		{"storedString":"Free City of %n","conditions":["OneCity", "Large"]},
-		{"storedString":"%n","conditions":["OneCity"]},
-		{"storedString":"Holy Order of %n","conditions":[]},
-		{"storedString":"Holy Diocese of %n","conditions":[]}
-	],
-	"HeraldryOverlayImage":"Anglo/Heraldry/Overlay.png",
-	"HeraldryForegrounds":[
-		
-		{"storedString":"Anglo/Heraldry/Symbols/Blank.png","conditions":[]},
-		{"storedString":"Anglo/Heraldry/Symbols/Dragon.png","conditions":[]},
-		{"storedString":"Anglo/Heraldry/Symbols/EagleHead.png","conditions":[]},
-		{"storedString":"Anglo/Heraldry/Symbols/Feather.png","conditions":[]},
-		{"storedString":"Anglo/Heraldry/Symbols/Gryphon.png","conditions":[]},
-		{"storedString":"Anglo/Heraldry/Symbols/Horse.png","conditions":[]}
-	],
-	"HeraldryBackgrounds":[
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_0.png","conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_1.png","conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_2.png","conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_3.png","conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_4.png","conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_5.png","conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_5.png","conditions":[]},
-		{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_Ocean.png","conditions":["Port"]}
-	],
-	"GroundPropertyValues":[
-		{"groundTrait":"Water","groundValue":0.0},
-		{"groundTrait":"Impassable","groundValue":0.0},
-		{"groundTrait":"Muddy","groundValue":0.10000000149011612},
-		{"groundTrait":"Rocky","groundValue":0.10000000149011612},
-		{"groundTrait":"Hunting","groundValue":0.15000000596046449},
-		{"groundTrait":"Forest","groundValue":0.10000000149011612},
-		{"groundTrait":"Fertile","groundValue":0.4000000059604645},
-		{"groundTrait":"City","groundValue":5.0},
-		{"groundTrait":"Road","groundValue":3.0}
-	],
-	"ModelPlacementByTraitCultureInfos":[
-		{"TerrainTrait":"Road",
-		"ModelPlacementInfos":[
-			{"model":"AngloBridge","placementMode":"Bridge","min":1,"max":1}
-		]},
-		{"TerrainTrait":"SmallCity",
-		"ModelPlacementInfos":[
-			{"model":"AngloHovel","placementMode":"Scattered","min":20,"max":25}
-		]},
-		{"TerrainTrait":"MediumCity",
-		"ModelPlacementInfos":[
-			{"model":"AngloHovel","placementMode":"ScatteredBordered","min":10,"max":15},
-			{"model":"AngloTownHouse","placementMode":"ScatteredBordered","min":10,"max":12},
-			{"model":"AngloWoodenWall","placementMode":"CityWalls","min":4,"max":4},
-			{"model":"AngloWoodenGates","placementMode":"CityGates","min":4,"max":4}
-		]},
-		{"TerrainTrait":"LargeCity",
-		"ModelPlacementInfos":[
-			{"model":"AngloTownHouse","placementMode":"ScatteredBordered","min":20,"max":25},
-			{"model":"AngloStoneWall","placementMode":"CityWalls","min":4,"max":4},
-			{"model":"AngloStoneGates","placementMode":"CityGates","min":4,"max":4},
-			{"model":"AngloStoneTower","placementMode":"Corners","min":4,"max":4}
-		]}
-	]
+"Id":"Anglo",
+"CultureName":"Midlander",
+"SettlementPrefixes":[
+	{"storedString":"Lunn"},
+	{"storedString":"Berry"},
+	{"storedString":"Mannin"},
+	{"storedString":"Hetten"},
+	{"storedString":"Stok"},
+	{"storedString":"Rusk"},
+	{"storedString":"An"},
+	{"storedString":"Ewer"},
+	{"storedString":"How"},
+	{"storedString":"Setter"},
+	{"storedString":"Somer"},
+	{"storedString":"Wend"},
+	{"storedString":"Torrent"},
+	{"storedString":"Comb"},
+	{"storedString":"Slak"},
+	{"storedString":"Brix"},
+	{"storedString":"Bux"},
+	{"storedString":"Win"},
+	{"storedString":"Fur"},
+	{"storedString":"Hather"}
+],
+"SettlementSuffixes":[
+	{"storedString":""},
+	{"storedString":"ton"},
+	{"storedString":"moor"},
+	{"storedString":"mont","conditions":["Mountains"]},
+	{"storedString":"rent"},
+	{"storedString":"eter"},
+	{"storedString":"by"},
+	{"storedString":"nall"},
+	{"storedString":"ford","conditions":["River"]},
+	{"storedString":"brook","conditions":["River"]},
+	{"storedString":"field","conditions":["Fertile"]},
+	{"storedString":"ham"},
+	{"storedString":"dun"},
+	{"storedString":"wick"},
+	{"storedString":"well"},
+	{"storedString":"light"},
+	{"storedString":"sor"},
+	{"storedString":"ley"},
+	{"storedString":"end"}
+],
+"SettlementAreaInfo":[
+	{"storedString":"%n"},
+	{"storedString":"Port %n","conditions":["Port","Large"]},
+	{"storedString":"%n Harbor","conditions":["Port","Medium"]},
+	{"storedString":"%n Anchorage","conditions":["Port","Small"]},
+	{"storedString":"%n Mountain","conditions":["Mountains"]},
+	{"storedString":"Mount %n","conditions":["Mountains"]},
+	{"storedString":"%nshire","conditions":["Fertile","Landlocked","Small"]},
+	{"storedString":"%n Vale","conditions":["Fertile","Landlocked","Small"]},
+	{"storedString":"Vale %n","conditions":["Fertile","Landlocked","Small"]},
+	{"storedString":"%n Castle","conditions":["Large"]},
+	{"storedString":"Castle %n","conditions":["Large"]},
+	{"storedString":"%n Hold","conditions":["Medium"]},
+	{"storedString":"%n Hall","conditions":["Medium"]},
+	{"storedString":"%n Stead","conditions":["Small"]},
+	{"storedString":"%n Ford","conditions":["River"]},
+	{"storedString":"%n Bridge","conditions":["River"]},
+	{"storedString":"%n Bend","conditions":["Small","River"]},
+	{"storedString":"%n Mill","conditions":["Small","Fertile"]},
+	{"storedString":"%n Heath","conditions":["Small"]},
+	{"storedString":"New %n"}
+],
+"KingdomTitles":[
+	{"storedString":"Kingdom of %n","conditions":["Medium"]},
+	{"storedString":"Kingdom of %n","conditions":["Large"]},
+	{"storedString":"Empire of %n","conditions":["Large"]},
+	{"storedString":"The %n Empire","conditions":["Large"]},
+	{"storedString":"Crown of %n","conditions":["Medium"]},
+	{"storedString":"Principality of %n","conditions":["Medium"]},
+	{"storedString":"Principality of %n","conditions":["Small"]},
+	{"storedString":"Grand Barony of %n","conditions":["Medium"]},
+	{"storedString":"Barony of %n","conditions":["Medium"]},
+	{"storedString":"Barony of %n","conditions":["Small"]},
+	{"storedString":"Dukedom of %n","conditions":["Small"]},
+	{"storedString":"The %n Prices","conditions":["Medium"]},
+	{"storedString":"Trade Princes of %n","conditions":["Medium","CapitolPort"]},
+	{"storedString":"Trade Princes of %n","conditions":["Small","CapitolPort"]},
+	{"storedString":"Trade Council of %n","conditions":["Small","CapitolPort"]},
+	{"storedString":"Trade Council of %n","conditions":["OneCity","CapitolPort"]},
+	{"storedString":"Council of %n","conditions":["OneCity"]},
+	{"storedString":"Free City of %n","conditions":["OneCity", "Large"]},
+	{"storedString":"%n","conditions":["OneCity"]},
+	{"storedString":"Holy Order of %n"},
+	{"storedString":"Holy Diocese of %n"}
+],
+"HeraldryOverlayImage":"Anglo/Heraldry/Overlay.png",
+"HeraldryForegrounds":[
+	
+	{"storedString":"Anglo/Heraldry/Symbols/Blank.png"},
+	{"storedString":"Anglo/Heraldry/Symbols/Dragon.png"},
+	{"storedString":"Anglo/Heraldry/Symbols/EagleHead.png"},
+	{"storedString":"Anglo/Heraldry/Symbols/Feather.png"},
+	{"storedString":"Anglo/Heraldry/Symbols/Gryphon.png"},
+	{"storedString":"Anglo/Heraldry/Symbols/Horse.png"}
+],
+"HeraldryBackgrounds":[
+	{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_0.png"},
+	{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_1.png"},
+	{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_2.png"},
+	{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_3.png"},
+	{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_4.png"},
+	{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_5.png"},
+	{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_5.png"},
+	{"storedString":"Anglo/Heraldry/Backgrounds/Anglo_Back_Ocean.png","conditions":["Port"]}
+],
+"GroundPropertyValues":[
+	{"groundTrait":"Water","groundValue":0.0},
+	{"groundTrait":"Impassable","groundValue":0.0},
+	{"groundTrait":"Muddy","groundValue":0.10000000149011612},
+	{"groundTrait":"Rocky","groundValue":0.10000000149011612},
+	{"groundTrait":"Hunting","groundValue":0.15000000596046449},
+	{"groundTrait":"Forest","groundValue":0.10000000149011612},
+	{"groundTrait":"Fertile","groundValue":0.4000000059604645},
+	{"groundTrait":"City","groundValue":5.0},
+	{"groundTrait":"Road","groundValue":3.0}
+],
+"ModelPlacementByTraitCultureInfos":[
+	{"TerrainTrait":"Road",
+	"ModelPlacementInfos":[
+		{"model":"AngloBridge","placementMode":"Bridge","min":1,"max":1}
+	]},
+	{"TerrainTrait":"SmallCity",
+	"ModelPlacementInfos":[
+		{"model":"AngloHovel","placementMode":"Scattered","min":20,"max":25}
+	]},
+	{"TerrainTrait":"MediumCity",
+	"ModelPlacementInfos":[
+		{"model":"AngloHovel","placementMode":"ScatteredBordered","min":10,"max":15},
+		{"model":"AngloTownHouse","placementMode":"ScatteredBordered","min":10,"max":12},
+		{"model":"AngloWoodenWall","placementMode":"CityWalls","min":4,"max":4},
+		{"model":"AngloWoodenGates","placementMode":"CityGates","min":4,"max":4}
+	]},
+	{"TerrainTrait":"LargeCity",
+	"ModelPlacementInfos":[
+		{"model":"AngloTownHouse","placementMode":"ScatteredBordered","min":20,"max":25},
+		{"model":"AngloStoneWall","placementMode":"CityWalls","min":4,"max":4},
+		{"model":"AngloStoneGates","placementMode":"CityGates","min":4,"max":4},
+		{"model":"AngloStoneTower","placementMode":"Corners","min":4,"max":4}
+	]}
+]
 }
 |
 {
-	"CultureId":"Dwarf",
-	"CultureName":"Dwarves",
-	"SettlementPrefixes":[
-		{"storedString":"Daz","conditions":[]},
-		{"storedString":"Kurz","conditions":[]},
-		{"storedString":"Inuk","conditions":[]},
-		{"storedString":"Tar","conditions":[]},
-		{"storedString":"Prak","conditions":[]},
-		{"storedString":"Wrokk","conditions":[]},
-		{"storedString":"Mentung","conditions":[]},
-		{"storedString":"Jekrat","conditions":[]},
-		{"storedString":"Kazdul","conditions":[]},
-		{"storedString":"Kazan","conditions":[]},
-		{"storedString":"Kazren","conditions":[]},
-		{"storedString":"Azorn","conditions":[]},
-		{"storedString":"Azdal","conditions":[]},
-		{"storedString":"Azlaak","conditions":[]},
-		{"storedString":"Kajar","conditions":[]},
-		{"storedString":"Draken","conditions":[]}
-	],
-	"SettlementSuffixes":[
-		{"storedString":"","conditions":[]},
-		{"storedString":"-kull","conditions":["Mountains"]},
-		{"storedString":"-kuzdal","conditions":["Mountains"]},
-		{"storedString":"-tazul","conditions":[]},
-		{"storedString":"-mikdun","conditions":[]},
-		{"storedString":"-trokk","conditions":[]},
-		{"storedString":"-pirok","conditions":[]},
-		{"storedString":"-tarmuk","conditions":[]},
-		{"storedString":"-ostrok","conditions":[]},
-		{"storedString":"-restrok","conditions":[]},
-		{"storedString":"-clarrok","conditions":[]},
-		{"storedString":"-sorrok","conditions":[]},
-		{"storedString":"-bendum","conditions":[]},
-		{"storedString":"-silrak","conditions":["Forest"]},
-		{"storedString":"-revvrok","conditions":["River"]},
-		{"storedString":"-serok","conditions":["Port"]}
-	],
-	"SettlementAreaInfo":[
-		{"storedString":"%n","conditions":[]},
-		{"storedString":"%n Post","conditions":["Small"]},
-		{"storedString":"%n Outpost","conditions":["Small"]},
-		{"storedString":"Kadrul %n","conditions":["Large"]},
-		{"storedString":"Nagut %n","conditions":["Port"]},
-		{"storedString":"%n Nagut","conditions":["Port"]},
-		{"storedString":"%n Mountain","conditions":["Mountains"]},
-		{"storedString":"Halls of %n","conditions":["Mountains"]},
-		{"storedString":"Mines of %n","conditions":["Mountains"]}
-	],
-	"KingdomTitles":[
-		{"storedString":"Kingdom of %n","conditions":["Small"]},
-		{"storedString":"Kingdom of %n","conditions":["Medium"]},
-		{"storedString":"Kingdom of %n","conditions":["Large"]},
-		{"storedString":"%n Expidition","conditions":["OneCity"]},
-		{"storedString":"Freehalls of %n","conditions":["OneCity"]},
-		{"storedString":"Guilds of %n","conditions":["OneCity"]},
-		{"storedString":"League of %n","conditions":["Small"]},
-		{"storedString":"League of %n","conditions":["Medium"]},
-		{"storedString":"%n","conditions":["OneCity"]},
-		{"storedString":"%n","conditions":["Small"]},
-		{"storedString":"%n","conditions":["Medium"]},
-		{"storedString":"The Empire of %n","conditions":["Large"]}
-	],
-	"HeraldryOverlayImage":"Dwarf/Heraldry/Overlay.png",
-	"HeraldryForegrounds":[
-		{"storedString":"Dwarf/Heraldry/Symbols/Anvil.png","conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Symbols/Dragon.png","conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Symbols/DragonSkull.png","conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Symbols/AleHorn.png","conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Symbols/Helmet.png","conditions":[]}
-	],
-	"HeraldryBackgrounds":[
-		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_0.png","conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_1.png","conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_2.png","conditions":[]},
-		{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_3.png","conditions":[]}
-	],
-	"GroundPropertyValues":[
-		{"groundTrait":"Water","groundValue":0.0},
-		{"groundTrait":"Impassable","groundValue":0.0},
-		{"groundTrait":"Muddy","groundValue":0.0},
-		{"groundTrait":"Rocky","groundValue":0.6},
-		{"groundTrait":"Hunting","groundValue":0.15},
-		{"groundTrait":"Forest","groundValue":0.15},
-		{"groundTrait":"Fertile","groundValue":0.2},
-		{"groundTrait":"City","groundValue":6.0},
-		{"groundTrait":"Road","groundValue":3.0}
-	],
-	"ModelPlacementByTraitCultureInfos":[
-		{"TerrainTrait":"Road",
-		"ModelPlacementInfos":[
-			{"model":"DwarfBridge","placementMode":"Bridge","min":1,"max":1}
-		]},
-		{"TerrainTrait":"City",
-		"ModelPlacementInfos":[
-			{"model":"DwarfHouse","placementMode":"ScatteredBordered","min":15,"max":20}
-		]},
-		{"TerrainTrait":"MediumCity",
-		"ModelPlacementInfos":[
-			{"model":"DwarfWall","placementMode":"CityWalls","min":4,"max":4},
-			{"model":"DwarfGates","placementMode":"CityGates","min":4,"max":4},
-			{"model":"DwarfTower","placementMode":"Corners","min":4,"max":4}
-		]},
-		{"TerrainTrait":"LargeCity",
-		"ModelPlacementInfos":[
-			{"model":"DwarfWall","placementMode":"CityWalls","min":4,"max":4},
-			{"model":"DwarfGates","placementMode":"CityGates","min":4,"max":4},
-			{"model":"DwarfTower","placementMode":"Corners","min":4,"max":4}
-		]}
-	]
+"Id":"Dwarf",
+"CultureName":"Dwarves",
+"SettlementPrefixes":[
+	{"storedString":"Daz"},
+	{"storedString":"Kurz"},
+	{"storedString":"Inuk"},
+	{"storedString":"Tar"},
+	{"storedString":"Prak"},
+	{"storedString":"Wrokk"},
+	{"storedString":"Mentung"},
+	{"storedString":"Jekrat"},
+	{"storedString":"Kazdul"},
+	{"storedString":"Kazan"},
+	{"storedString":"Kazren"},
+	{"storedString":"Azorn"},
+	{"storedString":"Azdal"},
+	{"storedString":"Azlaak"},
+	{"storedString":"Kajar"},
+	{"storedString":"Draken"}
+],
+"SettlementSuffixes":[
+	{"storedString":""},
+	{"storedString":"-kull","conditions":["Mountains"]},
+	{"storedString":"-kuzdal","conditions":["Mountains"]},
+	{"storedString":"-tazul"},
+	{"storedString":"-mikdun"},
+	{"storedString":"-trokk"},
+	{"storedString":"-pirok"},
+	{"storedString":"-tarmuk"},
+	{"storedString":"-ostrok"},
+	{"storedString":"-restrok"},
+	{"storedString":"-clarrok"},
+	{"storedString":"-sorrok"},
+	{"storedString":"-bendum"},
+	{"storedString":"-silrak","conditions":["Forest"]},
+	{"storedString":"-revvrok","conditions":["River"]},
+	{"storedString":"-serok","conditions":["Port"]}
+],
+"SettlementAreaInfo":[
+	{"storedString":"%n"},
+	{"storedString":"%n Post","conditions":["Small"]},
+	{"storedString":"%n Outpost","conditions":["Small"]},
+	{"storedString":"Kadrul %n","conditions":["Large"]},
+	{"storedString":"Nagut %n","conditions":["Port"]},
+	{"storedString":"%n Nagut","conditions":["Port"]},
+	{"storedString":"%n Mountain","conditions":["Mountains"]},
+	{"storedString":"Halls of %n","conditions":["Mountains"]},
+	{"storedString":"Mines of %n","conditions":["Mountains"]}
+],
+"KingdomTitles":[
+	{"storedString":"Kingdom of %n","conditions":["Small"]},
+	{"storedString":"Kingdom of %n","conditions":["Medium"]},
+	{"storedString":"Kingdom of %n","conditions":["Large"]},
+	{"storedString":"%n Expidition","conditions":["OneCity"]},
+	{"storedString":"Freehalls of %n","conditions":["OneCity"]},
+	{"storedString":"Guilds of %n","conditions":["OneCity"]},
+	{"storedString":"League of %n","conditions":["Small"]},
+	{"storedString":"League of %n","conditions":["Medium"]},
+	{"storedString":"%n","conditions":["OneCity"]},
+	{"storedString":"%n","conditions":["Small"]},
+	{"storedString":"%n","conditions":["Medium"]},
+	{"storedString":"The Empire of %n","conditions":["Large"]}
+],
+"HeraldryOverlayImage":"Dwarf/Heraldry/Overlay.png",
+"HeraldryForegrounds":[
+	{"storedString":"Dwarf/Heraldry/Symbols/Anvil.png"},
+	{"storedString":"Dwarf/Heraldry/Symbols/Dragon.png"},
+	{"storedString":"Dwarf/Heraldry/Symbols/DragonSkull.png"},
+	{"storedString":"Dwarf/Heraldry/Symbols/AleHorn.png"},
+	{"storedString":"Dwarf/Heraldry/Symbols/Helmet.png"}
+],
+"HeraldryBackgrounds":[
+	{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_0.png"},
+	{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_1.png"},
+	{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_2.png"},
+	{"storedString":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_3.png"}
+],
+"GroundPropertyValues":[
+	{"groundTrait":"Water","groundValue":0.0},
+	{"groundTrait":"Impassable","groundValue":0.0},
+	{"groundTrait":"Muddy","groundValue":0.0},
+	{"groundTrait":"Rocky","groundValue":0.6},
+	{"groundTrait":"Hunting","groundValue":0.15},
+	{"groundTrait":"Forest","groundValue":0.15},
+	{"groundTrait":"Fertile","groundValue":0.2},
+	{"groundTrait":"City","groundValue":6.0},
+	{"groundTrait":"Road","groundValue":3.0}
+],
+"ModelPlacementByTraitCultureInfos":[
+	{"TerrainTrait":"Road",
+	"ModelPlacementInfos":[
+		{"model":"DwarfBridge","placementMode":"Bridge","min":1,"max":1}
+	]},
+	{"TerrainTrait":"City",
+	"ModelPlacementInfos":[
+		{"model":"DwarfHouse","placementMode":"ScatteredBordered","min":15,"max":20}
+	]},
+	{"TerrainTrait":"MediumCity",
+	"ModelPlacementInfos":[
+		{"model":"DwarfWall","placementMode":"CityWalls","min":4,"max":4},
+		{"model":"DwarfGates","placementMode":"CityGates","min":4,"max":4},
+		{"model":"DwarfTower","placementMode":"Corners","min":4,"max":4}
+	]},
+	{"TerrainTrait":"LargeCity",
+	"ModelPlacementInfos":[
+		{"model":"DwarfWall","placementMode":"CityWalls","min":4,"max":4},
+		{"model":"DwarfGates","placementMode":"CityGates","min":4,"max":4},
+		{"model":"DwarfTower","placementMode":"Corners","min":4,"max":4}
+	]}
+]
 }
