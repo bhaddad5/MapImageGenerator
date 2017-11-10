@@ -1,0 +1,63 @@
+{"Id":"Ocean",
+"Texture":"Midlands/Terrain/Sand.png",
+"Difficulty":0.1,
+"StoredTraits":[
+	"Water",
+	"Impassable"
+]}
+|
+{"Id":"River",
+"Texture":"Midlands/Terrain/Sand.png",
+"Difficulty":0.1,
+"StoredTraits":[
+	"Water"
+]}
+|
+{"Id":"Swamp",
+"Texture":"Midlands/Terrain/Swamp.png",
+"Difficulty":0.35,
+"DefaultModelPlacement":[
+	{"model":"Willow","min":2,"max":3},
+	{"model":"Rushes","min":5,"max":7}
+],
+"StoredTraits":[
+	"Muddy"
+]}
+|
+{"Id":"Wilderness",
+"Texture":"Midlands/Terrain/Wilderness.png",
+"Difficulty":0.2,
+"DefaultModelPlacement":[
+	{"model":"Pine","min":0,"max":3}
+],
+"StoredTraits":[
+	"Hunting"
+]}
+|
+{"Id":"Forest",
+"Texture":"Midlands/Terrain/Forest.png",
+"Difficulty":0.25,
+"DefaultModelPlacement":[
+	{"model":"Pine","min":7,"max":10}
+],
+"StoredTraits":[
+	"Hunting",
+	"Forest"
+]}
+|
+{"Id":"Mountain",
+"Difficulty":50,
+"Texture":"Midlands/Terrain/Mountains.png",
+"StoredTraits":[
+	"Rocky",
+	"Impassable"
+]}
+|
+{"Id":"Fertile",
+"Difficulty":0.15,
+"Texture":"Midlands/Terrain/Fertile.png",
+"DefaultModelPlacement":[
+],
+"StoredTraits":[
+	"Fertile"
+]}
