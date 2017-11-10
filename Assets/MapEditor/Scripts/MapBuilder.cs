@@ -41,21 +41,28 @@ public class MapBuilder : MonoBehaviour
 	{
 		int width = 20;
 		int height = 20;
-		MapModel NewMap = GenerateMap(width, height, RealmParser.RealmsData[EnvironmentSelection.options[EnvironmentSelection.value].text]);
+		MapModel NewMap = new MapModel(width, height);
+		StartCoroutine(GenerateMap(NewMap, RealmParser.RealmsData[EnvironmentSelection.options[EnvironmentSelection.value].text]));
 		StartCoroutine(DisplayMap(NewMap));
 	}
 
-	public MapModel GenerateMap(int width, int height, RealmModel realmCreationInfo)
+	public IEnumerator GenerateMap(MapModel Map, RealmModel realmCreationInfo)
 	{
 		displayText.enabled = true;
 
+		displayText.text = "Raising Lands";
+		yield return null;
+
 		MapGeneratorApi generator = new MapGeneratorApi();
-		MapModel Map = generator.GenerateMap(width, height, realmCreationInfo);
+		generator.GenerateMap(Map, realmCreationInfo);
+
+		displayText.text = "Forging Kingdoms";
+		yield return null;
 		
 		RegionsGenerator regionsGen = new RegionsGenerator();
 		regionsGen.GenerateRegions(Map, realmCreationInfo);
 
-		return Map;
+		displayText.enabled = false;
 	}
 
 	private IEnumerator DisplayMap(MapModel Map)

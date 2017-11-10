@@ -9,9 +9,9 @@ public class MapGeneratorApi
 {
 	protected MapModel Map;
 
-	public MapModel GenerateMap(int width, int height, RealmModel realm)
+	public MapModel GenerateMap(MapModel map, RealmModel realm)
 	{
-		Map = new MapModel(width, height);
+		Map = map;
 		ExecuteApiCommands(realm.MapBuildingCommands);
 		return Map;
 	}

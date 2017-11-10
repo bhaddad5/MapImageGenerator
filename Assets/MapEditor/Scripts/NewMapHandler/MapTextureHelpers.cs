@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,7 +27,15 @@ public class MapTextureHelpers
 		List<Color> pixels = new List<Color>();
 		foreach (MapTileModel tile in Map.Map.GetMapValuesFlipped())
 		{
-			pixels.Add(tile.Terrain.LookupColor);
+			try
+			{
+				pixels.Add(tile.Terrain.LookupColor);
+			}
+			catch (Exception e)
+			{
+				Debug.Log(tile);
+				throw;
+			}
 		}
 		Texture2D terrainMapImage = new Texture2D(Map.Map.Width, Map.Map.Height, TextureFormat.ARGB32, true, true);
 		terrainMapImage.filterMode = FilterMode.Point;

@@ -6,6 +6,13 @@
 	"Impassable"
 ]}
 |
+{"Id":"River",
+"Texture":"Midlands/Terrain/Sand.png",
+"Difficulty":0.1,
+"StoredTraits":[
+	"Water"
+]}
+|
 {"Id":"Swamp",
 "Texture":"Midlands/Terrain/Swamp.png",
 "Difficulty":0.35,
