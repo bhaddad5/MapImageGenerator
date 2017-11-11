@@ -17,7 +17,7 @@
 	"MapBuildingCommands":[
 		"TerrainDefaultFill Ocean",
 		"TerrainRandomlyPlaceAlongLine Mountain 12 4 50 1",
-		"TerrainRandomlyExpandFromTypes Wilderness 2 7 Mountain",
+		"TerrainRandomlyExpandFromTypes Wilderness 3 7 Mountain",
 		"TerrainRandomizeEdges Ocean 1",
 		"CreateRivers 10 20",
 		"TerrainEncourageStartAlongMountains Forest 0.15",

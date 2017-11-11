@@ -382,11 +382,7 @@ public class MapGeneratorApi
 			BuildRiverBack(riverDistField, riverPath);
 		}
 	}
-
-
-
-
-	//TERRAIN
+	
 	public void TerrainDefaultFill(string defaultTerrain)
 	{
 		Map.FillMapWithTerrain(defaultTerrain);
