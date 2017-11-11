@@ -23,8 +23,7 @@
 "Difficulty":0.35,
 "LookupColor":{"r":0.0,"g":0.7,"b":1.0,"a":1.0},
 "EntityPlacements":[
-	{"model":"Willow","min":2,"max":3,"placementMode":"Scattered"},
-	{"model":"Rushes","min":5,"max":7,"placementMode":"Scattered"}
+	{"model":"Willow","min":8,"max":19,"placementMode":"Scattered"}
 ],
 "StoredTraits":[
 	"Muddy"
