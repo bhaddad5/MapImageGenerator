@@ -25,7 +25,7 @@ public class MapMeshBuilder
 
 		foreach (var pixle in Map.Map.GetMapPoints())
 		{
-			fillHeightsForTile(pixle, Map.Map.Get(pixle).Height, Map.Map.Width, Map.Map.Height);
+			fillHeightsForTile(pixle, Map.Map.Get(pixle).Terrain().Height, Map.Map.Width, Map.Map.Height);
 		}
 	}
 
@@ -74,12 +74,12 @@ public class MapMeshBuilder
 	{
 		foreach (Int2 pos in vertHeights.GetMapPoints())
 		{
-			if (vertHeights.Get(pos) >= Globals.MinGroundHeight)
+			if (vertHeights.Get(pos) >= TerrainModel.MinGroundHeight())
 			{
-				float newHeight = Mathf.Max(Globals.MinGroundHeight, (vertHeights.Get(pos) + NeighborAverageHeight(pos)) / 2 * Random.Range(1f, 1.1f));
+				float newHeight = Mathf.Max(TerrainModel.MinGroundHeight(), (vertHeights.Get(pos) + NeighborAverageHeight(pos)) / 2 * Random.Range(1f, 1.1f));
 				vertHeights.Set(pos, newHeight);
 			}
-			else vertHeights.Set(pos, Globals.MinGroundHeight - 0.05f);
+			else vertHeights.Set(pos, TerrainModel.MinGroundHeight() - 0.05f);
 		}
 	}
 
@@ -90,7 +90,7 @@ public class MapMeshBuilder
 		{
 			newHeights.Set(point, vertHeights.Get(point));
 			if (IsOceanCoastVert(point) && Helpers.Odds(0.9f))
-				newHeights.Set(point, Globals.MinGroundHeight);
+				newHeights.Set(point, TerrainModel.MinGroundHeight());
 		}
 		vertHeights = newHeights;
 	}
@@ -100,18 +100,18 @@ public class MapMeshBuilder
 		foreach (Int2 point in vertHeights.GetMapPoints())
 		{
 			if (IsOceanCoastVert(point))
-				vertHeights.Set(point, Random.Range(0, Globals.MinGroundHeight - 0.02f));
+				vertHeights.Set(point, Random.Range(0, TerrainModel.MinGroundHeight() - 0.02f));
 		}
 	}
 
 	private bool IsOceanCoastVert(Int2 pos)
 	{
-		if (vertHeights.Get(pos) >= Globals.MinGroundHeight)
+		if (vertHeights.Get(pos) >= TerrainModel.MinGroundHeight())
 			return false;
 
 		foreach (var neighbor in vertHeights.GetAdjacentValues(pos))
 		{
-			if (neighbor >= Globals.MinGroundHeight)
+			if (neighbor >= TerrainModel.MinGroundHeight())
 				return true;
 		}
 

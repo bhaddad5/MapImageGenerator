@@ -24,84 +24,38 @@ public class MapGeneratorApi
 		}
 	}
 
-	public class HeightLevel
-	{
-		public enum Comparison
-		{
-			Exact,
-			Greater,
-			Less
-		};
-
-		public float Height;
-		private Comparison comp = Comparison.Exact;
-
-		public HeightLevel(string height)
-		{
-			if (height.StartsWith(">"))
-			{
-				comp = Comparison.Greater;
-				height = height.Substring(1);
-			}
-			else if (height.StartsWith("<"))
-			{
-				comp = Comparison.Less;
-				height = height.Substring(1);
-			}
-			Height = Single.Parse(height);
-		}
-
-		public bool Compare(float level)
-		{
-			if (comp == Comparison.Exact)
-				return level.Equals(Height);
-			if (comp == Comparison.Greater)
-				return Height < level;
-			if (comp == Comparison.Less)
-				return Height > level;
-			return false;
-		}
-	}
-
 	private void ExecuteApiCommand(string cmd)
 	{
 		string[] split = cmd.Split(' ');
-		ReplaceWellKnownValues(split);
 		
-		if (split[0] == "HeightsDefaultFill")
-			HeightsDefaultFill(new HeightLevel(split[1]));
-		if (split[0] == "HeightRandomlyPlace")
-			HeightRandomlyPlace(new HeightLevel(split[1]), Single.Parse(split[2]));
-		if (split[0] == "HeightRandomlyPlaceNotInWater")
-			HeightRandomlyPlaceNotInWater(new HeightLevel(split[1]), Single.Parse(split[2]));
-		if (split[0] == "HeightRandomlyExpandLevel")
-			HeightRandomlyExpandLevel(new HeightLevel(split[1]), Single.Parse(split[2]));
-		if (split[0] == "HeightRandomizeLevelEdges")
-			HeightRandomizeLevelEdges(new HeightLevel(split[1]), Int32.Parse(split[2]));
-		if (split[0] == "HeightRandomlyPlaceAlongLine")
-			HeightRandomlyPlaceAlongLine(new HeightLevel(split[1]), Single.Parse(split[2]), Single.Parse(split[3]), Single.Parse(split[4]), Single.Parse(split[5]));
-		if (split[0] == "HeightRandomlyPlaceAlongEdges")
-			HeightRandomlyPlaceAlongEdges(new HeightLevel(split[1]), Single.Parse(split[2]));
-		if (split[0] == "HeightRandomlyExpandLevelFromItselfOrLevel")
-			HeightRandomlyExpandLevelFromItselfOrLevel(new HeightLevel(split[1]), new HeightLevel(split[2]), Single.Parse(split[3]), Single.Parse(split[4]));
-		if (split[0] == "HeightSetEdges")
-			HeightSetEdges(Single.Parse(split[1]));
-		if (split[0] == "HeightBlendUp")
-			HeightBlendUp(Int32.Parse(split[1]));
+		if (split[0] == "TerrainRandomlyPlace")
+			TerrainRandomlyPlace(split[1], Single.Parse(split[2]));
+
+		if (split[0] == "TerrainRandomlyPlaceNotInWater")
+			TerrainRandomlyPlaceNotInWater(split[1], Single.Parse(split[2]));
+		if (split[0] == "TerrainRandomlyExpand")
+			TerrainRandomlyExpand(split[1], Single.Parse(split[2]));
+		if (split[0] == "TerrainRandomizeEdges")
+			TerrainRandomizeEdges(split[1], Int32.Parse(split[2]));
+		if (split[0] == "TerrainRandomlyPlaceAlongLine")
+			TerrainRandomlyPlaceAlongLine(split[1], Single.Parse(split[2]), Single.Parse(split[3]), Single.Parse(split[4]), Single.Parse(split[5]));
+		if (split[0] == "TerrainRandomlyPlaceAlongEdges")
+			TerrainRandomlyPlaceAlongEdges(split[1], Single.Parse(split[2]));
+		if (split[0] == "TerrainRandomlyExpandFromTypes")
+		{
+			List<string> splits = new List<string>();
+			for (int j = 4; j < split.Length; j++)
+				splits.Add(split[j]);
+			TerrainRandomlyExpandFromTypes(split[1], Single.Parse(split[2]), Single.Parse(split[3]), splits.ToArray());
+		}
+		if (split[0] == "TerrainSetEdges")
+			TerrainSetEdges(split[1]);
 		if (split[0] == "CreateRivers")
 			CreateRivers(Int32.Parse(split[1]), Int32.Parse(split[2]));
 
 
 		if (split[0] == "TerrainDefaultFill")
 			TerrainDefaultFill(split[1]);
-		if (split[0] == "TerrainFillInOceans")
-			TerrainFillInOceans(split[1]);
-		if (split[0] == "TerrainFillInRivers")
-			TerrainFillInRivers(split[1]);
-		if (split[0] == "TerrainFillInSeaLevel")
-			TerrainFillInSeaLevel(split[1]);
-		if (split[0] == "TerrainFillInMountains")
-			TerrainFillInMountains(split[1]);
 		if (split[0] == "TerrainEncourageStartAlongMountains")
 			TerrainEncourageStartAlongMountains(split[1], Single.Parse(split[2]));
 		if (split[0] == "TerrainEncourageStartAlongOcean")
@@ -112,46 +66,28 @@ public class MapGeneratorApi
 			TerrainExpandSimmilarTypes(Int32.Parse(split[1]), split[2]);
 	}
 
-	private void ReplaceWellKnownValues(string[] strs)
-	{
-		for (int i = 0; i < strs.Length; i++)
-		{
-			if(strs[i] == "MinGroundHeight")
-				strs[i] = Globals.MinGroundHeight.ToString();
-			if (strs[i] == "MountainHeight")
-				strs[i] = Globals.MountainHeight.ToString();
-		}
-	}
-
-
-	//HEIGHTS
-	public void HeightsDefaultFill(HeightLevel height)
-	{
-		Map.FillMapWithHeight(height.Height);
-	}
-
-	public void HeightRandomlyPlace(HeightLevel height, float occurancesPer80Square)
+	public void TerrainRandomlyPlace(string terrain, float occurancesPer80Square)
 	{
 		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
 		for (int i = 0; i < numPlacements; i++)
 		{
 			Int2 randPos = new Int2(Random.Range(0, Map.Map.Width - 1), Random.Range(0, Map.Map.Height - 1));
-			Map.Map.Get(randPos).Height = height.Height;
+			Map.Map.Get(randPos).TerrainId = terrain;
 		}
 	}
 
-	public void HeightRandomlyPlaceNotInWater(HeightLevel height, float occurancesPer80Square)
+	public void TerrainRandomlyPlaceNotInWater(string terrain, float occurancesPer80Square)
 	{
 		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
 		for (int i = 0; i < numPlacements; i++)
 		{
 			Int2 randPos = new Int2(Random.Range(0, Map.Map.Width - 1), Random.Range(0, Map.Map.Height - 1));
-			if(Map.Map.Get(randPos).Height > 0)
-				Map.Map.Get(randPos).Height = height.Height;
+			if(!Map.Map.Get(randPos).Terrain().Traits.Contains("Water"))
+				Map.Map.Get(randPos).TerrainId = terrain;
 		}
 	}
 
-	public void HeightRandomlyPlaceAlongEdges(HeightLevel height, float occurancesPer80Square)
+	public void TerrainRandomlyPlaceAlongEdges(string terrain, float occurancesPer80Square)
 	{
 		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
 		for (int i = 0; i < numPlacements; i++)
@@ -176,27 +112,26 @@ public class MapGeneratorApi
 				}
 			}
 
-			if (Map.Map.Get(randPos).Height > 0)
-				Map.Map.Get(randPos).Height = height.Height;
+			Map.Map.Get(randPos).TerrainId = terrain;
 		}
 	}
 
-	public void HeightRandomlyPlaceAlongLine(HeightLevel height, float occurancesPer80Square, float minLength, float maxLength, float spacing)
+	public void TerrainRandomlyPlaceAlongLine(string terrain, float occurancesPer80Square, float minLength, float maxLength, float spacing)
 	{
 		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
 		for (int i = 0; i < numPlacements; i++)
 		{
 			Int2 randPos = new Int2(Random.Range(0, Map.Map.Width - 1), Random.Range(0, Map.Map.Height - 1));
-			PlaceHeightAlongVector(randPos, height, new Int2(Random.Range(-1, 1), Random.Range(-1, 1)), Random.Range(minLength, maxLength), spacing);
+			PlaceTerrainAlongVector(randPos, terrain, new Int2(Random.Range(-1, 1), Random.Range(-1, 1)), Random.Range(minLength, maxLength), spacing);
 		}
 	}
 
-	private void PlaceHeightAlongVector(Int2 startPos, HeightLevel height, Int2 direction, float length, float spacing)
+	private void PlaceTerrainAlongVector(Int2 startPos, string terrain, Int2 direction, float length, float spacing)
 	{
 		Int2 currPixel = startPos;
 		for (int k = 0; k < (int)length; k++)
 		{
-			Map.Map.Get(currPixel).Height = height.Height;
+			Map.Map.Get(currPixel).TerrainId = terrain;
 			currPixel = GetNextPixelInDirection(currPixel, direction, (int)spacing);
 			if (!Map.Map.PosInBounds(currPixel))
 				return;
@@ -231,117 +166,98 @@ public class MapGeneratorApi
 		return dirs[index];
 	}
 
-	public void HeightRandomlyExpandLevelFromItselfOrLevel(HeightLevel height, HeightLevel adjacentExpansionHeight, float minExpansion, float maxExpansion)
+	public void TerrainRandomlyExpandFromTypes(string terrain, float minExpansion, float maxExpansion, params string[] terrainTypes)
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
-			if (height.Compare(Map.Map.Get(point).Height) || (HeightBordersLevel(point, adjacentExpansionHeight) && !adjacentExpansionHeight.Compare(Map.Map.Get(point).Height)))
-				HeightExpandFromPoint(point, height, Random.Range(minExpansion, maxExpansion), adjacentExpansionHeight);
+			foreach (string terrainType in terrainTypes)
+			{
+				if(BordersTerrainType(point, terrainType))
+					TerrainExpandFromPoint(point, terrainType, Random.Range(minExpansion, maxExpansion), terrainTypes);
+			}
 		}
 	}
 
-	public void HeightRandomlyExpandLevel(HeightLevel height, float avgExpansion)
+	public void TerrainRandomlyExpand(string terrain, float avgExpansion)
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
-			if (height.Compare(Map.Map.Get(point).Height))
-				HeightExpandFromPoint(point, height, Helpers.Randomize(avgExpansion), new HeightLevel("-1"));
+			if (Map.Map.Get(point).TerrainId == terrain)
+				TerrainExpandFromPoint(point, terrain, Helpers.Randomize(avgExpansion), terrain);
 		}
 	}
 
 	//TODO: FIX!?!
-	private void HeightExpandFromPoint(Int2 point, HeightLevel height, float numExpansionsLevels, HeightLevel ignoreLevel)
+	private void TerrainExpandFromPoint(Int2 point, string terrain, float numExpansionsLevels, params string[] ignoredTypes)
 	{
-		SortedDupList<Int2> HeightFrontier = new SortedDupList<Int2>();
-		HeightFrontier.Insert(point, numExpansionsLevels);
-		while (HeightFrontier.Count > 0)
+		SortedDupList<Int2> TerrainFrontier = new SortedDupList<Int2>();
+		TerrainFrontier.Insert(point, numExpansionsLevels);
+		while (TerrainFrontier.Count > 0)
 		{
-			Int2 currPos = HeightFrontier.TopValue();
-			float currStrength = HeightFrontier.TopKey();
-			HeightFrontier.Pop();
-			Map.Map.Get(currPos).Height = height.Height;
+			Int2 currPos = TerrainFrontier.TopValue();
+			float currStrength = TerrainFrontier.TopKey();
+			TerrainFrontier.Pop();
+			Map.Map.Get(currPos).TerrainId = terrain;
 			foreach (Int2 pos in Map.Map.GetAdjacentPoints(currPos))
 			{
-				if (!HeightFrontier.ContainsValue(pos) && !ignoreLevel.Compare(Map.Map.Get(pos).Height) && currStrength > 0)
+				if (!TerrainFrontier.ContainsValue(pos) && !ignoredTypes.Contains(Map.Map.Get(pos).TerrainId) && currStrength > 0)
 				{
-					HeightFrontier.Insert(pos, currStrength - 1);
+					TerrainFrontier.Insert(pos, currStrength - 1);
 				}
 			}
 		}
 	}
 
-	public void HeightRandomizeLevelEdges(HeightLevel height, int numPasses)
+	public void TerrainRandomizeEdges(string terrain, int numPasses)
 	{
 		for (int i = 0; i < numPasses; i++)
 		{
 			foreach (Int2 point in Map.Map.GetMapPoints())
 			{
-				if (HeightBordersLevel(point, height))
+				if (BordersTerrainType(point, terrain))
 				{
 					if (Helpers.Odds(0.4f))
-						Map.Map.Get(point).Height = height.Height;
+						Map.Map.Get(point).TerrainId = terrain;
 				}
 			}
 		}
 	}
 
-	private bool HeightBordersLevel(Int2 tile, HeightLevel height)
+	private bool BordersTerrainTrait(Int2 tile, string trait)
 	{
 		foreach (Int2 neighbor in Map.Map.GetAdjacentPoints(tile))
 		{
-			if (height.Compare(Map.Map.Get(neighbor).Height))
+			if (Map.Map.Get(neighbor).Terrain().Traits.Contains(trait))
 				return true;
 		}
 		return false;
 	}
 
-	public void HeightBlendUp(int numPasses)
+	private bool BordersTerrainType(Int2 tile, string terrain)
 	{
-		for (int i = 0; i < numPasses; i++)
+		foreach (Int2 neighbor in Map.Map.GetAdjacentPoints(tile))
 		{
-			foreach (Int2 point in Map.Map.GetMapPoints())
-			{
-				float avg = NeighborAverageHeightAbove(point);
-				if (Map.Map.Get(point).Height > 0 && (Map.Map.Get(point).Height > Globals.MinGroundHeight || avg > Globals.MinGroundHeight))
-				{
-					if(avg > Map.Map.Get(point).Height)
-						Map.Map.Get(point).Height = (Map.Map.Get(point).Height + avg) / 2;
-				}
-			}
+			if (Map.Map.Get(neighbor).TerrainId == terrain)
+				return true;
 		}
+		return false;
 	}
 
-	private float NeighborAverageHeightAbove(Int2 pixle)
-	{
-		float sum = 0f;
-		var points = Map.Map.GetAdjacentValues(pixle);
-		int count = 0;
-		foreach (MapTileModel pt in points)
-		{
-			if (pt.Height > Map.Map.Get(pixle).Height)
-			{
-				sum += pt.Height;
-				count++;
-			}
-		}
-		return sum / count;
-	}
-
-	public void HeightSetEdges(float edgeHeight)
+	public void TerrainSetEdges(string terrain)
 	{
 		for (int i = 0; i < Map.Map.Width; i++)
 		{
-			Map.Map.Get(new Int2(i, 0)).Height = edgeHeight;
-			Map.Map.Get(new Int2(i, 1)).Height = edgeHeight;
-			Map.Map.Get(new Int2(i, Map.Map.Height - 2)).Height = edgeHeight;
-			Map.Map.Get(new Int2(i, Map.Map.Height - 1)).Height = edgeHeight;
+			Map.Map.Get(new Int2(i, 0)).TerrainId = terrain;
+			Map.Map.Get(new Int2(i, 1)).TerrainId = terrain;
+			Map.Map.Get(new Int2(i, Map.Map.Height - 2)).TerrainId = terrain;
+			Map.Map.Get(new Int2(i, Map.Map.Height - 1)).TerrainId = terrain;
 		}
 		for (int i = 0; i < Map.Map.Height; i++)
 		{
-			Map.Map.Get(new Int2(0, i)).Height =  edgeHeight;
-			Map.Map.Get(new Int2(1, i)).Height =  edgeHeight;
-			Map.Map.Get(new Int2(Map.Map.Width - 2, i)).Height =  edgeHeight;
-			Map.Map.Get(new Int2(Map.Map.Width - 1, i)).Height =  edgeHeight;
+			Map.Map.Get(new Int2(0, i)).TerrainId = terrain;
+			Map.Map.Get(new Int2(1, i)).TerrainId = terrain;
+			Map.Map.Get(new Int2(Map.Map.Width - 2, i)).TerrainId = terrain;
+			Map.Map.Get(new Int2(Map.Map.Width - 1, i)).TerrainId = terrain;
 		}
 	}
 
@@ -353,11 +269,8 @@ public class MapGeneratorApi
 		for (int i = 0; i < numOfRivers * 500; i++)
 		{
 			Int2 randPos = new Int2(Random.Range(0, Map.Map.Width), Random.Range(0, Map.Map.Height));
-
-			if (Map.Map.Get(randPos).Height < Globals.MountainHeight && Map.Map.Get(randPos).Height >= Globals.MinGroundHeight)
-			{
+			if (NotWaterOrImpassable(randPos))
 				possibleRiverStarts.Add(randPos);
-			}
 		}
 
 		int k = 0;
@@ -366,12 +279,12 @@ public class MapGeneratorApi
 			if (possibleRiverStarts.Count > k &&
 			    RiverStartValue(possibleRiverStarts[k]) > 0)
 			{
-				var river = TryExpandRiver(possibleRiverStarts[k], new List<Int2>());
+				var river = TryExpandRiver(possibleRiverStarts[k]);
 
 				if (river != null)
 				{
 					foreach (var px in river)
-						Map.Map.Get(px).Height = Globals.MinGroundHeight - 0.05f;
+						Map.Map.Get(px).TerrainId = "River";
 					numOfRivers--;
 				}
 			}
@@ -381,24 +294,15 @@ public class MapGeneratorApi
 
 	private float RiverStartValue(Int2 startPos)
 	{
-		int numMountains = 0;
-		int numOceans = 0;
-		int numOthers = 0;
-		foreach (MapTileModel h in Map.Map.GetAdjacentValues(startPos))
-		{
-			if (h.Height >= Globals.MountainHeight)
-				numMountains++;
-			else if (h.Height == 0)
-				numOceans++;
-			else numOthers++;
-		}
+		int numMountains = GetAdjacentNumWithTrait(startPos, "Mountain");
+		int numOceans = GetAdjacentNumWithTrait(startPos, "Ocean");
 
 		if (numOceans == 0 && numMountains > 0 && numMountains < 4)
 			return 1f;
 		else return 0f;
 	}
 
-	private List<Int2> TryExpandRiver(Int2 pos, List<Int2> currPath)
+	private List<Int2> TryExpandRiver(Int2 pos)
 	{
 		Map2D<int> checkedTiles = new Map2D<int>(Map.Map.Width, Map.Map.Height);
 		SortedDupList<Int2> nextRiverTiles = new SortedDupList<Int2>();
@@ -414,12 +318,12 @@ public class MapGeneratorApi
 			nextRiverTiles.PopMin();
 			foreach (var neighbor in GetAdjacentRiverExpansions(shortestTile, checkedTiles))
 			{
-				if (Map.Map.Get(neighbor).Height < Globals.MinGroundHeight)
+				if (Map.Map.Get(neighbor).Terrain().Traits.Contains("Water"))
 				{
 					endTile = shortestTile;
 					break;
 				}
-				else if (Map.Map.Get(neighbor).Height <= Map.Map.Get(shortestTile).Height + 0.02f)
+				else if (Map.Map.Get(neighbor).Terrain().Height <= Map.Map.Get(shortestTile).Terrain().Height + 0.02f)
 				{
 					checkedTiles.Set(neighbor, checkedTiles.Get(shortestTile) - 1);
 					nextRiverTiles.Insert(neighbor, checkedTiles.Get(shortestTile) - 1);
@@ -443,7 +347,7 @@ public class MapGeneratorApi
 		List<Int2> expansionTiles = new List<Int2>();
 		foreach (Int2 neighbor in Map.Map.GetAdjacentPoints(pos))
 		{
-			if (checkedTiles.Get(neighbor) == 0 && Map.Map.Get(neighbor).Height < Globals.MountainHeight)
+			if (checkedTiles.Get(neighbor) == 0 && Map.Map.Get(neighbor).Terrain().Height <= Map.Map.Get(pos).Terrain().Height)
 				expansionTiles.Add(neighbor);
 		}
 		return expansionTiles;
@@ -481,52 +385,11 @@ public class MapGeneratorApi
 		Map.FillMapWithTerrain(defaultTerrain);
 	}
 
-	public void TerrainFillInOceans(string ocean)
-	{
-		foreach (Int2 point in Map.Map.GetMapPoints())
-		{
-			if (Map.Map.Get(point).Height < Globals.MinGroundHeight)
-				Map.Map.Get(point).TerrainId = ocean;
-		}
-	}
-
-	public void TerrainFillInSeaLevel(string seaLevel)
-	{
-		foreach (Int2 point in Map.Map.GetMapPoints())
-		{
-			if (IsSeaLevel(point))
-				Map.Map.Get(point).TerrainId = seaLevel;
-		}
-	}
-
-	public void TerrainFillInMountains(string mountain)
-	{
-		foreach (Int2 point in Map.Map.GetMapPoints())
-		{
-			if (Map.Map.Get(point).Height >= Globals.MountainHeight)
-				Map.Map.Get(point).TerrainId = mountain;
-		}
-	}
-
-	public void TerrainFillInRivers(string river)
-	{
-		foreach (Int2 point in Map.Map.GetMapPoints())
-		{
-			if (Map.Map.Get(point).Height < Globals.MinGroundHeight && NumBordersOfAtLeaseHeight(point, Globals.MinGroundHeight) >= 6)
-				Map.Map.Get(point).TerrainId = river;
-		}
-	}
-
-	private int NumBordersOfAtLeaseHeight(Int2 point, float height)
-	{
-		return Map.Map.GetAllNeighboringValues(point).Select((h) => h.Height >= height).Count();
-	}
-
 	public void TerrainEncourageStartAlongMountains(string terrain, float odds)
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
-			if(IsSeaLevel(point) && Helpers.Odds(odds) && BordersMountain(point))
+			if(NotWaterOrImpassable(point) && Helpers.Odds(odds) && BordersTerrainType(point, "Mountain"))
 				Map.Map.Get(point).TerrainId = terrain;
 		}
 	}
@@ -535,7 +398,7 @@ public class MapGeneratorApi
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
-			if (IsSeaLevel(point) && Helpers.Odds(odds) && BordersOcean(point))
+			if (NotWaterOrImpassable(point) && Helpers.Odds(odds) && BordersTerrainType(point, "Water"))
 				Map.Map.Get(point).TerrainId = terrain;
 		}
 	}
@@ -544,7 +407,7 @@ public class MapGeneratorApi
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
-			if (IsSeaLevel(point) && Helpers.Odds(odds))
+			if (NotWaterOrImpassable(point) && Helpers.Odds(odds))
 				Map.Map.Get(point).TerrainId = terrain;
 		}
 	}
@@ -556,9 +419,9 @@ public class MapGeneratorApi
 		{
 			foreach (Int2 point in Map.Map.GetMapPoints())
 			{
-				if (IsSeaLevel(point))
+				if (NotWaterOrImpassable(point))
 				{
-					int numAdjacent = GetAdjacentSeaLevelOfType(point, typeToExpand);
+					int numAdjacent = GetAdjacentNumOfType(point, typeToExpand);
 					if (Helpers.Odds(0.25f * numAdjacent))
 						Map.Map.Get(point).TerrainId = typeToExpand;
 				}
@@ -567,39 +430,30 @@ public class MapGeneratorApi
 		}
 	}
 
-	private int GetAdjacentSeaLevelOfType(Int2 point, string type)
+	private int GetAdjacentNumWithTrait(Int2 point, string trait)
 	{
 		int num = 0;
 		foreach (Int2 adjacent in Map.Map.GetAdjacentPoints(point))
 		{
-			if (IsSeaLevel(adjacent) && Map.Map.Get(adjacent).TerrainId == type)
+			if (Map.Map.Get(adjacent).Terrain().Traits.Contains(trait))
 				num++;
 		}
 		return num;
 	}
 
-	private bool IsSeaLevel(Int2 point)
+	private int GetAdjacentNumOfType(Int2 point, string type)
 	{
-		return Map.Map.Get(point).Height < Globals.MountainHeight && Map.Map.Get(point).Height >= Globals.MinGroundHeight;
+		int num = 0;
+		foreach (Int2 adjacent in Map.Map.GetAdjacentPoints(point))
+		{
+			if (NotWaterOrImpassable(adjacent) && Map.Map.Get(adjacent).TerrainId == type)
+				num++;
+		}
+		return num;
 	}
 
-	protected bool BordersMountain(Int2 tile)
+	private bool NotWaterOrImpassable(Int2 point)
 	{
-		foreach (MapTileModel neighbor in Map.Map.GetAllNeighboringValues(tile))
-		{
-			if (neighbor.Height >= Globals.MountainHeight)
-				return true;
-		}
-		return false;
-	}
-
-	protected bool BordersOcean(Int2 tile)
-	{
-		foreach (Int2 neighbor in Map.Map.GetAdjacentPoints(tile))
-		{
-			if (Map.Map.Get(neighbor).Height < Globals.MinGroundHeight)
-				return true;
-		}
-		return false;
+		return !Map.Map.Get(point).Terrain().Traits.Contains("Impassable") && !Map.Map.Get(point).Terrain().Traits.Contains("Water");
 	}
 }

@@ -28,6 +28,15 @@ public class JsonTests
 		Debug.Log(TestMap2D.ToSerializable());
 	}
 
+	[MenuItem("My Menu/Test Terrain Json")]
+	public static void TestTerrainJson()
+	{
+		TerrainModel terrain = new TerrainModel();
+		terrain.LookupColor = Color.blue;
+
+		Debug.Log(JsonUtility.ToJson(terrain));
+	}
+
 	[MenuItem("My Menu/Test Realm Json")]
 	public static void TestRealmJson()
 	{

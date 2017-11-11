@@ -20,14 +20,6 @@ public class MapModel
 		}
 	}
 
-	public void FillMapWithHeight(float height)
-	{
-		foreach (MapTileModel mapTileModel in Map.GetMapValues())
-		{
-			mapTileModel.Height = height;
-		}
-	}
-
 	public void FillMapWithTerrain(string terrainId)
 	{
 		foreach (MapTileModel mapTileModel in Map.GetMapValues())

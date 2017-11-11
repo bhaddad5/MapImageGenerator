@@ -18,6 +18,11 @@ public static class TerrainParser
 [Serializable]
 public class TerrainModel : ParsableData
 {
+	public static float MinGroundHeight()
+	{
+		return 0.1f;
+	}
+
 	public enum GroundTraits
 	{
 		Water,
@@ -37,6 +42,7 @@ public class TerrainModel : ParsableData
 	};
 
 	public string Texture;
+	public float Height;
 	public float Difficulty = 0.1f;
 	public string[] Traits = new string[0];
 	public Color LookupColor;

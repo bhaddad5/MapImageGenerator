@@ -13,7 +13,6 @@ public class MapBuilder : MonoBehaviour
 
 	public GameObject terrainMeshDisplay;
 	public GameObject waterPlane;
-	public GameObject generatedMapInputDisplay;
 	public GameObject generatedTerrainMapInputDisplay;
 
 	public GameObject SettlementInfoPrefab;
@@ -107,7 +106,7 @@ public class MapBuilder : MonoBehaviour
 		waterPlane.SetActive(true);
 		waterPlane.transform.localScale = new Vector3(CurrentMap.Map.Width / 10, 1, CurrentMap.Map.Height / 10);
 		waterPlane.transform.parent = transform;
-		waterPlane.transform.localPosition = new Vector3(CurrentMap.Map.Width / 2, Globals.MinGroundHeight * 2f - 0.01f, CurrentMap.Map.Height / 2);
+		waterPlane.transform.localPosition = new Vector3(CurrentMap.Map.Width / 2, TerrainModel.MinGroundHeight() * 2f - 0.01f, CurrentMap.Map.Height / 2);
 
 		displayText.text = "Artificing Lands";
 		yield return null;
@@ -118,7 +117,6 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Presenting World";
 		yield return null;
 
-		generatedMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapTextureHelpers.GetHeightMapTexture(CurrentMap);
 		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapTextureHelpers.GetTerrainTexture(CurrentMap);
 
 		List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), CurrentMap);

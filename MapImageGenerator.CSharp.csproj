@@ -85,7 +85,6 @@
     <Compile Include="Assets\ExternalAssets\OBJImport\TextureLoader.cs" />
     <Compile Include="Assets\ExternalAssets\Standard Assets\Environment\Water (Basic)\Scripts\WaterBasic.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Culture.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\Globals.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Helpers\Helpers.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Helpers\Map2D.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Kingdom.cs" />
