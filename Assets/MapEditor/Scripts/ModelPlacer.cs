@@ -1,27 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 
 public class ModelPlacer
 {
 	Transform objectParent;
+	private MapModel Map;
 
-	public void PlaceModels(Transform par, MapModel Map)
+	public void PlaceModels(Transform par, MapModel map)
 	{
+		Map = map; 
 		objectParent = par;
+		foreach (Int2 tile in Map.Map.GetMapPoints())
+		{
+			PlaceEnvironmentObjectsOnTile(tile, Map.Map.Get(tile).Terrain().EntityPlacements.ToList());
+		}
 		foreach (Int2 tile in Map.Map.GetMapPoints())
 		{
 			//PlaceCultureObjectsOnTile(tile, Map.Kingdoms[Map.Map.Get(tile).KingdomId].Culture, Map.Map.Get(tile).Terrain.Traits);
 		}
-		foreach (Int2 tile in Map.Map.GetMapPoints())
-		{
-			//PlaceEnvironmentObjectsOnTile(tile, Map.Map.Get(tile).Entities);
-		}
-
-		//CombineAllMeshes();
+		CombineAllMeshes();
 	}
-	/*
+	
 	private void PlaceEnvironmentObjectsOnTile(Int2 tile, List<EntityPlacementModel> infos)
 	{
 		foreach (var info in infos)
@@ -30,7 +32,23 @@ public class ModelPlacer
 		}
 	}
 
-	private void PlaceCultureObjectsOnTile(Int2 tile, CultureModel culture, List<string> traits)
+	private void PlaceModels(Int2 tile, GameObject obj, EntityPlacementModel.PlacementMode mode, int num)
+	{
+		if (mode == EntityPlacementModel.PlacementMode.Scattered)
+			PlaceObjectsOnTile(tile, num, obj);
+		if (mode == EntityPlacementModel.PlacementMode.ScatteredBordered)
+			PlaceObjectsOnTileWithBorder(tile, num, obj);
+		if (mode == EntityPlacementModel.PlacementMode.Corners)
+			PlaceTurretsOnCorners(tile, obj);
+		if (mode == EntityPlacementModel.PlacementMode.CityWalls)
+			PlaceWallsOnEdges(tile, obj);
+		if (mode == EntityPlacementModel.PlacementMode.CityGates)
+			PlaceGatesOnEdges(tile, obj);
+		if (mode == EntityPlacementModel.PlacementMode.Bridge)
+			PlaceBridgeOnTile(tile, obj);
+	}
+
+	/*private void PlaceCultureObjectsOnTile(Int2 tile, CultureModel culture, List<string> traits)
 	{
 		foreach (string trait in traits)
 		{
@@ -43,29 +61,11 @@ public class ModelPlacer
 				}
 			}
 		}
-	}
-
-	private void PlaceModels(Int2 tile, GameObject obj, ModelPlacementInfo.PlacementMode mode, int num)
-	{
-		if (mode == ModelPlacementInfo.PlacementMode.Scattered)
-			PlaceObjectsOnTile(tile, num, obj);
-		if (mode == ModelPlacementInfo.PlacementMode.ScatteredBordered)
-			PlaceObjectsOnTileWithBorder(tile, num, obj);
-		if(mode == ModelPlacementInfo.PlacementMode.Corners)
-			PlaceTurretsOnCorners(tile, obj);
-		if(mode == ModelPlacementInfo.PlacementMode.CityWalls)
-			PlaceWallsOnEdges(tile, obj);
-		if(mode == ModelPlacementInfo.PlacementMode.CityGates)
-			PlaceGatesOnEdges(tile, obj);
-		if (mode == ModelPlacementInfo.PlacementMode.Bridge)
-			PlaceBridgeOnTile(tile, obj);
-	}
-
-
+	}*/
 
 	private void PlaceWallsOnEdges(Int2 tile, GameObject wall)
 	{
-		foreach (Int2 pt in MapTextureHelpers.Terrain.GetAdjacentPoints(tile))
+		foreach (Int2 pt in Map.Map.GetAdjacentPoints(tile))
 		{
 			if (TileIsCityBorder(pt) && !TileIsRoad(pt))
 			{
@@ -76,7 +76,7 @@ public class ModelPlacer
 
 	private void PlaceGatesOnEdges(Int2 tile, GameObject gate)
 	{
-		foreach (Int2 pt in MapTextureHelpers.Terrain.GetAdjacentPoints(tile))
+		foreach (Int2 pt in Map.Map.GetAdjacentPoints(tile))
 		{
 			if (TileIsRoad(pt))
 			{
@@ -87,19 +87,21 @@ public class ModelPlacer
 
 	private bool TileIsRoad(Int2 tile)
 	{
-		return MapTextureHelpers.Terrain.PosInBounds(tile) && MapTextureHelpers.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.Road);
+		return false;
+		//return Map.Map.PosInBounds(tile) && Map.Map.Get(tile).Terrain().HasTrait(TerrainInfo.GroundTraits.Road);
 	}
 
 	private bool TileIsCityBorder(Int2 tile)
 	{
-		return MapTextureHelpers.Terrain.PosInBounds(tile) &&
-		       !MapTextureHelpers.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.Impassable) &&
-		       !MapTextureHelpers.Terrain.Get(tile).HasTrait(TerrainInfo.GroundTraits.City);
+		/*return Map.Map.PosInBounds(tile) &&
+		       !Map.Map.Get(tile).Terrain().HasTrait(TerrainModel.GroundTraits.Impassable) &&
+		       !Map.Map.Get(tile).Terrain().HasTrait(TerrainInfo.GroundTraits.City);*/
+		return false;
 	}
 
 	private void PlaceTurretsOnCorners(Int2 tile, GameObject turret)
 	{
-		foreach (var t in MapTextureHelpers.Terrain.GetDiagonalPoints(tile))
+		foreach (var t in Map.Map.GetDiagonalPoints(tile))
 		{
 			if (TileIsCityBorder(t) ||
 			TileIsCityBorder(tile + new Int2(t.X - tile.X, 0)) ||
@@ -112,12 +114,12 @@ public class ModelPlacer
 
 	private void PlaceBridgeOnTile(Int2 tile, GameObject bridge)
 	{
-		if (MapTextureHelpers.Heights.Get(tile) < Globals.MinGroundHeight)
+		if (Map.Map.Get(tile).Terrain().HasTrait(TerrainModel.GroundTraits.Water))
 		{
-			foreach (var t in MapTextureHelpers.Terrain.GetAdjacentPoints(tile))
+			foreach (var t in Map.Map.GetAdjacentPoints(tile))
 			{
-				if (MapTextureHelpers.Terrain.Get(t).HasTrait(TerrainInfo.GroundTraits.Road) ||
-				    MapTextureHelpers.Terrain.Get(t).HasTrait(TerrainInfo.GroundTraits.City))
+				/*if (Map.Map.Get(t).HasTrait(TerrainInfo.GroundTraits.Road) ||
+				    Map.Map.Get(t).HasTrait(TerrainInfo.GroundTraits.City))
 				{
 					if (MapTextureHelpers.Heights.Get(t) >= Globals.MinGroundHeight)
 					{
@@ -127,7 +129,7 @@ public class ModelPlacer
 						SpawnObjectAtPos(GetCenterPlacementTrans(tile, rot, bridge, true), bridge);
 						break;
 					}
-				}
+				}*/
 			}
 		}
 	}
@@ -356,5 +358,5 @@ public class ModelPlacer
 			mats = mf.GetComponent<MeshRenderer>().sharedMaterials;
 			AddVerts(mf);
 		}
-	}*/
+	}
 }
