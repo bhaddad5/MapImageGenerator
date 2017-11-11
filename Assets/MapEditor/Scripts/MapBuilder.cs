@@ -46,7 +46,6 @@ public class MapBuilder : MonoBehaviour
 		if(File.Exists(path))
 			File.Delete(path);
 		StreamWriter sw = File.CreateText(path);
-		Debug.Log(json.Length);
 		sw.WriteLine(json);
 		sw.Close();
 	}

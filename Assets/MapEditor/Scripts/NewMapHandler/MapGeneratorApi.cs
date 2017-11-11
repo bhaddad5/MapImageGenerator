@@ -168,27 +168,33 @@ public class MapGeneratorApi
 
 	public void TerrainRandomlyExpandFromTypes(string terrain, float minExpansion, float maxExpansion, params string[] terrainTypes)
 	{
+		Map2D<bool> ModifiedTiles = new Map2D<bool>(Map.Map.Width, Map.Map.Height);
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
 			foreach (string terrainType in terrainTypes)
 			{
-				if(BordersTerrainType(point, terrainType))
-					TerrainExpandFromPoint(point, terrainType, Random.Range(minExpansion, maxExpansion), terrainTypes);
+				if (BordersTerrainType(point, terrainType))
+				{
+					var ignoreTypes = terrainTypes.ToList();
+					ignoreTypes.Add(terrain);
+					TerrainExpandFromPoint(point, terrain, Random.Range(minExpansion, maxExpansion), ModifiedTiles, ignoreTypes.ToArray());
+					break;
+				}
 			}
 		}
 	}
 
 	public void TerrainRandomlyExpand(string terrain, float avgExpansion)
 	{
+		Map2D<bool> ModifiedTiles = new Map2D<bool>(Map.Map.Width, Map.Map.Height);
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
 			if (Map.Map.Get(point).TerrainId == terrain)
-				TerrainExpandFromPoint(point, terrain, Helpers.Randomize(avgExpansion), terrain);
+				TerrainExpandFromPoint(point, terrain, Helpers.Randomize(avgExpansion), ModifiedTiles, terrain);
 		}
 	}
 
-	//TODO: FIX!?!
-	private void TerrainExpandFromPoint(Int2 point, string terrain, float numExpansionsLevels, params string[] ignoredTypes)
+	private void TerrainExpandFromPoint(Int2 point, string terrain, float numExpansionsLevels, Map2D<bool> modifiedTiles, params string[] ignoredTypes)
 	{
 		SortedDupList<Int2> TerrainFrontier = new SortedDupList<Int2>();
 		TerrainFrontier.Insert(point, numExpansionsLevels);
@@ -198,9 +204,10 @@ public class MapGeneratorApi
 			float currStrength = TerrainFrontier.TopKey();
 			TerrainFrontier.Pop();
 			Map.Map.Get(currPos).TerrainId = terrain;
+			modifiedTiles.Set(currPos, true);
 			foreach (Int2 pos in Map.Map.GetAdjacentPoints(currPos))
 			{
-				if (!TerrainFrontier.ContainsValue(pos) && !ignoredTypes.Contains(Map.Map.Get(pos).TerrainId) && currStrength > 0)
+				if (!modifiedTiles.Get(pos) && !TerrainFrontier.ContainsValue(pos) && !ignoredTypes.Contains(Map.Map.Get(pos).TerrainId) && currStrength > 0)
 				{
 					TerrainFrontier.Insert(pos, currStrength - 1);
 				}
@@ -323,7 +330,7 @@ public class MapGeneratorApi
 					endTile = shortestTile;
 					break;
 				}
-				else if (Map.Map.Get(neighbor).Terrain().Height <= Map.Map.Get(shortestTile).Terrain().Height + 0.02f)
+				else if (Map.Map.Get(neighbor).Terrain().Height <= Map.Map.Get(shortestTile).Terrain().Height)
 				{
 					checkedTiles.Set(neighbor, checkedTiles.Get(shortestTile) - 1);
 					nextRiverTiles.Insert(neighbor, checkedTiles.Get(shortestTile) - 1);
@@ -412,18 +419,21 @@ public class MapGeneratorApi
 		}
 	}
 
-	//TODO: FIX!?!
 	public void TerrainExpandSimmilarTypes(int numPasses, string typeToExpand)
 	{
+		Map2D<bool> ChangedTiles = new Map2D<bool>(Map.Map.Width, Map.Map.Height);
 		for (int i = 0; i < numPasses; i++)
 		{
 			foreach (Int2 point in Map.Map.GetMapPoints())
 			{
 				if (NotWaterOrImpassable(point))
 				{
-					int numAdjacent = GetAdjacentNumOfType(point, typeToExpand);
+					int numAdjacent = GetAdjacentNumOfType(point, typeToExpand, ChangedTiles);
 					if (Helpers.Odds(0.25f * numAdjacent))
+					{
+						ChangedTiles.Set(point, true);
 						Map.Map.Get(point).TerrainId = typeToExpand;
+					}
 				}
 				
 			}
@@ -441,12 +451,12 @@ public class MapGeneratorApi
 		return num;
 	}
 
-	private int GetAdjacentNumOfType(Int2 point, string type)
+	private int GetAdjacentNumOfType(Int2 point, string type, Map2D<bool> invalidTiles)
 	{
 		int num = 0;
 		foreach (Int2 adjacent in Map.Map.GetAdjacentPoints(point))
 		{
-			if (NotWaterOrImpassable(adjacent) && Map.Map.Get(adjacent).TerrainId == type)
+			if (!invalidTiles.Get(adjacent) && NotWaterOrImpassable(adjacent) && Map.Map.Get(adjacent).TerrainId == type)
 				num++;
 		}
 		return num;

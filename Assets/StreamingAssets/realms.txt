@@ -16,9 +16,10 @@
 	"DisplayName":"The Midlands",
 	"MapBuildingCommands":[
 		"TerrainDefaultFill Ocean",
-		"TerrainRandomlyPlaceAlongLine Mountain 6 4 50 3",
-		"TerrainRandomlyExpandFromTypes Winderness 1 1 Mountain Wilderness",
-		"TerrainRandomizeEdges Ocean 2",
+		"TerrainRandomlyPlaceAlongLine Mountain 6 4 50 1",
+		"TerrainRandomizeEdges Ocean 1",
+		"TerrainRandomlyExpandFromTypes Wilderness 1 5 Mountain",
+		"TerrainRandomizeEdges Ocean 1",
 		"CreateRivers 10 20",
 		"TerrainEncourageStartAlongMountains Forest 0.15",
 		"TerrainExpandSimmilarTypes 6 Forest",
