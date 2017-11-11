@@ -276,7 +276,7 @@ public class MapGeneratorApi
 		for (int i = 0; i < numOfRivers * 500; i++)
 		{
 			Int2 randPos = new Int2(Random.Range(0, Map.Map.Width), Random.Range(0, Map.Map.Height));
-			if (NotWaterOrImpassable(randPos))
+			if (!WaterOrMountain(randPos))
 				possibleRiverStarts.Add(randPos);
 		}
 
@@ -396,7 +396,7 @@ public class MapGeneratorApi
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
-			if(NotWaterOrImpassable(point) && Helpers.Odds(odds) && BordersTerrainType(point, "Mountain"))
+			if(!WaterOrMountain(point) && Helpers.Odds(odds) && BordersTerrainType(point, "Mountain"))
 				Map.Map.Get(point).TerrainId = terrain;
 		}
 	}
@@ -405,7 +405,7 @@ public class MapGeneratorApi
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
-			if (NotWaterOrImpassable(point) && Helpers.Odds(odds) && BordersTerrainType(point, "Water"))
+			if (!WaterOrMountain(point) && Helpers.Odds(odds) && BordersTerrainType(point, "Water"))
 				Map.Map.Get(point).TerrainId = terrain;
 		}
 	}
@@ -414,19 +414,19 @@ public class MapGeneratorApi
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
-			if (NotWaterOrImpassable(point) && Helpers.Odds(odds))
+			if (!WaterOrMountain(point) && Helpers.Odds(odds))
 				Map.Map.Get(point).TerrainId = terrain;
 		}
 	}
 
 	public void TerrainExpandSimmilarTypes(int numPasses, string typeToExpand)
 	{
-		Map2D<bool> ChangedTiles = new Map2D<bool>(Map.Map.Width, Map.Map.Height);
 		for (int i = 0; i < numPasses; i++)
 		{
+			Map2D<bool> ChangedTiles = new Map2D<bool>(Map.Map.Width, Map.Map.Height);
 			foreach (Int2 point in Map.Map.GetMapPoints())
 			{
-				if (NotWaterOrImpassable(point))
+				if (!WaterOrMountain(point) && Map.Map.Get(point).TerrainId != typeToExpand)
 				{
 					int numAdjacent = GetAdjacentNumOfType(point, typeToExpand, ChangedTiles);
 					if (Helpers.Odds(0.25f * numAdjacent))
@@ -456,14 +456,14 @@ public class MapGeneratorApi
 		int num = 0;
 		foreach (Int2 adjacent in Map.Map.GetAdjacentPoints(point))
 		{
-			if (!invalidTiles.Get(adjacent) && NotWaterOrImpassable(adjacent) && Map.Map.Get(adjacent).TerrainId == type)
+			if (!invalidTiles.Get(adjacent) && !WaterOrMountain(adjacent) && Map.Map.Get(adjacent).TerrainId == type)
 				num++;
 		}
 		return num;
 	}
 
-	private bool NotWaterOrImpassable(Int2 point)
+	private bool WaterOrMountain(Int2 point)
 	{
-		return !Map.Map.Get(point).Terrain().Traits.Contains("Impassable") && !Map.Map.Get(point).Terrain().Traits.Contains("Water");
+		return Map.Map.Get(point).Terrain().Traits.Contains("Mountain") || Map.Map.Get(point).Terrain().Traits.Contains("Water");
 	}
 }
