@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class RiverDisplayHandler : MonoBehaviour
+public class OverlayDisplayHandler : MonoBehaviour
 {
 	public Material OverlaysMat;
 	public Material WaterMat;
@@ -45,7 +45,8 @@ public class RiverDisplayHandler : MonoBehaviour
 
 	public OverlayTextures GetOverlayMats(MapModel Map)
 	{
-		Texture2D WaterMask = new Texture2D(Map.Map.Width * 128, Map.Map.Height * 128);
+		Texture2D WaterMaskRivers = new Texture2D(Map.Map.Width * 128, Map.Map.Height * 128);
+		Texture2D WaterMaskOceans = new Texture2D(Map.Map.Width * 128, Map.Map.Height * 128);
 		Texture2D OverlaysTexture = new Texture2D(Map.Map.Width * 128, Map.Map.Height * 128);
 		List<Color> colors = new List<Color>();
 		for (int i = 0; i < Map.Map.Width * 128 * Map.Map.Height * 128; i++)
@@ -54,8 +55,10 @@ public class RiverDisplayHandler : MonoBehaviour
 		}
 		OverlaysTexture.SetPixels(colors.ToArray());
 		OverlaysTexture.Apply();
-		WaterMask.SetPixels(colors.ToArray());
-		WaterMask.Apply();
+		WaterMaskRivers.SetPixels(colors.ToArray());
+		WaterMaskRivers.Apply();
+		WaterMaskOceans.SetPixels(colors.ToArray());
+		WaterMaskOceans.Apply();
 
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
@@ -63,19 +66,20 @@ public class RiverDisplayHandler : MonoBehaviour
 			{
 				OverlaysTexture.SetPixels(point.X * 128, point.Y * 128, 128, 128, 
 					GetTilePixels(Map, point, TerrainModel.GroundTraits.Water, RiverLakeOverlay, RiverEndOverlay, RiverBendOverlay, RiverStraightOverlay, RiverForkOverlay, RiverCrossOverlay));
-				WaterMask.SetPixels(point.X * 128, point.Y * 128, 128, 128,
+				WaterMaskRivers.SetPixels(point.X * 128, point.Y * 128, 128, 128,
 					GetTilePixels(Map, point, TerrainModel.GroundTraits.Water, RiverLakeOverlay, RiverEndMask, RiverBendMask, RiverStraightMask, RiverForkMask, RiverCrossMask));
 			}
 			if (Map.Map.Get(point).Terrain().HasTrait(TerrainModel.GroundTraits.Ocean))
 			{
-				WaterMask.SetPixels(point.X * 128, point.Y * 128, 128, 128,
+				WaterMaskOceans.SetPixels(point.X * 128, point.Y * 128, 128, 128,
 					GetTilePixels(Map, point, TerrainModel.GroundTraits.Ocean, CoastLakeMask, CoastBayMask, CoastBentMask, CoastStraightMask, CoastFlatMask, CoastOceanMask));
 			}
 		}
 		OverlaysTexture.Apply();
-		WaterMask.Apply();
+		WaterMaskRivers.Apply();
+		WaterMaskOceans.Apply();
 		OverlaysMat.mainTexture = OverlaysTexture;
-		WaterMat.SetTexture("_MaskTex", WaterMask);
+		WaterMat.SetTexture("_MaskTex", ImageHelpers.AlphaBlend(WaterMaskRivers, WaterMaskOceans));
 
 		return new OverlayTextures(OverlaysMat, WaterMat);
 	}

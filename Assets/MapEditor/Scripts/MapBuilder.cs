@@ -21,7 +21,7 @@ public class MapBuilder : MonoBehaviour
 
 	private GameObject objectParent;
 
-	public RiverDisplayHandler RiverDisplayHandler;
+	public OverlayDisplayHandler OverlayDisplayHandler;
 
 	private MapModel CurrentMap;
 
@@ -190,7 +190,7 @@ public class MapBuilder : MonoBehaviour
 		if(gtToFlush.Count > 0)
 			mats.Add(FlushGroundInfoToMat(gtToFlush, Map));
 
-		RiverDisplayHandler.OverlayTextures overlays = RiverDisplayHandler.GetOverlayMats(Map);
+		OverlayDisplayHandler.OverlayTextures overlays = OverlayDisplayHandler.GetOverlayMats(Map);
 		mats.Add(overlays.Overlays);
 		mats.Add(overlays.Water);
 

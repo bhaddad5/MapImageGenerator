@@ -59,15 +59,11 @@ public class MapMeshBuilder
 
 	private void RandomizeVertHeights()
 	{
-		RandomizeCoastHeights();
-
 		int numPasses = 3;
 		for (int i = 0; i < numPasses; i++)
 		{
 			RandomizeVertHeightsPass();
 		}
-
-		RandomizeCoastBumps();
 	}
 
 	private void RandomizeVertHeightsPass()
@@ -81,41 +77,6 @@ public class MapMeshBuilder
 			}
 			else vertHeights.Set(pos, TerrainModel.MinGroundHeight() - 0.05f);
 		}
-	}
-
-	private void RandomizeCoastHeights()
-	{
-		Map2D<float> newHeights = new Map2D<float>(vertHeights.Width, vertHeights.Height);
-		foreach (Int2 point in vertHeights.GetMapPoints())
-		{
-			newHeights.Set(point, vertHeights.Get(point));
-			if (IsOceanCoastVert(point) && Helpers.Odds(0.9f))
-				newHeights.Set(point, TerrainModel.MinGroundHeight());
-		}
-		vertHeights = newHeights;
-	}
-
-	private void RandomizeCoastBumps()
-	{
-		foreach (Int2 point in vertHeights.GetMapPoints())
-		{
-			if (IsOceanCoastVert(point))
-				vertHeights.Set(point, Random.Range(0, TerrainModel.MinGroundHeight() - 0.02f));
-		}
-	}
-
-	private bool IsOceanCoastVert(Int2 pos)
-	{
-		if (vertHeights.Get(pos) >= TerrainModel.MinGroundHeight())
-			return false;
-
-		foreach (var neighbor in vertHeights.GetAdjacentValues(pos))
-		{
-			if (neighbor >= TerrainModel.MinGroundHeight())
-				return true;
-		}
-
-		return false;
 	}
 
 	private float NeighborAverageHeight(Int2 pos)
