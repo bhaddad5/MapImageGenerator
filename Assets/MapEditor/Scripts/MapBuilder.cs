@@ -94,6 +94,8 @@ public class MapBuilder : MonoBehaviour
 
 	private IEnumerator DisplayMap()
 	{
+		displayText.enabled = true;
+
 		terrainMeshDisplay.transform.localPosition = Vector3.zero;
 		for (int i = 0; i < terrainMeshDisplay.transform.childCount; i++)
 		{
@@ -194,7 +196,7 @@ public class MapBuilder : MonoBehaviour
 		if(gtToFlush.Count > 0)
 			mats.Add(FlushGroundInfoToMat(gtToFlush, Map));
 
-		RiverDisplayHandler.OverlayTextures overlays = RiverDisplayHandler.GetRiversMat(Map);
+		RiverDisplayHandler.OverlayTextures overlays = RiverDisplayHandler.GetOverlayMats(Map);
 		mats.Add(overlays.Overlays);
 		mats.Add(overlays.Water);
 
