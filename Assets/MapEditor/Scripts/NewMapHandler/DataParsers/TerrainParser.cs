@@ -31,6 +31,8 @@ public class TerrainModel : ParsableData
 		Fertile,
 		Swamp,
 		Forest,
+		River,
+		Ocean,
 	}
 
 	private Dictionary<string, float> Defense = new Dictionary<string, float>()

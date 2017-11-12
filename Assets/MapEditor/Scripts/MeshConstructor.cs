@@ -5,12 +5,12 @@ using System.Linq;
 
 class MeshConstructor
 {
-	public static List<Mesh> BuildMeshes(Map2D<float> vertHeights, float scale, float verticalScale)
+	public static List<Mesh> BuildMeshes(Map2D<float> vertHeights, float scale)
 	{
 		List<Mesh> builtMeshes = new List<Mesh>();
 
 
-		List<Vector3> vertices = SetVerticesFromHeights(vertHeights, scale, verticalScale);
+		List<Vector3> vertices = SetVerticesFromHeights(vertHeights, scale);
 		List<int> indices = SetTriangles(vertHeights.Width, vertHeights.Height);
 		List<Vector2> uvCoords = SetUVs(vertHeights.Width, vertHeights.Height);
 
@@ -22,12 +22,12 @@ class MeshConstructor
 		return builtMeshes;
 	}
 
-	private static List<Vector3> SetVerticesFromHeights(Map2D<float> vertHeights, float scale, float verticalScale)
+	private static List<Vector3> SetVerticesFromHeights(Map2D<float> vertHeights, float scale)
 	{
 		List<Vector3> vertices = new List<Vector3>();
 		foreach (Int2 pos in vertHeights.GetMapPointsFlipped())
 		{
-			vertices.Add(new Vector3(pos.X/scale, vertHeights.Get(pos) * verticalScale, pos.Y / scale));
+			vertices.Add(new Vector3(pos.X/scale, vertHeights.Get(pos), pos.Y / scale));
 		}
 		return vertices;
 	}

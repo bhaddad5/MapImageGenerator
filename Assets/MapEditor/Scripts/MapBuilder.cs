@@ -13,7 +13,6 @@ public class MapBuilder : MonoBehaviour
 	public Text displayText;
 
 	public GameObject terrainMeshDisplay;
-	public GameObject waterPlane;
 	public GameObject generatedTerrainMapInputDisplay;
 	public GameObject GeneratedRiversMapDisplay;
 
@@ -107,11 +106,6 @@ public class MapBuilder : MonoBehaviour
 			Destroy(objectParent);
 		objectParent = new GameObject("objectParent");
 		objectParent.transform.SetParent(transform);
-
-		waterPlane.SetActive(true);
-		waterPlane.transform.localScale = new Vector3(CurrentMap.Map.Width / 10, 1, CurrentMap.Map.Height / 10);
-		waterPlane.transform.parent = transform;
-		waterPlane.transform.localPosition = new Vector3(CurrentMap.Map.Width / 2, TerrainModel.MinGroundHeight() * 2f - 0.01f, CurrentMap.Map.Height / 2);
 
 		displayText.text = "Artificing Lands";
 		yield return null;

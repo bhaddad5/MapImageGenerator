@@ -22,6 +22,15 @@ public class RiverDisplayHandler : MonoBehaviour
 	public Texture2D RiverCrossMask;
 	public Texture2D RiverLakeMask;
 
+	public Texture2D CoastFlatMask;
+	public Texture2D CoastBayMask;
+	public Texture2D CoastBentMask;
+	public Texture2D CoastLakeMask;
+	public Texture2D CoastOceanMask;
+	public Texture2D CoastStraightMask;
+
+	private int textureSize = 128;
+
 	public class OverlayTextures
 	{
 		public Material Overlays;
@@ -52,9 +61,15 @@ public class RiverDisplayHandler : MonoBehaviour
 		{
 			if (Map.Map.Get(point).Terrain().HasTrait(TerrainModel.GroundTraits.Water))
 			{
-				OverlayAndMaskPixels px = GetRiverTilePixels(Map, point);
-				OverlaysTexture.SetPixels(point.X * 128, point.Y * 128, 128, 128, px.OverlayPixels);
-				WaterMask.SetPixels(point.X * 128, point.Y * 128, 128, 128, px.MaskPixels);
+				OverlaysTexture.SetPixels(point.X * 128, point.Y * 128, 128, 128, 
+					GetTilePixels(Map, point, TerrainModel.GroundTraits.Water, RiverLakeOverlay, RiverEndOverlay, RiverBendOverlay, RiverStraightOverlay, RiverForkOverlay, RiverCrossOverlay));
+				WaterMask.SetPixels(point.X * 128, point.Y * 128, 128, 128,
+					GetTilePixels(Map, point, TerrainModel.GroundTraits.Water, RiverLakeOverlay, RiverEndMask, RiverBendMask, RiverStraightMask, RiverForkMask, RiverCrossMask));
+			}
+			if (Map.Map.Get(point).Terrain().HasTrait(TerrainModel.GroundTraits.Ocean))
+			{
+				WaterMask.SetPixels(point.X * 128, point.Y * 128, 128, 128,
+					GetTilePixels(Map, point, TerrainModel.GroundTraits.Ocean, CoastLakeMask, CoastBayMask, CoastBentMask, CoastStraightMask, CoastFlatMask, CoastOceanMask));
 			}
 		}
 		OverlaysTexture.Apply();
@@ -65,21 +80,8 @@ public class RiverDisplayHandler : MonoBehaviour
 		return new OverlayTextures(OverlaysMat, WaterMat);
 	}
 
-	public class OverlayAndMaskPixels
-	{
-		public Color[] OverlayPixels;
-		public Color[] MaskPixels;
-
-		private int textureSize = 128;
-
-		public OverlayAndMaskPixels(Texture2D overTex, Texture2D maskTex, int numRotations)
-		{
-			OverlayPixels = RotateMatrix(overTex.GetPixels(), textureSize, numRotations);
-			MaskPixels = RotateMatrix(maskTex.GetPixels(), textureSize, numRotations);
-		}
-	}
-
-	public OverlayAndMaskPixels GetRiverTilePixels(MapModel Map, Int2 tile)
+	public Color[] GetTilePixels(MapModel Map, Int2 tile, TerrainModel.GroundTraits adjacentTrait, 
+		Texture2D noSides, Texture2D oneSide, Texture2D twoAdjSides, Texture2D twoOppSides, Texture2D threeSides, Texture2D fourSides)
 	{
 		bool topBorders = true;
 		bool leftBorders = true;
@@ -88,57 +90,55 @@ public class RiverDisplayHandler : MonoBehaviour
 		foreach (Int2 adjacent in Map.Map.GetAdjacentPoints(tile))
 		{
 			if (adjacent.X == tile.X && adjacent.Y == tile.Y + 1 &&
-			    !Map.Map.Get(adjacent).Terrain().HasTrait(TerrainModel.GroundTraits.Water))
+			    !Map.Map.Get(adjacent).Terrain().HasTrait(adjacentTrait))
 				topBorders = false;
 			if (adjacent.X == tile.X - 1 && adjacent.Y == tile.Y &&
-			    !Map.Map.Get(adjacent).Terrain().HasTrait(TerrainModel.GroundTraits.Water))
+			    !Map.Map.Get(adjacent).Terrain().HasTrait(adjacentTrait))
 				leftBorders = false;
 			if (adjacent.X == tile.X + 1 && adjacent.Y == tile.Y &&
-			    !Map.Map.Get(adjacent).Terrain().HasTrait(TerrainModel.GroundTraits.Water))
+			    !Map.Map.Get(adjacent).Terrain().HasTrait(adjacentTrait))
 				rightBorders = false;
 			if (adjacent.X == tile.X && adjacent.Y == tile.Y - 1 &&
-			    !Map.Map.Get(adjacent).Terrain().HasTrait(TerrainModel.GroundTraits.Water))
+			    !Map.Map.Get(adjacent).Terrain().HasTrait(adjacentTrait))
 				bottomBorders = false;
 		}
 
-		int riverWidth = RiverStraightOverlay.width;
-
 		if (topBorders && bottomBorders && !leftBorders && !rightBorders)
-			return new OverlayAndMaskPixels(RiverStraightOverlay, RiverStraightMask, 0);
+			return RotateMatrix(twoOppSides.GetPixels(), textureSize, 0);
 		if (!topBorders && !bottomBorders && leftBorders && rightBorders)
-			return new OverlayAndMaskPixels(RiverStraightOverlay, RiverStraightMask, 1);
+			return RotateMatrix(twoOppSides.GetPixels(), textureSize, 1);
 
 		if (!topBorders && bottomBorders && !leftBorders && !rightBorders)
-			return new OverlayAndMaskPixels(RiverEndOverlay, RiverEndMask, 0);
+			return RotateMatrix(oneSide.GetPixels(), textureSize, 0);
 		if (!topBorders && !bottomBorders && !leftBorders && rightBorders)
-			return new OverlayAndMaskPixels(RiverEndOverlay, RiverEndMask, 1);
+			return RotateMatrix(oneSide.GetPixels(), textureSize, 1);
 		if (topBorders && !bottomBorders && !leftBorders && !rightBorders)
-			return new OverlayAndMaskPixels(RiverEndOverlay, RiverEndMask, 2);
+			return RotateMatrix(oneSide.GetPixels(), textureSize, 2);
 		if (!topBorders && !bottomBorders && leftBorders && !rightBorders)
-			return new OverlayAndMaskPixels(RiverEndOverlay, RiverEndMask, 3);
+			return RotateMatrix(oneSide.GetPixels(), textureSize, 3);
 
 		if (!topBorders && bottomBorders && !leftBorders && rightBorders)
-			return new OverlayAndMaskPixels(RiverBendOverlay, RiverBendMask, 0);
+			return RotateMatrix(twoAdjSides.GetPixels(), textureSize, 0);
 		if (topBorders && !bottomBorders && !leftBorders && rightBorders)
-			return new OverlayAndMaskPixels(RiverBendOverlay, RiverBendMask, 1);
+			return RotateMatrix(twoAdjSides.GetPixels(), textureSize, 1);
 		if (topBorders && !bottomBorders && leftBorders && !rightBorders)
-			return new OverlayAndMaskPixels(RiverBendOverlay, RiverBendMask, 2);
+			return RotateMatrix(twoAdjSides.GetPixels(), textureSize, 2);
 		if (!topBorders && bottomBorders && leftBorders && !rightBorders)
-			return new OverlayAndMaskPixels(RiverBendOverlay, RiverBendMask, 3);
+			return RotateMatrix(twoAdjSides.GetPixels(), textureSize, 3);
 
 		if (topBorders && bottomBorders && !leftBorders && rightBorders)
-			return new OverlayAndMaskPixels(RiverForkOverlay, RiverForkMask, 0);
+			return RotateMatrix(threeSides.GetPixels(), textureSize, 0);
 		if (topBorders && !bottomBorders && leftBorders && rightBorders)
-			return new OverlayAndMaskPixels(RiverForkOverlay, RiverForkMask, 1);
+			return RotateMatrix(threeSides.GetPixels(), textureSize, 1);
 		if (topBorders && bottomBorders && leftBorders && !rightBorders)
-			return new OverlayAndMaskPixels(RiverForkOverlay, RiverForkMask, 2);
+			return RotateMatrix(threeSides.GetPixels(), textureSize, 2);
 		if (!topBorders && bottomBorders && leftBorders && rightBorders)
-			return new OverlayAndMaskPixels(RiverForkOverlay, RiverForkMask, 3);
+			return RotateMatrix(threeSides.GetPixels(), textureSize, 3);
 
 		if (topBorders && bottomBorders && leftBorders && rightBorders)
-			return new OverlayAndMaskPixels(RiverCrossOverlay, RiverCrossMask, 0);
+			return RotateMatrix(fourSides.GetPixels(), textureSize, 0);
 
-		return new OverlayAndMaskPixels(RiverLakeOverlay, RiverLakeMask, 0);
+		return RotateMatrix(noSides.GetPixels(), textureSize, 0);
 	}
 
 	static Color[] RotateMatrix(Color[] matrix, int width, int numRotations)

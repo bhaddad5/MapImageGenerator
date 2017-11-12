@@ -5,21 +5,23 @@
 "LookupColor":{"r":0.0,"g":0.0,"b":1.0,"a":1.0},
 "Traits":[
 	"Water",
-	"Impassable"
+	"Impassable",
+	"Ocean"
 ]}
 |
 {"Id":"River",
 "Texture":"Midlands/Terrain/Fertile.png",
-"Height":0.1,
+"Height":0.01,
 "Difficulty":0.1,
 "LookupColor":{"r":0.3,"g":0.3,"b":1.0,"a":1.0},
 "Traits":[
-	"Water"
+	"Water",
+	"River"
 ]}
 |
 {"Id":"Swamp",
 "Texture":"Midlands/Terrain/Swamp.png",
-"Height":0.1,
+"Height":0.01,
 "Difficulty":0.35,
 "LookupColor":{"r":0.0,"g":0.7,"b":1.0,"a":1.0},
 "EntityPlacements":[
@@ -31,7 +33,7 @@
 |
 {"Id":"Wilderness",
 "Texture":"Midlands/Terrain/Wilderness.png",
-"Height":0.2,
+"Height":0.05,
 "Difficulty":0.2,
 "LookupColor":{"r":0.3,"g":0.6,"b":0.0,"a":1.0},
 "EntityPlacements":[
@@ -41,7 +43,7 @@
 |
 {"Id":"Forest",
 "Texture":"Midlands/Terrain/Forest.png",
-"Height":0.2,
+"Height":0.05,
 "Difficulty":0.25,
 "LookupColor":{"r":0.0,"g":1.0,"b":0.0,"a":1.0},
 "EntityPlacements":[
@@ -53,7 +55,7 @@
 |
 {"Id":"Mountain",
 "Difficulty":50,
-"Height":0.7,
+"Height":0.5,
 "Texture":"Midlands/Terrain/Mountains.png",
 "LookupColor":{"r":0.5,"g":0.3,"b":0.3,"a":1.0},
 "Traits":[
@@ -63,7 +65,7 @@
 |
 {"Id":"Fertile",
 "Difficulty":0.15,
-"Height":0.1,
+"Height":0.01,
 "Texture":"Midlands/Terrain/Fertile.png",
 "LookupColor":{"r":0.9,"g":0.7,"b":0.0,"a":1.0},
 "EntityPlacements":[

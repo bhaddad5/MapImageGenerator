@@ -16,7 +16,7 @@ public class MapMeshBuilder
 		RandomizeVertHeights();
 		ScaleVertHeights(heightScaler);
 
-		return MeshConstructor.BuildMeshes(vertHeights, vertsPerTileAcross, 2f);
+		return MeshConstructor.BuildMeshes(vertHeights, vertsPerTileAcross);
 	}
 
 	private void populateVertHeights()
