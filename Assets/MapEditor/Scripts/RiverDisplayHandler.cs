@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class RiverDisplayHandler : MonoBehaviour
 {
-	public Material RiversMat;
+	public Material OverlaysMat;
+	public Material WaterMat;
 
 	public Texture2D RiverStraight;
 	public Texture2D RiverEnd;
@@ -14,27 +15,45 @@ public class RiverDisplayHandler : MonoBehaviour
 	public Texture2D RiverCross;
 	public Texture2D RiverLake;
 
-	public Material GetRiversMat(MapModel Map)
+	public class OverlayTextures
 	{
-		Texture2D RiversTexture = new Texture2D(Map.Map.Width * 128, Map.Map.Height * 128);
+		public Material Overlays;
+		public Material Water;
+
+		public OverlayTextures(Material over, Material water)
+		{
+			Overlays = over;
+			Water = water;
+		}
+	}
+
+	public OverlayTextures GetRiversMat(MapModel Map)
+	{
+		Texture2D WaterMask = new Texture2D(Map.Map.Width * 128, Map.Map.Height * 128);
+		Texture2D OverlaysTexture = new Texture2D(Map.Map.Width * 128, Map.Map.Height * 128);
 		List<Color> colors = new List<Color>();
 		for (int i = 0; i < Map.Map.Width * 128 * Map.Map.Height * 128; i++)
 		{
 			colors.Add(new Color(0, 0, 0, 0));
 		}
-		RiversTexture.SetPixels(colors.ToArray());
-		RiversTexture.Apply();
+		OverlaysTexture.SetPixels(colors.ToArray());
+		OverlaysTexture.Apply();
+		WaterMask.SetPixels(colors.ToArray());
+		WaterMask.Apply();
 
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
 			if (Map.Map.Get(point).Terrain().HasTrait(TerrainModel.GroundTraits.Water))
 			{
-				RiversTexture.SetPixels(point.X * 128, point.Y * 128, 128, 128, GetRiverTilePixels(Map,point));
+				OverlaysTexture.SetPixels(point.X * 128, point.Y * 128, 128, 128, GetRiverTilePixels(Map,point));
 			}
 		}
-		RiversTexture.Apply();
-		RiversMat.mainTexture = RiversTexture;
-		return RiversMat;
+		OverlaysTexture.Apply();
+		OverlaysMat.mainTexture = OverlaysTexture;
+
+		WaterMat.SetTexture("_MaskTex", OverlaysTexture);
+
+		return new OverlayTextures(OverlaysMat, WaterMat);
 	}
 
 	public Color[] GetRiverTilePixels(MapModel Map, Int2 tile)

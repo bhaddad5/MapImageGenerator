@@ -3,9 +3,11 @@ using UnityEngine;
 
 namespace UnityStandardAssets.Water
 {
-    [ExecuteInEditMode]
+	[ExecuteInEditMode]
     public class WaterBasic : MonoBehaviour
-    {
+	{
+		public int matNumber = 0;
+
         void Update()
         {
             Renderer r = GetComponent<Renderer>();
@@ -13,7 +15,7 @@ namespace UnityStandardAssets.Water
             {
                 return;
             }
-            Material mat = r.sharedMaterial;
+            Material mat = r.materials[matNumber];
             if (!mat)
             {
                 return;

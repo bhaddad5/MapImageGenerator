@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using UnityStandardAssets.Water;
 
 public class MapBuilder : MonoBehaviour
 {
@@ -131,6 +132,8 @@ public class MapBuilder : MonoBehaviour
 			g.AddComponent<MeshFilter>().mesh = m;
 			g.AddComponent<MeshRenderer>();
 			g.GetComponent<MeshRenderer>().materials = mapMats.ToArray();
+			g.AddComponent<WaterBasic>();
+			g.GetComponent<WaterBasic>().matNumber = mapMats.Count - 1;
 			if (m.vertices.Length > 1)
 				g.AddComponent<MeshCollider>();
 			meshNum++;
@@ -191,7 +194,9 @@ public class MapBuilder : MonoBehaviour
 		if(gtToFlush.Count > 0)
 			mats.Add(FlushGroundInfoToMat(gtToFlush, Map));
 
-		mats.Add(RiverDisplayHandler.GetRiversMat(Map));
+		RiverDisplayHandler.OverlayTextures overlays = RiverDisplayHandler.GetRiversMat(Map);
+		mats.Add(overlays.Overlays);
+		mats.Add(overlays.Water);
 
 		return mats;
 	}

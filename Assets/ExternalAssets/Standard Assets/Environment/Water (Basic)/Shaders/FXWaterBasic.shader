@@ -2,6 +2,7 @@
 
 Shader "FX/Water (Basic)" {
 Properties {
+	_MaskTex("Mask", 2D) = "white" {}
 	_horizonColor ("Horizon color", COLOR)  = ( .172 , .463 , .435 , 0)
 	_WaveScale ("Wave scale", Range (0.02,0.15)) = .07
 	[NoScaleOffset] _ColorControl ("Reflective color (RGB) fresnel (A) ", 2D) = "" { }
@@ -15,6 +16,8 @@ CGINCLUDE
 
 uniform float4 _horizonColor;
 
+sampler2D _MaskTex;
+
 uniform float4 WaveSpeed;
 uniform float _WaveScale;
 uniform float4 _WaveOffset;
@@ -22,11 +25,13 @@ uniform float4 _WaveOffset;
 struct appdata {
 	float4 vertex : POSITION;
 	float3 normal : NORMAL;
+	float4 texcoord : TEXCOORD0;
 };
 
 struct v2f {
 	float4 pos : SV_POSITION;
 	float2 bumpuv[2] : TEXCOORD0;
+	float4 uv : TEXCOORD3;
 	float3 viewDir : TEXCOORD2;
 	UNITY_FOG_COORDS(3)
 };
@@ -45,6 +50,8 @@ v2f vert(appdata v)
 	o.bumpuv[0] = temp.xy * float2(.4, .45);
 	o.bumpuv[1] = temp.wz;
 
+	o.uv = float4(v.texcoord.xy, 0, 0);
+
 	// object space view direction
 	o.viewDir.xzy = normalize( WorldSpaceViewDir(v.vertex) );
 
@@ -56,7 +63,9 @@ ENDCG
 
 
 Subshader {
-	Tags { "RenderType"="Opaque" }
+	Tags{ "Queue" = "Transparent" }
+	Blend SrcAlpha OneMinusSrcAlpha
+	ColorMask RGB
 	Pass {
 
 CGPROGRAM
@@ -81,6 +90,8 @@ half4 frag( v2f i ) : COLOR
 	col.a = _horizonColor.a;
 
 	UNITY_APPLY_FOG(i.fogCoord, col);
+
+	col.a = tex2D(_MaskTex, i.uv).a;
 	return col;
 }
 ENDCG
