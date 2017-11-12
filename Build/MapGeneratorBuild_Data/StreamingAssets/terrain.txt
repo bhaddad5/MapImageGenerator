@@ -1,63 +1,75 @@
 {"Id":"Ocean",
 "Texture":"Midlands/Terrain/Sand.png",
+"Height":0,
 "Difficulty":0.1,
-"StoredTraits":[
+"LookupColor":{"r":0.0,"g":0.0,"b":1.0,"a":1.0},
+"Traits":[
 	"Water",
-	"Impassable"
+	"Impassable",
+	"Ocean"
 ]}
 |
 {"Id":"River",
-"Texture":"Midlands/Terrain/Sand.png",
+"Texture":"Midlands/Terrain/Fertile.png",
+"Height":0.01,
 "Difficulty":0.1,
-"StoredTraits":[
-	"Water"
+"LookupColor":{"r":0.3,"g":0.3,"b":1.0,"a":1.0},
+"Traits":[
+	"Water",
+	"River"
 ]}
 |
 {"Id":"Swamp",
 "Texture":"Midlands/Terrain/Swamp.png",
+"Height":0.01,
 "Difficulty":0.35,
-"DefaultModelPlacement":[
-	{"model":"Willow","min":2,"max":3},
-	{"model":"Rushes","min":5,"max":7}
+"LookupColor":{"r":0.0,"g":0.7,"b":1.0,"a":1.0},
+"EntityPlacements":[
+	{"model":"Willow","min":8,"max":19,"placementMode":"Scattered"}
 ],
-"StoredTraits":[
-	"Muddy"
+"Traits":[
+	"Swamp"
 ]}
 |
 {"Id":"Wilderness",
 "Texture":"Midlands/Terrain/Wilderness.png",
+"Height":0.05,
 "Difficulty":0.2,
-"DefaultModelPlacement":[
-	{"model":"Pine","min":0,"max":3}
+"LookupColor":{"r":0.3,"g":0.6,"b":0.0,"a":1.0},
+"EntityPlacements":[
+	{"model":"Pine","min":0,"max":5,"placementMode":"Scattered"}
 ],
-"StoredTraits":[
-	"Hunting"
-]}
+"Traits":[]}
 |
 {"Id":"Forest",
 "Texture":"Midlands/Terrain/Forest.png",
+"Height":0.05,
 "Difficulty":0.25,
-"DefaultModelPlacement":[
-	{"model":"Pine","min":7,"max":10}
+"LookupColor":{"r":0.0,"g":1.0,"b":0.0,"a":1.0},
+"EntityPlacements":[
+	{"model":"Pine","min":17,"max":33,"placementMode":"Scattered"}
 ],
-"StoredTraits":[
-	"Hunting",
+"Traits":[
 	"Forest"
 ]}
 |
 {"Id":"Mountain",
 "Difficulty":50,
+"Height":0.5,
 "Texture":"Midlands/Terrain/Mountains.png",
-"StoredTraits":[
-	"Rocky",
+"LookupColor":{"r":0.5,"g":0.3,"b":0.3,"a":1.0},
+"Traits":[
+	"Mountain",
 	"Impassable"
 ]}
 |
 {"Id":"Fertile",
 "Difficulty":0.15,
+"Height":0.01,
 "Texture":"Midlands/Terrain/Fertile.png",
-"DefaultModelPlacement":[
+"LookupColor":{"r":0.9,"g":0.7,"b":0.0,"a":1.0},
+"EntityPlacements":[
 ],
-"StoredTraits":[
+"Traits":[
 	"Fertile"
 ]}

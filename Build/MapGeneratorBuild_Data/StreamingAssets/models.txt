@@ -1,5 +1,4 @@
 {"Id":"Pine", "ModelPath":"Midlands/Models/Pine.obj"}|
-{"Id":"WheatField", "ModelPath":"Midlands/Models/WheatField.obj"}|
 {"Id":"Rushes", "ModelPath":"Midlands/Models/Rushes.obj"}|
 {"Id":"Willow", "ModelPath":"Midlands/Models/Willow.obj"}|
 
