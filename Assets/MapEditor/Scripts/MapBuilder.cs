@@ -21,8 +21,7 @@ public class MapBuilder : MonoBehaviour
 
 	private GameObject objectParent;
 
-	public Texture2D RiverTex;
-	public Material RiverMat;
+	public RiverDisplayHandler RiverDisplayHandler;
 
 	private MapModel CurrentMap;
 
@@ -192,22 +191,7 @@ public class MapBuilder : MonoBehaviour
 		if(gtToFlush.Count > 0)
 			mats.Add(FlushGroundInfoToMat(gtToFlush, Map));
 
-		Texture2D RiversTexture = new Texture2D(Map.Map.Width * 128, Map.Map.Height * 128);
-		List<Color> colors = new List<Color>();
-		for (int i = 0; i < Map.Map.Width * 128 * Map.Map.Height * 128; i++)
-		{
-			colors.Add(new Color(0, 0, 0, 0));
-		}
-		RiversTexture.SetPixels(colors.ToArray());
-		RiversTexture.Apply();
-		foreach (Int2 point in Map.Map.GetMapPoints())
-		{
-			if (Map.Map.Get(point).TerrainId == "River")
-				RiversTexture.SetPixels(point.X * 128, point.Y * 128, 128, 128, RiverTex.GetPixels());
-		}
-		RiversTexture.Apply();
-		RiverMat.mainTexture = RiversTexture;
-		mats.Add(RiverMat);
+		mats.Add(RiverDisplayHandler.GetRiversMat(Map));
 
 		return mats;
 	}

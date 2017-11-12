@@ -106,6 +106,7 @@
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\Model\MapModel.cs" />
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\Model\MapTileModel.cs" />
     <Compile Include="Assets\MapEditor\Scripts\RegionsGenerator.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\RiverDisplayHandler.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Settlement.cs" />
     <Compile Include="Assets\MapEditor\Scripts\UserInteractions\CameraControls.cs" />
     <Compile Include="Assets\MapEditor\Scripts\UserInteractions\LightController.cs" />
