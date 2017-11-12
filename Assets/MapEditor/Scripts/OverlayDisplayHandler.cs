@@ -28,6 +28,13 @@ public class OverlayDisplayHandler : MonoBehaviour
 	public Texture2D CoastOceanMask;
 	public Texture2D CoastStraightMask;
 
+	public Texture2D CoastFlatOverlay;
+	public Texture2D CoastBayOverlay;
+	public Texture2D CoastBentOverlay;
+	public Texture2D CoastLakeOverlay;
+	public Texture2D CoastOceanOverlay;
+	public Texture2D CoastStraightOverlay;
+
 	private int textureSize = 128;
 
 	public class OverlayTextures
@@ -70,6 +77,8 @@ public class OverlayDisplayHandler : MonoBehaviour
 			}
 			if (Map.Map.Get(point).Terrain().HasTrait(TerrainModel.GroundTraits.Ocean))
 			{
+				OverlaysTexture.SetPixels(point.X * 128, point.Y * 128, 128, 128,
+					GetTilePixels(Map, point, TerrainModel.GroundTraits.Ocean, CoastLakeOverlay, CoastBayOverlay, CoastBentOverlay, CoastStraightOverlay, CoastFlatOverlay, CoastOceanOverlay));
 				WaterMaskOceans.SetPixels(point.X * 128, point.Y * 128, 128, 128,
 					GetTilePixels(Map, point, TerrainModel.GroundTraits.Ocean, CoastLakeMask, CoastBayMask, CoastBentMask, CoastStraightMask, CoastFlatMask, CoastOceanMask));
 			}
