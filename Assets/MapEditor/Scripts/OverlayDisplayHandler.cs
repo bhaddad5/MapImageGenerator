@@ -49,50 +49,74 @@ public class OverlayDisplayHandler : MonoBehaviour
 		}
 	}
 
+	public class ColorMap
+	{
+		public Color[] Colors;
+		private int textureSize;
+		private int width;
+		private int height;
+
+		public ColorMap(int w, int h, int ts)
+		{
+			textureSize = ts;
+			width = w;
+			height = h;
+			Colors = new Color[width * textureSize * height * textureSize];
+		}
+
+		public void SetPixels(int x, int y, Color[] colorsToSet)
+		{
+			for (int i = 0; i < textureSize; i++)
+			{
+				for (int j = 0; j < textureSize; j++)
+				{
+					Color c = Colors[(y + i) * (width * textureSize) + (x + j)];
+					Color n = colorsToSet[(i * textureSize) + j];
+					if (c.a > n.a)
+						n = c;
+					Colors[(y + i) * (width * textureSize) + (x + j)] = n;
+				}
+			}
+		}
+	}
+
 	public OverlayTextures GetOverlayMats(MapModel Map)
 	{
-		Texture2D WaterMaskRivers = new Texture2D(Map.Map.Width * 128, Map.Map.Height * 128);
-		Texture2D WaterMaskOceans = new Texture2D(Map.Map.Width * 128, Map.Map.Height * 128);
-		Texture2D OverlaysTexture = new Texture2D(Map.Map.Width * 128, Map.Map.Height * 128);
-		List<Color> colors = new List<Color>();
-		for (int i = 0; i < Map.Map.Width * 128 * Map.Map.Height * 128; i++)
-		{
-			colors.Add(new Color(0, 0, 0, 0));
-		}
-		OverlaysTexture.SetPixels(colors.ToArray());
-		OverlaysTexture.Apply();
-		WaterMaskRivers.SetPixels(colors.ToArray());
-		WaterMaskRivers.Apply();
-		WaterMaskOceans.SetPixels(colors.ToArray());
-		WaterMaskOceans.Apply();
+		ColorMap WaterMask = new ColorMap(Map.Map.Width, Map.Map.Height, 128);
+		ColorMap OverlaysTexture = new ColorMap(Map.Map.Width, Map.Map.Height, 128);
 
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
 			if (Map.Map.Get(point).Terrain().HasTrait(TerrainModel.GroundTraits.Water))
 			{
-				OverlaysTexture.SetPixels(point.X * 128, point.Y * 128, 128, 128, 
+				OverlaysTexture.SetPixels(point.X * textureSize, point.Y * textureSize, 
 					GetTilePixels(Map, point, TerrainModel.GroundTraits.Water, RiverLakeOverlay, RiverEndOverlay, RiverBendOverlay, RiverStraightOverlay, RiverForkOverlay, RiverCrossOverlay));
-				WaterMaskRivers.SetPixels(point.X * 128, point.Y * 128, 128, 128,
+				WaterMask.SetPixels(point.X * textureSize, point.Y * textureSize,
 					GetTilePixels(Map, point, TerrainModel.GroundTraits.Water, RiverLakeOverlay, RiverEndMask, RiverBendMask, RiverStraightMask, RiverForkMask, RiverCrossMask));
 			}
 			if (Map.Map.Get(point).Terrain().HasTrait(TerrainModel.GroundTraits.Ocean))
 			{
-				OverlaysTexture.SetPixels(point.X * 128, point.Y * 128, 128, 128,
+				OverlaysTexture.SetPixels(point.X * textureSize, point.Y * textureSize,
 					GetTilePixels(Map, point, TerrainModel.GroundTraits.Ocean, CoastLakeOverlay, CoastBayOverlay, CoastBentOverlay, CoastStraightOverlay, CoastFlatOverlay, CoastOceanOverlay));
-				WaterMaskOceans.SetPixels(point.X * 128, point.Y * 128, 128, 128,
+				WaterMask.SetPixels(point.X * textureSize, point.Y * textureSize,
 					GetTilePixels(Map, point, TerrainModel.GroundTraits.Ocean, CoastLakeMask, CoastBayMask, CoastBentMask, CoastStraightMask, CoastFlatMask, CoastOceanMask));
 			}
 		}
-		OverlaysTexture.Apply();
-		WaterMaskRivers.Apply();
-		WaterMaskOceans.Apply();
-		OverlaysMat.mainTexture = OverlaysTexture;
-		WaterMat.SetTexture("_MaskTex", ImageHelpers.AlphaBlend(WaterMaskRivers, WaterMaskOceans));
+
+		Texture2D Overlays = new Texture2D(Map.Map.Width * textureSize, Map.Map.Height * textureSize);
+		Overlays.SetPixels(OverlaysTexture.Colors);
+		Overlays.Apply();
+		OverlaysMat.mainTexture = Overlays;
+
+		Texture2D Water = new Texture2D(Map.Map.Width * textureSize, Map.Map.Height * textureSize);
+		Water.SetPixels(WaterMask.Colors);
+		Water.Apply();
+		WaterMat.SetTexture("_MaskTex", Water);
 
 		return new OverlayTextures(OverlaysMat, WaterMat);
 	}
 
-	public Color[] GetTilePixels(MapModel Map, Int2 tile, TerrainModel.GroundTraits adjacentTrait, 
+	public Color[] GetTilePixels(MapModel Map, Int2 tile, TerrainModel.GroundTraits adjacentTrait,
 		Texture2D noSides, Texture2D oneSide, Texture2D twoAdjSides, Texture2D twoOppSides, Texture2D threeSides, Texture2D fourSides)
 	{
 		bool topBorders = true;
