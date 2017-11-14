@@ -7,6 +7,15 @@ using UnityEditor;
 
 public class JsonTests
 {
+	[MenuItem("My Menu/Test OverlayPlacementModel Json")]
+	public static void TestOverlayPlacementModelJson()
+	{
+		OverlayPlacementModel overlay = new OverlayPlacementModel();
+
+		Debug.Log(JsonUtility.ToJson(overlay));
+	}
+
+
 	[MenuItem("My Menu/Test MapModel Json")]
 	public static void TestMapModelJson()
 	{

@@ -137,6 +137,7 @@
     <None Include="Assets\StreamingAssets\cultures.txt" />
     <None Include="Assets\StreamingAssets\locations.txt" />
     <None Include="Assets\StreamingAssets\models.txt" />
+    <None Include="Assets\StreamingAssets\overlays.txt" />
     <None Include="Assets\StreamingAssets\realms.txt" />
     <None Include="Assets\StreamingAssets\terrain.txt" />
   </ItemGroup>

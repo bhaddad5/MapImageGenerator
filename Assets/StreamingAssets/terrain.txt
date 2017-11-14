@@ -7,6 +7,12 @@
 	"Water",
 	"Impassable",
 	"Ocean"
+],
+"Overlays":[
+	"RiverWater",
+	"RiverBanks",
+	"OceanWater",
+	"OceanShore"
 ]}
 |
 {"Id":"River",
@@ -17,6 +23,10 @@
 "Traits":[
 	"Water",
 	"River"
+],
+"Overlays":[
+	"RiverWater",
+	"RiverBanks"
 ]}
 |
 {"Id":"Swamp",

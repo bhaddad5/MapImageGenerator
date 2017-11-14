@@ -48,11 +48,17 @@ public class TerrainModel : ParsableData
 	public float Difficulty = 0.1f;
 	public string[] Traits = new string[0];
 	public Color LookupColor;
-	public EntityPlacementModel[] EntityPlacements = new EntityPlacementModel[0];
+	public List<EntityPlacementModel> EntityPlacements = new List<EntityPlacementModel>();
+	public List<string> Overlays = new List<string>();
 
 	public bool HasTrait(GroundTraits trait)
 	{
 		return Traits.Contains(trait.ToString());
+	}
+
+	public bool HasTrait(string trait)
+	{
+		return Traits.Contains(trait);
 	}
 
 	public float GetDefensibility()

@@ -33,6 +33,7 @@ public class MapBuilder : MonoBehaviour
 		CultureParser.LoadCultures();
 		LocationParser.LoadLocations();
 		TerrainParser.LoadTerrainTypes();
+		OverlayParser.LoadOverlays();
 
 		foreach (RealmModel environment in RealmParser.RealmsData.Values)
 		{
