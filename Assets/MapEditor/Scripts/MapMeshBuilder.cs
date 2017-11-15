@@ -11,10 +11,9 @@ public class MapMeshBuilder
 	public List<Mesh> BuildMapMeshes(MapModel map)
 	{
 		Map = map;
-		float heightScaler = 1f;
 		populateVertHeights();
 		RandomizeVertHeights();
-		ScaleVertHeights(heightScaler);
+		ZeroOutWaterBorders();
 
 		return MeshConstructor.BuildMeshes(vertHeights, vertsPerTileAcross);
 	}
@@ -25,11 +24,11 @@ public class MapMeshBuilder
 
 		foreach (var pixle in Map.Map.GetMapPoints())
 		{
-			fillHeightsForTile(pixle, Map.Map.Get(pixle).Terrain().Height, Map.Map.Width, Map.Map.Height);
+			FillHeightsForTile(pixle, Map.Map.Get(pixle).Terrain().Height);
 		}
 	}
 
-	private void fillHeightsForTile(Int2 pixle, float tileHeight, int mapWidth, int mapHeight)
+	private void FillHeightsForTile(Int2 pixle, float tileHeight)
 	{
 		int baseI = pixle.X * (vertsPerTileAcross);
 		int baseJ = pixle.Y * (vertsPerTileAcross);
@@ -40,26 +39,11 @@ public class MapMeshBuilder
 				vertHeights.Set(new Int2(baseI + x, baseJ + y), tileHeight);
 			}
 		}
-
-		if (pixle.X == mapWidth - 1)
-		{
-			for (int y = 0; y < vertsPerTileAcross; y++)
-				vertHeights.Set(new Int2(baseI + vertsPerTileAcross, baseJ + y), tileHeight);
-		}
-		if (pixle.Y == mapHeight - 1)
-		{
-			for (int x = 0; x < vertsPerTileAcross; x++)
-				vertHeights.Set(new Int2(baseI + x, baseJ + vertsPerTileAcross), tileHeight);
-		}
-		if (pixle.X == mapWidth - 1 && pixle.Y == mapHeight - 1)
-		{
-			vertHeights.Set(new Int2(baseI + vertsPerTileAcross, baseJ + vertsPerTileAcross), tileHeight);
-		}
 	}
 
 	private void RandomizeVertHeights()
 	{
-		int numPasses = 3;
+		int numPasses = 2;
 		for (int i = 0; i < numPasses; i++)
 		{
 			RandomizeVertHeightsPass();
@@ -70,12 +54,8 @@ public class MapMeshBuilder
 	{
 		foreach (Int2 pos in vertHeights.GetMapPoints())
 		{
-			if (vertHeights.Get(pos) >= TerrainModel.MinGroundHeight())
-			{
-				float newHeight = Mathf.Max(TerrainModel.MinGroundHeight(), (vertHeights.Get(pos) + NeighborAverageHeight(pos)) / 2 * Random.Range(1f, 1.1f));
-				vertHeights.Set(pos, newHeight);
-			}
-			else vertHeights.Set(pos, TerrainModel.MinGroundHeight() - 0.05f);
+			float newHeight = Mathf.Min(vertHeights.Get(pos), (vertHeights.Get(pos) + NeighborAverageHeight(pos)) / 2 * Random.Range(.7f, 1f));
+			vertHeights.Set(pos, newHeight);
 		}
 	}
 
@@ -91,11 +71,49 @@ public class MapMeshBuilder
 		return average / points.Count;
 	}
 
-	private void ScaleVertHeights(float scale)
+	private void ZeroOutWaterBorders()
 	{
-		foreach (Int2 point in vertHeights.GetMapPoints())
+		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
-			vertHeights.Set(point, vertHeights.Get(point) * scale);
+			if(Map.Map.Get(point).Terrain().HasTrait(TerrainModel.GroundTraits.Ocean))
+				continue;
+			List<Int2> AdjacentOceanTiles = new List<Int2>();
+			foreach (Int2 adjacentPoint in Map.Map.GetAdjacentPoints(point))
+			{
+				if (Map.Map.Get(adjacentPoint).Terrain().HasTrait(TerrainModel.GroundTraits.Ocean))
+				{
+					AdjacentOceanTiles.Add(adjacentPoint);
+				}
+			}
+			foreach (Int2 adjacentOceanTile in AdjacentOceanTiles)
+			{
+				for (int i = 0; i < vertsPerTileAcross; i++)
+				{
+					var diff = point - adjacentOceanTile;
+					float newHeight = Map.Map.Get(adjacentOceanTile).Terrain().Height;
+					if (diff.Equals(new Int2(-1, 0)))
+					{
+						vertHeights.Set(new Int2(point.X * vertsPerTileAcross + vertsPerTileAcross, point.Y * vertsPerTileAcross + i), newHeight);
+					}
+					if (diff.Equals(new Int2(1, 0)))
+					{
+						vertHeights.Set(new Int2(point.X * vertsPerTileAcross, point.Y * vertsPerTileAcross + i), newHeight);
+					}
+					if (diff.Equals(new Int2(0, -1)))
+					{
+						vertHeights.Set(new Int2(point.X * vertsPerTileAcross + i, point.Y * vertsPerTileAcross + vertsPerTileAcross), newHeight);
+					}
+					if (diff.Equals(new Int2(0, 1)))
+					{
+						vertHeights.Set(new Int2(point.X * vertsPerTileAcross + i, point.Y * vertsPerTileAcross), newHeight);
+					}
+				}
+			}
 		}
+	}
+
+	private void SphereAtVertexHeight(Int2 vertex)
+	{
+		Helpers.DEBUGSphereAtPoint(new Vector3(vertex.X/(float)vertsPerTileAcross - Map.Map.Width / 2, 0, vertex.Y / (float)vertsPerTileAcross - Map.Map.Height / 2), 0.1f);
 	}
 }

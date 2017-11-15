@@ -20,7 +20,7 @@ public static class ModelsParser
 				mr.gameObject.AddComponent<MeshCollider>();
 				mr.gameObject.layer = LayerMask.NameToLayer("PlacedModel");
 
-				if ((mr.material.mainTexture as Texture2D).TextureContainsTransparency())
+				if (mr.material.mainTexture != null && (mr.material.mainTexture as Texture2D).TextureContainsTransparency())
 					SetShaders(mr, "Unlit/Transparent Cutout");
 				else SetShaders(mr, "Standard");
 			}

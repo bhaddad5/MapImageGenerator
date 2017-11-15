@@ -26,6 +26,7 @@ public static class Helpers
 		GameObject sphere = GameObject.Instantiate(Resources.Load("DebugSphere") as GameObject);
 		sphere.transform.position = point;
 		sphere.transform.localScale = new Vector3(scale, scale, scale);
+		sphere.GetComponent<MeshRenderer>().material.color = Color.red;
 	}
 
 	public static List<T> RandomEnumerate<T>(this List<T> list)
@@ -100,6 +101,11 @@ public class Int2
 	public static Int2 operator *(Int2 a, int b)
 	{
 		return new Int2(a.X * b, a.Y * b);
+	}
+
+	public static Int2 operator /(Int2 a, int b)
+	{
+		return new Int2(a.X / b, a.Y / b);
 	}
 
 	public override string ToString()

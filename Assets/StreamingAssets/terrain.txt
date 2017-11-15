@@ -65,7 +65,7 @@
 |
 {"Id":"Mountain",
 "Difficulty":50,
-"Height":0.5,
+"Height":0.8,
 "Texture":"Midlands/Terrain/Mountains.png",
 "LookupColor":{"r":0.5,"g":0.3,"b":0.3,"a":1.0},
 "Traits":[
