@@ -115,6 +115,12 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>Assets\ExternalAssets\JsonDotNet\Assemblies\Standalone\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="TextMeshPro-1.0.55.56.0b12">
+      <HintPath>Assets\ExternalAssets\TextMesh Pro\Plugins\TextMeshPro-1.0.55.56.0b12.dll</HintPath>
+    </Reference>
+    <Reference Include="TextMeshPro-1.0.55.56.0b12-Editor">
+      <HintPath>Assets\ExternalAssets\TextMesh Pro\Plugins\Editor\TextMeshPro-1.0.55.56.0b12-Editor.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="MapImageGenerator.CSharp.csproj">
@@ -132,6 +138,25 @@
     <None Include="Assets\ExternalAssets\JsonDotNet\link.xml" />
     <None Include="Assets\ExternalAssets\OBJImport\readme.txt" />
     <None Include="Assets\ExternalAssets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Fonts\Anton OFL.txt" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Fonts\Bangers - OFL.txt" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Fonts\Oswald-Bold - OFL.txt" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\MapEditor\MapDisplay\BordersShader.shader" />
     <None Include="Assets\MapEditor\MapDisplay\GroundShader.shader" />
     <None Include="Assets\StreamingAssets\cultures.txt" />

@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using System.Linq;
-using JetBrains.Annotations;
+using TMPro;
 using UnityStandardAssets.Water;
 
 public class MapBuilder : MonoBehaviour
 {
-	public Dropdown EnvironmentSelection;
-	public Text displayText;
+	public TMP_Dropdown EnvironmentSelection;
+	public TextMeshProUGUI displayText;
 
 	public GameObject terrainMeshDisplay;
 	public GameObject generatedTerrainMapInputDisplay;
@@ -37,7 +37,7 @@ public class MapBuilder : MonoBehaviour
 
 		foreach (RealmModel environment in RealmParser.RealmsData.Values)
 		{
-			EnvironmentSelection.options.Add(new Dropdown.OptionData(environment.Id));
+			EnvironmentSelection.options.Add(new TMP_Dropdown.OptionData(environment.Id));
 		}
 		EnvironmentSelection.value = 1;
 	}
