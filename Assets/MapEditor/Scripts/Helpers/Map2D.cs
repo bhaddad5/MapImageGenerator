@@ -62,6 +62,38 @@ public class Map2D<T>
 		return points;
 	}
 
+	public Map2D<T> FlipMap()
+	{
+		Map2D<T> flipped = new Map2D<T>(Height, Width);
+		for (int j = 0; j < Height; j++)
+		{
+			for (int i = 0; i < Width; i++)
+			{
+				flipped.Set(new Int2(j, i), map[i][j]);
+			}
+		}
+
+		return flipped;
+	}
+
+	public Map2D<T> GetMapBlock(Int2 startingPoint, int width, int height)
+	{
+		int actualWidth = Math.Min(Width - startingPoint.X, width);
+		int actualHeight = Math.Min(Height - startingPoint.Y, height);
+
+		Map2D<T> block = new Map2D<T>(actualWidth, actualHeight);
+
+		for (int i = startingPoint.X; i <= startingPoint.X + actualWidth && i < width; i++)
+		{
+			for (int j = startingPoint.Y; j <= startingPoint.Y + actualHeight && j < height; j++)
+			{
+				block.Set(new Int2(i - startingPoint.X, j - startingPoint.Y), Get(new Int2(i, j)));
+			}
+		}
+
+		return block;
+	}
+
 	public List<T> GetMapValues()
 	{
 		List<T> points = new List<T>();

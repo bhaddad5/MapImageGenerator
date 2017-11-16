@@ -5,27 +5,27 @@ using System.Linq;
 
 class MeshConstructor
 {
-	public static List<Mesh> BuildMeshes(Map2D<float> vertHeights, float scale)
+	public static Mesh BuildMesh(Map2D<float> vertHeights, float scale, Int2 startingPoint, int size)
 	{
-		List<Mesh> builtMeshes = new List<Mesh>();
+		Mesh builtMesh = new Mesh();
 
+		Map2D<float> blockUsed = vertHeights.FlipMap().GetMapBlock(new Int2(startingPoint.Y, startingPoint.X), size, size);
+		List <Vector3> vertices = SetVerticesFromHeights(blockUsed, scale);
+		List<int> indices = SetTriangles(blockUsed.Width, blockUsed.Height);
+		List<Vector2> uvCoords = SetUVs(blockUsed.Width, blockUsed.Height);
 
-		List<Vector3> vertices = SetVerticesFromHeights(vertHeights, scale);
-		List<int> indices = SetTriangles(vertHeights.Width, vertHeights.Height);
-		List<Vector2> uvCoords = SetUVs(vertHeights.Width, vertHeights.Height);
+		builtMesh.vertices = vertices.ToArray();
+		builtMesh.triangles = indices.ToArray();
+		builtMesh.uv = uvCoords.ToArray();
+		builtMesh.RecalculateNormals();
 
-		builtMeshes = MeshSplitter.Split(vertices, uvCoords, indices, 64000, 64000);
-
-		foreach(Mesh m in builtMeshes)
-			m.RecalculateNormals();
-
-		return builtMeshes;
+		return builtMesh;
 	}
 
 	private static List<Vector3> SetVerticesFromHeights(Map2D<float> vertHeights, float scale)
 	{
 		List<Vector3> vertices = new List<Vector3>();
-		foreach (Int2 pos in vertHeights.GetMapPointsFlipped())
+		foreach (Int2 pos in vertHeights.GetMapPoints())
 		{
 			vertices.Add(new Vector3(pos.X/scale, vertHeights.Get(pos), pos.Y / scale));
 		}

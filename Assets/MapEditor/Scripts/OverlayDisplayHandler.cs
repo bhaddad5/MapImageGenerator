@@ -51,7 +51,7 @@ public class OverlayDisplayHandler : MonoBehaviour
 		}
 	}
 
-	public OverlayTextures GetOverlayMats(MapModel Map)
+	public OverlayTextures GetOverlayMats(MapModel Map, Int2 meshSectoion, int mapSectionSize)
 	{
 		ColorMap WaterMask = new ColorMap(Map.Map.Width, Map.Map.Height, 128);
 		ColorMap OverlaysTexture = new ColorMap(Map.Map.Width, Map.Map.Height, 128);

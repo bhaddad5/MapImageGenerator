@@ -25,6 +25,8 @@ public class MapBuilder : MonoBehaviour
 
 	private MapModel CurrentMap;
 
+	private int mapSectionSize = 20;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -112,28 +114,27 @@ public class MapBuilder : MonoBehaviour
 		yield return null;
 
 		MapMeshBuilder meshConstructor = new MapMeshBuilder();
-		List<Mesh> mapMeshes = meshConstructor.BuildMapMeshes(CurrentMap);
+		Map2D<Mesh> mapMeshes = meshConstructor.BuildMapMeshes(CurrentMap, mapSectionSize);
 
 		displayText.text = "Presenting World";
 		yield return null;
 
-		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapTextureHelpers.GetTerrainTexture(CurrentMap);
-
-		List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), CurrentMap);
-
-		int meshNum = 0;
-		foreach (Mesh m in mapMeshes)
+		foreach (Int2 meshSection in mapMeshes.GetMapPoints())
 		{
-			GameObject g = new GameObject("Mesh" + meshNum);
+			generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapTextureHelpers.GetTerrainTexture(CurrentMap, meshSection, mapSectionSize);
+			List<Material> mapMats = GetMapMaterials(CurrentMap, meshSection);
+
+			GameObject g = new GameObject("Mesh" + meshSection.ToString());
 			g.transform.SetParent(terrainMeshDisplay.transform);
-			g.AddComponent<MeshFilter>().mesh = m;
+			g.AddComponent<MeshFilter>().mesh = mapMeshes.Get(meshSection);
 			g.AddComponent<MeshRenderer>();
 			g.GetComponent<MeshRenderer>().materials = mapMats.ToArray();
-			g.AddComponent<WaterBasic>();
-			g.GetComponent<WaterBasic>().matNumber = mapMats.Count - 1;
-			if (m.vertices.Length > 1)
+			//g.AddComponent<WaterBasic>();
+			//g.GetComponent<WaterBasic>().matNumber = mapMats.Count - 1;
+			if (mapMeshes.Get(meshSection).vertices.Length > 1)
 				g.AddComponent<MeshCollider>();
-			meshNum++;
+
+			g.transform.localPosition += new Vector3(meshSection.X * mapSectionSize, 0, meshSection.Y * mapSectionSize);
 		}
 
 		displayText.text = "Seeding Forests";
@@ -171,7 +172,7 @@ public class MapBuilder : MonoBehaviour
 		}
 	}
 
-	private List<Material> GetMapMaterials(List<TerrainModel> groundTypes, MapModel Map)
+	private List<Material> GetMapMaterials(MapModel Map, Int2 meshSection)
 	{
 		var mats = new List<Material>() {new Material(Shader.Find("Standard"))};
 		
@@ -179,31 +180,31 @@ public class MapBuilder : MonoBehaviour
 		mats[0].SetFloat("_Glossiness", 0f);
 
 		List<TerrainModel> gtToFlush = new List<TerrainModel>();
-		for (int i = 0; i < groundTypes.Count; i++)
+		for (int i = 0; i < TerrainParser.TerrainData.Values.Count; i++)
 		{
-			gtToFlush.Add(groundTypes[i]);
+			gtToFlush.Add(TerrainParser.TerrainData.Values.ToArray()[i]);
 			if (gtToFlush.Count >= 5)
 			{
-				mats.Add(FlushGroundInfoToMat(gtToFlush, Map));
+				mats.Add(FlushGroundInfoToMat(gtToFlush, Map, meshSection));
 				gtToFlush.Clear();
 			}
 		}
 		if(gtToFlush.Count > 0)
-			mats.Add(FlushGroundInfoToMat(gtToFlush, Map));
+			mats.Add(FlushGroundInfoToMat(gtToFlush, Map, meshSection));
 
-		OverlayDisplayHandler.OverlayTextures overlays = OverlayDisplayHandler.GetOverlayMats(Map);
-		mats.Add(overlays.Overlays);
-		mats.Add(overlays.Water);
+		//OverlayDisplayHandler.OverlayTextures overlays = OverlayDisplayHandler.GetOverlayMats(Map, meshSection, mapSectionSize);
+		//mats.Add(overlays.Overlays);
+		//mats.Add(overlays.Water);
 
 		return mats;
 	}
 
-	private Material FlushGroundInfoToMat(List<TerrainModel> groundInfo, MapModel Map)
+	private Material FlushGroundInfoToMat(List<TerrainModel> groundInfo, MapModel Map, Int2 startingPoint)
 	{
 		var mat = new Material(Shader.Find("Custom/GroundShader"));
 
-		mat.SetTexture("_LookupTex", MapTextureHelpers.GetTerrainTexture(Map));
-		mat.SetFloat("_LookupWidth", MapTextureHelpers.GetTerrainTexture(Map).width);
+		mat.SetTexture("_LookupTex", MapTextureHelpers.GetTerrainTexture(Map, startingPoint, mapSectionSize));
+		mat.SetFloat("_LookupWidth", MapTextureHelpers.GetTerrainTexture(Map, startingPoint, mapSectionSize).width);
 		for (int i = 0; i < 5 && i < groundInfo.Count; i++)
 		{
 			mat.SetVector("_Color" + i, groundInfo[i].LookupColor);

@@ -8,14 +8,26 @@ public class MapMeshBuilder
 	private Map2D<float> vertHeights;
 	private const int vertsPerTileAcross = 5;
 
-	public List<Mesh> BuildMapMeshes(MapModel map)
+	public Map2D<Mesh> BuildMapMeshes(MapModel map, int sizeOfMeshSection)
 	{
 		Map = map;
 		populateVertHeights();
 		RandomizeVertHeights();
 		ZeroOutWaterBorders();
 
-		return MeshConstructor.BuildMeshes(vertHeights, vertsPerTileAcross);
+		int width = Map.Map.Width / sizeOfMeshSection;
+		if (Map.Map.Width % sizeOfMeshSection > 0)
+			width++;
+		int height = Map.Map.Height / sizeOfMeshSection;
+		if (Map.Map.Height % sizeOfMeshSection > 0)
+			height++;
+		Map2D<Mesh> meshes = new Map2D<Mesh>(width, height);
+		foreach (Int2 point in meshes.GetMapPoints())
+		{
+			meshes.Set(point, MeshConstructor.BuildMesh(vertHeights, vertsPerTileAcross, point * sizeOfMeshSection * vertsPerTileAcross, sizeOfMeshSection * vertsPerTileAcross));
+		}
+
+		return meshes;
 	}
 
 	private void populateVertHeights()
