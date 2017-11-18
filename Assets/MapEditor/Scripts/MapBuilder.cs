@@ -114,7 +114,7 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Artificing Lands";
 		yield return null;
 
-		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapTextureHelpers.GetTerrainTexture(CurrentMap);
+		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapTextureHelpers.GetTerrainTexture(CurrentMap.Map);
 
 		int vertsPerTile = 5;
 		Map2D<float> vertHeights = MapMeshBuilder.BuildVertHeights(CurrentMap, vertsPerTile);
@@ -126,7 +126,7 @@ public class MapBuilder : MonoBehaviour
 
 		Mesh mapMesh = MeshConstructor.BuildMeshes(vertHeights, vertsPerTile);
 
-		List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), CurrentMap);
+		List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), CurrentMap.Map);
 		OverlaysMat.mainTexture = MapTextureHelpers.ColorMapToMaterial(overlays.Overlays);
 		mapMats.Add(OverlaysMat);
 		WaterMat.SetTexture("_MaskTex", MapTextureHelpers.ColorMapToMaterial(overlays.Water));
@@ -177,7 +177,7 @@ public class MapBuilder : MonoBehaviour
 		}
 	}
 
-	private List<Material> GetMapMaterials(List<TerrainModel> groundTypes, MapModel Map)
+	private List<Material> GetMapMaterials(List<TerrainModel> groundTypes, Map2D<MapTileModel> Map)
 	{
 		var mats = new List<Material>() {new Material(Shader.Find("Standard"))};
 		
@@ -200,7 +200,7 @@ public class MapBuilder : MonoBehaviour
 		return mats;
 	}
 
-	private Material FlushGroundInfoToMat(List<TerrainModel> groundInfo, MapModel Map)
+	private Material FlushGroundInfoToMat(List<TerrainModel> groundInfo, Map2D<MapTileModel> Map)
 	{
 		var mat = new Material(Shader.Find("Custom/GroundShader"));
 

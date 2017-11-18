@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class MapTextureHelpers
 {
-	public static Texture2D GetTerrainTexture(MapModel Map)
+	public static Texture2D GetTerrainTexture(Map2D<MapTileModel> Map)
 	{
 		List<Color> pixels = new List<Color>();
-		foreach (MapTileModel tile in Map.Map.GetMapValuesFlipped())
+		foreach (MapTileModel tile in Map.GetMapValuesFlipped())
 			pixels.Add(tile.Terrain().LookupColor);
-		Texture2D terrainMapImage = new Texture2D(Map.Map.Width, Map.Map.Height, TextureFormat.ARGB32, true, true);
+		Texture2D terrainMapImage = new Texture2D(Map.Width, Map.Height, TextureFormat.ARGB32, true, true);
 		terrainMapImage.filterMode = FilterMode.Point;
 		terrainMapImage.anisoLevel = 0;
 		terrainMapImage.SetPixels(pixels.ToArray());
