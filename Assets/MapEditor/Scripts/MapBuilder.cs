@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -69,30 +70,20 @@ public class MapBuilder : MonoBehaviour
 
 	public void RebuildMap()
 	{
-		int width = 30;
-		int height = 30;
+		int width = 40;
+		int height = 20;
 		CurrentMap = new MapModel(width, height);
-		StartCoroutine(GenerateMap(RealmParser.RealmsData[EnvironmentSelection.options[EnvironmentSelection.value].text]));
+		GenerateMap(RealmParser.RealmsData[EnvironmentSelection.options[EnvironmentSelection.value].text]);
 		StartCoroutine(DisplayMap());
 	}
 
-	public IEnumerator GenerateMap(RealmModel realmCreationInfo)
+	public void GenerateMap(RealmModel realmCreationInfo)
 	{
-		displayText.enabled = true;
-
-		displayText.text = "Raising Lands";
-		yield return null;
-
 		MapGeneratorApi generator = new MapGeneratorApi();
 		generator.GenerateMap(CurrentMap, realmCreationInfo);
-
-		displayText.text = "Forging Kingdoms";
-		yield return null;
 		
 		RegionsGenerator regionsGen = new RegionsGenerator();
 		regionsGen.GenerateRegions(CurrentMap, realmCreationInfo);
-
-		displayText.enabled = false;
 	}
 
 	private IEnumerator DisplayMap()
@@ -118,13 +109,10 @@ public class MapBuilder : MonoBehaviour
 
 		int vertsPerTile = 5;
 		Map2D<float> vertHeights = MapMeshBuilder.BuildVertHeights(CurrentMap, vertsPerTile);
-		int overlayTexSize = 128;
+		int overlayTexSize = 64;
 		OverlayDisplayHandler.OverlayTextures overlays = OverlayDisplayHandler.GetOverlayMats(CurrentMap.Map, overlayTexSize);
 
-		displayText.text = "Presenting World";
-		yield return null;
-
-		/*int mapChunkSize = 20;
+		int mapChunkSize = 20;
 		int mapChunkWidth = CurrentMap.Map.Width / mapChunkSize;
 		if (CurrentMap.Map.Width % mapChunkSize > 0)
 			mapChunkWidth++;
@@ -132,28 +120,37 @@ public class MapBuilder : MonoBehaviour
 		if (CurrentMap.Map.Height % mapChunkSize > 0)
 			mapChunkHeight++;
 		Map2D<int> mapChunks = new Map2D<int>(mapChunkWidth, mapChunkHeight);
+
 		foreach (Int2 mapChunk in mapChunks.GetMapPoints())
 		{
+			displayText.text = "Presenting World " + mapChunk;
+			yield return null;
 
-		}*/
+			Int2 MapScaleStartingPoint = mapChunk * mapChunkSize;
+			int MapScaleWidth = Math.Min(mapChunkSize, CurrentMap.Map.Width - MapScaleStartingPoint.X);
+			int MapScaleHeight = Math.Min(mapChunkSize, CurrentMap.Map.Height - MapScaleStartingPoint.Y);
 
-		Mesh mapMesh = MeshConstructor.BuildMeshes(vertHeights.GetMapBlock(new Int2(0, 0), 20 * vertsPerTile, 20 * vertsPerTile), vertsPerTile);
+			Debug.Log(mapChunk + ", " + MapScaleWidth + ", " + MapScaleHeight);
 
-		List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), CurrentMap.Map.GetMapBlock(new Int2(0, 0), 20, 20));
-		OverlaysMat.mainTexture = MapTextureHelpers.ColorMapToMaterial(overlays.Overlays.GetMapBlock(new Int2(0, 0), 20 * overlayTexSize, 20 * overlayTexSize));
-		mapMats.Add(OverlaysMat);
-		WaterMat.SetTexture("_MaskTex", MapTextureHelpers.ColorMapToMaterial(overlays.Water.GetMapBlock(new Int2(0, 0), 20 * overlayTexSize, 20 * overlayTexSize)));
-		mapMats.Add(WaterMat);
+			Mesh mapMesh = MeshConstructor.BuildMeshes(vertHeights.GetMapBlock(MapScaleStartingPoint * vertsPerTile, MapScaleWidth * vertsPerTile + 1, MapScaleHeight * vertsPerTile + 1), vertsPerTile);
 
-		GameObject g = new GameObject("Mesh");
-		g.transform.SetParent(terrainMeshDisplay.transform);
-		g.AddComponent<MeshFilter>().mesh = mapMesh;
-		g.AddComponent<MeshRenderer>();
-		g.GetComponent<MeshRenderer>().materials = mapMats.ToArray();
-		g.AddComponent<WaterBasic>();
-		g.GetComponent<WaterBasic>().matNumber = mapMats.Count - 1;
-		if (mapMesh.vertices.Length > 1)
-			g.AddComponent<MeshCollider>();
+			List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), CurrentMap.Map.GetMapBlock(MapScaleStartingPoint, MapScaleWidth, MapScaleHeight));
+			OverlaysMat.mainTexture = MapTextureHelpers.ColorMapToMaterial(overlays.Overlays.GetMapBlock(MapScaleStartingPoint * overlayTexSize, MapScaleWidth * overlayTexSize, MapScaleHeight * overlayTexSize));
+			mapMats.Add(OverlaysMat);
+			WaterMat.SetTexture("_MaskTex", MapTextureHelpers.ColorMapToMaterial(overlays.Water.GetMapBlock(MapScaleStartingPoint * overlayTexSize, MapScaleWidth * overlayTexSize, MapScaleHeight * overlayTexSize)));
+			mapMats.Add(WaterMat);
+
+			GameObject g = new GameObject("Mesh");
+			g.transform.SetParent(terrainMeshDisplay.transform);
+			g.AddComponent<MeshFilter>().mesh = mapMesh;
+			g.AddComponent<MeshRenderer>();
+			g.GetComponent<MeshRenderer>().materials = mapMats.ToArray();
+			g.AddComponent<WaterBasic>();
+			g.GetComponent<WaterBasic>().matNumber = mapMats.Count - 1;
+			if (mapMesh.vertices.Length > 1)
+				g.AddComponent<MeshCollider>();
+			g.transform.localPosition += new Vector3(MapScaleStartingPoint.X, 0, MapScaleStartingPoint.Y);
+		}
 
 		displayText.text = "Seeding Forests";
 		yield return null;

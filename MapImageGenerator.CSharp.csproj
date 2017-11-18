@@ -126,7 +126,6 @@
     <Compile Include="Assets\MapEditor\Scripts\MapBuilder.cs" />
     <Compile Include="Assets\MapEditor\Scripts\MapMeshBuilder.cs" />
     <Compile Include="Assets\MapEditor\Scripts\MeshConstructor.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\MeshSplitter.cs" />
     <Compile Include="Assets\MapEditor\Scripts\ModelPlacer.cs" />
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\DataParsers\CultureParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\NewMapHandler\DataParsers\LocationParser.cs" />
