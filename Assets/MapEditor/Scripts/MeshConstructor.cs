@@ -5,11 +5,8 @@ using System.Linq;
 
 class MeshConstructor
 {
-	public static List<Mesh> BuildMeshes(Map2D<float> vertHeights, float scale)
+	public static Mesh BuildMeshes(Map2D<float> vertHeights, float scale)
 	{
-		List<Mesh> builtMeshes = new List<Mesh>();
-
-
 		List<Vector3> vertices = SetVerticesFromHeights(vertHeights, scale);
 		List<int> indices = SetTriangles(vertHeights.Width, vertHeights.Height);
 		List<Vector2> uvCoords = SetUVs(vertHeights.Width, vertHeights.Height);
@@ -19,15 +16,9 @@ class MeshConstructor
 		mesh.triangles = indices.ToArray();
 		mesh.uv = uvCoords.ToArray();
 
-		builtMeshes.Add(mesh);
+		mesh.RecalculateNormals();
 
-
-		//builtMeshes = MeshSplitter.Split(vertices, uvCoords, indices, 64000, 64000);
-
-		foreach(Mesh m in builtMeshes)
-			m.RecalculateNormals();
-
-		return builtMeshes;
+		return mesh;
 	}
 
 	private static List<Vector3> SetVerticesFromHeights(Map2D<float> vertHeights, float scale)

@@ -111,30 +111,27 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Artificing Lands";
 		yield return null;
 
-		MapMeshBuilder meshConstructor = new MapMeshBuilder();
-		List<Mesh> mapMeshes = meshConstructor.BuildMapMeshes(CurrentMap);
+		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapTextureHelpers.GetTerrainTexture(CurrentMap);
+
+		int vertsPerTile = 5;
+		Map2D<float> vertHeights = MapMeshBuilder.BuildVertHeights(CurrentMap, vertsPerTile);
 
 		displayText.text = "Presenting World";
 		yield return null;
 
-		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapTextureHelpers.GetTerrainTexture(CurrentMap);
+		Mesh mapMesh = MeshConstructor.BuildMeshes(vertHeights, vertsPerTile);
 
 		List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), CurrentMap);
 
-		int meshNum = 0;
-		foreach (Mesh m in mapMeshes)
-		{
-			GameObject g = new GameObject("Mesh" + meshNum);
-			g.transform.SetParent(terrainMeshDisplay.transform);
-			g.AddComponent<MeshFilter>().mesh = m;
-			g.AddComponent<MeshRenderer>();
-			g.GetComponent<MeshRenderer>().materials = mapMats.ToArray();
-			g.AddComponent<WaterBasic>();
-			g.GetComponent<WaterBasic>().matNumber = mapMats.Count - 1;
-			if (m.vertices.Length > 1)
-				g.AddComponent<MeshCollider>();
-			meshNum++;
-		}
+		GameObject g = new GameObject("Mesh");
+		g.transform.SetParent(terrainMeshDisplay.transform);
+		g.AddComponent<MeshFilter>().mesh = mapMesh;
+		g.AddComponent<MeshRenderer>();
+		g.GetComponent<MeshRenderer>().materials = mapMats.ToArray();
+		g.AddComponent<WaterBasic>();
+		g.GetComponent<WaterBasic>().matNumber = mapMats.Count - 1;
+		if (mapMesh.vertices.Length > 1)
+			g.AddComponent<MeshCollider>();
 
 		displayText.text = "Seeding Forests";
 		yield return null;
