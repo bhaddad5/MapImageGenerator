@@ -70,8 +70,8 @@ public class MapBuilder : MonoBehaviour
 
 	public void RebuildMap()
 	{
-		int width = 40;
-		int height = 20;
+		int width = 80;
+		int height = 40;
 		CurrentMap = new MapModel(width, height);
 		GenerateMap(RealmParser.RealmsData[EnvironmentSelection.options[EnvironmentSelection.value].text]);
 		StartCoroutine(DisplayMap());
@@ -121,16 +121,16 @@ public class MapBuilder : MonoBehaviour
 			mapChunkHeight++;
 		Map2D<int> mapChunks = new Map2D<int>(mapChunkWidth, mapChunkHeight);
 
+		int currChunk = 0;
 		foreach (Int2 mapChunk in mapChunks.GetMapPoints())
 		{
-			displayText.text = "Presenting World " + mapChunk;
+			displayText.text = "Presenting World " + (currChunk/(float)mapChunks.Size * 100f) + "%";
+			currChunk++;
 			yield return null;
 
 			Int2 MapScaleStartingPoint = mapChunk * mapChunkSize;
 			int MapScaleWidth = Math.Min(mapChunkSize, CurrentMap.Map.Width - MapScaleStartingPoint.X);
 			int MapScaleHeight = Math.Min(mapChunkSize, CurrentMap.Map.Height - MapScaleStartingPoint.Y);
-
-			Debug.Log(mapChunk + ", " + MapScaleWidth + ", " + MapScaleHeight);
 
 			Mesh mapMesh = MeshConstructor.BuildMeshes(vertHeights.GetMapBlock(MapScaleStartingPoint * vertsPerTile, MapScaleWidth * vertsPerTile + 1, MapScaleHeight * vertsPerTile + 1), vertsPerTile);
 

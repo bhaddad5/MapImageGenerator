@@ -10,6 +10,8 @@ public class Map2D<T>
 	public int Width { get { return map.Length; } }
 	public int Height { get { return map[0].Length; } }
 
+	public int Size { get { return Width * Height; } }
+
 	T[][] map;
 
 	public Map2D(int width, int height)
