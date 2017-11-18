@@ -36,9 +36,41 @@ public class MapMeshBuilder
 		{
 			for (int y = 0; y < vertsPerTileAcross; y++)
 			{
-				vertHeights.Set(new Int2(baseI + x, baseJ + y), tileHeight);
+				float height = tileHeight;
+				int combinedHeights = 1;
+				if (x == 0)
+				{
+					height += GetHeight(pixle + new Int2(-1, 0));
+					combinedHeights++;
+				}
+				if (y == 0)
+				{
+					height += GetHeight(pixle + new Int2(0, -1));
+					combinedHeights++;
+				}
+				if (x == vertsPerTileAcross - 1)
+				{
+					height += GetHeight(pixle + new Int2(1, 0));
+					combinedHeights++;
+				}
+				if (y == vertsPerTileAcross - 1)
+				{
+					height += GetHeight(pixle + new Int2(0, 1));
+					combinedHeights++;
+				}
+				height = height / combinedHeights;
+				if (Map.Map.Get(pixle).Terrain().HasTrait(TerrainModel.GroundTraits.Water))
+					height = tileHeight;
+				vertHeights.Set(new Int2(baseI + x, baseJ + y), height);
 			}
 		}
+	}
+
+	private float GetHeight(Int2 point)
+	{
+		if (Map.Map.PosInBounds(point))
+			return Map.Map.Get(point).Terrain().Height;
+		else return 0;
 	}
 
 	private void RandomizeVertHeights()

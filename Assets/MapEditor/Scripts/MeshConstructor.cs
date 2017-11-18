@@ -14,7 +14,15 @@ class MeshConstructor
 		List<int> indices = SetTriangles(vertHeights.Width, vertHeights.Height);
 		List<Vector2> uvCoords = SetUVs(vertHeights.Width, vertHeights.Height);
 
-		builtMeshes = MeshSplitter.Split(vertices, uvCoords, indices, 64000, 64000);
+		Mesh mesh = new Mesh();
+		mesh.vertices = vertices.ToArray();
+		mesh.triangles = indices.ToArray();
+		mesh.uv = uvCoords.ToArray();
+
+		builtMeshes.Add(mesh);
+
+
+		//builtMeshes = MeshSplitter.Split(vertices, uvCoords, indices, 64000, 64000);
 
 		foreach(Mesh m in builtMeshes)
 			m.RecalculateNormals();
