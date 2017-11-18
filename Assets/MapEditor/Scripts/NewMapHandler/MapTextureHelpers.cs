@@ -29,4 +29,11 @@ public class MapTextureHelpers
 		}
 		return numTiles;
 	}
+
+	public static Texture2D ColorMapToMaterial(Map2D<Color> colors)
+	{
+		Texture2D tex = new Texture2D(colors.Width, colors.Height);
+		tex.SetPixels(colors.GetMapValues().ToArray());
+		return tex;
+	}
 }

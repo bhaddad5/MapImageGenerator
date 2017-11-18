@@ -19,6 +19,9 @@ public class MapBuilder : MonoBehaviour
 	public GameObject SettlementInfoPrefab;
 	public GameObject LocationInfoPrefab;
 
+	public Material OverlaysMat;
+	public Material WaterMat;
+
 	private GameObject objectParent;
 
 	public OverlayDisplayHandler OverlayDisplayHandler;
@@ -66,8 +69,8 @@ public class MapBuilder : MonoBehaviour
 
 	public void RebuildMap()
 	{
-		int width = 30;
-		int height = 30;
+		int width = 20;
+		int height = 20;
 		CurrentMap = new MapModel(width, height);
 		StartCoroutine(GenerateMap(RealmParser.RealmsData[EnvironmentSelection.options[EnvironmentSelection.value].text]));
 		StartCoroutine(DisplayMap());
@@ -116,12 +119,16 @@ public class MapBuilder : MonoBehaviour
 		int vertsPerTile = 5;
 		Map2D<float> vertHeights = MapMeshBuilder.BuildVertHeights(CurrentMap, vertsPerTile);
 
+		OverlayDisplayHandler.OverlayTextures overlays = OverlayDisplayHandler.GetOverlayMats(CurrentMap.Map);
+
 		displayText.text = "Presenting World";
 		yield return null;
 
 		Mesh mapMesh = MeshConstructor.BuildMeshes(vertHeights, vertsPerTile);
 
 		List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), CurrentMap);
+		mapMats.Add(overlays.Overlays);
+		mapMats.Add(overlays.Water);
 
 		GameObject g = new GameObject("Mesh");
 		g.transform.SetParent(terrainMeshDisplay.transform);
@@ -187,10 +194,6 @@ public class MapBuilder : MonoBehaviour
 		}
 		if(gtToFlush.Count > 0)
 			mats.Add(FlushGroundInfoToMat(gtToFlush, Map));
-
-		OverlayDisplayHandler.OverlayTextures overlays = OverlayDisplayHandler.GetOverlayMats(Map);
-		mats.Add(overlays.Overlays);
-		mats.Add(overlays.Water);
 
 		return mats;
 	}

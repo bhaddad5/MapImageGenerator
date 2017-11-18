@@ -167,6 +167,24 @@ public class Map2D<T>
 		}
 	}
 
+	public Map2D<T> GetMapBlock(Int2 startingPoint, int width, int height)
+	{
+		int actualWidth = Math.Min(Width - startingPoint.X, width);
+		int actualHeight = Math.Min(Height - startingPoint.Y, height);
+
+		Map2D<T> block = new Map2D<T>(actualWidth, actualHeight);
+
+		for (int i = startingPoint.X; i <= startingPoint.X + actualWidth && i < width; i++)
+		{
+			for (int j = startingPoint.Y; j <= startingPoint.Y + actualHeight && j < height; j++)
+			{
+				block.Set(new Int2(i - startingPoint.X, j - startingPoint.Y), Get(new Int2(i, j)));
+			}
+		}
+
+		return block;
+	}
+
 	[Serializable]
 	public class Map2DSerializable
 	{

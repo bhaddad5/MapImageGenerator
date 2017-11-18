@@ -22,7 +22,7 @@ public class OverlayDisplayHandler : MonoBehaviour
 
 	public class ColorMap
 	{
-		public Color[] Colors;
+		public Map2D<Color> Colors;
 		private int textureSize;
 		private int width;
 		private int height;
@@ -32,7 +32,7 @@ public class OverlayDisplayHandler : MonoBehaviour
 			textureSize = ts;
 			width = w;
 			height = h;
-			Colors = new Color[width * textureSize * height * textureSize];
+			Colors = new Map2D<Color>(width * textureSize, height * textureSize);
 		}
 
 		public void SetPixels(int x, int y, Color[] colorsToSet)
@@ -41,24 +41,24 @@ public class OverlayDisplayHandler : MonoBehaviour
 			{
 				for (int j = 0; j < textureSize; j++)
 				{
-					Color c = Colors[(y + i) * (width * textureSize) + (x + j)];
+					Color c = Colors.Get(new Int2(x + j, y + i));
 					Color n = colorsToSet[(i * textureSize) + j];
 					if (c.a > n.a)
 						n = c;
-					Colors[(y + i) * (width * textureSize) + (x + j)] = n;
+					Colors.Set(new Int2(x + j, y + i), n);
 				}
 			}
 		}
 	}
 
-	public OverlayTextures GetOverlayMats(MapModel Map)
+	public OverlayTextures GetOverlayMats(Map2D<MapTileModel> Map)
 	{
-		ColorMap WaterMask = new ColorMap(Map.Map.Width, Map.Map.Height, 128);
-		ColorMap OverlaysTexture = new ColorMap(Map.Map.Width, Map.Map.Height, 128);
+		ColorMap WaterMask = new ColorMap(Map.Width, Map.Height, 128);
+		ColorMap OverlaysTexture = new ColorMap(Map.Width, Map.Height, 128);
 
-		foreach (Int2 point in Map.Map.GetMapPoints())
+		foreach (Int2 point in Map.GetMapPoints())
 		{
-			foreach (string over in Map.Map.Get(point).Terrain().Overlays)
+			foreach (string over in Map.Get(point).Terrain().Overlays)
 			{
 				OverlayPlacementModel overlay = OverlayParser.OverlayData[over];
 				var pixels = GetTilePixels(Map, point, overlay.GroundTrait,
@@ -73,39 +73,39 @@ public class OverlayDisplayHandler : MonoBehaviour
 			}
 		}
 
-		Texture2D Overlays = new Texture2D(Map.Map.Width * textureSize, Map.Map.Height * textureSize);
-		Overlays.SetPixels(OverlaysTexture.Colors);
+		Texture2D Overlays = new Texture2D(Map.Width * textureSize, Map.Height * textureSize);
+		Overlays.SetPixels(OverlaysTexture.Colors.GetMapValuesFlipped().ToArray());
 		Overlays.Apply();
 		OverlaysMat.mainTexture = Overlays;
 
-		Texture2D Water = new Texture2D(Map.Map.Width * textureSize, Map.Map.Height * textureSize);
-		Water.SetPixels(WaterMask.Colors);
+		Texture2D Water = new Texture2D(Map.Width * textureSize, Map.Height * textureSize);
+		Water.SetPixels(WaterMask.Colors.GetMapValuesFlipped().ToArray());
 		Water.Apply();
 		WaterMat.SetTexture("_MaskTex", Water);
 
 		return new OverlayTextures(OverlaysMat, WaterMat);
 	}
 
-	public Color[] GetTilePixels(MapModel Map, Int2 tile,string adjacentTrait,
+	public Color[] GetTilePixels(Map2D<MapTileModel> Map, Int2 tile,string adjacentTrait,
 		Texture2D noSides, Texture2D oneSide, Texture2D twoAdjSides, Texture2D twoOppSides, Texture2D threeSides, Texture2D fourSides)
 	{
 		bool topBorders = true;
 		bool leftBorders = true;
 		bool rightBorders = true;
 		bool bottomBorders = true;
-		foreach (Int2 adjacent in Map.Map.GetAdjacentPoints(tile))
+		foreach (Int2 adjacent in Map.GetAdjacentPoints(tile))
 		{
 			if (adjacent.X == tile.X && adjacent.Y == tile.Y + 1 &&
-			    !Map.Map.Get(adjacent).Terrain().HasTrait(adjacentTrait))
+			    !Map.Get(adjacent).Terrain().HasTrait(adjacentTrait))
 				topBorders = false;
 			if (adjacent.X == tile.X - 1 && adjacent.Y == tile.Y &&
-			    !Map.Map.Get(adjacent).Terrain().HasTrait(adjacentTrait))
+			    !Map.Get(adjacent).Terrain().HasTrait(adjacentTrait))
 				leftBorders = false;
 			if (adjacent.X == tile.X + 1 && adjacent.Y == tile.Y &&
-			    !Map.Map.Get(adjacent).Terrain().HasTrait(adjacentTrait))
+			    !Map.Get(adjacent).Terrain().HasTrait(adjacentTrait))
 				rightBorders = false;
 			if (adjacent.X == tile.X && adjacent.Y == tile.Y - 1 &&
-			    !Map.Map.Get(adjacent).Terrain().HasTrait(adjacentTrait))
+			    !Map.Get(adjacent).Terrain().HasTrait(adjacentTrait))
 				bottomBorders = false;
 		}
 
