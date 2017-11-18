@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class OverlayDisplayHandler : MonoBehaviour
 {
-	private int textureSize = 128;
-
 	public class OverlayTextures
 	{
 		public Map2D<Color> Overlays;
@@ -49,31 +47,31 @@ public class OverlayDisplayHandler : MonoBehaviour
 		}
 	}
 
-	public OverlayTextures GetOverlayMats(Map2D<MapTileModel> Map)
+	public OverlayTextures GetOverlayMats(Map2D<MapTileModel> Map, int tileSize)
 	{
-		ColorMap WaterMask = new ColorMap(Map.Width, Map.Height, 128);
-		ColorMap OverlaysTexture = new ColorMap(Map.Width, Map.Height, 128);
+		ColorMap WaterMask = new ColorMap(Map.Width, Map.Height, tileSize);
+		ColorMap OverlaysTexture = new ColorMap(Map.Width, Map.Height, tileSize);
 
 		foreach (Int2 point in Map.GetMapPoints())
 		{
 			foreach (string over in Map.Get(point).Terrain().Overlays)
 			{
 				OverlayPlacementModel overlay = OverlayParser.OverlayData[over];
-				var pixels = GetTilePixels(Map, point, overlay.GroundTrait,
+				var pixels = GetTilePixels(Map, point, overlay.GroundTrait, tileSize,
 					overlay.NoSides.GetTexture(), overlay.OneSide.GetTexture(), overlay.TwoAdjSides.GetTexture(),
 					overlay.TwoOppSides.GetTexture(), overlay.ThreeSides.GetTexture(), overlay.FourSides.GetTexture());
 
 				if(overlay.OverlayLayer == "Overlay")
-					OverlaysTexture.SetPixels(point.X * textureSize, point.Y * textureSize, pixels);
+					OverlaysTexture.SetPixels(point.X * tileSize, point.Y * tileSize, pixels);
 				if (overlay.OverlayLayer == "Water")
-					WaterMask.SetPixels(point.X * textureSize, point.Y * textureSize, pixels);
+					WaterMask.SetPixels(point.X * tileSize, point.Y * tileSize, pixels);
 
 			}
 		}
 		return new OverlayTextures(OverlaysTexture.Colors, WaterMask.Colors);
 	}
 
-	public Color[] GetTilePixels(Map2D<MapTileModel> Map, Int2 tile,string adjacentTrait,
+	public Color[] GetTilePixels(Map2D<MapTileModel> Map, Int2 tile, string adjacentTrait, int textureSize,
 		Texture2D noSides, Texture2D oneSide, Texture2D twoAdjSides, Texture2D twoOppSides, Texture2D threeSides, Texture2D fourSides)
 	{
 		bool topBorders = true;

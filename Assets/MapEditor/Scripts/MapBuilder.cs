@@ -118,18 +118,31 @@ public class MapBuilder : MonoBehaviour
 
 		int vertsPerTile = 5;
 		Map2D<float> vertHeights = MapMeshBuilder.BuildVertHeights(CurrentMap, vertsPerTile);
-
-		OverlayDisplayHandler.OverlayTextures overlays = OverlayDisplayHandler.GetOverlayMats(CurrentMap.Map);
+		int overlayTexSize = 128;
+		OverlayDisplayHandler.OverlayTextures overlays = OverlayDisplayHandler.GetOverlayMats(CurrentMap.Map, overlayTexSize);
 
 		displayText.text = "Presenting World";
 		yield return null;
 
-		Mesh mapMesh = MeshConstructor.BuildMeshes(vertHeights, vertsPerTile);
+		/*int mapChunkSize = 20;
+		int mapChunkWidth = CurrentMap.Map.Width / mapChunkSize;
+		if (CurrentMap.Map.Width % mapChunkSize > 0)
+			mapChunkWidth++;
+		int mapChunkHeight = CurrentMap.Map.Height / mapChunkSize;
+		if (CurrentMap.Map.Height % mapChunkSize > 0)
+			mapChunkHeight++;
+		Map2D<int> mapChunks = new Map2D<int>(mapChunkWidth, mapChunkHeight);
+		foreach (Int2 mapChunk in mapChunks.GetMapPoints())
+		{
 
-		List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), CurrentMap.Map);
-		OverlaysMat.mainTexture = MapTextureHelpers.ColorMapToMaterial(overlays.Overlays);
+		}*/
+
+		Mesh mapMesh = MeshConstructor.BuildMeshes(vertHeights.GetMapBlock(new Int2(0, 0), 20 * vertsPerTile, 20 * vertsPerTile), vertsPerTile);
+
+		List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), CurrentMap.Map.GetMapBlock(new Int2(0, 0), 20, 20));
+		OverlaysMat.mainTexture = MapTextureHelpers.ColorMapToMaterial(overlays.Overlays.GetMapBlock(new Int2(0, 0), 20 * overlayTexSize, 20 * overlayTexSize));
 		mapMats.Add(OverlaysMat);
-		WaterMat.SetTexture("_MaskTex", MapTextureHelpers.ColorMapToMaterial(overlays.Water));
+		WaterMat.SetTexture("_MaskTex", MapTextureHelpers.ColorMapToMaterial(overlays.Water.GetMapBlock(new Int2(0, 0), 20 * overlayTexSize, 20 * overlayTexSize)));
 		mapMats.Add(WaterMat);
 
 		GameObject g = new GameObject("Mesh");
