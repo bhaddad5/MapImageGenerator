@@ -157,6 +157,11 @@ public class ModelPlacer
 				if (Vector3.Angle(hit.normal, Vector3.up) > 60f)
 					return;
 
+				var rend = hit.collider.gameObject.GetComponent<Renderer>();
+				Texture2D tex = rend.materials[rend.materials.Length - 1].GetTexture("_MaskTex") as Texture2D;
+				if (tex.GetPixel((int) (hit.textureCoord.x * tex.width), (int) (hit.textureCoord.y * tex.height)).a > .2f)
+					return;
+
 				if (!forcePlacement && !ClearDownwardRaycasts(g, p))
 					return;
 
