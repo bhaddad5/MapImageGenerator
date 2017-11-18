@@ -24,7 +24,7 @@ public class MapTextureHelpers
 		int numTiles = 0;
 		foreach (MapTileModel tile in Map.Map.GetMapValues())
 		{
-			if (!tile.Terrain().Traits.Contains("Water") && !tile.Terrain().Traits.Contains("Mountain"))
+			if (!tile.HasTrait(MapTileModel.TileTraits.Water) && !tile.HasTrait(MapTileModel.TileTraits.Mountain))
 				numTiles++;
 		}
 		return numTiles;

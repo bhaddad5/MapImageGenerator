@@ -59,7 +59,7 @@ public class MapMeshBuilder
 					combinedHeights++;
 				}
 				height = height / combinedHeights;
-				if (Map.Map.Get(pixle).Terrain().HasTrait(TerrainModel.GroundTraits.Water))
+				if (Map.Map.Get(pixle).HasTrait(MapTileModel.TileTraits.Water))
 					height = tileHeight;
 				VertHeights.Set(new Int2(baseI + x, baseJ + y), height);
 			}
@@ -107,12 +107,12 @@ public class MapMeshBuilder
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
-			if(Map.Map.Get(point).Terrain().HasTrait(TerrainModel.GroundTraits.Ocean))
+			if(Map.Map.Get(point).HasTrait(MapTileModel.TileTraits.Ocean))
 				continue;
 			List<Int2> AdjacentOceanTiles = new List<Int2>();
 			foreach (Int2 adjacentPoint in Map.Map.GetAdjacentPoints(point))
 			{
-				if (Map.Map.Get(adjacentPoint).Terrain().HasTrait(TerrainModel.GroundTraits.Ocean))
+				if (Map.Map.Get(adjacentPoint).HasTrait(MapTileModel.TileTraits.Ocean))
 				{
 					AdjacentOceanTiles.Add(adjacentPoint);
 				}

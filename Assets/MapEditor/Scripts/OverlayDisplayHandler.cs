@@ -54,7 +54,7 @@ public class OverlayDisplayHandler : MonoBehaviour
 
 		foreach (Int2 point in Map.GetMapPoints())
 		{
-			foreach (string over in Map.Get(point).Terrain().Overlays)
+			foreach (string over in Map.Get(point).GetOverlays())
 			{
 				OverlayPlacementModel overlay = OverlayParser.OverlayData[over];
 				var pixels = GetTilePixels(Map, point, overlay.GroundTrait, tileSize,
@@ -81,16 +81,16 @@ public class OverlayDisplayHandler : MonoBehaviour
 		foreach (Int2 adjacent in Map.GetAdjacentPoints(tile))
 		{
 			if (adjacent.X == tile.X && adjacent.Y == tile.Y + 1 &&
-			    !Map.Get(adjacent).Terrain().HasTrait(adjacentTrait))
+			    !Map.Get(adjacent).HasTrait(adjacentTrait))
 				topBorders = false;
 			if (adjacent.X == tile.X - 1 && adjacent.Y == tile.Y &&
-			    !Map.Get(adjacent).Terrain().HasTrait(adjacentTrait))
+			    !Map.Get(adjacent).HasTrait(adjacentTrait))
 				leftBorders = false;
 			if (adjacent.X == tile.X + 1 && adjacent.Y == tile.Y &&
-			    !Map.Get(adjacent).Terrain().HasTrait(adjacentTrait))
+			    !Map.Get(adjacent).HasTrait(adjacentTrait))
 				rightBorders = false;
 			if (adjacent.X == tile.X && adjacent.Y == tile.Y - 1 &&
-			    !Map.Get(adjacent).Terrain().HasTrait(adjacentTrait))
+			    !Map.Get(adjacent).HasTrait(adjacentTrait))
 				bottomBorders = false;
 		}
 

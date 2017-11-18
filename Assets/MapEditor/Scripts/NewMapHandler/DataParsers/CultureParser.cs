@@ -71,7 +71,7 @@ public class CultureModel : ParsableData
 		int numWaterBorders = 0;
 		foreach (Int2 t in Map.Map.GetAdjacentPoints(pos))
 		{
-			if (Map.Map.Get(t).TerrainId == "Ocean" || Map.Map.Get(t).TerrainId == "River")
+			if (Map.Map.Get(t).HasTrait(MapTileModel.TileTraits.Ocean) || Map.Map.Get(t).HasTrait(MapTileModel.TileTraits.River))
 				numWaterBorders++;
 			value += GetTileValue(t, Map);
 		}

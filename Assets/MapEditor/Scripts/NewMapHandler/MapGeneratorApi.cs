@@ -82,7 +82,7 @@ public class MapGeneratorApi
 		for (int i = 0; i < numPlacements; i++)
 		{
 			Int2 randPos = new Int2(Random.Range(0, Map.Map.Width - 1), Random.Range(0, Map.Map.Height - 1));
-			if(!Map.Map.Get(randPos).Terrain().Traits.Contains("Water"))
+			if(!Map.Map.Get(randPos).HasTrait(MapTileModel.TileTraits.Water))
 				Map.Map.Get(randPos).TerrainId = terrain;
 		}
 	}
@@ -230,11 +230,11 @@ public class MapGeneratorApi
 		}
 	}
 
-	private bool BordersTerrainTrait(Int2 tile, string trait)
+	private bool BordersTerrainTrait(Int2 tile, MapTileModel.TileTraits trait)
 	{
 		foreach (Int2 neighbor in Map.Map.GetAdjacentPoints(tile))
 		{
-			if (Map.Map.Get(neighbor).Terrain().Traits.Contains(trait))
+			if (Map.Map.Get(neighbor).HasTrait(trait))
 				return true;
 		}
 		return false;
@@ -276,7 +276,7 @@ public class MapGeneratorApi
 		for (int i = 0; i < numOfRivers * 500; i++)
 		{
 			Int2 randPos = new Int2(Random.Range(0, Map.Map.Width), Random.Range(0, Map.Map.Height));
-			if (!WaterOrMountain(randPos))
+			if (!OceanOrMountain(randPos))
 				possibleRiverStarts.Add(randPos);
 		}
 
@@ -291,7 +291,12 @@ public class MapGeneratorApi
 				if (river != null)
 				{
 					foreach (var px in river)
-						Map.Map.Get(px).TerrainId = "River";
+					{
+						Map.Map.Get(px).Traits.Add(MapTileModel.TileTraits.River.ToString());
+						Map.Map.Get(px).Traits.Add(MapTileModel.TileTraits.Water.ToString());
+						Map.Map.Get(px).Overlays.Add("RiverWater");
+						Map.Map.Get(px).Overlays.Add("RiverBanks");
+					}
 					numOfRivers--;
 				}
 			}
@@ -301,8 +306,8 @@ public class MapGeneratorApi
 
 	private float RiverStartValue(Int2 startPos)
 	{
-		int numMountains = GetAdjacentNumWithTrait(startPos, "Mountain");
-		int numOceans = GetAdjacentNumWithTrait(startPos, "Ocean");
+		int numMountains = GetAdjacentNumWithTrait(startPos, MapTileModel.TileTraits.Mountain);
+		int numOceans = GetAdjacentNumWithTrait(startPos, MapTileModel.TileTraits.Ocean);
 
 		if (numOceans == 0 && numMountains > 0 && numMountains < 4)
 			return 1f;
@@ -325,7 +330,7 @@ public class MapGeneratorApi
 			nextRiverTiles.PopMin();
 			foreach (var neighbor in GetAdjacentRiverExpansions(shortestTile, checkedTiles))
 			{
-				if (Map.Map.Get(neighbor).Terrain().Traits.Contains("Water"))
+				if (Map.Map.Get(neighbor).HasTrait(MapTileModel.TileTraits.Water))
 				{
 					endTile = shortestTile;
 					break;
@@ -392,7 +397,7 @@ public class MapGeneratorApi
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
-			if(!WaterOrMountain(point) && Helpers.Odds(odds) && BordersTerrainType(point, "Mountain"))
+			if(!OceanOrMountain(point) && Helpers.Odds(odds) && BordersTerrainTrait(point, MapTileModel.TileTraits.Mountain))
 				Map.Map.Get(point).TerrainId = terrain;
 		}
 	}
@@ -401,7 +406,7 @@ public class MapGeneratorApi
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
-			if (!WaterOrMountain(point) && Helpers.Odds(odds) && BordersTerrainType(point, "Water"))
+			if (!OceanOrMountain(point) && Helpers.Odds(odds) && BordersTerrainTrait(point, MapTileModel.TileTraits.Water))
 				Map.Map.Get(point).TerrainId = terrain;
 		}
 	}
@@ -410,7 +415,7 @@ public class MapGeneratorApi
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
-			if (!WaterOrMountain(point) && Helpers.Odds(odds))
+			if (!OceanOrMountain(point) && Helpers.Odds(odds))
 				Map.Map.Get(point).TerrainId = terrain;
 		}
 	}
@@ -422,7 +427,7 @@ public class MapGeneratorApi
 			Map2D<bool> ChangedTiles = new Map2D<bool>(Map.Map.Width, Map.Map.Height);
 			foreach (Int2 point in Map.Map.GetMapPoints())
 			{
-				if (!WaterOrMountain(point) && Map.Map.Get(point).TerrainId != typeToExpand)
+				if (!OceanOrMountain(point) && Map.Map.Get(point).TerrainId != typeToExpand)
 				{
 					int numAdjacent = GetAdjacentNumOfType(point, typeToExpand, ChangedTiles);
 					if (Helpers.Odds(0.25f * numAdjacent))
@@ -436,12 +441,12 @@ public class MapGeneratorApi
 		}
 	}
 
-	private int GetAdjacentNumWithTrait(Int2 point, string trait)
+	private int GetAdjacentNumWithTrait(Int2 point, MapTileModel.TileTraits trait)
 	{
 		int num = 0;
 		foreach (Int2 adjacent in Map.Map.GetAdjacentPoints(point))
 		{
-			if (Map.Map.Get(adjacent).Terrain().Traits.Contains(trait))
+			if (Map.Map.Get(adjacent).HasTrait(trait))
 				num++;
 		}
 		return num;
@@ -452,14 +457,14 @@ public class MapGeneratorApi
 		int num = 0;
 		foreach (Int2 adjacent in Map.Map.GetAdjacentPoints(point))
 		{
-			if (!invalidTiles.Get(adjacent) && !WaterOrMountain(adjacent) && Map.Map.Get(adjacent).TerrainId == type)
+			if (!invalidTiles.Get(adjacent) && !OceanOrMountain(adjacent) && Map.Map.Get(adjacent).TerrainId == type)
 				num++;
 		}
 		return num;
 	}
 
-	private bool WaterOrMountain(Int2 point)
+	private bool OceanOrMountain(Int2 point)
 	{
-		return Map.Map.Get(point).Terrain().Traits.Contains("Mountain") || Map.Map.Get(point).Terrain().Traits.Contains("Water");
+		return Map.Map.Get(point).HasTrait(MapTileModel.TileTraits.Ocean) || Map.Map.Get(point).HasTrait(MapTileModel.TileTraits.Mountain);
 	}
 }

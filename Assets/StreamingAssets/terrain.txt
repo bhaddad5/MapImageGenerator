@@ -1,4 +1,4 @@
-{"Id":"Ocean",
+{"Id":"MidlandOcean",
 "Texture":"Midlands/Terrain/Fertile.png",
 "Height":0,
 "Difficulty":0.1,
@@ -15,21 +15,7 @@
 	"OceanShore"
 ]}
 |
-{"Id":"River",
-"Texture":"Midlands/Terrain/Fertile.png",
-"Height":0.01,
-"Difficulty":0.1,
-"LookupColor":{"r":0.3,"g":0.3,"b":1.0,"a":1.0},
-"Traits":[
-	"Water",
-	"River"
-],
-"Overlays":[
-	"RiverWater",
-	"RiverBanks"
-]}
-|
-{"Id":"Swamp",
+{"Id":"MidlandSwamp",
 "Texture":"Midlands/Terrain/Swamp.png",
 "Height":0.01,
 "Difficulty":0.35,
@@ -41,7 +27,7 @@
 	"Swamp"
 ]}
 |
-{"Id":"Wilderness",
+{"Id":"MidlandWilderness",
 "Texture":"Midlands/Terrain/Wilderness.png",
 "Height":0.05,
 "Difficulty":0.2,
@@ -51,7 +37,7 @@
 ],
 "Traits":[]}
 |
-{"Id":"Forest",
+{"Id":"MidlandForest",
 "Texture":"Midlands/Terrain/Forest.png",
 "Height":0.05,
 "Difficulty":0.25,
@@ -63,7 +49,7 @@
 	"Forest"
 ]}
 |
-{"Id":"Mountain",
+{"Id":"MidlandMountain",
 "Difficulty":50,
 "Height":0.8,
 "Texture":"Midlands/Terrain/Mountains.png",
@@ -73,7 +59,7 @@
 	"Impassable"
 ]}
 |
-{"Id":"Fertile",
+{"Id":"MidlandFertile",
 "Difficulty":0.15,
 "Height":0.01,
 "Texture":"Midlands/Terrain/Fertile.png",

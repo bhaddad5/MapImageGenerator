@@ -114,7 +114,7 @@ public class ModelPlacer
 
 	private void PlaceBridgeOnTile(Int2 tile, GameObject bridge)
 	{
-		if (Map.Map.Get(tile).Terrain().HasTrait(TerrainModel.GroundTraits.Water))
+		if (Map.Map.Get(tile).HasTrait(MapTileModel.TileTraits.Water))
 		{
 			foreach (var t in Map.Map.GetAdjacentPoints(tile))
 			{
