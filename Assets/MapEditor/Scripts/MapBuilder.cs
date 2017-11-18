@@ -69,8 +69,8 @@ public class MapBuilder : MonoBehaviour
 
 	public void RebuildMap()
 	{
-		int width = 20;
-		int height = 20;
+		int width = 30;
+		int height = 30;
 		CurrentMap = new MapModel(width, height);
 		StartCoroutine(GenerateMap(RealmParser.RealmsData[EnvironmentSelection.options[EnvironmentSelection.value].text]));
 		StartCoroutine(DisplayMap());
@@ -127,8 +127,10 @@ public class MapBuilder : MonoBehaviour
 		Mesh mapMesh = MeshConstructor.BuildMeshes(vertHeights, vertsPerTile);
 
 		List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), CurrentMap);
-		mapMats.Add(overlays.Overlays);
-		mapMats.Add(overlays.Water);
+		OverlaysMat.mainTexture = MapTextureHelpers.ColorMapToMaterial(overlays.Overlays);
+		mapMats.Add(OverlaysMat);
+		WaterMat.SetTexture("_MaskTex", MapTextureHelpers.ColorMapToMaterial(overlays.Water));
+		mapMats.Add(WaterMat);
 
 		GameObject g = new GameObject("Mesh");
 		g.transform.SetParent(terrainMeshDisplay.transform);

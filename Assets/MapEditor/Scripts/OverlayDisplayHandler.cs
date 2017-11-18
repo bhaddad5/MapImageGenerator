@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class OverlayDisplayHandler : MonoBehaviour
 {
-	public Material OverlaysMat;
-	public Material WaterMat;
 	private int textureSize = 128;
 
 	public class OverlayTextures
 	{
-		public Material Overlays;
-		public Material Water;
+		public Map2D<Color> Overlays;
+		public Map2D<Color> Water;
 
-		public OverlayTextures(Material over, Material water)
+		public OverlayTextures(Map2D<Color> over, Map2D<Color> water)
 		{
 			Overlays = over;
 			Water = water;
@@ -72,18 +70,7 @@ public class OverlayDisplayHandler : MonoBehaviour
 
 			}
 		}
-
-		Texture2D Overlays = new Texture2D(Map.Width * textureSize, Map.Height * textureSize);
-		Overlays.SetPixels(OverlaysTexture.Colors.GetMapValuesFlipped().ToArray());
-		Overlays.Apply();
-		OverlaysMat.mainTexture = Overlays;
-
-		Texture2D Water = new Texture2D(Map.Width * textureSize, Map.Height * textureSize);
-		Water.SetPixels(WaterMask.Colors.GetMapValuesFlipped().ToArray());
-		Water.Apply();
-		WaterMat.SetTexture("_MaskTex", Water);
-
-		return new OverlayTextures(OverlaysMat, WaterMat);
+		return new OverlayTextures(OverlaysTexture.Colors, WaterMask.Colors);
 	}
 
 	public Color[] GetTilePixels(Map2D<MapTileModel> Map, Int2 tile,string adjacentTrait,
