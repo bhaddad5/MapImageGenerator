@@ -1,0 +1,5 @@
+{"Id":"Ternath",
+"Realms":[
+	{"RealmId":"Khemras","MinLatitude":0.0,"MaxLatitude":0.5},
+	{"RealmId":"Midland","MinLatitude":0.0,"MaxLatitude":0.5}
+]}

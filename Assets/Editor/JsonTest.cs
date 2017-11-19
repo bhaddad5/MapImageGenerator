@@ -7,6 +7,20 @@ using UnityEditor;
 
 public class JsonTests
 {
+	[MenuItem("My Menu/Test WorldModel Json")]
+	public static void TestWorldModelJson()
+	{
+		WorldModel world = new WorldModel();
+		world.Realms.Add(new RealmPlacementModel()
+		{
+			RealmId = "Egypt",
+			MaxLatitude = .5f,
+			MinLatitude = 0f
+		});
+
+		Debug.Log(JsonUtility.ToJson(world));
+	}
+
 	[MenuItem("My Menu/Test OverlayPlacementModel Json")]
 	public static void TestOverlayPlacementModelJson()
 	{
