@@ -141,8 +141,19 @@ public class Map2D<T>
 		return pos.X >= 0 && pos.X < Width && pos.Y >= 0 && pos.Y < Height;
 	}
 
-	public T Get(Int2 point)
+	public T Get(Int2 point, bool wrapped = false)
 	{
+		if (wrapped)
+		{
+			if (point.X < 0)
+				point.X = Width + point.X % Width;
+			if (point.X >= Width)
+				point.X = point.X % Width;
+			if (point.Y < 0)
+				point.Y = Height + point.Y % Height;
+			if (point.Y >= Height)
+				point.Y = point.Y % Height;
+		}
 		return map[point.X][point.Y];
 	}
 
@@ -169,7 +180,7 @@ public class Map2D<T>
 		}
 	}
 
-	public Map2D<T> GetMapBlock(Int2 startingPoint, int width, int height)
+	public Map2D<T> GetMapBlock(Int2 startingPoint, int width, int height, bool wrapped = false)
 	{
 		Map2D<T> block = new Map2D<T>(width, height);
 
@@ -177,11 +188,22 @@ public class Map2D<T>
 		{
 			for (int j = startingPoint.Y; j < startingPoint.Y + height; j++)
 			{
-				block.Set(new Int2(i - startingPoint.X, j - startingPoint.Y), Get(new Int2(i, j)));
+				block.Set(new Int2(i - startingPoint.X, j - startingPoint.Y), Get(new Int2(i, j), wrapped));
 			}
 		}
 
 		return block;
+	}
+
+	public void SetMapBlock(Map2D<T> source, Int2 startingPoint)
+	{
+		for (int i = startingPoint.X; i < startingPoint.X + source.Width; i++)
+		{
+			for (int j = startingPoint.Y; j < startingPoint.Y + source.Height; j++)
+			{
+				Set(new Int2(i, j), source.Get(new Int2(i-startingPoint.X, j-startingPoint.Y)));
+			}
+		}
 	}
 
 	[Serializable]

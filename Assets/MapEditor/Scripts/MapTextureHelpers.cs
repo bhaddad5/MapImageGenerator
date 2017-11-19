@@ -6,6 +6,19 @@ using UnityEngine;
 
 public class MapTextureHelpers
 {
+	public static Map2D<Color> GetTerrainTexture(Map2D<MapTileModel> Map, int tileSize)
+	{
+		OverlayDisplayHandler.ColorMap colors = new OverlayDisplayHandler.ColorMap(Map.Width, Map.Height, tileSize);
+		colors.Colors.FillMap(Color.black);
+		foreach (Int2 mapPoint in Map.GetMapPoints())
+		{
+			Map2D<Color> tex = Map.Get(mapPoint).Terrain().GetTerrainTexture().Colors;
+			Map2D<Color> colorBlock = tex.GetMapBlock(new Int2(mapPoint.X * tileSize, mapPoint.Y * tileSize), tileSize, tileSize, true);
+			colors.Colors.SetMapBlock(colorBlock, new Int2(mapPoint.X * tileSize, mapPoint.Y * tileSize));
+		}
+		return colors.Colors;
+	}
+
 	public static Texture2D GetTerrainTexture(Map2D<MapTileModel> Map)
 	{
 		List<Color> pixels = new List<Color>();

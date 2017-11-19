@@ -12,6 +12,7 @@ public static class TerrainParser
 	public static void LoadTerrainTypes()
 	{
 		TerrainData = ParserHelpers.ParseTypes<TerrainModel>("terrain");
+
 		TerrainData["Ocean"] = new TerrainModel()
 		{
 			Difficulty = .05f,
@@ -71,11 +72,20 @@ public class TerrainModel : ParsableData
 		return defense;
 	}
 
-	public Texture2D GetTerrainTexture()
+	private OverlayDisplayHandler.ColorMap texture = null;
+
+	public OverlayDisplayHandler.ColorMap GetTerrainTexture()
 	{
-		Byte[] file = File.ReadAllBytes(Application.streamingAssetsPath + "/" + Texture);
-		Texture2D tex = new Texture2D(2, 2);
-		tex.LoadImage(file);
-		return tex;
+		if (texture == null)
+		{
+			Byte[] file = File.ReadAllBytes(Application.streamingAssetsPath + "/" + Texture);
+			Texture2D tex = new Texture2D(2, 2);
+			tex.LoadImage(file);
+			tex.Apply();
+			texture = new OverlayDisplayHandler.ColorMap(1, 1, tex.width);
+			texture.SetPixels(0, 0, tex.GetPixels());
+		}
+		
+		return texture;
 	}
 }

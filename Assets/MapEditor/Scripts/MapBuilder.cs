@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using System.Linq;
+using NUnit.Framework.Constraints;
 using TMPro;
 using UnityStandardAssets.Water;
 
@@ -20,6 +21,7 @@ public class MapBuilder : MonoBehaviour
 	public GameObject SettlementInfoPrefab;
 	public GameObject LocationInfoPrefab;
 
+	public Material TerrainTextMat;
 	public Material OverlaysMat;
 	public Material WaterMat;
 
@@ -70,8 +72,8 @@ public class MapBuilder : MonoBehaviour
 
 	public void RebuildMap()
 	{
-		int width = 40;
-		int height = 40;
+		int width = 30;
+		int height = 20;
 		CurrentMap = new MapModel(width, height);
 		GenerateMap(RealmParser.RealmsData[EnvironmentSelection.options[EnvironmentSelection.value].text]);
 		StartCoroutine(DisplayMap());
@@ -110,6 +112,7 @@ public class MapBuilder : MonoBehaviour
 		int vertsPerTile = 5;
 		Map2D<float> vertHeights = MapMeshBuilder.BuildVertHeights(CurrentMap, vertsPerTile);
 		int overlayTexSize = 64;
+		Map2D<Color> groundsMat = MapTextureHelpers.GetTerrainTexture(CurrentMap.Map, overlayTexSize);
 		OverlayDisplayHandler.OverlayTextures overlays = OverlayDisplayHandler.GetOverlayMats(CurrentMap.Map, overlayTexSize);
 
 		int mapChunkSize = 20;
@@ -128,7 +131,10 @@ public class MapBuilder : MonoBehaviour
 
 			Mesh mapMesh = MeshConstructor.BuildMeshes(vertHeights.GetMapBlock(MapScaleStartingPoint * vertsPerTile, MapScaleWidth * vertsPerTile + 1, MapScaleHeight * vertsPerTile + 1), vertsPerTile);
 
-			List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), CurrentMap.Map.GetMapBlock(MapScaleStartingPoint, MapScaleWidth, MapScaleHeight));
+			//List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), CurrentMap.Map.GetMapBlock(MapScaleStartingPoint, MapScaleWidth, MapScaleHeight));
+			List<Material> mapMats = new List<Material>();
+			TerrainTextMat.mainTexture = MapTextureHelpers.ColorMapToMaterial(groundsMat.GetMapBlock(MapScaleStartingPoint * overlayTexSize, MapScaleWidth * overlayTexSize, MapScaleHeight * overlayTexSize));
+			mapMats.Add(TerrainTextMat);
 			OverlaysMat.mainTexture = MapTextureHelpers.ColorMapToMaterial(overlays.Overlays.GetMapBlock(MapScaleStartingPoint * overlayTexSize, MapScaleWidth * overlayTexSize, MapScaleHeight * overlayTexSize));
 			mapMats.Add(OverlaysMat);
 			WaterMat.SetTexture("_MaskTex", MapTextureHelpers.ColorMapToMaterial(overlays.Water.GetMapBlock(MapScaleStartingPoint * overlayTexSize, MapScaleWidth * overlayTexSize, MapScaleHeight * overlayTexSize)));
@@ -191,43 +197,6 @@ public class MapBuilder : MonoBehaviour
 				tag.GetComponent<SettlementInfoDisplay>().settlement = sett;
 			}*/
 		}
-	}
-
-	private List<Material> GetMapMaterials(List<TerrainModel> groundTypes, Map2D<MapTileModel> Map)
-	{
-		var mats = new List<Material>() {new Material(Shader.Find("Standard"))};
-		
-		mats[0].color = Color.black;
-		mats[0].SetFloat("_Glossiness", 0f);
-
-		List<TerrainModel> gtToFlush = new List<TerrainModel>();
-		for (int i = 0; i < groundTypes.Count; i++)
-		{
-			gtToFlush.Add(groundTypes[i]);
-			if (gtToFlush.Count >= 5)
-			{
-				mats.Add(FlushGroundInfoToMat(gtToFlush, Map));
-				gtToFlush.Clear();
-			}
-		}
-		if(gtToFlush.Count > 0)
-			mats.Add(FlushGroundInfoToMat(gtToFlush, Map));
-
-		return mats;
-	}
-
-	private Material FlushGroundInfoToMat(List<TerrainModel> groundInfo, Map2D<MapTileModel> Map)
-	{
-		var mat = new Material(Shader.Find("Custom/GroundShader"));
-
-		mat.SetTexture("_LookupTex", MapTextureHelpers.GetTerrainTexture(Map));
-		mat.SetFloat("_LookupWidth", MapTextureHelpers.GetTerrainTexture(Map).width);
-		for (int i = 0; i < 5 && i < groundInfo.Count; i++)
-		{
-			mat.SetVector("_Color" + i, groundInfo[i].LookupColor);
-			mat.SetTexture("_Tex" + i, groundInfo[i].GetTerrainTexture());
-		}
-		return mat;
 	}
 
 	public void QuitApp()
