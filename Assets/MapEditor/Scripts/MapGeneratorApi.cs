@@ -512,7 +512,7 @@ public class MapGeneratorApi
 				List<string> neighborTerrains = new List<string>();
 				foreach (MapTileModel neighbor in Map.Map.GetAllNeighboringValues(point))
 				{
-					if(neighbor.TerrainId != "Ocean")
+					if(!neighbor.HasTrait(MapTileModel.TileTraits.Ocean))
 						neighborTerrains.Add(neighbor.TerrainId);
 				}
 				if (neighborTerrains.Count == 0)
@@ -528,6 +528,8 @@ public class MapGeneratorApi
 				Map.Map.Get(point).Overlays.Add("RiverBanks");
 				Map.Map.Get(point).Overlays.Add("OceanWater");
 				Map.Map.Get(point).Overlays.Add("OceanShore");
+
+				Map.Map.Get(point).SetMaxHeight(TerrainParser.TerrainData["Ocean"].Height);
 			}
 			
 		}

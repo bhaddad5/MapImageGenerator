@@ -1,0 +1,47 @@
+{
+	"Id":"RiverWater",
+	"GroundTrait":"Water",
+	"OverlayLayer":"Water",
+	"NoSides":{"Path":"Overlays/RiverLakeMask.png"},
+	"OneSide":{"Path":"Overlays/RiverEndMask.png"},
+	"TwoAdjSides":{"Path":"Overlays/RiverBendMask.png"},
+	"TwoOppSides":{"Path":"Overlays/RiverStraightMask.png"},
+	"ThreeSides":{"Path":"Overlays/RiverForkMask.png"},
+	"FourSides":{"Path":"Overlays/RiverCrossMask.png"}
+}
+|
+{
+	"Id":"RiverBanks",
+	"GroundTrait":"Water",
+	"OverlayLayer":"Overlay",
+	"NoSides":{"Path":"Overlays/RiverLake.png"},
+	"OneSide":{"Path":"Overlays/RiverEnd.png"},
+	"TwoAdjSides":{"Path":"Overlays/RiverBend.png"},
+	"TwoOppSides":{"Path":"Overlays/RiverStraight.png"},
+	"ThreeSides":{"Path":"Overlays/RiverFork.png"},
+	"FourSides":{"Path":"Overlays/RiverCross.png"}
+}
+|
+{
+	"Id":"OceanWater",
+	"GroundTrait":"Ocean",
+	"OverlayLayer":"Water",
+	"NoSides":{"Path":"Overlays/CoastLake.png"},
+	"OneSide":{"Path":"Overlays/CoastBay.png"},
+	"TwoAdjSides":{"Path":"Overlays/CoastBent.png"},
+	"TwoOppSides":{"Path":"Overlays/CoastStraight.png"},
+	"ThreeSides":{"Path":"Overlays/CoastFlat.png"},
+	"FourSides":{"Path":"Overlays/CoastOcean.png"}
+}
+|
+{
+	"Id":"OceanShore",
+	"GroundTrait":"Ocean",
+	"OverlayLayer":"Overlay",
+	"NoSides":{"Path":"Overlays/CoastLakeOverlay.png"},
+	"OneSide":{"Path":"Overlays/CoastBayOverlay.png"},
+	"TwoAdjSides":{"Path":"Overlays/CoastBentOverlay.png"},
+	"TwoOppSides":{"Path":"Overlays/CoastStraightOverlay.png"},
+	"ThreeSides":{"Path":"Overlays/CoastFlatOverlay.png"},
+	"FourSides":{"Path":"Overlays/CoastOceanOverlay.png"}
+}

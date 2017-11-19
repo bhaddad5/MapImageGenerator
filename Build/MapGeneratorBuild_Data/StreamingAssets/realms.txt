@@ -15,24 +15,44 @@
 	"Id":"Midland",
 	"DisplayName":"The Midlands",
 	"MapBuildingCommands":[
-		"TerrainDefaultFill Ocean",
-		"TerrainRandomlyPlaceAlongLine Mountain 12 4 50 1",
-		"TerrainRandomlyExpandFromTypes Wilderness 3 7 Mountain",
+		"TerrainRandomlyPlaceAlongLine MidlandMountain 12 4 50 1",
+		"TerrainRandomlyExpandFromTypes MidlandWilderness 3 7 MidlandMountain",
 		"TerrainRandomizeEdges Ocean 1",
 		"CreateRivers 10 20",
-		"TerrainEncourageStartAlongMountains Forest 0.15",
-		"TerrainExpandSimmilarTypes 6 Forest",
-		"TerrainRandomlyStart Forest 0.05",
-		"TerrainExpandSimmilarTypes 3 Forest",
-		"TerrainEncourageStartAlongOcean Fertile 0.15",
-		"TerrainRandomlyStart Fertile 0.05",
-		"TerrainExpandSimmilarTypes 4 Fertile",
-		"TerrainEncourageStartAlongOcean Swamp 0.02",
-		"TerrainRandomlyStart Swamp 0.005",
-		"TerrainExpandSimmilarTypes 3 Swamp"
+		"TerrainEncourageStartAlongMountains MidlandForest 0.15",
+		"TerrainExpandSimmilarTypes 6 MidlandForest",
+		"TerrainRandomlyStart MidlandForest 0.05",
+		"TerrainExpandSimmilarTypes 3 MidlandForest",
+		"TerrainEncourageStartAlongOcean MidlandFertile 0.15",
+		"TerrainRandomlyStart MidlandFertile 0.05",
+		"TerrainExpandSimmilarTypes 4 MidlandFertile",
+		"TerrainEncourageStartAlongOcean MidlandSwamp 0.02",
+		"TerrainRandomlyStart MidlandSwamp 0.005",
+		"TerrainExpandSimmilarTypes 3 MidlandSwamp"
 	],
 	"Cultures":[
 		{"cultureId":"Anglo", "avgSettlementsPer80Square":45},
 		{"cultureId":"Dwarf", "avgSettlementsPer80Square":35}
+	]
+}
+|
+{
+	"Id":"Khemras",
+	"DisplayName":"Khemras",
+	"MapBuildingCommands":[
+		"TerrainRandomlyPlaceAlongLine DesertMountain 8 4 12 1",
+		"TerrainRandomlyExpandFromTypes DesertSand 7 12 DesertMountain",
+		"TerrainRandomizeEdges Ocean 1",
+		"CreateRivers 20 30",
+		"TerrainEncourageStartAlongOcean DesertFertile .05",
+		"TerrainExpandSimmilarTypes 3 DesertFertile",
+		"TerrainForceSetRivers DesertFertile",
+		"TerrainRandomlyStart DesertOasis 0.02",
+		"TerrainEncourageStartAlongRiver DesertFertile .4",
+		"TerrainEncourageStartAlongRiver DesertForest .05",
+		"TerrainExpandSimmilarTypes 1 DesertForest"
+	],
+	"Cultures":[
+		{"cultureId":"Anglo", "avgSettlementsPer80Square":45}
 	]
 }

@@ -22,7 +22,6 @@ public class OverlayDisplayHandler : MonoBehaviour
 		private int textureSize;
 		private int width;
 		private int height;
-		private Map2D<int> stackedColorsPerTile;
 
 		public ColorMap(int w, int h, int ts)
 		{
@@ -30,7 +29,6 @@ public class OverlayDisplayHandler : MonoBehaviour
 			width = w;
 			height = h;
 			Colors = new Map2D<Color>(width * textureSize, height * textureSize);
-			stackedColorsPerTile = new Map2D<int>(width * textureSize, height * textureSize);
 		}
 
 		public void SetPixels(int x, int y, Color[] colorsToSet)

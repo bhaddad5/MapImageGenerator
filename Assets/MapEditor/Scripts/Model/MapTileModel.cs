@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 [Serializable]
 public class MapTileModel
@@ -28,6 +29,13 @@ public class MapTileModel
 
 	public List<string> Traits = new List<string>();
 	public List<string> Overlays = new List<string>();
+	public float Height { get { return Mathf.Min(Terrain().Height, maxHeight); } }
+	private float maxHeight = 1000;
+
+	public void SetMaxHeight(float newMaxHeight)
+	{
+		maxHeight = newMaxHeight;
+	}
 
 	public List<string> GetOverlays()
 	{
