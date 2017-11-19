@@ -13,14 +13,12 @@ public class MapTextureHelpers
 		{
 			Int2 mapPoint = (point - new Int2(tileSize/2, tileSize/2)) / tileSize;
 			Vector2 mapFraction = new Vector2(((point.X - mapPoint.X * tileSize - tileSize / 2))/(float) tileSize, (point.Y - mapPoint.Y * tileSize - tileSize / 2) / (float)tileSize);
-
 			Color interp = (1 - mapFraction.x) *
 			               ((1 - mapFraction.y) * GetColor(point, mapPoint, Map) +
 			               mapFraction.y * GetColor(point, mapPoint + new Int2(0, 1), Map)) +
 						   mapFraction.x *
 						   ((1 - mapFraction.y) * GetColor(point, mapPoint + new Int2(1, 0), Map) +
 						   mapFraction.y * GetColor(point, mapPoint + new Int2(1, 1), Map));
-
 			interp = interp / interp.a;
 
 			mapTex.Set(point, interp);
@@ -30,6 +28,11 @@ public class MapTextureHelpers
 
 	private static Color GetColor(Int2 texPos, Int2 mapPos, Map2D<MapTileModel> Map)
 	{
+		if (mapPos.X > Map.Width - 1)
+			mapPos.X = Map.Width - 1;
+		if (mapPos.Y > Map.Height - 1)
+			mapPos.Y = Map.Height - 1;
+
 		if (!Map.PosInBounds(mapPos))
 			return new Color(1, .4f, .7f, 1);
 		Color res = Map.Get(mapPos).Terrain().GetTerrainTexture().Colors.Get(texPos, true);
