@@ -2,13 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class MapTextureHelpers
 {
-	public static Map2D<Color> GetTerrainTexture(Map2D<MapTileModel> Map, int tileSize)
+	public static IEnumerator GetTerrainTexture(Map2D<MapTileModel> Map, int tileSize, Map2D<Color> mapTex, TextMeshProUGUI displayText)
 	{
-		Map2D<Color> mapTex = new Map2D<Color>(Map.Width * tileSize, Map.Height * tileSize);
+		int count = 0;
+		int displayedCount = 0;
 		foreach (Int2 point in mapTex.GetMapPoints())
 		{
 			Int2 mapPoint = (point - new Int2(tileSize/2, tileSize/2)) / tileSize;
@@ -22,8 +24,15 @@ public class MapTextureHelpers
 			interp = interp / interp.a;
 
 			mapTex.Set(point, interp);
+
+			if (count >= (mapTex.Size / 10) * displayedCount)
+			{
+				displayedCount++;
+				displayText.text = "Displaying Lands " + (displayedCount * 10) + "%";
+				yield return new WaitForEndOfFrame();
+			}
+			count++;
 		}
-		return mapTex;
 	}
 
 	private static Color GetColor(Int2 texPos, Int2 mapPos, Map2D<MapTileModel> Map)
