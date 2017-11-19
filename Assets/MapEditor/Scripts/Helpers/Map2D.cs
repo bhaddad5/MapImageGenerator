@@ -143,18 +143,19 @@ public class Map2D<T>
 
 	public T Get(Int2 point, bool wrapped = false)
 	{
+		Int2 p = new Int2(point.X, point.Y);
 		if (wrapped)
 		{
-			if (point.X < 0)
-				point.X = Width + point.X % Width;
-			if (point.X >= Width)
-				point.X = point.X % Width;
-			if (point.Y < 0)
-				point.Y = Height + point.Y % Height;
-			if (point.Y >= Height)
-				point.Y = point.Y % Height;
+			if (p.X < 0)
+				p.X = Width + p.X % Width;
+			if (p.X >= Width)
+				p.X = p.X % Width;
+			if (p.Y < 0)
+				p.Y = Height + p.Y % Height;
+			if (p.Y >= Height)
+				p.Y = p.Y % Height;
 		}
-		return map[point.X][point.Y];
+		return map[p.X][p.Y];
 	}
 
 	public T GetOrDefault(Int2 point, T defaultVal)
