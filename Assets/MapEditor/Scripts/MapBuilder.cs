@@ -72,8 +72,8 @@ public class MapBuilder : MonoBehaviour
 
 	public void RebuildMap()
 	{
-		int width = 30;
-		int height = 20;
+		int width = 10;
+		int height = 10;
 		CurrentMap = new MapModel(width, height);
 		GenerateMap(RealmParser.RealmsData[EnvironmentSelection.options[EnvironmentSelection.value].text]);
 		StartCoroutine(DisplayMap());
