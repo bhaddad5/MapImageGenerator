@@ -58,8 +58,14 @@ public class MapGeneratorApi
 			TerrainDefaultFill(split[1]);
 		if (split[0] == "TerrainEncourageStartAlongMountains")
 			TerrainEncourageStartAlongMountains(split[1], Single.Parse(split[2]));
+		if (split[0] == "TerrainEncourageStartAlongWater")
+			TerrainEncourageStartAlongWater(split[1], Single.Parse(split[2]));
 		if (split[0] == "TerrainEncourageStartAlongOcean")
 			TerrainEncourageStartAlongOcean(split[1], Single.Parse(split[2]));
+		if (split[0] == "TerrainEncourageStartAlongRiver")
+			TerrainEncourageStartAlongRiver(split[1], Single.Parse(split[2]));
+		if (split[0] == "TerrainForceSetRivers")
+			TerrainForceSetRivers(split[1]);
 		if (split[0] == "TerrainRandomlyStart")
 			TerrainRandomlyStart(split[1], Single.Parse(split[2]));
 		if (split[0] == "TerrainExpandSimmilarTypes")
@@ -402,11 +408,38 @@ public class MapGeneratorApi
 		}
 	}
 
-	public void TerrainEncourageStartAlongOcean(string terrain, float odds)
+	public void TerrainEncourageStartAlongWater(string terrain, float odds)
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
 			if (!OceanOrMountain(point) && Helpers.Odds(odds) && BordersTerrainTrait(point, MapTileModel.TileTraits.Water))
+				Map.Map.Get(point).TerrainId = terrain;
+		}
+	}
+
+	public void TerrainEncourageStartAlongOcean(string terrain, float odds)
+	{
+		foreach (Int2 point in Map.Map.GetMapPoints())
+		{
+			if (!OceanOrMountain(point) && Helpers.Odds(odds) && BordersTerrainTrait(point, MapTileModel.TileTraits.Ocean))
+				Map.Map.Get(point).TerrainId = terrain;
+		}
+	}
+
+	public void TerrainForceSetRivers(string terrain)
+	{
+		foreach (Int2 point in Map.Map.GetMapPoints())
+		{
+			if (Map.Map.Get(point).HasTrait(MapTileModel.TileTraits.River))
+				Map.Map.Get(point).TerrainId = terrain;
+		}
+	}
+
+	public void TerrainEncourageStartAlongRiver(string terrain, float odds)
+	{
+		foreach (Int2 point in Map.Map.GetMapPoints())
+		{
+			if (!OceanOrMountain(point) && Helpers.Odds(odds) && BordersTerrainTrait(point, MapTileModel.TileTraits.River))
 				Map.Map.Get(point).TerrainId = terrain;
 		}
 	}

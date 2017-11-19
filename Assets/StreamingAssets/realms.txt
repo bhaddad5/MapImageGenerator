@@ -36,3 +36,25 @@
 		{"cultureId":"Dwarf", "avgSettlementsPer80Square":35}
 	]
 }
+|
+{
+	"Id":"Khemras",
+	"DisplayName":"Khemras",
+	"MapBuildingCommands":[
+		"TerrainDefaultFill DesertOcean",
+		"TerrainRandomlyPlaceAlongLine DesertMountain 8 4 12 1",
+		"TerrainRandomlyExpandFromTypes DesertSand 7 12 DesertMountain",
+		"TerrainRandomizeEdges DesertOcean 1",
+		"CreateRivers 20 30",
+		"TerrainEncourageStartAlongOcean DesertFertile .05",
+		"TerrainExpandSimmilarTypes 3 DesertFertile",
+		"TerrainForceSetRivers DesertFertile",
+		"TerrainRandomlyStart DesertOasis 0.02",
+		"TerrainEncourageStartAlongRiver DesertFertile .4",
+		"TerrainEncourageStartAlongRiver DesertForest .05",
+		"TerrainExpandSimmilarTypes 1 DesertForest"
+	],
+	"Cultures":[
+		{"cultureId":"Anglo", "avgSettlementsPer80Square":45}
+	]
+}
