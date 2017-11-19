@@ -113,13 +113,7 @@ public class MapBuilder : MonoBehaviour
 		OverlayDisplayHandler.OverlayTextures overlays = OverlayDisplayHandler.GetOverlayMats(CurrentMap.Map, overlayTexSize);
 
 		int mapChunkSize = 20;
-		int mapChunkWidth = CurrentMap.Map.Width / mapChunkSize;
-		if (CurrentMap.Map.Width % mapChunkSize > 0)
-			mapChunkWidth++;
-		int mapChunkHeight = CurrentMap.Map.Height / mapChunkSize;
-		if (CurrentMap.Map.Height % mapChunkSize > 0)
-			mapChunkHeight++;
-		Map2D<int> mapChunks = new Map2D<int>(mapChunkWidth, mapChunkHeight);
+		Map2D<int> mapChunks = GetMapChunks(mapChunkSize);
 
 		int currChunk = 0;
 		foreach (Int2 mapChunk in mapChunks.GetMapPoints())
@@ -169,6 +163,18 @@ public class MapBuilder : MonoBehaviour
 		transform.localPosition -= new Vector3(CurrentMap.Map.Width / 2f, 0f, CurrentMap.Map.Height / 2f);
 
 		displayText.enabled = false;
+	}
+
+	private Map2D<int> GetMapChunks(int mapChunkSize)
+	{
+		int mapChunkWidth = CurrentMap.Map.Width / mapChunkSize;
+		if (CurrentMap.Map.Width % mapChunkSize > 0)
+			mapChunkWidth++;
+		int mapChunkHeight = CurrentMap.Map.Height / mapChunkSize;
+		if (CurrentMap.Map.Height % mapChunkSize > 0)
+			mapChunkHeight++;
+		Map2D<int> mapChunks = new Map2D<int>(mapChunkWidth, mapChunkHeight);
+		return mapChunks;
 	}
 
 

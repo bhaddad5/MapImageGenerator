@@ -12,7 +12,9 @@ public class MapGeneratorApi
 	public MapModel GenerateMap(MapModel map, RealmModel realm)
 	{
 		Map = map;
+		TerrainDefaultFill("Ocean");
 		ExecuteApiCommands(realm.MapBuildingCommands);
+		ReplaceOceanCoastTiles();
 		return Map;
 	}
 
@@ -499,5 +501,35 @@ public class MapGeneratorApi
 	private bool OceanOrMountain(Int2 point)
 	{
 		return Map.Map.Get(point).HasTrait(MapTileModel.TileTraits.Ocean) || Map.Map.Get(point).HasTrait(MapTileModel.TileTraits.Mountain);
+	}
+
+	private void ReplaceOceanCoastTiles()
+	{
+		foreach (Int2 point in Map.Map.GetMapPoints())
+		{
+			if (Map.Map.Get(point).TerrainId == "Ocean")
+			{
+				List<string> neighborTerrains = new List<string>();
+				foreach (MapTileModel neighbor in Map.Map.GetAllNeighboringValues(point))
+				{
+					if(neighbor.TerrainId != "Ocean")
+						neighborTerrains.Add(neighbor.TerrainId);
+				}
+				if (neighborTerrains.Count == 0)
+					continue;
+
+				string newTerrain = neighborTerrains.GroupBy(item => item).OrderByDescending(g => g.Count()).Select(g => g.Key).First();
+				Map.Map.Get(point).TerrainId = newTerrain;
+				Map.Map.Get(point).Traits.Add(MapTileModel.TileTraits.Ocean.ToString());
+				Map.Map.Get(point).Traits.Add(MapTileModel.TileTraits.Water.ToString());
+				Map.Map.Get(point).Traits.Add(MapTileModel.TileTraits.Impassable.ToString());
+
+				Map.Map.Get(point).Overlays.Add("RiverWater");
+				Map.Map.Get(point).Overlays.Add("RiverBanks");
+				Map.Map.Get(point).Overlays.Add("OceanWater");
+				Map.Map.Get(point).Overlays.Add("OceanShore");
+			}
+			
+		}
 	}
 }

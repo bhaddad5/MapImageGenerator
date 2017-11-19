@@ -15,10 +15,9 @@
 	"Id":"Midland",
 	"DisplayName":"The Midlands",
 	"MapBuildingCommands":[
-		"TerrainDefaultFill MidlandOcean",
 		"TerrainRandomlyPlaceAlongLine MidlandMountain 12 4 50 1",
 		"TerrainRandomlyExpandFromTypes MidlandWilderness 3 7 MidlandMountain",
-		"TerrainRandomizeEdges MidlandOcean 1",
+		"TerrainRandomizeEdges Ocean 1",
 		"CreateRivers 10 20",
 		"TerrainEncourageStartAlongMountains MidlandForest 0.15",
 		"TerrainExpandSimmilarTypes 6 MidlandForest",
@@ -41,10 +40,9 @@
 	"Id":"Khemras",
 	"DisplayName":"Khemras",
 	"MapBuildingCommands":[
-		"TerrainDefaultFill DesertOcean",
 		"TerrainRandomlyPlaceAlongLine DesertMountain 8 4 12 1",
 		"TerrainRandomlyExpandFromTypes DesertSand 7 12 DesertMountain",
-		"TerrainRandomizeEdges DesertOcean 1",
+		"TerrainRandomizeEdges Ocean 1",
 		"CreateRivers 20 30",
 		"TerrainEncourageStartAlongOcean DesertFertile .05",
 		"TerrainExpandSimmilarTypes 3 DesertFertile",

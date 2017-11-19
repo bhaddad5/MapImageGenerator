@@ -12,6 +12,27 @@ public static class TerrainParser
 	public static void LoadTerrainTypes()
 	{
 		TerrainData = ParserHelpers.ParseTypes<TerrainModel>("terrain");
+		TerrainData["Ocean"] = new TerrainModel()
+		{
+			Difficulty = .05f,
+			Texture = "GenericOcean.png",
+			Height = 0f,
+			Id = "Ocean",
+			LookupColor = new Color(0, 0, .8f, 0),
+			Traits = new List<string>()
+			{
+				"Water",
+				"Impassable",
+				"Ocean"
+			},
+			Overlays = new List<string>()
+			{
+				"RiverWater",
+				"RiverBanks",
+				"OceanWater",
+				"OceanShore"
+			}
+		};
 	}
 }
 
