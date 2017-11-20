@@ -10,6 +10,8 @@ public class MapModel
 	public Dictionary<string, KingdomModel> Kingdoms = new Dictionary<string, KingdomModel>();
 	public Map2D<MapTileModel> Map;
 
+	public int NumTiles { get { return Map.Size / (20 * 20); } }
+
 	public MapModel(int w, int h)
 	{
 		Map = new Map2D<MapTileModel>(w, h);

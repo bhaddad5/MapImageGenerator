@@ -66,9 +66,9 @@ public class MapGeneratorApi
 			TerrainExpandSimmilarTypes(Int32.Parse(split[1]), split[2], minH, maxH);
 	}
 
-	private void TerrainRandomlyPlaceAlongLine(string terrain, float occurancesPer80Square, float minLength, float maxLength, float spacing, int minH, int maxH)
+	private void TerrainRandomlyPlaceAlongLine(string terrain, float occurancesPer20Square, float minLength, float maxLength, float spacing, int minH, int maxH)
 	{
-		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
+		int numPlacements = (int)Helpers.Randomize(occurancesPer20Square * Map.NumTiles);
 		for (int i = 0; i < numPlacements; i++)
 		{
 			Int2 randPos = new Int2(Random.Range(0, Map.Map.Width - 1), Random.Range(minH, maxH - 1));
@@ -82,7 +82,7 @@ public class MapGeneratorApi
 		for (int k = 0; k < (int)length; k++)
 		{
 			Map.Map.Get(currPixel).TerrainId = terrain;
-			currPixel = GetNextPixelInDirection(currPixel, direction, (int)spacing);
+			currPixel = GetNextPixelInDirection(currPixel, direction, (int)(spacing + Random.Range(-2, 2)));
 			if (!Map.Map.PosInBounds(currPixel) || currPixel.Y >= maxH || currPixel.Y < minH)
 				return;
 		}
@@ -119,14 +119,17 @@ public class MapGeneratorApi
 	private void TerrainRandomlyExpandFromTypes(string terrain, float minExpansion, float maxExpansion, int minH, int maxH, params string[] terrainTypes)
 	{
 		Map2D<bool> ModifiedTiles = new Map2D<bool>(Map.Map.Width, Map.Map.Height);
+		List<string> ignoreTypes = terrainTypes.ToList();
+		ignoreTypes.Add(terrain);
 		foreach (Int2 point in Map.Map.GetMapPoints(minH, maxH))
 		{
+			if (ignoreTypes.Contains(Map.Map.Get(point).TerrainId))
+				continue;
+
 			foreach (string terrainType in terrainTypes)
 			{
 				if (BordersTerrainType(point, terrainType))
 				{
-					var ignoreTypes = terrainTypes.ToList();
-					ignoreTypes.Add(terrain);
 					TerrainExpandFromPoint(point, terrain, Random.Range(minExpansion, maxExpansion), ModifiedTiles, ignoreTypes.ToArray());
 					break;
 				}

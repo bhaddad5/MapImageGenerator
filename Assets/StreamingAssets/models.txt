@@ -1,11 +1,15 @@
 {"Id":"Pine", "ModelPath":"Midlands/Models/Pine.obj"}|
-{"Id":"Rushes", "ModelPath":"Midlands/Models/Rushes.obj"}|
 {"Id":"Willow", "ModelPath":"Midlands/Models/Willow.obj"}|
+
+{"Id":"Palm", "ModelPath":"Desert/Models/Palm.obj"}|
+
+{"Id":"AngloCastle", "ModelPath":"Anglo/Models/Castle/Castle.obj"}|
+
+
+//OLD MODELS
 
 {"Id":"GiantMushroom", "ModelPath":"Underground/Models/GiantMushroom.obj"}|
 {"Id":"DwarfMushroom", "ModelPath":"Underground/Models/DwarfMushroom.obj"}|
-
-{"Id":"Palm", "ModelPath":"Desert/Models/Palm.obj"}|
 
 {"Id":"JungleTree", "ModelPath":"Jungle/Models/JungleTree.obj"}|
 
@@ -26,9 +30,6 @@
 {"Id":"AngloTownHouse", "ModelPath":"Anglo/Models/Hovel/House.obj"}|
 {"Id":"AngloWoodenWall", "ModelPath":"Anglo/Models/WoodenWall/WoodenWall.obj"}|
 {"Id":"AngloWoodenGates", "ModelPath":"Anglo/Models/WoodenWall/WoodenGate.obj"}|
-{"Id":"AngloStoneWall", "ModelPath":"Anglo/Models/Castle/wall.obj"}|
-{"Id":"AngloStoneGates", "ModelPath":"Anglo/Models/Castle/gates.obj"}|
-{"Id":"AngloStoneTower", "ModelPath":"Anglo/Models/Castle/turret.obj"}|
 
 {"Id":"DwarfHouse", "ModelPath":"Dwarf/Models/Dwarf House.obj"}|
 {"Id":"DwarfGates", "ModelPath":"Dwarf/Models/Dwarf Gates.obj"}|

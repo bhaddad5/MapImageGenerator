@@ -15,7 +15,7 @@
 	"Id":"Midland",
 	"DisplayName":"The Midlands",
 	"PreRiverCommands":[
-		"TerrainRandomlyPlaceAlongLine MidlandMountain 12 4 50 1",
+		"TerrainRandomlyPlaceAlongLine MidlandMountain 2 4 30 1",
 		"TerrainRandomlyExpandFromTypes MidlandWilderness 3 7 MidlandMountain",
 		"TerrainRandomizeEdges Ocean 1"
 	],
@@ -44,7 +44,7 @@
 	"Id":"Khemras",
 	"DisplayName":"Khemras",
 	"PreRiverCommands":[
-		"TerrainRandomlyPlaceAlongLine DesertMountain 8 4 12 1",
+		"TerrainRandomlyPlaceAlongLine DesertMountain 2 4 12 1",
 		"TerrainRandomlyExpandFromTypes DesertSand 7 12 DesertMountain",
 		"TerrainRandomizeEdges Ocean 1"
 	],
