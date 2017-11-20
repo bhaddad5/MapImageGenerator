@@ -128,19 +128,31 @@ public class MapMeshBuilder
 					float newHeight = Map.Map.Get(adjacentTraitTile).Height;
 					if (diff.Equals(new Int2(-1, 0)))
 					{
-						VertHeights.Set(new Int2(point.X * VertsPerTile + VertsPerTile, point.Y * VertsPerTile + i), newHeight);
+						Int2 edgePos = new Int2(point.X * VertsPerTile + VertsPerTile, point.Y * VertsPerTile + i);
+						VertHeights.Set(edgePos, newHeight);
+						float avgHeight = (newHeight + VertHeights.Get(new Int2(edgePos.X - 2, edgePos.Y))) / 2f;
+						VertHeights.Set(new Int2(edgePos.X - 1, edgePos.Y), avgHeight);
 					}
 					if (diff.Equals(new Int2(1, 0)))
 					{
-						VertHeights.Set(new Int2(point.X * VertsPerTile, point.Y * VertsPerTile + i), newHeight);
+						Int2 edgePos = new Int2(point.X * VertsPerTile, point.Y * VertsPerTile + i);
+						VertHeights.Set(edgePos, newHeight);
+						float avgHeight = (newHeight + VertHeights.Get(new Int2(edgePos.X + 2, edgePos.Y))) / 2f;
+						VertHeights.Set(new Int2(edgePos.X + 1, edgePos.Y), avgHeight);
 					}
 					if (diff.Equals(new Int2(0, -1)))
 					{
-						VertHeights.Set(new Int2(point.X * VertsPerTile + i, point.Y * VertsPerTile + VertsPerTile), newHeight);
+						Int2 edgePos = new Int2(point.X * VertsPerTile + i, point.Y * VertsPerTile + VertsPerTile);
+						VertHeights.Set(edgePos, newHeight);
+						float avgHeight = (newHeight + VertHeights.Get(new Int2(edgePos.X, edgePos.Y - 2))) / 2f;
+						VertHeights.Set(new Int2(edgePos.X, edgePos.Y - 1), avgHeight);
 					}
 					if (diff.Equals(new Int2(0, 1)))
 					{
-						VertHeights.Set(new Int2(point.X * VertsPerTile + i, point.Y * VertsPerTile), newHeight);
+						Int2 edgePos = new Int2(point.X * VertsPerTile + i, point.Y * VertsPerTile);
+						VertHeights.Set(edgePos, newHeight);
+						float avgHeight = (newHeight + VertHeights.Get(new Int2(edgePos.X, edgePos.Y + 2))) / 2f;
+						VertHeights.Set(new Int2(edgePos.X, edgePos.Y + 1), avgHeight);
 					}
 				}
 			}
