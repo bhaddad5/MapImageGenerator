@@ -1,0 +1,108 @@
+{"Id":"AngloPrefixes",
+"TextOptions":[
+	{"StoredString":"Lunn"},
+	{"StoredString":"Berry"},
+	{"StoredString":"Mannin"},
+	{"StoredString":"Hetten"},
+	{"StoredString":"Stok"},
+	{"StoredString":"Rusk"},
+	{"StoredString":"An"},
+	{"StoredString":"Ewer"},
+	{"StoredString":"How"},
+	{"StoredString":"Setter"},
+	{"StoredString":"Somer"},
+	{"StoredString":"Wend"},
+	{"StoredString":"Torrent"},
+	{"StoredString":"Comb"},
+	{"StoredString":"Slak"},
+	{"StoredString":"Brix"},
+	{"StoredString":"Bux"},
+	{"StoredString":"Win"},
+	{"StoredString":"Fur"},
+	{"StoredString":"Hather"}
+]}
+|
+{"Id":"AngloSuffixes",
+"TextOptions":[
+	{"StoredString":""},
+	{"StoredString":"ton"},
+	{"StoredString":"moor"},
+	{"StoredString":"mont","conditions":["Mountains"]},
+	{"StoredString":"rent"},
+	{"StoredString":"eter"},
+	{"StoredString":"by"},
+	{"StoredString":"nall"},
+	{"StoredString":"ford","conditions":["River"]},
+	{"StoredString":"brook","conditions":["River"]},
+	{"StoredString":"field","conditions":["Fertile"]},
+	{"StoredString":"ham"},
+	{"StoredString":"dun"},
+	{"StoredString":"wick"},
+	{"StoredString":"well"},
+	{"StoredString":"light"},
+	{"StoredString":"sor"},
+	{"StoredString":"ley"},
+	{"StoredString":"end"}
+]}
+|
+{"Id":"AngloCastles",
+"TextOptions":[
+	{"StoredString":"%AngloPrefixes%%AngloSuffixes%"},
+	{"StoredString":"Castle %AngloPrefixes%%AngloSuffixes%"},
+	{"StoredString":"Fort %AngloPrefixes%%AngloSuffixes%"},
+	{"StoredString":"%AngloPrefixes%%AngloSuffixes% Castle"}
+]}
+|
+{"Id":"DwarfPre",
+"TextOptions":[
+	{"storedString":"Daz"},
+	{"storedString":"Kurz"},
+	{"storedString":"Inuk"},
+	{"storedString":"Tar"},
+	{"storedString":"Prak"},
+	{"storedString":"Wrokk"},
+	{"storedString":"Mentung"},
+	{"storedString":"Jekrat"},
+	{"storedString":"Kazdul"},
+	{"storedString":"Kazan"},
+	{"storedString":"Kazren"},
+	{"storedString":"Azorn"},
+	{"storedString":"Azdal"},
+	{"storedString":"Azlaak"},
+	{"storedString":"Kajar"},
+	{"storedString":"Draken"}
+]}
+|
+{"Id":"DwarfSuff",
+"TextOptions":[
+	{"storedString":""},
+	{"storedString":"-kull","conditions":["Mountains"]},
+	{"storedString":"-kuzdal","conditions":["Mountains"]},
+	{"storedString":"-tazul"},
+	{"storedString":"-mikdun"},
+	{"storedString":"-trokk"},
+	{"storedString":"-pirok"},
+	{"storedString":"-tarmuk"},
+	{"storedString":"-ostrok"},
+	{"storedString":"-restrok"},
+	{"storedString":"-clarrok"},
+	{"storedString":"-sorrok"},
+	{"storedString":"-bendum"},
+	{"storedString":"-silrak","conditions":["Forest"]},
+	{"storedString":"-revvrok","conditions":["River"]},
+	{"storedString":"-serok","conditions":["Port"]}
+]}
+|
+{"Id":"DwarfFortresses",
+"TextOptions":[
+	{"StoredString":"%DwarfPre%%DwarfSuff% Citadel"},
+	{"StoredString":"%DwarfPre%%DwarfSuff% Fortress"},
+	{"StoredString":"Fortress of %DwarfPre%%DwarfSuff%"},
+	{"StoredString":"Fort %DwarfPre%%DwarfSuff%"},
+	{"StoredString":"%DwarfPre%%DwarfSuff% Post"},
+	{"StoredString":"%DwarfPre%%DwarfSuff% Mountain","conditions":["Mountains"]}
+]}
+
+
+
+

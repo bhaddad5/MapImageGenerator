@@ -163,6 +163,7 @@
     <None Include="Assets\StreamingAssets\overlays.txt" />
     <None Include="Assets\StreamingAssets\realms.txt" />
     <None Include="Assets\StreamingAssets\terrain.txt" />
+    <None Include="Assets\StreamingAssets\textChunks.txt" />
     <None Include="Assets\StreamingAssets\worlds.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

@@ -4,6 +4,23 @@ using UnityEditor;
 
 public class JsonTests
 {
+	[MenuItem("Json Tests/Test TextChunk Json")]
+	public static void TestTextChunkJson()
+	{
+		TextChunkModel text = new TextChunkModel();
+		text.TextOptions.Add(new StoredStringModel()
+		{
+			StoredString = "hi"
+		});
+		text.TextOptions.Add(new StoredStringModel()
+		{
+			StoredString = "hi2",
+			Conditions = new List<string>() { "cond1", "cont2" }
+		});
+
+		Debug.Log(JsonUtility.ToJson(text));
+	}
+
 	[MenuItem("Json Tests/Test WorldModel Json")]
 	public static void TestWorldModelJson()
 	{
@@ -99,59 +116,7 @@ public class JsonTests
 		{
 			Id = "Anglo",
 			CultureName = "Midlander",
-			GroundPropertyValues = new Dictionary<string, float>()
-			{
-				{"ocean", 3f},
-				{"fertile", 4f }
-			},
-			HeraldryBackgrounds = new List<StoredStringModel>()
-			{
-				new StoredStringModel()
-				{
-					storedString = "heraldryPath",
-					conditions = new []{"shit", "stuff"}
-				},
-				new StoredStringModel()
-				{
-					storedString = "heraldryPath2"
-				}
-			},
-			HeraldryForegrounds = new List<StoredStringModel>()
-			{
-				new StoredStringModel()
-				{
-					storedString = "heraldryPath2"
-				}
-			},
 			HeraldryOverlayImage = "HeraldryOverlay",
-			KingdomTitles = new List<StoredStringModel>()
-			{
-				new StoredStringModel()
-				{
-					storedString = "heraldryPath2"
-				}
-			},
-			SettlementAreaInfo = new List<StoredStringModel>()
-			{
-				new StoredStringModel()
-				{
-					storedString = "heraldryPath2"
-				}
-			},
-			SettlementPrefixes = new List<StoredStringModel>()
-			{
-				new StoredStringModel()
-				{
-					storedString = "heraldryPath2"
-				}
-			},
-			SettlementSuffixes = new List<StoredStringModel>()
-			{
-				new StoredStringModel()
-				{
-					storedString = "heraldryPath2"
-				}
-			}
 		};
 
 		Debug.Log(JsonUtility.ToJson(Culture));

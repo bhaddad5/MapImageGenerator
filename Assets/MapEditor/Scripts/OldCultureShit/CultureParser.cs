@@ -16,29 +16,6 @@ public static class CultureParser
 
 
 [Serializable]
-public class StoredStringModel
-{
-	public string storedString;
-	public string[] conditions = new string[0];
-
-	/*public List<Settlement.CityTrait> GetCityTraits()
-	{
-		List<Settlement.CityTrait> traits = new List<Settlement.CityTrait>();
-		foreach (string trait in conditions)
-			traits.Add((Settlement.CityTrait)System.Enum.Parse(typeof(Settlement.CityTrait), trait));
-		return traits;
-	}
-
-	public List<Kingdom.KingdomTrait> GetKingdomTraits()
-	{
-		List<Kingdom.KingdomTrait> traits = new List<Kingdom.KingdomTrait>();
-		foreach (string trait in conditions)
-			traits.Add((Kingdom.KingdomTrait)System.Enum.Parse(typeof(Kingdom.KingdomTrait), trait));
-		return traits;
-	}*/
-}
-
-[Serializable]
 public class StoredCultureEntityPlacementByTrait
 {
 	public string TerrainTrait;
@@ -49,18 +26,12 @@ public class StoredCultureEntityPlacementByTrait
 public class CultureModel : ParsableData
 {
 	public string CultureName;
-	public List<StoredStringModel> SettlementPrefixes = new List<StoredStringModel>();
-	public List<StoredStringModel> SettlementSuffixes = new List<StoredStringModel>();
-	public List<StoredStringModel> SettlementAreaInfo = new List<StoredStringModel>();
-	public List<StoredStringModel> KingdomTitles = new List<StoredStringModel>();
 
 	public string HeraldryOverlayImage;
-	public List<StoredStringModel> HeraldryForegrounds = new List<StoredStringModel>();
-	public List<StoredStringModel> HeraldryBackgrounds = new List<StoredStringModel>();
+	public List<StoredTexture> HeraldryForegrounds = new List<StoredTexture>();
+	public List<StoredTexture> HeraldryBackgrounds = new List<StoredTexture>();
 
-	public Dictionary<string, float> GroundPropertyValues = new Dictionary<string, float>();
-
-	public float TileAreaValue(Int2 pos, MapModel Map)
+	/*public float TileAreaValue(Int2 pos, MapModel Map)
 	{
 		float value = GetTileValue(pos, Map) * 2;
 
@@ -95,5 +66,5 @@ public class CultureModel : ParsableData
 				value += GroundPropertyValues[trait];
 		}
 		return value;
-	}
+	}*/
 }
