@@ -15,6 +15,13 @@ public class MapTileModel
 	public string KingdomId;
 	public List<EntityPlacementModel> Entities = new List<EntityPlacementModel>();
 
+	public List<EntityPlacementModel> GetEntites()
+	{
+		if (Entities.Count > 0)
+			return Entities;
+		else return Terrain().EntityPlacements;
+	}
+
 	public enum TileTraits
 	{
 		Water,
@@ -26,6 +33,7 @@ public class MapTileModel
 		River,
 		Desert,
 		Ocean,
+		Settled,
 	}
 
 	public List<string> Traits = new List<string>();

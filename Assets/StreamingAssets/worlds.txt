@@ -1,10 +1,10 @@
 {"Id":"Ternath",
-"MapWidth":60,
-"MapHeight":40,
+"MapWidth":20,
+"MapHeight":20,
 "Realms":[
 	{"RealmId":"Khemras","MinLatitude":0.0,"MaxLatitude":0.5},
 	{"RealmId":"Midland","MinLatitude":0.5,"MaxLatitude":1}
 ],
 "Cultures":[
-	{"CultureId":"Midland","MinLatitude":0.5,"MaxLatitude":1}
+	{"CultureId":"Anglo","MinLatitude":0.5,"MaxLatitude":1}
 ]}

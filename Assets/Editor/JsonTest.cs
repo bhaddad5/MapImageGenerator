@@ -60,9 +60,9 @@ public class JsonTests
 			MaxLatitude = .5f,
 			MinLatitude = 0f
 		});
-		world.Cultures = new List<StoredCulturePrevelance>()
+		world.Cultures = new List<CulturePlacementModel>()
 		{
-			new StoredCulturePrevelance()
+			new CulturePlacementModel()
 			{
 				CultureId = "Anglo"
 			}

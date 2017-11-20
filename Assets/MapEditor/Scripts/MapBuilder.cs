@@ -14,7 +14,6 @@ public class MapBuilder : MonoBehaviour
 	public GameObject TerrainMeshDisplay;
 
 	public GameObject SettlementInfoPrefab;
-	public GameObject LocationInfoPrefab;
 
 	public Material TerrainTextMat;
 	public Material OverlaysMat;
@@ -82,9 +81,9 @@ public class MapBuilder : MonoBehaviour
 	{
 		MapGeneratorApi generator = new MapGeneratorApi();
 		generator.GenerateMap(CurrentMap, WorldCreationInfo);
-		
-		//RegionsGenerator regionsGen = new RegionsGenerator();
-		//regionsGen.GenerateRegions(CurrentMap, WorldCreationInfo);
+
+		CulturesGenerator culturesGen = new CulturesGenerator();
+		culturesGen.GenerateMap(CurrentMap, WorldCreationInfo);
 	}
 
 	private IEnumerator DisplayMap()

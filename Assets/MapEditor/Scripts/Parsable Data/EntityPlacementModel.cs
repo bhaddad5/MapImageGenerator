@@ -7,10 +7,7 @@ public class EntityPlacementModel
 	public enum PlacementMode
 	{
 		Scattered,
-		ScatteredBordered,
-		CityWalls,
-		CityGates,
-		Corners,
+		Center,
 		Bridge,
 	}
 
