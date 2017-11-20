@@ -52,7 +52,6 @@ public class JsonTests
 	public static void TestTerrainJson()
 	{
 		TerrainModel terrain = new TerrainModel();
-		terrain.LookupColor = Color.blue;
 		terrain.Texture = new StoredTexture()
 		{
 			TexturePath = "path"

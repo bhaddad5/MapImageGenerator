@@ -66,18 +66,4 @@ public class MapTextureHelpers
 		tex.Apply();
 		return tex;
 	}
-
-	public static Texture2D GetTerrainTexture(Map2D<MapTileModel> Map)
-	{
-		List<Color> pixels = new List<Color>();
-		foreach (MapTileModel tile in Map.GetMapValuesFlipped())
-			pixels.Add(tile.Terrain().LookupColor);
-		Texture2D terrainMapImage = new Texture2D(Map.Width, Map.Height, TextureFormat.ARGB32, true, true);
-		terrainMapImage.filterMode = FilterMode.Point;
-		terrainMapImage.anisoLevel = 0;
-		terrainMapImage.SetPixels(pixels.ToArray());
-		terrainMapImage.Apply();
-		return terrainMapImage;
-	}
-
 }

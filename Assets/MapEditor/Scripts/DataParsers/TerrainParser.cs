@@ -23,7 +23,6 @@ public static class TerrainParser
 			},
 			Height = 0f,
 			Id = "Ocean",
-			LookupColor = new Color(0, 0, .8f, 0),
 			Traits = new List<string>()
 			{
 				"Water",
@@ -62,7 +61,6 @@ public class TerrainModel : ParsableData
 	public StoredTexture Texture;
 	public float Difficulty = 0.1f;
 	public List<string> Traits = new List<string>();
-	public Color LookupColor;
 	public List<EntityPlacementModel> EntityPlacements = new List<EntityPlacementModel>();
 	public List<string> Overlays = new List<string>();
 

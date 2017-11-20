@@ -2,7 +2,6 @@
 "Texture":{"TexturePath":"Midlands/Terrain/Swamp.png"},
 "Height":0.01,
 "Difficulty":0.35,
-"LookupColor":{"r":0.0,"g":0.7,"b":1.0,"a":1.0},
 "EntityPlacements":[
 	{"model":"Willow","min":8,"max":19,"placementMode":"Scattered"}
 ],
@@ -14,7 +13,6 @@
 "Texture":{"TexturePath":"Midlands/Terrain/Wilderness.png"},
 "Height":0.05,
 "Difficulty":0.2,
-"LookupColor":{"r":0.3,"g":0.6,"b":0.0,"a":1.0},
 "EntityPlacements":[
 	{"model":"Pine","min":0,"max":5,"placementMode":"Scattered"}
 ],
@@ -24,7 +22,6 @@
 "Texture":{"TexturePath":"Midlands/Terrain/Forest.png"},
 "Height":0.05,
 "Difficulty":0.25,
-"LookupColor":{"r":0.0,"g":1.0,"b":0.0,"a":1.0},
 "EntityPlacements":[
 	{"model":"Pine","min":17,"max":33,"placementMode":"Scattered"}
 ],
@@ -36,7 +33,6 @@
 "Difficulty":50,
 "Height":1.8,
 "Texture":{"TexturePath":"Midlands/Terrain/Mountains.png"},
-"LookupColor":{"r":0.5,"g":0.3,"b":0.3,"a":1.0},
 "Traits":[
 	"Mountain",
 	"Impassable"
@@ -46,9 +42,6 @@
 "Difficulty":0.15,
 "Height":0.01,
 "Texture":{"TexturePath":"Midlands/Terrain/Fertile.png"},
-"LookupColor":{"r":0.9,"g":0.7,"b":0.0,"a":1.0},
-"EntityPlacements":[
-],
 "Traits":[
 	"Fertile"
 ]}
@@ -59,16 +52,14 @@
 "Difficulty":0.3,
 "Height":0.01,
 "Texture":{"TexturePath":"Desert/Terrain/Desert Sand.png"},
-"LookupColor":{"r":0.6,"g":0.7,"b":0.0,"a":1.0},
-"EntityPlacements":[
-],
-"Traits":[]}
+"Traits":[
+	"Desert"
+]}
 |
 {"Id":"DesertFertile",
 "Difficulty":0.15,
 "Height":0.01,
 "Texture":{"TexturePath":"Desert/Terrain/Desert Farms.png"},
-"LookupColor":{"r":0.2,"g":0.8,"b":0.0,"a":1.0},
 "EntityPlacements":[
 	{"model":"Palm","min":0,"max":4,"placementMode":"Scattered"}
 ],
@@ -80,7 +71,6 @@
 "Difficulty":0.15,
 "Height":0.01,
 "Texture":{"TexturePath":"Desert/Terrain/Desert Farms.png"},
-"LookupColor":{"r":0.2,"g":0.8,"b":0.0,"a":1.0},
 "EntityPlacements":[
 	{"model":"Palm","min":3,"max":8,"placementMode":"Scattered"}
 ],
@@ -98,7 +88,6 @@
 "Difficulty":50,
 "Height":0.8,
 "Texture":{"TexturePath":"Desert/Terrain/Desert Mountains.png"},
-"LookupColor":{"r":0.7,"g":0.3,"b":0.3,"a":1.0},
 "Traits":[
 	"Mountain",
 	"Impassable"
@@ -108,7 +97,6 @@
 "Difficulty":50,
 "Height":0.01,
 "Texture":{"TexturePath":"Desert/Terrain/Desert Farms.png"},
-"LookupColor":{"r":0.1,"g":0.4,"b":0.3,"a":1.0},
 "EntityPlacements":[
 	{"model":"Palm","min":16,"max":30,"placementMode":"Scattered"}
 ],

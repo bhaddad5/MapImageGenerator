@@ -11,9 +11,7 @@ public class MapBuilder : MonoBehaviour
 	public TMP_Dropdown EnvironmentSelection;
 	public TextMeshProUGUI displayText;
 
-	public GameObject terrainMeshDisplay;
-	public GameObject generatedTerrainMapInputDisplay;
-	public GameObject GeneratedRiversMapDisplay;
+	public GameObject TerrainMeshDisplay;
 
 	public GameObject SettlementInfoPrefab;
 	public GameObject LocationInfoPrefab;
@@ -22,9 +20,7 @@ public class MapBuilder : MonoBehaviour
 	public Material OverlaysMat;
 	public Material WaterMat;
 
-	private GameObject objectParent;
-
-	public OverlayDisplayHandler OverlayDisplayHandler;
+	private GameObject ObjectParent;
 
 	private MapModel CurrentMap;
 
@@ -89,23 +85,21 @@ public class MapBuilder : MonoBehaviour
 	{
 		displayText.enabled = true;
 
-		terrainMeshDisplay.transform.localPosition = Vector3.zero;
-		for (int i = 0; i < terrainMeshDisplay.transform.childCount; i++)
+		TerrainMeshDisplay.transform.localPosition = Vector3.zero;
+		for (int i = 0; i < TerrainMeshDisplay.transform.childCount; i++)
 		{
-			Destroy(terrainMeshDisplay.transform.GetChild(i).gameObject);
+			Destroy(TerrainMeshDisplay.transform.GetChild(i).gameObject);
 		}
 		transform.localPosition = Vector3.zero;
 
-		if (objectParent != null)
-			Destroy(objectParent);
-		objectParent = new GameObject("objectParent");
-		objectParent.transform.SetParent(transform);
+		if (ObjectParent != null)
+			Destroy(ObjectParent);
+		ObjectParent = new GameObject("objectParent");
+		ObjectParent.transform.SetParent(transform);
 
 		displayText.text = "Artificing Lands";
 		yield return null;
-
-		generatedTerrainMapInputDisplay.GetComponent<MeshRenderer>().sharedMaterial.mainTexture = MapTextureHelpers.GetTerrainTexture(CurrentMap.Map);
-
+		
 		int vertsPerTile = 5;
 		Map2D<float> vertHeights = MapMeshBuilder.BuildVertHeights(CurrentMap, vertsPerTile);
 		int overlayTexSize = 64;
@@ -139,7 +133,7 @@ public class MapBuilder : MonoBehaviour
 			mapMats.Add(WaterMat);
 
 			GameObject g = new GameObject("Mesh");
-			g.transform.SetParent(terrainMeshDisplay.transform);
+			g.transform.SetParent(TerrainMeshDisplay.transform);
 			g.AddComponent<MeshFilter>().mesh = mapMesh;
 			g.AddComponent<MeshRenderer>();
 			g.GetComponent<MeshRenderer>().materials = mapMats.ToArray();
@@ -154,7 +148,7 @@ public class MapBuilder : MonoBehaviour
 		yield return null;
 
 		ModelPlacer mp = new ModelPlacer();
-		mp.PlaceModels(objectParent.transform, CurrentMap);
+		mp.PlaceModels(ObjectParent.transform, CurrentMap);
 
 		displayText.text = "Displaying Heraldry";
 		yield return null;

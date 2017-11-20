@@ -24,6 +24,7 @@ public class MapTileModel
 		Swamp,
 		Forest,
 		River,
+		Desert,
 		Ocean,
 	}
 

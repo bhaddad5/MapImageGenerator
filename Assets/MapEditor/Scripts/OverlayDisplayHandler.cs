@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OverlayDisplayHandler : MonoBehaviour
+public static class OverlayDisplayHandler
 {
 	public class OverlayTextures
 	{
@@ -47,7 +47,7 @@ public class OverlayDisplayHandler : MonoBehaviour
 		}
 	}
 
-	public OverlayTextures GetOverlayMats(Map2D<MapTileModel> Map, int tileSize)
+	public static OverlayTextures GetOverlayMats(Map2D<MapTileModel> Map, int tileSize)
 	{
 		ColorMap WaterMask = new ColorMap(Map.Width, Map.Height, tileSize);
 		ColorMap OverlaysTexture = new ColorMap(Map.Width, Map.Height, tileSize);
@@ -71,7 +71,7 @@ public class OverlayDisplayHandler : MonoBehaviour
 		return new OverlayTextures(OverlaysTexture.Colors, WaterMask.Colors);
 	}
 
-	public Color[] GetTilePixels(Map2D<MapTileModel> Map, Int2 tile, string adjacentTrait, int textureSize,
+	public static Color[] GetTilePixels(Map2D<MapTileModel> Map, Int2 tile, string adjacentTrait, int textureSize,
 		Texture2D noSides, Texture2D oneSide, Texture2D twoAdjSides, Texture2D twoOppSides, Texture2D threeSides, Texture2D fourSides)
 	{
 		bool topBorders = true;
