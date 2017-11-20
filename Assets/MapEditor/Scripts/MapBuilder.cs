@@ -130,7 +130,6 @@ public class MapBuilder : MonoBehaviour
 
 			Mesh mapMesh = MeshConstructor.BuildMeshes(vertHeights.GetMapBlock(MapScaleStartingPoint * vertsPerTile, MapScaleWidth * vertsPerTile + 1, MapScaleHeight * vertsPerTile + 1), vertsPerTile);
 
-			//List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), CurrentMap.Map.GetMapBlock(MapScaleStartingPoint, MapScaleWidth, MapScaleHeight));
 			List<Material> mapMats = new List<Material>();
 			TerrainTextMat.mainTexture = MapTextureHelpers.ColorMapToMaterial(mapTex.GetMapBlock(MapScaleStartingPoint * terrainMatTexSize, MapScaleWidth * terrainMatTexSize, MapScaleHeight * terrainMatTexSize));
 			mapMats.Add(TerrainTextMat);

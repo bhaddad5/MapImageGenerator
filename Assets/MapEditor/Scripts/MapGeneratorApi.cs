@@ -257,7 +257,7 @@ public class MapGeneratorApi
 					endTile = shortestTile;
 					break;
 				}
-				else if (Map.Map.Get(neighbor).Terrain().Height <= Map.Map.Get(shortestTile).Terrain().Height)
+				else if (Map.Map.Get(neighbor).Height <= Map.Map.Get(shortestTile).Height)
 				{
 					checkedTiles.Set(neighbor, checkedTiles.Get(shortestTile) - 1);
 					nextRiverTiles.Insert(neighbor, checkedTiles.Get(shortestTile) - 1);
@@ -281,7 +281,7 @@ public class MapGeneratorApi
 		List<Int2> expansionTiles = new List<Int2>();
 		foreach (Int2 neighbor in Map.Map.GetAdjacentPoints(pos))
 		{
-			if (checkedTiles.Get(neighbor) == 0 && Map.Map.Get(neighbor).Terrain().Height <= Map.Map.Get(pos).Terrain().Height)
+			if (checkedTiles.Get(neighbor) == 0 && Map.Map.Get(neighbor).Height <= Map.Map.Get(pos).Height)
 				expansionTiles.Add(neighbor);
 		}
 		return expansionTiles;

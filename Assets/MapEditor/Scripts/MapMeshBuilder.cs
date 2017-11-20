@@ -24,7 +24,7 @@ public class MapMeshBuilder
 	{
 		foreach (var pixle in Map.Map.GetMapPoints())
 		{
-			FillHeightsForTile(pixle, Map.Map.Get(pixle).Terrain().Height, Map);
+			FillHeightsForTile(pixle, Map.Map.Get(pixle).Height, Map);
 		}
 	}
 
@@ -69,7 +69,7 @@ public class MapMeshBuilder
 	private static float GetHeight(Int2 point, MapModel Map)
 	{
 		if (Map.Map.PosInBounds(point))
-			return Map.Map.Get(point).Terrain().Height;
+			return Map.Map.Get(point).Height;
 		else return 0;
 	}
 
@@ -122,7 +122,7 @@ public class MapMeshBuilder
 				for (int i = 0; i < VertsPerTile; i++)
 				{
 					var diff = point - adjacentOceanTile;
-					float newHeight = Map.Map.Get(adjacentOceanTile).Terrain().Height;
+					float newHeight = Map.Map.Get(adjacentOceanTile).Height;
 					if (diff.Equals(new Int2(-1, 0)))
 					{
 						VertHeights.Set(new Int2(point.X * VertsPerTile + VertsPerTile, point.Y * VertsPerTile + i), newHeight);
