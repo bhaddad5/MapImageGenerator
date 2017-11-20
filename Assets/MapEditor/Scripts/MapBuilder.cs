@@ -70,10 +70,9 @@ public class MapBuilder : MonoBehaviour
 
 	public void RebuildMap()
 	{
-		int width = 40;
-		int height = 40;
-		CurrentMap = new MapModel(width, height);
-		GenerateMap(WorldParser.WorldData[EnvironmentSelection.options[EnvironmentSelection.value].text]);
+		WorldModel world = WorldParser.WorldData[EnvironmentSelection.options[EnvironmentSelection.value].text];
+		CurrentMap = new MapModel(world.MapWidth, world.MapHeight);
+		GenerateMap(world);
 		StartCoroutine(DisplayMap());
 	}
 

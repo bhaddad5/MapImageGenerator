@@ -14,9 +14,11 @@ public class MapGeneratorApi
 		Map = map;
 		TerrainDefaultFill("Ocean");
 		foreach (RealmPlacementModel realm in world.Realms)
-		{
-			ExecuteApiCommands(realm.Realm.MapBuildingCommands, realm.MinLatitude, realm.MaxLatitude);
-		}
+			ExecuteApiCommands(realm.Realm.PreRiverCommands, realm.MinLatitude, realm.MaxLatitude);
+		foreach (RealmPlacementModel realm in world.Realms)
+			ExecuteApiCommands(realm.Realm.RiverCommands, realm.MinLatitude, realm.MaxLatitude);
+		foreach (RealmPlacementModel realm in world.Realms)
+			ExecuteApiCommands(realm.Realm.PostRiverCommands, realm.MinLatitude, realm.MaxLatitude);
 		ReplaceOceanCoastTiles();
 		return Map;
 	}
@@ -29,47 +31,47 @@ public class MapGeneratorApi
 		}
 	}
 
-	private void ExecuteApiCommand(string cmd, int minHeight, int maxHeight)
+	private void ExecuteApiCommand(string cmd, int minH, int maxH)
 	{
 		string[] split = cmd.Split(' ');
 		
 		if (split[0] == "TerrainRandomizeEdges")
 			TerrainRandomizeEdges(split[1], Int32.Parse(split[2]));
 		if (split[0] == "TerrainRandomlyPlaceAlongLine")
-			TerrainRandomlyPlaceAlongLine(split[1], Single.Parse(split[2]), Single.Parse(split[3]), Single.Parse(split[4]), Single.Parse(split[5]));
+			TerrainRandomlyPlaceAlongLine(split[1], Single.Parse(split[2]), Single.Parse(split[3]), Single.Parse(split[4]), Single.Parse(split[5]), minH, maxH);
 		if (split[0] == "TerrainRandomlyExpandFromTypes")
 		{
 			List<string> splits = new List<string>();
 			for (int j = 4; j < split.Length; j++)
 				splits.Add(split[j]);
-			TerrainRandomlyExpandFromTypes(split[1], Single.Parse(split[2]), Single.Parse(split[3]), splits.ToArray());
+			TerrainRandomlyExpandFromTypes(split[1], Single.Parse(split[2]), Single.Parse(split[3]), minH, maxH, splits.ToArray());
 		}
 
 		if (split[0] == "CreateRivers")
 			CreateRivers(Int32.Parse(split[1]), Int32.Parse(split[2]));
 
 		if (split[0] == "TerrainEncourageStartAlongMountains")
-			TerrainEncourageStartAlongMountains(split[1], Single.Parse(split[2]));
+			TerrainEncourageStartAlongMountains(split[1], Single.Parse(split[2]), minH, maxH);
 		if (split[0] == "TerrainEncourageStartAlongWater")
-			TerrainEncourageStartAlongWater(split[1], Single.Parse(split[2]));
+			TerrainEncourageStartAlongWater(split[1], Single.Parse(split[2]), minH, maxH);
 		if (split[0] == "TerrainEncourageStartAlongOcean")
-			TerrainEncourageStartAlongOcean(split[1], Single.Parse(split[2]));
+			TerrainEncourageStartAlongOcean(split[1], Single.Parse(split[2]), minH, maxH);
 		if (split[0] == "TerrainEncourageStartAlongRiver")
-			TerrainEncourageStartAlongRiver(split[1], Single.Parse(split[2]));
+			TerrainEncourageStartAlongRiver(split[1], Single.Parse(split[2]), minH, maxH);
 		if (split[0] == "TerrainForceSetRivers")
-			TerrainForceSetRivers(split[1]);
+			TerrainForceSetRivers(split[1], minH, maxH);
 		if (split[0] == "TerrainRandomlyStart")
-			TerrainRandomlyStart(split[1], Single.Parse(split[2]));
+			TerrainRandomlyStart(split[1], Single.Parse(split[2]), minH, maxH);
 		if (split[0] == "TerrainExpandSimmilarTypes")
-			TerrainExpandSimmilarTypes(Int32.Parse(split[1]), split[2]);
+			TerrainExpandSimmilarTypes(Int32.Parse(split[1]), split[2], minH, maxH);
 	}
 
-	private void TerrainRandomlyPlaceAlongLine(string terrain, float occurancesPer80Square, float minLength, float maxLength, float spacing)
+	private void TerrainRandomlyPlaceAlongLine(string terrain, float occurancesPer80Square, float minLength, float maxLength, float spacing, int minH, int maxH)
 	{
 		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
 		for (int i = 0; i < numPlacements; i++)
 		{
-			Int2 randPos = new Int2(Random.Range(0, Map.Map.Width - 1), Random.Range(0, Map.Map.Height - 1));
+			Int2 randPos = new Int2(Random.Range(0, Map.Map.Width - 1), Random.Range(minH, maxH - 1));
 			PlaceTerrainAlongVector(randPos, terrain, new Int2(Random.Range(-1, 1), Random.Range(-1, 1)), Random.Range(minLength, maxLength), spacing);
 		}
 	}
@@ -114,10 +116,10 @@ public class MapGeneratorApi
 		return dirs[index];
 	}
 
-	private void TerrainRandomlyExpandFromTypes(string terrain, float minExpansion, float maxExpansion, params string[] terrainTypes)
+	private void TerrainRandomlyExpandFromTypes(string terrain, float minExpansion, float maxExpansion, int minH, int maxH, params string[] terrainTypes)
 	{
 		Map2D<bool> ModifiedTiles = new Map2D<bool>(Map.Map.Width, Map.Map.Height);
-		foreach (Int2 point in Map.Map.GetMapPoints())
+		foreach (Int2 point in Map.Map.GetMapPoints(minH, maxH))
 		{
 			foreach (string terrainType in terrainTypes)
 			{
@@ -313,66 +315,66 @@ public class MapGeneratorApi
 		Map.FillMapWithTerrain(defaultTerrain);
 	}
 
-	private void TerrainEncourageStartAlongMountains(string terrain, float odds)
+	private void TerrainEncourageStartAlongMountains(string terrain, float odds, int minH, int maxH)
 	{
-		foreach (Int2 point in Map.Map.GetMapPoints())
+		foreach (Int2 point in Map.Map.GetMapPoints(minH, maxH))
 		{
 			if(!OceanOrMountain(point) && Helpers.Odds(odds) && BordersTerrainTrait(point, MapTileModel.TileTraits.Mountain))
 				Map.Map.Get(point).TerrainId = terrain;
 		}
 	}
 
-	private void TerrainEncourageStartAlongWater(string terrain, float odds)
+	private void TerrainEncourageStartAlongWater(string terrain, float odds, int minH, int maxH)
 	{
-		foreach (Int2 point in Map.Map.GetMapPoints())
+		foreach (Int2 point in Map.Map.GetMapPoints(minH, maxH))
 		{
 			if (!OceanOrMountain(point) && Helpers.Odds(odds) && BordersTerrainTrait(point, MapTileModel.TileTraits.Water))
 				Map.Map.Get(point).TerrainId = terrain;
 		}
 	}
 
-	private void TerrainEncourageStartAlongOcean(string terrain, float odds)
+	private void TerrainEncourageStartAlongOcean(string terrain, float odds, int minH, int maxH)
 	{
-		foreach (Int2 point in Map.Map.GetMapPoints())
+		foreach (Int2 point in Map.Map.GetMapPoints(minH, maxH))
 		{
 			if (!OceanOrMountain(point) && Helpers.Odds(odds) && BordersTerrainTrait(point, MapTileModel.TileTraits.Ocean))
 				Map.Map.Get(point).TerrainId = terrain;
 		}
 	}
 
-	private void TerrainForceSetRivers(string terrain)
+	private void TerrainForceSetRivers(string terrain, int minH, int maxH)
 	{
-		foreach (Int2 point in Map.Map.GetMapPoints())
+		foreach (Int2 point in Map.Map.GetMapPoints(minH, maxH))
 		{
 			if (Map.Map.Get(point).HasTrait(MapTileModel.TileTraits.River))
 				Map.Map.Get(point).TerrainId = terrain;
 		}
 	}
 
-	private void TerrainEncourageStartAlongRiver(string terrain, float odds)
+	private void TerrainEncourageStartAlongRiver(string terrain, float odds, int minH, int maxH)
 	{
-		foreach (Int2 point in Map.Map.GetMapPoints())
+		foreach (Int2 point in Map.Map.GetMapPoints(minH, maxH))
 		{
 			if (!OceanOrMountain(point) && Helpers.Odds(odds) && BordersTerrainTrait(point, MapTileModel.TileTraits.River))
 				Map.Map.Get(point).TerrainId = terrain;
 		}
 	}
 
-	private void TerrainRandomlyStart(string terrain, float odds)
+	private void TerrainRandomlyStart(string terrain, float odds, int minH, int maxH)
 	{
-		foreach (Int2 point in Map.Map.GetMapPoints())
+		foreach (Int2 point in Map.Map.GetMapPoints(minH, maxH))
 		{
 			if (!OceanOrMountain(point) && Helpers.Odds(odds))
 				Map.Map.Get(point).TerrainId = terrain;
 		}
 	}
 
-	private void TerrainExpandSimmilarTypes(int numPasses, string typeToExpand)
+	private void TerrainExpandSimmilarTypes(int numPasses, string typeToExpand, int minH, int maxH)
 	{
 		for (int i = 0; i < numPasses; i++)
 		{
 			Map2D<bool> ChangedTiles = new Map2D<bool>(Map.Map.Width, Map.Map.Height);
-			foreach (Int2 point in Map.Map.GetMapPoints())
+			foreach (Int2 point in Map.Map.GetMapPoints(minH, maxH))
 			{
 				if (!OceanOrMountain(point) && Map.Map.Get(point).TerrainId != typeToExpand)
 				{

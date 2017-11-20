@@ -72,7 +72,15 @@ public class JsonTests
 					cultureId = "Anglo"
 				}
 			},
-			MapBuildingCommands = new List<string>()
+			PreRiverCommands = new List<string>()
+			{
+				"HeightsDefaultFill 0",
+			},
+			RiverCommands = new List<string>()
+			{
+				"HeightsDefaultFill 0",
+			},
+			PostRiverCommands = new List<string>()
 			{
 				"HeightsDefaultFill 0",
 			}

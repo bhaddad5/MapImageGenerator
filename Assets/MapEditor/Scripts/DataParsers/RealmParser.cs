@@ -26,6 +26,8 @@ public class StoredCulturePrevelance
 public class RealmModel : ParsableData
 {
 	public string DisplayName;
-	public List<string> MapBuildingCommands = new List<string>();
+	public List<string> PreRiverCommands = new List<string>();
+	public List<string> RiverCommands = new List<string>();
+	public List<string> PostRiverCommands = new List<string>();
 	public List<StoredCulturePrevelance> Cultures = new List<StoredCulturePrevelance>();
 }

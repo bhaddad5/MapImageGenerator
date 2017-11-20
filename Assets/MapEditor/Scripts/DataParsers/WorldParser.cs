@@ -16,6 +16,8 @@ public static class WorldParser
 [Serializable]
 public class WorldModel : ParsableData
 {
+	public int MapWidth;
+	public int MapHeight;
 	public List<RealmPlacementModel> Realms = new List<RealmPlacementModel>();
 }
 

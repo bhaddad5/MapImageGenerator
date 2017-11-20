@@ -50,6 +50,20 @@ public class Map2D<T>
 		return points;
 	}
 
+	public List<Int2> GetMapPoints(int minHeight, int maxHeight)
+	{
+		List<Int2> points = new List<Int2>();
+		for (int i = 0; i < Width; i++)
+		{
+			for (int j = minHeight; j < maxHeight; j++)
+			{
+				points.Add(new Int2(i, j));
+			}
+		}
+
+		return points;
+	}
+
 	public List<Int2> GetMapPointsFlipped()
 	{
 		List<Int2> points = new List<Int2>();
