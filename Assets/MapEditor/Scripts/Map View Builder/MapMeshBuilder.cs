@@ -16,6 +16,7 @@ public class MapMeshBuilder
 		populateVertHeights(map);
 		RandomizeVertHeights();
 		ZeroOutTerrainTypeBorders(map, MapTileModel.TileTraits.Ocean);
+		ZeroOutTerrainTypeBorders(map, MapTileModel.TileTraits.Settled);
 
 		return VertHeights;
 	}
@@ -60,6 +61,8 @@ public class MapMeshBuilder
 				}
 				height = height / combinedHeights;
 				if (Map.Map.Get(pixle).HasTrait(MapTileModel.TileTraits.Water))
+					height = tileHeight;
+				if (Map.Map.Get(pixle).HasTrait(MapTileModel.TileTraits.Settled))
 					height = tileHeight;
 				VertHeights.Set(new Int2(baseI + x, baseJ + y), height);
 			}

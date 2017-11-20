@@ -131,6 +131,21 @@
 	{"StoredString":"ha"}
 ]}
 |
+{"Id":"EgyptGods",
+"TextOptions":[
+	{"StoredString":"Kopehk"},
+	{"StoredString":"Osirion"},
+	{"StoredString":"the Fallen Gods"},
+	{"StoredString":"the Forgotten"},
+	{"StoredString":"Forgotten Souls"},
+	{"StoredString":"Amath"},
+	{"StoredString":"Horai"},
+	{"StoredString":"Septra"},
+	{"StoredString":"the Sun"},
+	{"StoredString":"the Moon"},
+	{"StoredString":"the Stars"}
+]}
+|
 {"Id":"EgyptCities",
 "TextOptions":[
 	{"StoredString":"%EgyptPre%%EgyptSuff%"},
@@ -144,7 +159,10 @@
 	{"StoredString":"Pyramid of %EgyptPre%%EgyptSuff%"},
 	{"StoredString":"Great Pyramid of %EgyptPre%%EgyptSuff%"},
 	{"StoredString":"Catacombs of %EgyptPre%%EgyptSuff%"},
-	{"StoredString":"Grand Pyramid of %EgyptPre%%EgyptSuff%"}
+	{"StoredString":"Mortuary of %EgyptPre%%EgyptSuff%"},
+	{"StoredString":"Pyramid of %EgyptGods%"},
+	{"StoredString":"Mortuary of %EgyptGods%"},
+	{"StoredString":"Catacombs of %EgyptGods%"}
 ]}
 
 

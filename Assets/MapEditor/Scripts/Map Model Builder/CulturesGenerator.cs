@@ -43,7 +43,9 @@ public class CulturesGenerator
 		for (int i = 0; i < 100; i++)
 		{
 			Int2 randPos = new Int2(Random.Range(0, Map.Map.Width - 1), Random.Range(minH, maxH - 1));
-			if (Map.Map.Get(randPos).HasTrait(MapTileModel.TileTraits.Impassable) || Map.Map.Get(randPos).HasTrait(MapTileModel.TileTraits.Water))
+			if (Map.Map.Get(randPos).HasTrait(MapTileModel.TileTraits.Impassable) || 
+				Map.Map.Get(randPos).HasTrait(MapTileModel.TileTraits.Water) ||
+			    Map.Map.Get(randPos).HasTrait(MapTileModel.TileTraits.Settled))
 				continue;
 			float value = GetSettlementPosValue(randPos, settlementType);
 			possiblePoses.Insert(randPos, value);
