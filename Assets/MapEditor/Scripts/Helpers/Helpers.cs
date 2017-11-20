@@ -23,7 +23,7 @@ public static class Helpers
 
 	public static void DEBUGSphereAtPoint(Vector3 point, float scale)
 	{
-		GameObject sphere = GameObject.Instantiate(Resources.Load("DebugSphere") as GameObject);
+		GameObject sphere = GameObject.Instantiate(MapBuilder.DebugSphere);
 		sphere.transform.position = point;
 		sphere.transform.localScale = new Vector3(scale, scale, scale);
 		sphere.GetComponent<MeshRenderer>().material.color = Color.red;

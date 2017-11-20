@@ -20,13 +20,17 @@ public class MapBuilder : MonoBehaviour
 	public Material OverlaysMat;
 	public Material WaterMat;
 
-	private GameObject ObjectParent;
+	public GameObject Sphere;
+	public static GameObject DebugSphere;
 
+	private GameObject ObjectParent;
 	private MapModel CurrentMap;
 
 	// Use this for initialization
 	void Start ()
 	{
+		DebugSphere = Sphere;
+
 		WorldParser.LoadWorlds();
 		RealmParser.LoadRealms();
 		ModelsParser.LoadModels();
@@ -34,6 +38,8 @@ public class MapBuilder : MonoBehaviour
 		LocationParser.LoadLocations();
 		TerrainParser.LoadTerrainTypes();
 		OverlayParser.LoadOverlays();
+		TextChunkParser.LoadTextChunks();
+		SettlementTypeParser.ParseSettlementTypes();
 
 		foreach (WorldModel environment in WorldParser.WorldData.Values)
 		{
