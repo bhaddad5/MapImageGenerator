@@ -109,8 +109,9 @@ public class MapBuilder : MonoBehaviour
 		int vertsPerTile = 5;
 		Map2D<float> vertHeights = MapMeshBuilder.BuildVertHeights(CurrentMap, vertsPerTile);
 		int overlayTexSize = 64;
-		Map2D<Color> mapTex = new Map2D<Color>(CurrentMap.Map.Width * overlayTexSize, CurrentMap.Map.Height * overlayTexSize);
-		yield return StartCoroutine(MapTextureHelpers.GetTerrainTexture(CurrentMap.Map, overlayTexSize, mapTex, displayText));
+		int terrainMatTexSize = 36;
+		Map2D<Color> mapTex = new Map2D<Color>(CurrentMap.Map.Width * terrainMatTexSize, CurrentMap.Map.Height * terrainMatTexSize);
+		yield return StartCoroutine(MapTextureHelpers.GetTerrainTexture(CurrentMap.Map, terrainMatTexSize, mapTex, displayText));
 		OverlayDisplayHandler.OverlayTextures overlays = OverlayDisplayHandler.GetOverlayMats(CurrentMap.Map, overlayTexSize);
 
 		int mapChunkSize = 20;
@@ -131,7 +132,7 @@ public class MapBuilder : MonoBehaviour
 
 			//List<Material> mapMats = GetMapMaterials(TerrainParser.TerrainData.Values.ToList(), CurrentMap.Map.GetMapBlock(MapScaleStartingPoint, MapScaleWidth, MapScaleHeight));
 			List<Material> mapMats = new List<Material>();
-			TerrainTextMat.mainTexture = MapTextureHelpers.ColorMapToMaterial(mapTex.GetMapBlock(MapScaleStartingPoint * overlayTexSize, MapScaleWidth * overlayTexSize, MapScaleHeight * overlayTexSize));
+			TerrainTextMat.mainTexture = MapTextureHelpers.ColorMapToMaterial(mapTex.GetMapBlock(MapScaleStartingPoint * terrainMatTexSize, MapScaleWidth * terrainMatTexSize, MapScaleHeight * terrainMatTexSize));
 			mapMats.Add(TerrainTextMat);
 			OverlaysMat.mainTexture = MapTextureHelpers.ColorMapToMaterial(overlays.Overlays.GetMapBlock(MapScaleStartingPoint * overlayTexSize, MapScaleWidth * overlayTexSize, MapScaleHeight * overlayTexSize));
 			mapMats.Add(OverlaysMat);

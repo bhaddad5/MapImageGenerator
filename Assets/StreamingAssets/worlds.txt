@@ -1,6 +1,6 @@
 {"Id":"Ternath",
-"MapWidth":30,
-"MapHeight":30,
+"MapWidth":40,
+"MapHeight":40,
 "Realms":[
 	{"RealmId":"Khemras","MinLatitude":0.0,"MaxLatitude":0.5},
 	{"RealmId":"Midland","MinLatitude":0.5,"MaxLatitude":1}
