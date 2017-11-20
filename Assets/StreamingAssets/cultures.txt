@@ -57,5 +57,6 @@
 	{"TexturePath":"Egyptian/Heraldry/Backgrounds/Egypt_Back_0.png"}
 ],
 "SettlementTypes":[
-	{"SettlementType":"EgyptCity","PlacementsPer20Square":8}
+	{"SettlementType":"EgyptCity","PlacementsPer20Square":8},
+	{"SettlementType":"EgyptPyramid","PlacementsPer20Square":4}
 ]}

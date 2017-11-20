@@ -15,7 +15,7 @@ public class MapMeshBuilder
 
 		populateVertHeights(map);
 		RandomizeVertHeights();
-		ZeroOutWaterBorders(map);
+		ZeroOutTerrainTypeBorders(map, MapTileModel.TileTraits.Ocean);
 
 		return VertHeights;
 	}
@@ -103,26 +103,26 @@ public class MapMeshBuilder
 		return average / points.Count;
 	}
 
-	private static void ZeroOutWaterBorders(MapModel Map)
+	private static void ZeroOutTerrainTypeBorders(MapModel Map, MapTileModel.TileTraits trait)
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
-			if(Map.Map.Get(point).HasTrait(MapTileModel.TileTraits.Ocean))
+			if(Map.Map.Get(point).HasTrait(trait))
 				continue;
-			List<Int2> AdjacentOceanTiles = new List<Int2>();
+			List<Int2> AdjacentTraitTiles = new List<Int2>();
 			foreach (Int2 adjacentPoint in Map.Map.GetAdjacentPoints(point))
 			{
-				if (Map.Map.Get(adjacentPoint).HasTrait(MapTileModel.TileTraits.Ocean))
+				if (Map.Map.Get(adjacentPoint).HasTrait(trait))
 				{
-					AdjacentOceanTiles.Add(adjacentPoint);
+					AdjacentTraitTiles.Add(adjacentPoint);
 				}
 			}
-			foreach (Int2 adjacentOceanTile in AdjacentOceanTiles)
+			foreach (Int2 adjacentTraitTile in AdjacentTraitTiles)
 			{
 				for (int i = 0; i < VertsPerTile; i++)
 				{
-					var diff = point - adjacentOceanTile;
-					float newHeight = Map.Map.Get(adjacentOceanTile).Height;
+					var diff = point - adjacentTraitTile;
+					float newHeight = Map.Map.Get(adjacentTraitTile).Height;
 					if (diff.Equals(new Int2(-1, 0)))
 					{
 						VertHeights.Set(new Int2(point.X * VertsPerTile + VertsPerTile, point.Y * VertsPerTile + i), newHeight);
