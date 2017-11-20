@@ -72,18 +72,18 @@ public class MapGeneratorApi
 		for (int i = 0; i < numPlacements; i++)
 		{
 			Int2 randPos = new Int2(Random.Range(0, Map.Map.Width - 1), Random.Range(minH, maxH - 1));
-			PlaceTerrainAlongVector(randPos, terrain, new Int2(Random.Range(-1, 1), Random.Range(-1, 1)), Random.Range(minLength, maxLength), spacing);
+			PlaceTerrainAlongVector(randPos, terrain, new Int2(Random.Range(-1, 1), Random.Range(-1, 1)), Random.Range(minLength, maxLength), spacing, minH, maxH);
 		}
 	}
 
-	private void PlaceTerrainAlongVector(Int2 startPos, string terrain, Int2 direction, float length, float spacing)
+	private void PlaceTerrainAlongVector(Int2 startPos, string terrain, Int2 direction, float length, float spacing, int minH, int maxH)
 	{
 		Int2 currPixel = startPos;
 		for (int k = 0; k < (int)length; k++)
 		{
 			Map.Map.Get(currPixel).TerrainId = terrain;
 			currPixel = GetNextPixelInDirection(currPixel, direction, (int)spacing);
-			if (!Map.Map.PosInBounds(currPixel))
+			if (!Map.Map.PosInBounds(currPixel) || currPixel.Y >= maxH || currPixel.Y < minH)
 				return;
 		}
 	}
