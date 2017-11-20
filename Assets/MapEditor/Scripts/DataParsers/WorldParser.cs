@@ -7,7 +7,7 @@ public static class WorldParser
 {
 	public static Dictionary<string, WorldModel> WorldData = new Dictionary<string, WorldModel>();
 
-	public static void LoadTerrainTypes()
+	public static void LoadWorlds()
 	{
 		WorldData = ParserHelpers.ParseTypes<WorldModel>("worlds");
 	}
@@ -25,4 +25,6 @@ public class RealmPlacementModel
 	public string RealmId;
 	public float MinLatitude;
 	public float MaxLatitude;
+
+	public RealmModel Realm { get { return RealmParser.RealmsData[RealmId]; } }
 }

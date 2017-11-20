@@ -9,40 +9,34 @@ public class MapGeneratorApi
 {
 	protected MapModel Map;
 
-	public MapModel GenerateMap(MapModel map, RealmModel realm)
+	public MapModel GenerateMap(MapModel map, WorldModel world)
 	{
 		Map = map;
 		TerrainDefaultFill("Ocean");
-		ExecuteApiCommands(realm.MapBuildingCommands);
+		foreach (RealmPlacementModel realm in world.Realms)
+		{
+			ExecuteApiCommands(realm.Realm.MapBuildingCommands, realm.MinLatitude, realm.MaxLatitude);
+		}
 		ReplaceOceanCoastTiles();
 		return Map;
 	}
 
-	public void ExecuteApiCommands(List<string> commands)
+	private void ExecuteApiCommands(List<string> commands, float minLatitude, float maxLatitude)
 	{
 		foreach (string command in commands)
 		{
-			ExecuteApiCommand(command);
+			ExecuteApiCommand(command, (int)(Map.Map.Height * minLatitude), (int)(Map.Map.Height * maxLatitude));
 		}
 	}
 
-	private void ExecuteApiCommand(string cmd)
+	private void ExecuteApiCommand(string cmd, int minHeight, int maxHeight)
 	{
 		string[] split = cmd.Split(' ');
 		
-		if (split[0] == "TerrainRandomlyPlace")
-			TerrainRandomlyPlace(split[1], Single.Parse(split[2]));
-
-		if (split[0] == "TerrainRandomlyPlaceNotInWater")
-			TerrainRandomlyPlaceNotInWater(split[1], Single.Parse(split[2]));
-		if (split[0] == "TerrainRandomlyExpand")
-			TerrainRandomlyExpand(split[1], Single.Parse(split[2]));
 		if (split[0] == "TerrainRandomizeEdges")
 			TerrainRandomizeEdges(split[1], Int32.Parse(split[2]));
 		if (split[0] == "TerrainRandomlyPlaceAlongLine")
 			TerrainRandomlyPlaceAlongLine(split[1], Single.Parse(split[2]), Single.Parse(split[3]), Single.Parse(split[4]), Single.Parse(split[5]));
-		if (split[0] == "TerrainRandomlyPlaceAlongEdges")
-			TerrainRandomlyPlaceAlongEdges(split[1], Single.Parse(split[2]));
 		if (split[0] == "TerrainRandomlyExpandFromTypes")
 		{
 			List<string> splits = new List<string>();
@@ -50,14 +44,10 @@ public class MapGeneratorApi
 				splits.Add(split[j]);
 			TerrainRandomlyExpandFromTypes(split[1], Single.Parse(split[2]), Single.Parse(split[3]), splits.ToArray());
 		}
-		if (split[0] == "TerrainSetEdges")
-			TerrainSetEdges(split[1]);
+
 		if (split[0] == "CreateRivers")
 			CreateRivers(Int32.Parse(split[1]), Int32.Parse(split[2]));
 
-
-		if (split[0] == "TerrainDefaultFill")
-			TerrainDefaultFill(split[1]);
 		if (split[0] == "TerrainEncourageStartAlongMountains")
 			TerrainEncourageStartAlongMountains(split[1], Single.Parse(split[2]));
 		if (split[0] == "TerrainEncourageStartAlongWater")
@@ -74,57 +64,7 @@ public class MapGeneratorApi
 			TerrainExpandSimmilarTypes(Int32.Parse(split[1]), split[2]);
 	}
 
-	public void TerrainRandomlyPlace(string terrain, float occurancesPer80Square)
-	{
-		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
-		for (int i = 0; i < numPlacements; i++)
-		{
-			Int2 randPos = new Int2(Random.Range(0, Map.Map.Width - 1), Random.Range(0, Map.Map.Height - 1));
-			Map.Map.Get(randPos).TerrainId = terrain;
-		}
-	}
-
-	public void TerrainRandomlyPlaceNotInWater(string terrain, float occurancesPer80Square)
-	{
-		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
-		for (int i = 0; i < numPlacements; i++)
-		{
-			Int2 randPos = new Int2(Random.Range(0, Map.Map.Width - 1), Random.Range(0, Map.Map.Height - 1));
-			if(!Map.Map.Get(randPos).HasTrait(MapTileModel.TileTraits.Water))
-				Map.Map.Get(randPos).TerrainId = terrain;
-		}
-	}
-
-	public void TerrainRandomlyPlaceAlongEdges(string terrain, float occurancesPer80Square)
-	{
-		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
-		for (int i = 0; i < numPlacements; i++)
-		{
-			Int2 randPos;
-			if (Helpers.Odds(0.5f))
-			{
-				int randX = Random.Range(0, Map.Map.Width - 1);
-				randPos = new Int2(randX, 0);
-				if (Helpers.Odds(0.5f))
-				{
-					randPos = new Int2(randX, Map.Map.Height-1);
-				}
-			}
-			else
-			{
-				int randY = Random.Range(0, Map.Map.Height - 1);
-				randPos = new Int2(randY, 0);
-				if (Helpers.Odds(0.5f))
-				{
-					randPos = new Int2(Map.Map.Width - 1, randY);
-				}
-			}
-
-			Map.Map.Get(randPos).TerrainId = terrain;
-		}
-	}
-
-	public void TerrainRandomlyPlaceAlongLine(string terrain, float occurancesPer80Square, float minLength, float maxLength, float spacing)
+	private void TerrainRandomlyPlaceAlongLine(string terrain, float occurancesPer80Square, float minLength, float maxLength, float spacing)
 	{
 		int numPlacements = (int)Helpers.Randomize(occurancesPer80Square);
 		for (int i = 0; i < numPlacements; i++)
@@ -146,7 +86,7 @@ public class MapGeneratorApi
 		}
 	}
 
-	protected Int2 GetNextPixelInDirection(Int2 currPoint, Int2 direction, int distBetweenPixles)
+	private Int2 GetNextPixelInDirection(Int2 currPoint, Int2 direction, int distBetweenPixles)
 	{
 		Int2[] potentials = new Int2[10];
 		potentials[0] = currPoint + nextDirection(direction, 0) * distBetweenPixles;
@@ -174,7 +114,7 @@ public class MapGeneratorApi
 		return dirs[index];
 	}
 
-	public void TerrainRandomlyExpandFromTypes(string terrain, float minExpansion, float maxExpansion, params string[] terrainTypes)
+	private void TerrainRandomlyExpandFromTypes(string terrain, float minExpansion, float maxExpansion, params string[] terrainTypes)
 	{
 		Map2D<bool> ModifiedTiles = new Map2D<bool>(Map.Map.Width, Map.Map.Height);
 		foreach (Int2 point in Map.Map.GetMapPoints())
@@ -189,16 +129,6 @@ public class MapGeneratorApi
 					break;
 				}
 			}
-		}
-	}
-
-	public void TerrainRandomlyExpand(string terrain, float avgExpansion)
-	{
-		Map2D<bool> ModifiedTiles = new Map2D<bool>(Map.Map.Width, Map.Map.Height);
-		foreach (Int2 point in Map.Map.GetMapPoints())
-		{
-			if (Map.Map.Get(point).TerrainId == terrain)
-				TerrainExpandFromPoint(point, terrain, Helpers.Randomize(avgExpansion), ModifiedTiles, terrain);
 		}
 	}
 
@@ -223,7 +153,7 @@ public class MapGeneratorApi
 		}
 	}
 
-	public void TerrainRandomizeEdges(string terrain, int numPasses)
+	private void TerrainRandomizeEdges(string terrain, int numPasses)
 	{
 		for (int i = 0; i < numPasses; i++)
 		{
@@ -258,25 +188,7 @@ public class MapGeneratorApi
 		return false;
 	}
 
-	public void TerrainSetEdges(string terrain)
-	{
-		for (int i = 0; i < Map.Map.Width; i++)
-		{
-			Map.Map.Get(new Int2(i, 0)).TerrainId = terrain;
-			Map.Map.Get(new Int2(i, 1)).TerrainId = terrain;
-			Map.Map.Get(new Int2(i, Map.Map.Height - 2)).TerrainId = terrain;
-			Map.Map.Get(new Int2(i, Map.Map.Height - 1)).TerrainId = terrain;
-		}
-		for (int i = 0; i < Map.Map.Height; i++)
-		{
-			Map.Map.Get(new Int2(0, i)).TerrainId = terrain;
-			Map.Map.Get(new Int2(1, i)).TerrainId = terrain;
-			Map.Map.Get(new Int2(Map.Map.Width - 2, i)).TerrainId = terrain;
-			Map.Map.Get(new Int2(Map.Map.Width - 1, i)).TerrainId = terrain;
-		}
-	}
-
-	public void CreateRivers(int minNumRivers, int maxNumRivers)
+	private void CreateRivers(int minNumRivers, int maxNumRivers)
 	{
 		int numOfRivers = Random.Range(minNumRivers, maxNumRivers);
 
@@ -395,13 +307,13 @@ public class MapGeneratorApi
 			BuildRiverBack(riverDistField, riverPath);
 		}
 	}
-	
-	public void TerrainDefaultFill(string defaultTerrain)
+
+	private void TerrainDefaultFill(string defaultTerrain)
 	{
 		Map.FillMapWithTerrain(defaultTerrain);
 	}
 
-	public void TerrainEncourageStartAlongMountains(string terrain, float odds)
+	private void TerrainEncourageStartAlongMountains(string terrain, float odds)
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
@@ -410,7 +322,7 @@ public class MapGeneratorApi
 		}
 	}
 
-	public void TerrainEncourageStartAlongWater(string terrain, float odds)
+	private void TerrainEncourageStartAlongWater(string terrain, float odds)
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
@@ -419,7 +331,7 @@ public class MapGeneratorApi
 		}
 	}
 
-	public void TerrainEncourageStartAlongOcean(string terrain, float odds)
+	private void TerrainEncourageStartAlongOcean(string terrain, float odds)
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
@@ -428,7 +340,7 @@ public class MapGeneratorApi
 		}
 	}
 
-	public void TerrainForceSetRivers(string terrain)
+	private void TerrainForceSetRivers(string terrain)
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
@@ -437,7 +349,7 @@ public class MapGeneratorApi
 		}
 	}
 
-	public void TerrainEncourageStartAlongRiver(string terrain, float odds)
+	private void TerrainEncourageStartAlongRiver(string terrain, float odds)
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
@@ -446,7 +358,7 @@ public class MapGeneratorApi
 		}
 	}
 
-	public void TerrainRandomlyStart(string terrain, float odds)
+	private void TerrainRandomlyStart(string terrain, float odds)
 	{
 		foreach (Int2 point in Map.Map.GetMapPoints())
 		{
@@ -455,7 +367,7 @@ public class MapGeneratorApi
 		}
 	}
 
-	public void TerrainExpandSimmilarTypes(int numPasses, string typeToExpand)
+	private void TerrainExpandSimmilarTypes(int numPasses, string typeToExpand)
 	{
 		for (int i = 0; i < numPasses; i++)
 		{

@@ -23,10 +23,10 @@
 		"TerrainExpandSimmilarTypes 6 MidlandForest",
 		"TerrainRandomlyStart MidlandForest 0.05",
 		"TerrainExpandSimmilarTypes 3 MidlandForest",
-		"TerrainEncourageStartAlongOcean MidlandFertile 0.15",
+		"TerrainEncourageStartAlongWater MidlandFertile 0.15",
 		"TerrainRandomlyStart MidlandFertile 0.05",
 		"TerrainExpandSimmilarTypes 4 MidlandFertile",
-		"TerrainEncourageStartAlongOcean MidlandSwamp 0.02",
+		"TerrainEncourageStartAlongWater MidlandSwamp 0.02",
 		"TerrainRandomlyStart MidlandSwamp 0.005",
 		"TerrainExpandSimmilarTypes 3 MidlandSwamp"
 	],

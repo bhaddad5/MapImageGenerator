@@ -31,6 +31,7 @@ public class MapBuilder : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		WorldParser.LoadWorlds();
 		RealmParser.LoadRealms();
 		ModelsParser.LoadModels();
 		CultureParser.LoadCultures();
@@ -38,7 +39,7 @@ public class MapBuilder : MonoBehaviour
 		TerrainParser.LoadTerrainTypes();
 		OverlayParser.LoadOverlays();
 
-		foreach (RealmModel environment in RealmParser.RealmsData.Values)
+		foreach (WorldModel environment in WorldParser.WorldData.Values)
 		{
 			EnvironmentSelection.options.Add(new TMP_Dropdown.OptionData(environment.Id));
 		}
@@ -72,17 +73,17 @@ public class MapBuilder : MonoBehaviour
 		int width = 40;
 		int height = 40;
 		CurrentMap = new MapModel(width, height);
-		GenerateMap(RealmParser.RealmsData[EnvironmentSelection.options[EnvironmentSelection.value].text]);
+		GenerateMap(WorldParser.WorldData[EnvironmentSelection.options[EnvironmentSelection.value].text]);
 		StartCoroutine(DisplayMap());
 	}
 
-	public void GenerateMap(RealmModel realmCreationInfo)
+	public void GenerateMap(WorldModel WorldCreationInfo)
 	{
 		MapGeneratorApi generator = new MapGeneratorApi();
-		generator.GenerateMap(CurrentMap, realmCreationInfo);
+		generator.GenerateMap(CurrentMap, WorldCreationInfo);
 		
-		RegionsGenerator regionsGen = new RegionsGenerator();
-		regionsGen.GenerateRegions(CurrentMap, realmCreationInfo);
+		//RegionsGenerator regionsGen = new RegionsGenerator();
+		//regionsGen.GenerateRegions(CurrentMap, WorldCreationInfo);
 	}
 
 	private IEnumerator DisplayMap()
