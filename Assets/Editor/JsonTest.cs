@@ -143,7 +143,10 @@ public class JsonTests
 		{
 			Id = "Anglo",
 			CultureName = "Midlander",
-			HeraldryOverlayImage = "HeraldryOverlay",
+			HeraldryOverlayImage = new StoredTexture()
+			{
+				TexturePath = "HeraldryOverlay"
+			},
 			SettlementTypes = new List<SettlementPlacementInfo>()
 			{
 				new SettlementPlacementInfo()

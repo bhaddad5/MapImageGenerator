@@ -6,5 +6,6 @@
 	{"RealmId":"Midland","MinLatitude":0.5,"MaxLatitude":1}
 ],
 "Cultures":[
-	{"CultureId":"Anglo","MinLatitude":0.5,"MaxLatitude":1}
+	{"CultureId":"Anglo","MinLatitude":0.5,"MaxLatitude":1},
+	{"CultureId":"Egypt","MinLatitude":0,"MaxLatitude":0.5}
 ]}

@@ -33,6 +33,7 @@ public class CulturesGenerator
 
 			Map.Map.Get(pos).Entities.Add(SettlementTypeParser.SettlementsData[settlementType.SettlementType].Entity);
 			Map.Map.Get(pos).Traits.Add("Settled");
+			Map.Map.Get(pos).SetMaxHeight(0);
 		}
 	}
 

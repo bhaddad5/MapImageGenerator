@@ -102,6 +102,42 @@
 	{"StoredString":"%DwarfPre%%DwarfSuff% Post"},
 	{"StoredString":"%DwarfPre%%DwarfSuff% Mountain","conditions":["Mountains"]}
 ]}
+|
+{"Id":"EgyptPre",
+"TextOptions":[
+	{"StoredString":"Men"},
+	{"StoredString":"Mem"},
+	{"StoredString":"Khem"},
+	{"StoredString":"Yam"},
+	{"StoredString":"Ra"},
+	{"StoredString":"Khi"},
+	{"StoredString":"Ptkhe"},
+	{"StoredString":"Khas"},
+	{"StoredString":"Theb"},
+	{"StoredString":"Giz"}
+]}
+|
+{"Id":"EgyptSuff",
+"TextOptions":[
+	{"StoredString":"u"},
+	{"StoredString":"nefer"},
+	{"StoredString":"qote"},
+	{"StoredString":"as"},
+	{"StoredString":"isdun"},
+	{"StoredString":"is"},
+	{"StoredString":"ese"},
+	{"StoredString":"ru"},
+	{"StoredString":"phis"},
+	{"StoredString":"ha"}
+]}
+|
+{"Id":"EgyptCities",
+"TextOptions":[
+	{"StoredString":"%EgyptPre%%EgyptSuff%"},
+	{"StoredString":"Temple City of %EgyptPre%%EgyptSuff%"},
+	{"StoredString":"Great %EgyptPre%%EgyptSuff%"},
+	{"StoredString":"Port %EgyptPre%%EgyptSuff%","conditions":["Ocean"]}
+]}
 
 
 

@@ -1,6 +1,6 @@
 {"Id":"Anglo",
 "CultureName":"Midlander",
-"HeraldryOverlayImage":"Anglo/Heraldry/Overlay.png",
+"HeraldryOverlayImage":{"TexturePath":"Anglo/Heraldry/Overlay.png"},
 "HeraldryForegrounds":[
 	{"TexturePath":"Anglo/Heraldry/Symbols/Blank.png"},
 	{"TexturePath":"Anglo/Heraldry/Symbols/Dragon.png"},
@@ -25,7 +25,7 @@
 |
 {"Id":"Dwarf",
 "CultureName":"Dwarven",
-"HeraldryOverlayImage":"Dwarf/Heraldry/Overlay.png",
+"HeraldryOverlayImage":{"TexturePath":"Dwarf/Heraldry/Overlay.png"},
 "HeraldryForegrounds":[
 	{"TexturePath":"Dwarf/Heraldry/Symbols/Anvil.png"},
 	{"TexturePath":"Dwarf/Heraldry/Symbols/Dragon.png"},
@@ -38,4 +38,24 @@
 	{"TexturePath":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_1.png"},
 	{"TexturePath":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_2.png"},
 	{"TexturePath":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_3.png"}
+]}
+|
+{"Id":"Egypt",
+"CultureName":"Khemran ",
+"HeraldryOverlayImage":{"TexturePath":"Egyptian/Heraldry/Overlay.png"},
+"HeraldryForegrounds":[
+	{"TexturePath":"Egyptian/Heraldry/Symbols/Ankh.png"},
+	{"TexturePath":"Egyptian/Heraldry/Symbols/Bird.png"},
+	{"TexturePath":"Egyptian/Heraldry/Symbols/Crown.png"},
+	{"TexturePath":"Egyptian/Heraldry/Symbols/Feathers.png"},
+	{"TexturePath":"Egyptian/Heraldry/Symbols/Lion.png"},
+	{"TexturePath":"Egyptian/Heraldry/Symbols/Snake.png"},
+	{"TexturePath":"Egyptian/Heraldry/Symbols/Crook.png"},
+	{"TexturePath":"Egyptian/Heraldry/Symbols/Owl.png"}
+],
+"HeraldryBackgrounds":[
+	{"TexturePath":"Egyptian/Heraldry/Backgrounds/Egypt_Back_0.png"}
+],
+"SettlementTypes":[
+	{"SettlementType":"EgyptCity","PlacementsPer20Square":8}
 ]}

@@ -5,6 +5,7 @@
 
 {"Id":"AngloCastle", "ModelPath":"Anglo/Models/Castle/Castle.obj"}|
 
+{"Id":"EgyptianCity", "ModelPath":"Egyptian/Models/Egyptian City.obj"}|
 
 //OLD MODELS
 
@@ -14,11 +15,6 @@
 {"Id":"JungleTree", "ModelPath":"Jungle/Models/JungleTree.obj"}|
 
 {"Id":"Pyramid", "ModelPath":"Egyptian/Models/Pyramid.obj"}|
-
-{"Id":"EgyptianHovel", "ModelPath":"Egyptian/Models/hovel.obj"}|
-{"Id":"EgyptianWall", "ModelPath":"Egyptian/Models/EgyptianWall.obj"}|
-{"Id":"EgyptianGate", "ModelPath":"Egyptian/Models/EgyptianGate.obj"}|
-{"Id":"EgyptianTower", "ModelPath":"Egyptian/Models/EgyptianTower.obj"}|
 
 {"Id":"AztecHovel", "ModelPath":"Aztec/Models/hovel.obj"}|
 {"Id":"AztecWall", "ModelPath":"Aztec/Models/Aztec Wall.obj"}|

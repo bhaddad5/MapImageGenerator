@@ -26,7 +26,7 @@ public class CultureModel : ParsableData
 {
 	public string CultureName;
 
-	public string HeraldryOverlayImage;
+	public StoredTexture HeraldryOverlayImage;
 	public List<StoredTexture> HeraldryForegrounds = new List<StoredTexture>();
 	public List<StoredTexture> HeraldryBackgrounds = new List<StoredTexture>();
 	public List<SettlementPlacementInfo> SettlementTypes = new List<SettlementPlacementInfo>();
