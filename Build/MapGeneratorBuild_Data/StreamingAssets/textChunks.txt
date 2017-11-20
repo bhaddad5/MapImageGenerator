@@ -138,7 +138,14 @@
 	{"StoredString":"Great %EgyptPre%%EgyptSuff%"},
 	{"StoredString":"Port %EgyptPre%%EgyptSuff%","conditions":["Ocean"]}
 ]}
-
+|
+{"Id":"EgyptPyramids",
+"TextOptions":[
+	{"StoredString":"Pyramid of %EgyptPre%%EgyptSuff%"},
+	{"StoredString":"Great Pyramid of %EgyptPre%%EgyptSuff%"},
+	{"StoredString":"Catacombs of %EgyptPre%%EgyptSuff%"},
+	{"StoredString":"Grand Pyramid of %EgyptPre%%EgyptSuff%"}
+]}
 
 
 
