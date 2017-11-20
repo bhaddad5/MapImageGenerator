@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using UnityEngine;
 
@@ -16,7 +17,10 @@ public static class TerrainParser
 		TerrainData["Ocean"] = new TerrainModel()
 		{
 			Difficulty = .05f,
-			Texture = "GenericOcean.png",
+			Texture = new StoredTexture()
+			{
+				TexturePath = "GenericOcean.png"
+			},
 			Height = 0f,
 			Id = "Ocean",
 			LookupColor = new Color(0, 0, .8f, 0),
@@ -53,8 +57,9 @@ public class TerrainModel : ParsableData
 		{MapTileModel.TileTraits.Forest.ToString(), -.3f },
 	};
 
-	public string Texture;
+	
 	public float Height;
+	public StoredTexture Texture;
 	public float Difficulty = 0.1f;
 	public List<string> Traits = new List<string>();
 	public Color LookupColor;
@@ -71,21 +76,32 @@ public class TerrainModel : ParsableData
 		}
 		return defense;
 	}
+}
 
-	private OverlayDisplayHandler.ColorMap texture = null;
+[Serializable]
+public class StoredTexture
+{
+	public string TexturePath;
 
-	public OverlayDisplayHandler.ColorMap GetTerrainTexture()
+	[IgnoreDataMember]
+	private Map2D<Color> texture = null;
+
+	public Map2D<Color> GetTexture()
 	{
 		if (texture == null)
 		{
-			Byte[] file = File.ReadAllBytes(Application.streamingAssetsPath + "/" + Texture);
+			if(TexturePath == null)
+				Debug.Log("HIT!");
+
+			Byte[] file = File.ReadAllBytes(Application.streamingAssetsPath + "/" + TexturePath);
 			Texture2D tex = new Texture2D(2, 2);
 			tex.LoadImage(file);
 			tex.Apply();
-			texture = new OverlayDisplayHandler.ColorMap(1, 1, tex.width);
-			texture.SetPixels(0, 0, tex.GetPixels());
+			OverlayDisplayHandler.ColorMap colorMap = new OverlayDisplayHandler.ColorMap(1, 1, tex.width);
+			colorMap.SetPixels(0, 0, tex.GetPixels());
+			texture = colorMap.Colors;
 		}
-		
+
 		return texture;
 	}
 }

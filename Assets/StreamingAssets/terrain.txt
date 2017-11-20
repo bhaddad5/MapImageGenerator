@@ -1,22 +1,5 @@
-{"Id":"MidlandOcean",
-"Texture":"Midlands/Terrain/Fertile.png",
-"Height":0,
-"Difficulty":0.1,
-"LookupColor":{"r":0.0,"g":0.0,"b":1.0,"a":1.0},
-"Traits":[
-	"Water",
-	"Impassable",
-	"Ocean"
-],
-"Overlays":[
-	"RiverWater",
-	"RiverBanks",
-	"OceanWater",
-	"OceanShore"
-]}
-|
 {"Id":"MidlandSwamp",
-"Texture":"Midlands/Terrain/Swamp.png",
+"Texture":{"TexturePath":"Midlands/Terrain/Swamp.png"},
 "Height":0.01,
 "Difficulty":0.35,
 "LookupColor":{"r":0.0,"g":0.7,"b":1.0,"a":1.0},
@@ -28,7 +11,7 @@
 ]}
 |
 {"Id":"MidlandWilderness",
-"Texture":"Midlands/Terrain/Wilderness.png",
+"Texture":{"TexturePath":"Midlands/Terrain/Wilderness.png"},
 "Height":0.05,
 "Difficulty":0.2,
 "LookupColor":{"r":0.3,"g":0.6,"b":0.0,"a":1.0},
@@ -38,7 +21,7 @@
 "Traits":[]}
 |
 {"Id":"MidlandForest",
-"Texture":"Midlands/Terrain/Forest.png",
+"Texture":{"TexturePath":"Midlands/Terrain/Forest.png"},
 "Height":0.05,
 "Difficulty":0.25,
 "LookupColor":{"r":0.0,"g":1.0,"b":0.0,"a":1.0},
@@ -52,7 +35,7 @@
 {"Id":"MidlandMountain",
 "Difficulty":50,
 "Height":1.8,
-"Texture":"Midlands/Terrain/Mountains.png",
+"Texture":{"TexturePath":"Midlands/Terrain/Mountains.png"},
 "LookupColor":{"r":0.5,"g":0.3,"b":0.3,"a":1.0},
 "Traits":[
 	"Mountain",
@@ -62,7 +45,7 @@
 {"Id":"MidlandFertile",
 "Difficulty":0.15,
 "Height":0.01,
-"Texture":"Midlands/Terrain/Fertile.png",
+"Texture":{"TexturePath":"Midlands/Terrain/Fertile.png"},
 "LookupColor":{"r":0.9,"g":0.7,"b":0.0,"a":1.0},
 "EntityPlacements":[
 ],
@@ -72,30 +55,10 @@
 
 |
 
-{"Id":"DesertOcean",
-"Texture":"Desert/Terrain/Desert Sand.png",
-"Height":0,
-"Difficulty":0.1,
-"LookupColor":{"r":0.0,"g":0.0,"b":0.9,"a":1.0},
-"EntityPlacements":[
-	{"model":"Palm","min":0,"max":2,"placementMode":"Scattered"}
-],
-"Traits":[
-	"Water",
-	"Impassable",
-	"Ocean"
-],
-"Overlays":[
-	"RiverWater",
-	"RiverBanks",
-	"OceanWater",
-	"OceanShore"
-]}
-|
 {"Id":"DesertSand",
 "Difficulty":0.3,
 "Height":0.01,
-"Texture":"Desert/Terrain/Desert Sand.png",
+"Texture":{"TexturePath":"Desert/Terrain/Desert Sand.png"},
 "LookupColor":{"r":0.6,"g":0.7,"b":0.0,"a":1.0},
 "EntityPlacements":[
 ],
@@ -104,7 +67,7 @@
 {"Id":"DesertFertile",
 "Difficulty":0.15,
 "Height":0.01,
-"Texture":"Desert/Terrain/Desert Farms.png",
+"Texture":{"TexturePath":"Desert/Terrain/Desert Farms.png"},
 "LookupColor":{"r":0.2,"g":0.8,"b":0.0,"a":1.0},
 "EntityPlacements":[
 	{"model":"Palm","min":0,"max":4,"placementMode":"Scattered"}
@@ -116,7 +79,7 @@
 {"Id":"DesertOasis",
 "Difficulty":0.15,
 "Height":0.01,
-"Texture":"Desert/Terrain/Desert Farms.png",
+"Texture":{"TexturePath":"Desert/Terrain/Desert Farms.png"},
 "LookupColor":{"r":0.2,"g":0.8,"b":0.0,"a":1.0},
 "EntityPlacements":[
 	{"model":"Palm","min":3,"max":8,"placementMode":"Scattered"}
@@ -134,7 +97,7 @@
 {"Id":"DesertMountain",
 "Difficulty":50,
 "Height":0.8,
-"Texture":"Desert/Terrain/Desert Mountains.png",
+"Texture":{"TexturePath":"Desert/Terrain/Desert Mountains.png"},
 "LookupColor":{"r":0.7,"g":0.3,"b":0.3,"a":1.0},
 "Traits":[
 	"Mountain",
@@ -144,7 +107,7 @@
 {"Id":"DesertForest",
 "Difficulty":50,
 "Height":0.01,
-"Texture":"Desert/Terrain/Desert Farms.png",
+"Texture":{"TexturePath":"Desert/Terrain/Desert Farms.png"},
 "LookupColor":{"r":0.1,"g":0.4,"b":0.3,"a":1.0},
 "EntityPlacements":[
 	{"model":"Palm","min":16,"max":30,"placementMode":"Scattered"}

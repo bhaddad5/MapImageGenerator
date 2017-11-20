@@ -44,7 +44,7 @@ public class MapTextureHelpers
 
 		if (!Map.PosInBounds(mapPos))
 			return new Color(1, .4f, .7f, 1);
-		Color res = Map.Get(mapPos).Terrain().GetTerrainTexture().Colors.Get(texPos, true);
+		Color res = Map.Get(mapPos).Terrain().Texture.GetTexture().Get(texPos, true);
 		return res;
 	}
 

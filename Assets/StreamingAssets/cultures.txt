@@ -148,7 +148,7 @@
 |
 {
 "Id":"Dwarf",
-"CultureName":"Dwarves",
+"CultureName":"Dwarven",
 "SettlementPrefixes":[
 	{"storedString":"Daz"},
 	{"storedString":"Kurz"},

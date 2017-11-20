@@ -4,7 +4,7 @@ using UnityEditor;
 
 public class JsonTests
 {
-	[MenuItem("My Menu/Test WorldModel Json")]
+	[MenuItem("Json Tests/Test WorldModel Json")]
 	public static void TestWorldModelJson()
 	{
 		WorldModel world = new WorldModel();
@@ -18,7 +18,7 @@ public class JsonTests
 		Debug.Log(JsonUtility.ToJson(world));
 	}
 
-	[MenuItem("My Menu/Test OverlayPlacementModel Json")]
+	[MenuItem("Json Tests/Test OverlayPlacementModel Json")]
 	public static void TestOverlayPlacementModelJson()
 	{
 		OverlayPlacementModel overlay = new OverlayPlacementModel();
@@ -27,7 +27,7 @@ public class JsonTests
 	}
 
 
-	[MenuItem("My Menu/Test MapModel Json")]
+	[MenuItem("Json Tests/Test MapModel Json")]
 	public static void TestMapModelJson()
 	{
 		MapModel Map = new MapModel(5, 5);
@@ -36,7 +36,7 @@ public class JsonTests
 		Debug.Log(Map.ToJson());
 	}
 
-	[MenuItem("My Menu/Test Map2D Json")]
+	[MenuItem("Json Tests/Test Map2D Json")]
 	public static void TestMap2DJson()
 	{
 		Map2D<MapTileModel> TestMap2D = new Map2D<MapTileModel>(5, 5);
@@ -48,16 +48,20 @@ public class JsonTests
 		Debug.Log(TestMap2D.ToSerializable());
 	}
 
-	[MenuItem("My Menu/Test Terrain Json")]
+	[MenuItem("Json Tests/Test Terrain Json")]
 	public static void TestTerrainJson()
 	{
 		TerrainModel terrain = new TerrainModel();
 		terrain.LookupColor = Color.blue;
+		terrain.Texture = new StoredTexture()
+		{
+			TexturePath = "path"
+		};
 
 		Debug.Log(JsonUtility.ToJson(terrain));
 	}
 
-	[MenuItem("My Menu/Test Realm Json")]
+	[MenuItem("Json Tests/Test Realm Json")]
 	public static void TestRealmJson()
 	{
 		RealmModel Realm = new RealmModel()
@@ -89,7 +93,7 @@ public class JsonTests
 		Debug.Log(JsonUtility.ToJson(Realm));
 	}
 
-	[MenuItem("My Menu/Test Culture Json")]
+	[MenuItem("Json Tests/Test Culture Json")]
 	public static void TestObjectJson()
 	{
 		CultureModel Culture = new CultureModel()
