@@ -9,6 +9,16 @@
 	{"Trait":"Mountain","Preference":-0.1}
 ]}
 |
+{"Id":"DwarfFortress",
+"SettlementTypeName":" Fortress",
+"NameChunk":"DwarfFortresses",
+"Entity":{"model":"DwarfFortress","placementMode":"Center","min":1,"max":1},
+"TraitPreferences":[
+	{"Trait":"Forest","Preference":0.1},
+	{"Trait":"Mountain","Preference":0.3},
+	{"Trait":"Settled","Preference":-0.5}
+]}
+|
 {"Id":"EgyptCity",
 "SettlementTypeName":" City",
 "NameChunk":"EgyptCities",

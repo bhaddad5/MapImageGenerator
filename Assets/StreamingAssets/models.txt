@@ -5,6 +5,8 @@
 
 {"Id":"AngloCastle", "ModelPath":"Anglo/Models/Castle/Castle.obj"}|
 
+{"Id":"DwarfFortress", "ModelPath":"Dwarf/Models/Dwarf Fortress.obj"}|
+
 {"Id":"EgyptianCity", "ModelPath":"Egyptian/Models/Egyptian City.obj"}|
 {"Id":"EgyptianPyramid", "ModelPath":"Egyptian/Models/Pyramid.obj"}|
 
@@ -15,8 +17,6 @@
 
 {"Id":"JungleTree", "ModelPath":"Jungle/Models/JungleTree.obj"}|
 
-
-
 {"Id":"AztecHovel", "ModelPath":"Aztec/Models/hovel.obj"}|
 {"Id":"AztecWall", "ModelPath":"Aztec/Models/Aztec Wall.obj"}|
 {"Id":"AztecGate", "ModelPath":"Aztec/Models/Aztec Gate.obj"}|
@@ -24,10 +24,6 @@
 
 {"Id":"AngloBridge", "ModelPath":"Anglo/Models/Bridge/Bridge.obj"}|
 
-{"Id":"DwarfHouse", "ModelPath":"Dwarf/Models/Dwarf House.obj"}|
-{"Id":"DwarfGates", "ModelPath":"Dwarf/Models/Dwarf Gates.obj"}|
-{"Id":"DwarfWall", "ModelPath":"Dwarf/Models/Dwarf Wall.obj"}|
-{"Id":"DwarfTower", "ModelPath":"Dwarf/Models/Dwarf Tower.obj"}|
 {"Id":"DwarfBridge", "ModelPath":"Dwarf/Models/Dwarf Bridge.obj"}|
 
 {"Id":"OrcHut", "ModelPath":"Orc/Models/OrcWoodenWall/OrcHut.obj"}|

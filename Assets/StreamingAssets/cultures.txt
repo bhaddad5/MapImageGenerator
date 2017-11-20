@@ -38,6 +38,9 @@
 	{"TexturePath":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_1.png"},
 	{"TexturePath":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_2.png"},
 	{"TexturePath":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_3.png"}
+],
+"SettlementTypes":[
+	{"SettlementType":"DwarfFortress","PlacementsPer20Square":6}
 ]}
 |
 {"Id":"Egypt",
