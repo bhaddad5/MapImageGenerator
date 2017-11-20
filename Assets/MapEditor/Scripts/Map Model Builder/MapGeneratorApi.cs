@@ -48,7 +48,7 @@ public class MapGeneratorApi
 		}
 
 		if (split[0] == "CreateRivers")
-			CreateRivers(Int32.Parse(split[1]), Int32.Parse(split[2]));
+			CreateRivers(Int32.Parse(split[1]), Int32.Parse(split[2]), minH, maxH);
 
 		if (split[0] == "TerrainEncourageStartAlongMountains")
 			TerrainEncourageStartAlongMountains(split[1], Single.Parse(split[2]), minH, maxH);
@@ -68,7 +68,7 @@ public class MapGeneratorApi
 
 	private void TerrainRandomlyPlaceAlongLine(string terrain, float occurancesPer20Square, float minLength, float maxLength, float spacing, int minH, int maxH)
 	{
-		int numPlacements = (int)Helpers.Randomize(occurancesPer20Square * Map.NumTiles);
+		int numPlacements = (int)Helpers.Randomize(occurancesPer20Square * Map.OccurancesPer20Scaler(minH, maxH));
 		for (int i = 0; i < numPlacements; i++)
 		{
 			Int2 randPos = new Int2(Random.Range(0, Map.Map.Width - 1), Random.Range(minH, maxH - 1));
@@ -193,14 +193,14 @@ public class MapGeneratorApi
 		return false;
 	}
 
-	private void CreateRivers(int minNumRivers, int maxNumRivers)
+	private void CreateRivers(int minNumRivers, int maxNumRivers, int minH, int maxH)
 	{
-		int numOfRivers = Random.Range(minNumRivers, maxNumRivers);
+		int numOfRivers = (int)(Random.Range(minNumRivers, maxNumRivers) * Map.OccurancesPer20Scaler(minH, maxH));
 
 		List<Int2> possibleRiverStarts = new List<Int2>();
 		for (int i = 0; i < numOfRivers * 500; i++)
 		{
-			Int2 randPos = new Int2(Random.Range(0, Map.Map.Width), Random.Range(0, Map.Map.Height));
+			Int2 randPos = new Int2(Random.Range(0, Map.Map.Width), Random.Range(minH, maxH));
 			if (!OceanOrMountain(randPos))
 				possibleRiverStarts.Add(randPos);
 		}

@@ -10,7 +10,12 @@ public class MapModel
 	public Dictionary<string, KingdomModel> Kingdoms = new Dictionary<string, KingdomModel>();
 	public Map2D<MapTileModel> Map;
 
-	public int NumTiles { get { return Map.Size / (20 * 20); } }
+	public float OccurancesPer20Scaler(int minH, int maxH)
+	{
+		int mapNumTiles = Map.Size / (20 * 20);
+		float heightSizeScaler = (maxH - minH) / (float) Map.Height;
+		return mapNumTiles * heightSizeScaler;
+	}
 
 	public MapModel(int w, int h)
 	{
