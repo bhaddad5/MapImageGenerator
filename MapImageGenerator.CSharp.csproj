@@ -119,6 +119,7 @@
     <Compile Include="Assets\ExternalAssets\TextMesh Pro\Examples\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\ExternalAssets\TextMesh Pro\Examples\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\ExternalAssets\TextMesh Pro\Examples\Scripts\WarpTextExample.cs" />
+    <Compile Include="Assets\MapEditor\MapDisplay\SettlementDisplay\SettlementInfoDisplay.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Helpers\Helpers.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Helpers\Map2D.cs" />
     <Compile Include="Assets\MapEditor\Scripts\MapBuilder.cs" />
@@ -146,7 +147,6 @@
     <Compile Include="Assets\MapEditor\Scripts\Parsable Models\WorldParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\User Interactions\CameraControls.cs" />
     <Compile Include="Assets\MapEditor\Scripts\User Interactions\LightController.cs" />
-    <Compile Include="Assets\MapEditor\SettlementDisplay\SettlementInfoDisplay.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ExternalAssets\JsonDotNet\Assemblies\AOT\Newtonsoft.Json.XML" />
