@@ -4,6 +4,35 @@ using UnityEditor;
 
 public class JsonTests
 {
+	[MenuItem("Json Tests/Test SettlementType Json")]
+	public static void TestSettlementTypeJson()
+	{
+		SettlementTypeModel sett = new SettlementTypeModel()
+		{
+			Id = "Castle",
+			SettlementTypeName = " Castle",
+			NameChunk = "AngloCastle",
+			Entity = new EntityPlacementModel()
+			{
+				model = "model",
+				max = 1,
+				min = 1,
+				placementMode = "Center"
+			},
+			TraitPreferences = new List<TraitPreferance>()
+			{
+				new TraitPreferance()
+				{
+					Preference = .3f,
+					Trait = "River"
+				}
+			}
+		};
+		
+
+		Debug.Log(JsonUtility.ToJson(sett));
+	}
+
 	[MenuItem("Json Tests/Test TextChunk Json")]
 	public static void TestTextChunkJson()
 	{
@@ -31,7 +60,13 @@ public class JsonTests
 			MaxLatitude = .5f,
 			MinLatitude = 0f
 		});
-
+		world.Cultures = new List<StoredCulturePrevelance>()
+		{
+			new StoredCulturePrevelance()
+			{
+				CultureId = "Anglo"
+			}
+		};
 		Debug.Log(JsonUtility.ToJson(world));
 	}
 
@@ -84,14 +119,6 @@ public class JsonTests
 		{
 			Id = "Midland",
 			DisplayName = "Midland",
-			Cultures = new List<StoredCulturePrevelance>()
-			{
-				new StoredCulturePrevelance()
-				{
-					avgSettlementsPer80Square = 20,
-					cultureId = "Anglo"
-				}
-			},
 			PreRiverCommands = new List<string>()
 			{
 				"HeightsDefaultFill 0",
@@ -117,6 +144,14 @@ public class JsonTests
 			Id = "Anglo",
 			CultureName = "Midlander",
 			HeraldryOverlayImage = "HeraldryOverlay",
+			SettlementTypes = new List<SettlementPlacementInfo>()
+			{
+				new SettlementPlacementInfo()
+				{
+					SettlementType = "AngloCastle",
+					PlacementsPer20Square = 2
+				}
+			}
 		};
 
 		Debug.Log(JsonUtility.ToJson(Culture));

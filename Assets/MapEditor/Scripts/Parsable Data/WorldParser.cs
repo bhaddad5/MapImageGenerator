@@ -19,14 +19,25 @@ public class WorldModel : ParsableData
 	public int MapWidth;
 	public int MapHeight;
 	public List<RealmPlacementModel> Realms = new List<RealmPlacementModel>();
+	public List<StoredCulturePrevelance> Cultures = new List<StoredCulturePrevelance>();
+}
+
+public class WorldPlacementData
+{
+	public float MinLatitude;
+	public float MaxLatitude;
 }
 
 [Serializable]
-public class RealmPlacementModel
+public class RealmPlacementModel : WorldPlacementData
 {
 	public string RealmId;
-	public float MinLatitude;
-	public float MaxLatitude;
-
 	public RealmModel Realm { get { return RealmParser.RealmsData[RealmId]; } }
+}
+
+[Serializable]
+public class StoredCulturePrevelance : WorldPlacementData
+{
+	public string CultureId;
+	public CultureModel Culture { get { return CultureParser.CultureData[CultureId]; } }
 }

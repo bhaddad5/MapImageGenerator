@@ -15,19 +15,10 @@ public static class RealmParser
 }
 
 [Serializable]
-public class StoredCulturePrevelance
-{
-	public string cultureId;
-	public CultureModel Culture { get { return CultureParser.CultureData[cultureId]; } }
-	public int avgSettlementsPer80Square;
-}
-
-[Serializable]
 public class RealmModel : ParsableData
 {
 	public string DisplayName;
 	public List<string> PreRiverCommands = new List<string>();
 	public List<string> RiverCommands = new List<string>();
 	public List<string> PostRiverCommands = new List<string>();
-	public List<StoredCulturePrevelance> Cultures = new List<StoredCulturePrevelance>();
 }

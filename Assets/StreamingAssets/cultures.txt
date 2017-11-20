@@ -18,6 +18,9 @@
 	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_5.png"},
 	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_5.png"},
 	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_Ocean.png"}
+],
+"SettlementTypes":[
+	{"SettlementType":"AngloCastle","PlacementsPer20Square":2}
 ]}
 |
 {"Id":"Dwarf",

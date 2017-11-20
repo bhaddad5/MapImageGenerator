@@ -25,11 +25,7 @@
 		"TerrainEncourageStartAlongWater MidlandSwamp 0.02",
 		"TerrainRandomlyStart MidlandSwamp 0.005",
 		"TerrainExpandSimmilarTypes 3 MidlandSwamp"
-	],
-	"Cultures":[
-		{"cultureId":"Anglo", "avgSettlementsPer80Square":45},
-		{"cultureId":"Dwarf", "avgSettlementsPer80Square":35}
-	]
+	]	
 }
 |
 {
@@ -51,8 +47,5 @@
 		"TerrainEncourageStartAlongRiver DesertFertile .4",
 		"TerrainEncourageStartAlongRiver DesertForest .05",
 		"TerrainExpandSimmilarTypes 1 DesertForest"
-	],
-	"Cultures":[
-		{"cultureId":"Anglo", "avgSettlementsPer80Square":45}
 	]
 }

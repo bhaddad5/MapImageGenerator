@@ -10,10 +10,10 @@ class RegionsGenerator
 	{
 		Map = map;
 		
-		if (realm.Cultures.Count == 0)
+		/*if (realm.Cultures.Count == 0)
 			return;
-
-		/*foreach (StoredCulturePrevelance culture in realm.Cultures)
+			
+		foreach (StoredCulturePrevelance culture in realm.Cultures)
 		{
 			float portionAtSeaLevel = (float)MapTextureHelpers.SeaLevelPixelCount(Map) / (float)(Map.Map.Width * Map.Map.Height);
 			var settlementLocations = GetSettlementLocations(culture.Culture, (int)(culture.avgSettlementsPer80Square * portionAtSeaLevel));
