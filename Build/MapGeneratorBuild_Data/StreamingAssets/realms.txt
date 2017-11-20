@@ -1,49 +1,45 @@
 //EnvironmentId: A unique ID for your environment
 //DisplayName: The displayed name of your environment
 //MapBuildingCommands: The instructions on how to build your environment
-	//HeightsDefaultFill : Fill the whole map with this height (recommended values: 0, MinGroundHeight, 1)
-	//HeightRandomlyPlaceAlongLine : Sets pixels to height along a random line (Height, Occurances Per 80x80 Square, Min Line Length, Max Line Length, Spacing Betwen Placements)
-	//HeightRandomlyPlace : Randomly sets pixels to height (Height, Occurances Per 80x80 Square)
-	//HeightBlendUp : Blends pixel heights up to smoothly border their heigher neighbirs (number of times to blend)
-	//HeightRandomlyPlaceAlongEdges : Randomly sets edge pixels to height (Height, Occurances Per 80x80 Square)
-	//HeightRandomlyExpandLevel : Expands out height level into neighbors (Height level to expand, number of times to expand)
-	//HeightRandomizeLevelEdges : Randomly expand level to give rough edge (Height level to randomly expand, number of times to randomly expand)
-	//HeightRandomlyExpandLevelFromItselfOrLevel : Randomly spreads ground from itself or from an existing height (Level to spread, Level to build off of, minimum number of times to expand, max number of times to expand)
 	//CreateRivers : Creates rivers from mountains to oceans (Min number of rivers, Max number of rivers)
 
 {
 	"Id":"Midland",
 	"DisplayName":"The Midlands",
-	"MapBuildingCommands":[
-		"TerrainRandomlyPlaceAlongLine MidlandMountain 12 4 50 1",
+	"PreRiverCommands":[
+		"TerrainRandomlyPlaceAlongLine MidlandMountain 4 4 30 1",
 		"TerrainRandomlyExpandFromTypes MidlandWilderness 3 7 MidlandMountain",
-		"TerrainRandomizeEdges Ocean 1",
-		"CreateRivers 10 20",
+		"TerrainRandomizeEdges Ocean 1"
+	],
+	"RiverCommands":[
+		"CreateRivers 10 20"
+	],
+	"PostRiverCommands":[
 		"TerrainEncourageStartAlongMountains MidlandForest 0.15",
 		"TerrainExpandSimmilarTypes 6 MidlandForest",
 		"TerrainRandomlyStart MidlandForest 0.05",
 		"TerrainExpandSimmilarTypes 3 MidlandForest",
-		"TerrainEncourageStartAlongOcean MidlandFertile 0.15",
+		"TerrainEncourageStartAlongWater MidlandFertile 0.15",
 		"TerrainRandomlyStart MidlandFertile 0.05",
 		"TerrainExpandSimmilarTypes 4 MidlandFertile",
-		"TerrainEncourageStartAlongOcean MidlandSwamp 0.02",
+		"TerrainEncourageStartAlongWater MidlandSwamp 0.02",
 		"TerrainRandomlyStart MidlandSwamp 0.005",
 		"TerrainExpandSimmilarTypes 3 MidlandSwamp"
-	],
-	"Cultures":[
-		{"cultureId":"Anglo", "avgSettlementsPer80Square":45},
-		{"cultureId":"Dwarf", "avgSettlementsPer80Square":35}
-	]
+	]	
 }
 |
 {
 	"Id":"Khemras",
 	"DisplayName":"Khemras",
-	"MapBuildingCommands":[
-		"TerrainRandomlyPlaceAlongLine DesertMountain 8 4 12 1",
+	"PreRiverCommands":[
+		"TerrainRandomlyPlaceAlongLine DesertMountain 4 4 12 1",
 		"TerrainRandomlyExpandFromTypes DesertSand 7 12 DesertMountain",
-		"TerrainRandomizeEdges Ocean 1",
-		"CreateRivers 20 30",
+		"TerrainRandomizeEdges Ocean 1"
+	],
+	"RiverCommands":[
+		"CreateRivers 20 30"
+	],
+	"PostRiverCommands":[
 		"TerrainEncourageStartAlongOcean DesertFertile .05",
 		"TerrainExpandSimmilarTypes 3 DesertFertile",
 		"TerrainForceSetRivers DesertFertile",
@@ -51,8 +47,5 @@
 		"TerrainEncourageStartAlongRiver DesertFertile .4",
 		"TerrainEncourageStartAlongRiver DesertForest .05",
 		"TerrainExpandSimmilarTypes 1 DesertForest"
-	],
-	"Cultures":[
-		{"cultureId":"Anglo", "avgSettlementsPer80Square":45}
 	]
 }

@@ -107,7 +107,8 @@ public class ModelPlacer
 
 	private PlacementTrans GetCenterPlacementTrans(Int2 myTile, GameObject g, bool forcePlacement = false)
 	{
-		return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y + 0.5f), Vector3.zero, g, forcePlacement);
+		Vector3 rot = new Vector3(0, Random.Range(0, 3) * 90f, 0);
+		return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y + 0.5f), rot, g, forcePlacement);
 	}
 
 	private PlacementTrans GetRandomPlacementTrans(Int2 myTile, GameObject g, bool forcePlacement = false)

@@ -1,20 +1,20 @@
 {"Id":"Pine", "ModelPath":"Midlands/Models/Pine.obj"}|
-{"Id":"Rushes", "ModelPath":"Midlands/Models/Rushes.obj"}|
 {"Id":"Willow", "ModelPath":"Midlands/Models/Willow.obj"}|
+
+{"Id":"Palm", "ModelPath":"Desert/Models/Palm.obj"}|
+
+{"Id":"AngloCastle", "ModelPath":"Anglo/Models/Castle/Castle.obj"}|
+
+{"Id":"EgyptianCity", "ModelPath":"Egyptian/Models/Egyptian City.obj"}|
+
+//OLD MODELS
 
 {"Id":"GiantMushroom", "ModelPath":"Underground/Models/GiantMushroom.obj"}|
 {"Id":"DwarfMushroom", "ModelPath":"Underground/Models/DwarfMushroom.obj"}|
 
-{"Id":"Palm", "ModelPath":"Desert/Models/Palm.obj"}|
-
 {"Id":"JungleTree", "ModelPath":"Jungle/Models/JungleTree.obj"}|
 
 {"Id":"Pyramid", "ModelPath":"Egyptian/Models/Pyramid.obj"}|
-
-{"Id":"EgyptianHovel", "ModelPath":"Egyptian/Models/hovel.obj"}|
-{"Id":"EgyptianWall", "ModelPath":"Egyptian/Models/EgyptianWall.obj"}|
-{"Id":"EgyptianGate", "ModelPath":"Egyptian/Models/EgyptianGate.obj"}|
-{"Id":"EgyptianTower", "ModelPath":"Egyptian/Models/EgyptianTower.obj"}|
 
 {"Id":"AztecHovel", "ModelPath":"Aztec/Models/hovel.obj"}|
 {"Id":"AztecWall", "ModelPath":"Aztec/Models/Aztec Wall.obj"}|
@@ -22,13 +22,6 @@
 {"Id":"AztecTower", "ModelPath":"Aztec/Models/Aztec Tower.obj"}|
 
 {"Id":"AngloBridge", "ModelPath":"Anglo/Models/Bridge/Bridge.obj"}|
-{"Id":"AngloHovel", "ModelPath":"Anglo/Models/Hovel/hovel.obj"}|
-{"Id":"AngloTownHouse", "ModelPath":"Anglo/Models/Hovel/House.obj"}|
-{"Id":"AngloWoodenWall", "ModelPath":"Anglo/Models/WoodenWall/WoodenWall.obj"}|
-{"Id":"AngloWoodenGates", "ModelPath":"Anglo/Models/WoodenWall/WoodenGate.obj"}|
-{"Id":"AngloStoneWall", "ModelPath":"Anglo/Models/Castle/wall.obj"}|
-{"Id":"AngloStoneGates", "ModelPath":"Anglo/Models/Castle/gates.obj"}|
-{"Id":"AngloStoneTower", "ModelPath":"Anglo/Models/Castle/turret.obj"}|
 
 {"Id":"DwarfHouse", "ModelPath":"Dwarf/Models/Dwarf House.obj"}|
 {"Id":"DwarfGates", "ModelPath":"Dwarf/Models/Dwarf Gates.obj"}|

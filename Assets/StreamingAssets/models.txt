@@ -22,10 +22,6 @@
 {"Id":"AztecTower", "ModelPath":"Aztec/Models/Aztec Tower.obj"}|
 
 {"Id":"AngloBridge", "ModelPath":"Anglo/Models/Bridge/Bridge.obj"}|
-{"Id":"AngloHovel", "ModelPath":"Anglo/Models/Hovel/hovel.obj"}|
-{"Id":"AngloTownHouse", "ModelPath":"Anglo/Models/Hovel/House.obj"}|
-{"Id":"AngloWoodenWall", "ModelPath":"Anglo/Models/WoodenWall/WoodenWall.obj"}|
-{"Id":"AngloWoodenGates", "ModelPath":"Anglo/Models/WoodenWall/WoodenGate.obj"}|
 
 {"Id":"DwarfHouse", "ModelPath":"Dwarf/Models/Dwarf House.obj"}|
 {"Id":"DwarfGates", "ModelPath":"Dwarf/Models/Dwarf Gates.obj"}|
