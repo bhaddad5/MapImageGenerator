@@ -155,13 +155,10 @@ public class MapBuilder : MonoBehaviour
 		ModelPlacer mp = new ModelPlacer();
 		mp.PlaceModels(ObjectParent.transform, CurrentMap);
 
-		displayText.text = "Displaying Heraldry";
+		displayText.text = "Unfurling Heraldry";
 		yield return null;
 
 		TextDisplayHandler.DisplayMapText(CurrentMap, TextInstantiationController);
-
-		displayText.text = "Done";
-		yield return null;
 
 		transform.localPosition -= new Vector3(CurrentMap.Map.Width / 2f, 0f, CurrentMap.Map.Height / 2f);
 
