@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CulturesGenerator
@@ -36,9 +37,17 @@ public class CulturesGenerator
 			Map.Map.Get(pos).Entities.Add(SettlementType.Entity);
 			Map.Map.Get(pos).Traits.Add("Settled");
 			Map.Map.Get(pos).SetMaxHeight(0);
+
+			List<string> traits = new List<string>();
+			traits = traits.Concat(Map.Map.Get(pos).Traits).ToList();
+			foreach (MapTileModel adjacentValue in Map.Map.GetAdjacentValues(pos))
+			{
+				traits = traits.Concat(adjacentValue.Traits).ToList();
+			}
+
 			Map.Map.Get(pos).TextEntry = new SettlementTextModel()
 			{
-				Text = TextChunkParser.TextData[SettlementType.NameChunk].GetText(),
+				Text = TextChunkParser.TextData[SettlementType.NameChunk].GetText(traits),
 				SettlementDescription = culture.CultureName + SettlementType.SettlementTypeName,
 				BackgroundTexture = culture.HeraldryBackgrounds[Random.Range(0, culture.HeraldryBackgrounds.Count)],
 				ForegroundTexture = culture.HeraldryForegrounds[Random.Range(0, culture.HeraldryForegrounds.Count)],

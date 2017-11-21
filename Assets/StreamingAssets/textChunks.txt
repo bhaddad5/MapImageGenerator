@@ -27,14 +27,14 @@
 	{"StoredString":""},
 	{"StoredString":"ton"},
 	{"StoredString":"moor"},
-	{"StoredString":"mont","conditions":["Mountains"]},
+	{"StoredString":"mont","Conditions":["Mountains"]},
 	{"StoredString":"rent"},
 	{"StoredString":"eter"},
 	{"StoredString":"by"},
 	{"StoredString":"nall"},
-	{"StoredString":"ford","conditions":["River"]},
-	{"StoredString":"brook","conditions":["River"]},
-	{"StoredString":"field","conditions":["Fertile"]},
+	{"StoredString":"ford","Conditions":["River"]},
+	{"StoredString":"brook","Conditions":["River"]},
+	{"StoredString":"field","Conditions":["Fertile"]},
 	{"StoredString":"ham"},
 	{"StoredString":"dun"},
 	{"StoredString":"wick"},
@@ -76,8 +76,8 @@
 {"Id":"DwarfSuff",
 "TextOptions":[
 	{"StoredString":""},
-	{"StoredString":"-kull","conditions":["Mountains"]},
-	{"StoredString":"-kuzdal","conditions":["Mountains"]},
+	{"StoredString":"-kull","Conditions":["Mountains"]},
+	{"StoredString":"-kuzdal","Conditions":["Mountains"]},
 	{"StoredString":"-tazul"},
 	{"StoredString":"-mikdun"},
 	{"StoredString":"-trokk"},
@@ -88,9 +88,9 @@
 	{"StoredString":"-clarrok"},
 	{"StoredString":"-sorrok"},
 	{"StoredString":"-bendum"},
-	{"StoredString":"-silrak","conditions":["Forest"]},
-	{"StoredString":"-revvrok","conditions":["River"]},
-	{"StoredString":"-serok","conditions":["Port"]}
+	{"StoredString":"-silrak","Conditions":["Forest"]},
+	{"StoredString":"-revvrok","Conditions":["River"]},
+	{"StoredString":"-serok","Conditions":["Ocean"]}
 ]}
 |
 {"Id":"DwarfFortresses",
@@ -100,7 +100,7 @@
 	{"StoredString":"Fortress of %DwarfPre%%DwarfSuff%"},
 	{"StoredString":"Fort %DwarfPre%%DwarfSuff%"},
 	{"StoredString":"%DwarfPre%%DwarfSuff% Post"},
-	{"StoredString":"%DwarfPre%%DwarfSuff% Mountain","conditions":["Mountains"]}
+	{"StoredString":"%DwarfPre%%DwarfSuff% Mountain","Conditions":["Mountains"]}
 ]}
 |
 {"Id":"EgyptPre",
@@ -151,7 +151,7 @@
 	{"StoredString":"%EgyptPre%%EgyptSuff%"},
 	{"StoredString":"Temple City of %EgyptPre%%EgyptSuff%"},
 	{"StoredString":"Great %EgyptPre%%EgyptSuff%"},
-	{"StoredString":"Port %EgyptPre%%EgyptSuff%","conditions":["Ocean"]}
+	{"StoredString":"Port %EgyptPre%%EgyptSuff%","Conditions":["Ocean"]}
 ]}
 |
 {"Id":"EgyptPyramids",

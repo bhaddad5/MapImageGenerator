@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public static class TextChunkParser
 {
@@ -16,10 +17,10 @@ public class TextChunkModel : ParsableData
 {
 	public List<StoredStringModel> TextOptions = new List<StoredStringModel>();
 
-	public string GetText()
+	public string GetText(List<string> traits)
 	{
 		string res = "";
-		char[] chars = TextOptions[UnityEngine.Random.Range(0, TextOptions.Count)].StoredString.ToCharArray();
+		char[] chars = GetRandomTextOption(traits).ToCharArray();
 		for (int i = 0; i < chars.Length; i++)
 		{
 			if (chars[i] == '%')
@@ -35,12 +36,35 @@ public class TextChunkModel : ParsableData
 					else lookup += chars[j];
 				}
 
-				res += TextChunkParser.TextData[lookup].GetText();
+				res += TextChunkParser.TextData[lookup].GetText(traits);
 			}
 			else res += chars[i];
 		}
 
 		return res;
+	}
+
+	private string GetRandomTextOption(List<string> traits)
+	{
+		int startCheck = UnityEngine.Random.Range(0, TextOptions.Count);
+		for (int i = 0; i < TextOptions.Count; i++)
+		{
+			int offset = i;
+			if (i >= TextOptions.Count - startCheck)
+				offset = i - TextOptions.Count;
+
+			bool valid = true;
+			foreach (string condition in TextOptions[startCheck + offset].Conditions)
+			{
+				if (!traits.Contains(condition))
+					valid = false;
+			}
+
+			if (valid)
+				return TextOptions[startCheck + offset].StoredString;
+		}
+
+		return TextOptions.First().StoredString;
 	}
 }
 
