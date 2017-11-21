@@ -79,14 +79,13 @@ public class TerrainModel : ParsableData
 [Serializable]
 public class StoredTexture
 {
-	public string TexturePath;
+	public static Dictionary<string, Map2D<Color>> ParsedTextures = new Dictionary<string, Map2D<Color>>();
 
-	[IgnoreDataMember]
-	private Map2D<Color> texture = null;
+	public string TexturePath;
 
 	public Map2D<Color> GetTexture()
 	{
-		if (texture == null)
+		if (!ParsedTextures.ContainsKey(TexturePath))
 		{
 			if(TexturePath == null)
 				Debug.Log("HIT!");
@@ -97,9 +96,9 @@ public class StoredTexture
 			tex.Apply();
 			OverlayDisplayHandler.ColorMap colorMap = new OverlayDisplayHandler.ColorMap(1, 1, tex.width);
 			colorMap.SetPixels(0, 0, tex.GetPixels());
-			texture = colorMap.Colors;
+			ParsedTextures[TexturePath] = colorMap.Colors;
 		}
 
-		return texture;
+		return ParsedTextures[TexturePath];
 	}
 }
