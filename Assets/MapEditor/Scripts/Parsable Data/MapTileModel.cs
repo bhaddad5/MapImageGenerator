@@ -14,6 +14,7 @@ public class MapTileModel
 	}
 	public string KingdomId;
 	public List<EntityPlacementModel> Entities = new List<EntityPlacementModel>();
+	public MapTextModel TextEntry;
 
 	public List<EntityPlacementModel> GetEntites()
 	{
@@ -60,4 +61,19 @@ public class MapTileModel
 	{
 		return Traits.Contains(trait) || Terrain().Traits.Contains(trait);
 	}
+}
+
+[Serializable]
+public class MapTextModel
+{
+	public string Text;
+}
+
+[Serializable]
+public class SettlementTextModel : MapTextModel
+{
+	public string SettlementDescription;
+	public StoredTexture BackgroundTexture;
+	public StoredTexture ForegroundTexture;
+	public StoredTexture OverlayTexture;
 }

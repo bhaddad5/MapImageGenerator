@@ -20,20 +20,32 @@ public class CulturesGenerator
 	{
 		foreach (SettlementPlacementInfo settlementType in culture.Culture.SettlementTypes)
 		{
-			PlaceSettlementType(settlementType, (int)(Map.Map.Height * culture.MinLatitude), (int)(Map.Map.Height * culture.MaxLatitude));
+			PlaceSettlementType(settlementType, culture.Culture, (int)(Map.Map.Height * culture.MinLatitude), (int)(Map.Map.Height * culture.MaxLatitude));
 		}
 	}
 
-	private void PlaceSettlementType(SettlementPlacementInfo settlementType, int minH, int maxH)
+	private void PlaceSettlementType(SettlementPlacementInfo settlementPlacementInfo, CultureModel culture, int minH, int maxH)
 	{
-		int numToPlace = (int)(settlementType.PlacementsPer20Square * Map.OccurancesPer20Scaler(minH, maxH));
+		int numToPlace = (int)(settlementPlacementInfo.PlacementsPer20Square * Map.OccurancesPer20Scaler(minH, maxH));
 		for (int i = 0; i < numToPlace; i++)
 		{
-			Int2 pos = GetSettlementPlacementPos(SettlementTypeParser.SettlementsData[settlementType.SettlementType], minH, maxH);
+			Int2 pos = GetSettlementPlacementPos(SettlementTypeParser.SettlementsData[settlementPlacementInfo.SettlementType], minH, maxH);
 
-			Map.Map.Get(pos).Entities.Add(SettlementTypeParser.SettlementsData[settlementType.SettlementType].Entity);
+			SettlementTypeModel SettlementType = SettlementTypeParser.SettlementsData[settlementPlacementInfo.SettlementType];
+
+			Map.Map.Get(pos).Entities.Add(SettlementType.Entity);
 			Map.Map.Get(pos).Traits.Add("Settled");
 			Map.Map.Get(pos).SetMaxHeight(0);
+			Map.Map.Get(pos).TextEntry = new SettlementTextModel()
+			{
+				Text = TextChunkParser.TextData[SettlementType.NameChunk].GetText(),
+				SettlementDescription = culture.CultureName + SettlementType.SettlementTypeName,
+				BackgroundTexture = culture.HeraldryBackgrounds[Random.Range(0, culture.HeraldryBackgrounds.Count)],
+				ForegroundTexture = culture.HeraldryForegrounds[Random.Range(0, culture.HeraldryForegrounds.Count)],
+				OverlayTexture = culture.HeraldryOverlayImage,
+			};
+
+			Debug.Log(Map.Map.Get(pos).TextEntry.Text);
 		}
 	}
 
