@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class TextInstantiationController : MonoBehaviour
 {
-	public Transform TextParent;
-
 	public SettlementInfoDisplay SettlementInfoDisplay;
 
-	public void DisplayText(Vector3 position, MapTextModel textModel)
+	public void DisplayText(Vector3 position, MapTextModel textModel, Transform textParent)
 	{
 		if (textModel is SettlementTextModel)
 		{
-			SettlementInfoDisplay display = Instantiate(SettlementInfoDisplay, TextParent);
+			SettlementInfoDisplay display = Instantiate(SettlementInfoDisplay, textParent);
 			display.settlementDescr.text = (textModel as SettlementTextModel).SettlementDescription;
 			display.settlementName.text = (textModel as SettlementTextModel).Text;
 			display.heraldry.sprite = GetHeraldryTexture(textModel as SettlementTextModel);
@@ -37,9 +35,9 @@ public class TextInstantiationController : MonoBehaviour
 
 			Color foreBase = foreground.Get(mapPoint);
 			Color fore = new Color();
-			fore.r = foreBase.r + (1 - foreBase.r) * textModel.ForegroundColor.r;
-			fore.g = foreBase.g + (1 - foreBase.g) * textModel.ForegroundColor.g;
-			fore.b = foreBase.b + (1 - foreBase.b) * textModel.ForegroundColor.b;
+			fore.r = foreBase.r + (1 - foreBase.r) * textModel.ForegroundColor.x;
+			fore.g = foreBase.g + (1 - foreBase.g) * textModel.ForegroundColor.y;
+			fore.b = foreBase.b + (1 - foreBase.b) * textModel.ForegroundColor.z;
 			fore.a = foreBase.a;
 
 			c = OverlayColors(c, fore);

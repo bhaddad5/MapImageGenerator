@@ -74,9 +74,9 @@ public class SettlementTextModel : MapTextModel
 {
 	public string SettlementDescription;
 	public StoredTexture BackgroundTexture;
-	public Color32 BackgroundColor1;
-	public Color32 BackgroundColor2;
+	public Vector4 BackgroundColor1;
+	public Vector4 BackgroundColor2;
 	public StoredTexture ForegroundTexture;
-	public Color32 ForegroundColor;
+	public Vector4 ForegroundColor;
 	public StoredTexture OverlayTexture;
 }

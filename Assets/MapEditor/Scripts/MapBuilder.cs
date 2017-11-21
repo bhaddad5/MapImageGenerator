@@ -11,7 +11,8 @@ public class MapBuilder : MonoBehaviour
 	public TMP_Dropdown EnvironmentSelection;
 	public TextMeshProUGUI displayText;
 
-	public GameObject TerrainMeshDisplay;
+	public Transform TerrainMeshDisplay;
+	public Transform TextParent;
 
 	public TextInstantiationController TextInstantiationController;
 
@@ -94,11 +95,17 @@ public class MapBuilder : MonoBehaviour
 	{
 		displayText.enabled = true;
 
-		TerrainMeshDisplay.transform.localPosition = Vector3.zero;
-		for (int i = 0; i < TerrainMeshDisplay.transform.childCount; i++)
+		TerrainMeshDisplay.localPosition = Vector3.zero;
+		for (int i = 0; i < TerrainMeshDisplay.childCount; i++)
 		{
-			Destroy(TerrainMeshDisplay.transform.GetChild(i).gameObject);
+			Destroy(TerrainMeshDisplay.GetChild(i).gameObject);
 		}
+
+		for (int i = 0; i < TextParent.childCount; i++)
+		{
+			Destroy(TextParent.GetChild(i).gameObject);
+		}
+
 		transform.localPosition = Vector3.zero;
 
 		if (ObjectParent != null)
@@ -142,7 +149,7 @@ public class MapBuilder : MonoBehaviour
 			mapMats.Add(WaterMat);
 
 			GameObject g = new GameObject("Mesh");
-			g.transform.SetParent(TerrainMeshDisplay.transform);
+			g.transform.SetParent(TerrainMeshDisplay);
 			g.AddComponent<MeshFilter>().mesh = mapMesh;
 			g.AddComponent<MeshRenderer>();
 			g.GetComponent<MeshRenderer>().materials = mapMats.ToArray();
@@ -162,7 +169,7 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Unfurling Heraldry";
 		yield return null;
 
-		TextDisplayHandler.DisplayMapText(CurrentMap, TextInstantiationController);
+		TextDisplayHandler.DisplayMapText(CurrentMap, TextInstantiationController, TextParent);
 
 		transform.localPosition -= new Vector3(CurrentMap.Map.Width / 2f, 0f, CurrentMap.Map.Height / 2f);
 
