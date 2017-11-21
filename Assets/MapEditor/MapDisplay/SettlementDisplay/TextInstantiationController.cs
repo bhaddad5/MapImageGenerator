@@ -30,7 +30,19 @@ public class TextInstantiationController : MonoBehaviour
 		foreach (Int2 mapPoint in result.GetMapPoints())
 		{
 			Color c = result.Get(mapPoint);
-			c = OverlayColors(c, foreground.Get(mapPoint));
+			if (c.r.Equals(1f))
+				c = textModel.BackgroundColor1;
+			else if (c.b.Equals(1f))
+				c = textModel.BackgroundColor2;
+
+			Color foreBase = foreground.Get(mapPoint);
+			Color fore = new Color();
+			fore.r = foreBase.r + (1 - foreBase.r) * textModel.ForegroundColor.r;
+			fore.g = foreBase.g + (1 - foreBase.g) * textModel.ForegroundColor.g;
+			fore.b = foreBase.b + (1 - foreBase.b) * textModel.ForegroundColor.b;
+			fore.a = foreBase.a;
+
+			c = OverlayColors(c, fore);
 			c = OverlayColors(c, overlay.Get(mapPoint));
 			result.Set(mapPoint, c);
 		}

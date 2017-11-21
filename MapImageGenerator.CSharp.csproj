@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>5.6.2f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -140,6 +138,7 @@
     <Compile Include="Assets\MapEditor\Scripts\OldCultureShit\LocationParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\OldCultureShit\RegionsGenerator.cs" />
     <Compile Include="Assets\MapEditor\Scripts\OldCultureShit\Settlement.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\Parsable Data\ColorOptionsParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Parsable Data\CultureParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Parsable Data\EntityPlacementModel.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Parsable Data\MapModel.cs" />
@@ -181,6 +180,7 @@
     <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\StreamingAssets\colorOptions.txt" />
     <None Include="Assets\StreamingAssets\cultures.txt" />
     <None Include="Assets\StreamingAssets\locations.txt" />
     <None Include="Assets\StreamingAssets\models.txt" />

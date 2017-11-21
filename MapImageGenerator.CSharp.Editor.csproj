@@ -157,6 +157,7 @@
     <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\StreamingAssets\colorOptions.txt" />
     <None Include="Assets\StreamingAssets\cultures.txt" />
     <None Include="Assets\StreamingAssets\locations.txt" />
     <None Include="Assets\StreamingAssets\models.txt" />

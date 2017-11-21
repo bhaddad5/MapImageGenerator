@@ -28,6 +28,8 @@ public class CultureModel : ParsableData
 
 	public StoredTexture HeraldryOverlayImage;
 	public List<StoredTexture> HeraldryForegrounds = new List<StoredTexture>();
+	public string HeraldryForegroundColorSource;
 	public List<StoredTexture> HeraldryBackgrounds = new List<StoredTexture>();
+	public string HeraldryBackgroundColorSource;
 	public List<SettlementPlacementInfo> SettlementTypes = new List<SettlementPlacementInfo>();
 }

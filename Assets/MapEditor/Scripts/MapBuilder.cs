@@ -39,6 +39,7 @@ public class MapBuilder : MonoBehaviour
 		OverlayParser.LoadOverlays();
 		TextChunkParser.LoadTextChunks();
 		SettlementTypeParser.ParseSettlementTypes();
+		ColorOptionsParser.ParseColorOptions();
 
 		foreach (WorldModel environment in WorldParser.WorldData.Values)
 		{
@@ -73,6 +74,9 @@ public class MapBuilder : MonoBehaviour
 	{
 		WorldModel world = WorldParser.WorldData[EnvironmentSelection.options[EnvironmentSelection.value].text];
 		CurrentMap = new MapModel(world.MapWidth, world.MapHeight);
+#if UNITY_EDITOR
+		CurrentMap = new MapModel(30, 30);
+#endif
 		GenerateMap(world);
 		StartCoroutine(DisplayMap());
 	}

@@ -9,6 +9,7 @@
 	{"TexturePath":"Anglo/Heraldry/Symbols/Gryphon.png"},
 	{"TexturePath":"Anglo/Heraldry/Symbols/Horse.png"}
 ],
+"HeraldryForegroundColorSource":"Metals",
 "HeraldryBackgrounds":[
 	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_0.png"},
 	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_1.png"},
@@ -19,6 +20,7 @@
 	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_5.png"},
 	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_Ocean.png"}
 ],
+"HeraldryBackgroundColorSource":"Vibrant",
 "SettlementTypes":[
 	{"SettlementType":"AngloCastle","PlacementsPer20Square":8}
 ]}
@@ -33,12 +35,14 @@
 	{"TexturePath":"Dwarf/Heraldry/Symbols/AleHorn.png"},
 	{"TexturePath":"Dwarf/Heraldry/Symbols/Helmet.png"}
 ],
+"HeraldryForegroundColorSource":"Vibrant",
 "HeraldryBackgrounds":[
 	{"TexturePath":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_0.png"},
 	{"TexturePath":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_1.png"},
 	{"TexturePath":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_2.png"},
 	{"TexturePath":"Dwarf/Heraldry/Backgrounds/Dwarf_Back_3.png"}
 ],
+"HeraldryBackgroundColorSource":"Metals",
 "SettlementTypes":[
 	{"SettlementType":"DwarfFortress","PlacementsPer20Square":6}
 ]}
@@ -56,9 +60,11 @@
 	{"TexturePath":"Egyptian/Heraldry/Symbols/Crook.png"},
 	{"TexturePath":"Egyptian/Heraldry/Symbols/Owl.png"}
 ],
+"HeraldryForegroundColorSource":"Vibrant",
 "HeraldryBackgrounds":[
 	{"TexturePath":"Egyptian/Heraldry/Backgrounds/Egypt_Back_0.png"}
 ],
+"HeraldryBackgroundColorSource":"Vibrant",
 "SettlementTypes":[
 	{"SettlementType":"EgyptCity","PlacementsPer20Square":8},
 	{"SettlementType":"EgyptPyramid","PlacementsPer20Square":4}

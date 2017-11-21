@@ -17,17 +17,6 @@
 
 {"Id":"JungleTree", "ModelPath":"Jungle/Models/JungleTree.obj"}|
 
-{"Id":"AztecHovel", "ModelPath":"Aztec/Models/hovel.obj"}|
-{"Id":"AztecWall", "ModelPath":"Aztec/Models/Aztec Wall.obj"}|
-{"Id":"AztecGate", "ModelPath":"Aztec/Models/Aztec Gate.obj"}|
-{"Id":"AztecTower", "ModelPath":"Aztec/Models/Aztec Tower.obj"}|
-
 {"Id":"AngloBridge", "ModelPath":"Anglo/Models/Bridge/Bridge.obj"}|
 
-{"Id":"DwarfBridge", "ModelPath":"Dwarf/Models/Dwarf Bridge.obj"}|
-
-{"Id":"OrcHut", "ModelPath":"Orc/Models/OrcWoodenWall/OrcHut.obj"}|
-{"Id":"OrcWoodenGate", "ModelPath":"Orc/Models/OrcWoodenWall/WoodenGate.obj"}|
-{"Id":"OrcWoodenWall", "ModelPath":"Orc/Models/OrcWoodenWall/WoodenWall.obj"}|
-{"Id":"OrcWoodenTower", "ModelPath":"Orc/Models/OrcWoodenWall/OrcTower.obj"}|
-{"Id":"OrcBridge", "ModelPath":"Orc/Models/OrcWoodenWall/OrcBridge.obj"}
+{"Id":"DwarfBridge", "ModelPath":"Dwarf/Models/Dwarf Bridge.obj"}

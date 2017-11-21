@@ -4,6 +4,16 @@ using UnityEditor;
 
 public class JsonTests
 {
+	[MenuItem("Json Tests/Test ColorOptions Json")]
+	public static void TestColorOptionsJson()
+	{
+		ColorOptionsModel colors = new ColorOptionsModel();
+		colors.Id = "Colors";
+		colors.Colors.Add(new Color32(255, 0, 160, 255));
+
+		Debug.Log(JsonUtility.ToJson(colors));
+	}
+
 	[MenuItem("Json Tests/Test SettlementType Json")]
 	public static void TestSettlementTypeJson()
 	{
