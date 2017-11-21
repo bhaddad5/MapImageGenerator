@@ -49,7 +49,7 @@
 "TextOptions":[
 	{"StoredString":"%AngloPrefixes%%AngloSuffixes%"},
 	{"StoredString":"Castle %AngloPrefixes%%AngloSuffixes%"},
-	{"StoredString":"Fort %AngloPrefixes%%AngloSuffixes%"},
+	{"StoredString":"%AngloPrefixes%%AngloSuffixes% Hold"},
 	{"StoredString":"%AngloPrefixes%%AngloSuffixes% Castle"}
 ]}
 |

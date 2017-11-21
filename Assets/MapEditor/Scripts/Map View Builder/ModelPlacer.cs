@@ -22,7 +22,7 @@ public class ModelPlacer
 	{
 		foreach (var info in infos)
 		{
-			PlaceModels(tile, info.Model, info.Mode, info.NumToPlace);
+			PlaceModels(tile, info.Model(), info.Mode(), info.NumToPlace());
 		}
 	}
 

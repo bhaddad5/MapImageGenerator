@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SettlementInfoDisplay : MonoBehaviour
 {
-	public Text settlementName;
-	public Text kingdomName;
-	public Text cultureName;
+	public TextMeshProUGUI settlementName;
+	public TextMeshProUGUI kingdomName;
+	public TextMeshProUGUI settlementDescr;
 	public Image crown;
 	public Image heraldry;
 	//public Settlement settlement;

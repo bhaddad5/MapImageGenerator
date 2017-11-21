@@ -44,8 +44,6 @@ public class CulturesGenerator
 				ForegroundTexture = culture.HeraldryForegrounds[Random.Range(0, culture.HeraldryForegrounds.Count)],
 				OverlayTexture = culture.HeraldryOverlayImage,
 			};
-
-			Debug.Log(Map.Map.Get(pos).TextEntry.Text);
 		}
 	}
 

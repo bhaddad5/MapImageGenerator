@@ -13,7 +13,7 @@ public class MapBuilder : MonoBehaviour
 
 	public GameObject TerrainMeshDisplay;
 
-	public GameObject SettlementInfoPrefab;
+	public TextInstantiationController TextInstantiationController;
 
 	public Material TerrainTextMat;
 	public Material OverlaysMat;
@@ -158,7 +158,7 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Displaying Heraldry";
 		yield return null;
 
-		AddSettlementInfoPanels(CurrentMap);
+		TextDisplayHandler.DisplayMapText(CurrentMap, TextInstantiationController);
 
 		displayText.text = "Done";
 		yield return null;
@@ -178,22 +178,6 @@ public class MapBuilder : MonoBehaviour
 			mapChunkHeight++;
 		Map2D<int> mapChunks = new Map2D<int>(mapChunkWidth, mapChunkHeight);
 		return mapChunks;
-	}
-
-
-	private void AddSettlementInfoPanels(MapModel Map)
-	{
-		foreach(KingdomModel r in Map.Kingdoms.Values)
-		{
-			/*foreach(var sett in r.settlements)
-			{
-				GameObject tag = GameObject.Instantiate(SettlementInfoPrefab);
-				tag.transform.SetParent(terrainMeshDisplay.transform);
-				Int2 placementPos = sett.GetInfoPlacementPos();
-				tag.transform.localPosition = new Vector3(placementPos.X, .5f, placementPos.Y);
-				tag.GetComponent<SettlementInfoDisplay>().settlement = sett;
-			}*/
-		}
 	}
 
 	public void QuitApp()
