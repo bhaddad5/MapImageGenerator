@@ -26,7 +26,8 @@
 "PortEntity":{"model":"EgyptianPort","placementMode":"Center","min":1,"max":1},
 "TraitPreferences":[
 	{"Trait":"Fertile","Preference":0.3},
-	{"Trait":"Water","Preference":0.5},
+	{"Trait":"Ocean","Preference":0.5},
+	{"Trait":"River","Preference":0.5},
 	{"Trait":"Settled","Preference":-1}
 ]}
 |
