@@ -6,26 +6,29 @@ using UnityEngine;
 
 public static class ModelsParser
 {
-	public static Dictionary<string, GameObject> ModelData = new Dictionary<string, GameObject>();
+	public static Dictionary<string, StoredModelEntry> ModelData = new Dictionary<string, StoredModelEntry>();
 
 	public static void LoadModels()
 	{
-		Dictionary<string, StoredModelEntry> ModelTypes = ParserHelpers.ParseTypes<StoredModelEntry>("models");
+		ModelData = ParserHelpers.ParseTypes<StoredModelEntry>("models");
 
-		foreach (StoredModelEntry modelEntry in ModelTypes.Values)
+		foreach (StoredModelEntry modelEntry in ModelData.Values)
 		{
-			GameObject g = OBJLoader.LoadOBJFile(Application.streamingAssetsPath + "/" + modelEntry.ModelPath);
-			foreach (MeshRenderer mr in g.GetComponentsInChildren<MeshRenderer>())
+			foreach (string modelPath in modelEntry.ModelPaths)
 			{
-				mr.gameObject.AddComponent<MeshCollider>();
-				mr.gameObject.layer = LayerMask.NameToLayer("PlacedModel");
+				GameObject g = OBJLoader.LoadOBJFile(Application.streamingAssetsPath + "/" + modelPath);
+				foreach (MeshRenderer mr in g.GetComponentsInChildren<MeshRenderer>())
+				{
+					mr.gameObject.AddComponent<MeshCollider>();
+					mr.gameObject.layer = LayerMask.NameToLayer("PlacedModel");
 
-				if (mr.material.mainTexture != null && (mr.material.mainTexture as Texture2D).TextureContainsTransparency())
-					SetShaders(mr, "Unlit/Transparent Cutout");
-				else SetShaders(mr, "Standard");
+					if (mr.material.mainTexture != null && (mr.material.mainTexture as Texture2D).TextureContainsTransparency())
+						SetShaders(mr, "Unlit/Transparent Cutout");
+					else SetShaders(mr, "Standard");
+				}
+				ModelData[modelEntry.Id].ParsedObjs.Add(g);
+				g.SetActive(false);
 			}
-			ModelData[modelEntry.Id] = g;
-			g.SetActive(false);
 		}
 	}
 
@@ -43,5 +46,12 @@ public static class ModelsParser
 [Serializable]
 public class StoredModelEntry : ParsableData
 {
-	public string ModelPath;
+	public List<string> ModelPaths;
+
+	public List<GameObject> ParsedObjs = new List<GameObject>();
+
+	public GameObject GetGameObject()
+	{
+		return ParsedObjs[UnityEngine.Random.Range(0, ParsedObjs.Count)];
+	}
 }

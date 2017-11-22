@@ -135,7 +135,6 @@
     <Compile Include="Assets\MapEditor\Scripts\OldCultureShit\Culture.cs" />
     <Compile Include="Assets\MapEditor\Scripts\OldCultureShit\Kingdom.cs" />
     <Compile Include="Assets\MapEditor\Scripts\OldCultureShit\KingdomModel.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\OldCultureShit\LocationParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\OldCultureShit\RegionsGenerator.cs" />
     <Compile Include="Assets\MapEditor\Scripts\OldCultureShit\Settlement.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Parsable Data\ColorOptionsParser.cs" />
@@ -182,7 +181,6 @@
     <None Include="Assets\ExternalAssets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\StreamingAssets\colorOptions.txt" />
     <None Include="Assets\StreamingAssets\cultures.txt" />
-    <None Include="Assets\StreamingAssets\locations.txt" />
     <None Include="Assets\StreamingAssets\models.txt" />
     <None Include="Assets\StreamingAssets\overlays.txt" />
     <None Include="Assets\StreamingAssets\realms.txt" />

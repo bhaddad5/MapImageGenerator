@@ -22,6 +22,8 @@ public class ModelPlacer
 	{
 		foreach (var info in infos)
 		{
+			if(info.model == null)
+				Debug.Log("Hit!");
 			PlaceModels(tile, info.Model(), info.Mode(), info.NumToPlace());
 		}
 	}
@@ -31,7 +33,15 @@ public class ModelPlacer
 		if (mode == EntityPlacementModel.PlacementMode.Scattered)
 			PlaceObjectsOnTile(tile, num, obj);
 		if (mode == EntityPlacementModel.PlacementMode.Center)
-			PlaceObjectsOnTileCenter(tile, num, obj);
+			PlaceObjectsOnTileCenter(tile, num, obj, true);
+		if (mode == EntityPlacementModel.PlacementMode.Rot0)
+			PlaceObjectsOnTileCenterWithRot(tile, num, obj, 0, true);
+		if (mode == EntityPlacementModel.PlacementMode.Rot90)
+			PlaceObjectsOnTileCenterWithRot(tile, num, obj, 90, true);
+		if (mode == EntityPlacementModel.PlacementMode.Rot180)
+			PlaceObjectsOnTileCenterWithRot(tile, num, obj, 180, true);
+		if (mode == EntityPlacementModel.PlacementMode.Rot270)
+			PlaceObjectsOnTileCenterWithRot(tile, num, obj, 270, true);
 		if (mode == EntityPlacementModel.PlacementMode.Bridge)
 			PlaceBridgeOnTile(tile, obj);
 	}
@@ -83,7 +93,7 @@ public class ModelPlacer
 
 				var rend = hit.collider.gameObject.GetComponent<Renderer>();
 				Texture2D tex = rend.materials[rend.materials.Length - 1].GetTexture("_MaskTex") as Texture2D;
-				if (tex.GetPixel((int) (hit.textureCoord.x * tex.width), (int) (hit.textureCoord.y * tex.height)).a > .2f)
+				if (!forcePlacement && tex.GetPixel((int) (hit.textureCoord.x * tex.width), (int) (hit.textureCoord.y * tex.height)).a > .2f)
 					return;
 
 				pos = hit.point;
@@ -103,6 +113,17 @@ public class ModelPlacer
 	{
 		for (int i = 0; i < num; i++)
 			SpawnObjectAtPos(GetCenterPlacementTrans(tile, objToPlace, forcePlacement), objToPlace);
+	}
+
+	private void PlaceObjectsOnTileCenterWithRot(Int2 tile, int num, GameObject objToPlace, float rot, bool forcePlacement = false)
+	{
+		for (int i = 0; i < num; i++)
+			SpawnObjectAtPos(GetCenterPlacementTransWithRot(tile, objToPlace, rot, forcePlacement), objToPlace);
+	}
+
+	private PlacementTrans GetCenterPlacementTransWithRot(Int2 myTile, GameObject g, float rot, bool forcePlacement = false)
+	{
+		return new PlacementTrans(new Vector3(myTile.X + 0.5f, 2f, myTile.Y + 0.5f), new Vector3(0, rot, 0), g, forcePlacement);
 	}
 
 	private PlacementTrans GetCenterPlacementTrans(Int2 myTile, GameObject g, bool forcePlacement = false)

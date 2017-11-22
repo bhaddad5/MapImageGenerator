@@ -58,6 +58,7 @@
 	{"TexturePath":"Egyptian/Heraldry/Symbols/Lion.png"},
 	{"TexturePath":"Egyptian/Heraldry/Symbols/Snake.png"},
 	{"TexturePath":"Egyptian/Heraldry/Symbols/Crook.png"},
+	{"TexturePath":"Egyptian/Heraldry/Symbols/Scarab.png"},
 	{"TexturePath":"Egyptian/Heraldry/Symbols/Owl.png"}
 ],
 "HeraldryForegroundColorSource":"Vibrant",

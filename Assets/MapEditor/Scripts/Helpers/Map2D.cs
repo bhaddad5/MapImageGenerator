@@ -110,6 +110,14 @@ public class Map2D<T>
 		return values;
 	}
 
+	public List<T> GetTwoAwayAdjacentValues(Int2 pos)
+	{
+		List<T> values = new List<T>();
+		foreach (var point in GetTwoAwayAdjacentPoints(pos))
+			values.Add(Get(point));
+		return values;
+	}
+
 	public List<T> GetAllNeighboringValues(Int2 pos)
 	{
 		List<T> values = new List<T>();
@@ -134,6 +142,16 @@ public class Map2D<T>
 		TryAdd(pos + new Int2(1, -1), values);
 		TryAdd(pos + new Int2(-1, 1), values);
 		TryAdd(pos + new Int2(-1, -1), values);
+		return values;
+	}
+
+	public List<Int2> GetTwoAwayAdjacentPoints(Int2 pos)
+	{
+		List<Int2> values = new List<Int2>();
+		TryAdd(pos + new Int2(0, 2), values);
+		TryAdd(pos + new Int2(0, -2), values);
+		TryAdd(pos + new Int2(2, 0), values);
+		TryAdd(pos + new Int2(-2, 0), values);
 		return values;
 	}
 

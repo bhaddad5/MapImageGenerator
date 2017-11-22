@@ -50,7 +50,8 @@
 	{"StoredString":"%AngloPrefixes%%AngloSuffixes%"},
 	{"StoredString":"Castle %AngloPrefixes%%AngloSuffixes%"},
 	{"StoredString":"%AngloPrefixes%%AngloSuffixes% Hold"},
-	{"StoredString":"%AngloPrefixes%%AngloSuffixes% Castle"}
+	{"StoredString":"%AngloPrefixes%%AngloSuffixes% Castle"},
+	{"StoredString":"Port %AngloPrefixes%%AngloSuffixes%","Conditions":["Ocean"]}
 ]}
 |
 {"Id":"DwarfPre",
@@ -114,7 +115,25 @@
 	{"StoredString":"Ptkhe"},
 	{"StoredString":"Khas"},
 	{"StoredString":"Theb"},
-	{"StoredString":"Giz"}
+	{"StoredString":"Giz"},
+	{"StoredString":"As"},
+	{"StoredString":"Za"},
+	{"StoredString":"Thon"},
+	{"StoredString":"Tjeb"},
+	{"StoredString":"Seten"},
+	{"StoredString":"Am"},
+	{"StoredString":"Djed"},
+	{"StoredString":"Djan"},
+	{"StoredString":"Djer"},
+	{"StoredString":"Hut"},
+	{"StoredString":"Ab"},
+	{"StoredString":"Ta"},
+	{"StoredString":"Per-"},
+	{"StoredString":"Shesh"},
+	{"StoredString":"Ip"},
+	{"StoredString":"Sa"},
+	{"StoredString":"Shed"},
+	{"StoredString":"Sem"}
 ]}
 |
 {"Id":"EgyptSuff",
@@ -128,7 +147,26 @@
 	{"StoredString":"ese"},
 	{"StoredString":"ru"},
 	{"StoredString":"phis"},
-	{"StoredString":"ha"}
+	{"StoredString":"ha"},
+	{"StoredString":"nut"},
+	{"StoredString":"rah"},
+	{"StoredString":"a"},
+	{"StoredString":"heb"},
+	{"StoredString":"this"},
+	{"StoredString":"nutjer"},
+	{"StoredString":"nu"},
+	{"StoredString":"et"},
+	{"StoredString":"waret"},
+	{"StoredString":"knaten"},
+	{"StoredString":"senet"},
+	{"StoredString":"ty"},
+	{"StoredString":"tu"},
+	{"StoredString":"esh"},
+	{"StoredString":"otep"},
+	{"StoredString":"un"},
+	{"StoredString":"khent"},
+	{"StoredString":"at"},
+	{"StoredString":"amun"}
 ]}
 |
 {"Id":"EgyptGods",
@@ -138,12 +176,25 @@
 	{"StoredString":"the Fallen Gods"},
 	{"StoredString":"the Forgotten"},
 	{"StoredString":"Forgotten Souls"},
+	{"StoredString":"Forgotten Kings"},
 	{"StoredString":"Amath"},
 	{"StoredString":"Horai"},
 	{"StoredString":"Septra"},
 	{"StoredString":"the Sun"},
 	{"StoredString":"the Moon"},
-	{"StoredString":"the Stars"}
+	{"StoredString":"the Stars"},
+	{"StoredString":"Shadows"},
+	{"StoredString":"the Lost"},
+	{"StoredString":"the Waters","Conditions":["Water"]},
+	{"StoredString":"the Sands","Conditions":["Desert"]},
+	{"StoredString":"the Creator"},
+	{"StoredString":"the Destroyer"},
+	{"StoredString":"the Sky"},
+	{"StoredString":"the Warrior"},
+	{"StoredString":"the Necromancer"},
+	{"StoredString":"Lost Knowledge"},
+	{"StoredString":"Secrets"},
+	{"StoredString":"Darkness"}
 ]}
 |
 {"Id":"EgyptCities",
@@ -162,7 +213,9 @@
 	{"StoredString":"Mortuary of %EgyptPre%%EgyptSuff%"},
 	{"StoredString":"Pyramid of %EgyptGods%"},
 	{"StoredString":"Mortuary of %EgyptGods%"},
-	{"StoredString":"Catacombs of %EgyptGods%"}
+	{"StoredString":"Catacombs of %EgyptGods%"},
+	{"StoredString":"Necropolis of %EgyptGods%"},
+	{"StoredString":"Necropolis of %EgyptPre%%EgyptSuff%"}
 ]}
 
 

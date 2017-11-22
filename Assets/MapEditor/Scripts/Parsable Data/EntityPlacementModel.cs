@@ -10,6 +10,10 @@ public class EntityPlacementModel
 		Scattered,
 		Center,
 		Bridge,
+		Rot0,
+		Rot90,
+		Rot180,
+		Rot270
 	}
 
 	public PlacementMode Mode()
@@ -19,7 +23,7 @@ public class EntityPlacementModel
 
 	public GameObject Model()
 	{
-		return ModelsParser.ModelData[model];
+		return ModelsParser.ModelData[model].GetGameObject();
 	}
 
 	public int NumToPlace()

@@ -26,5 +26,6 @@ public class SettlementTypeModel : ParsableData
 	public string SettlementTypeName;
 	public string NameChunk;
 	public EntityPlacementModel Entity;
+	public EntityPlacementModel PortEntity;
 	public List<TraitPreferance> TraitPreferences;
 }

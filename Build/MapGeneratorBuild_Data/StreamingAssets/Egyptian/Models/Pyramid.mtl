@@ -1,5 +1,5 @@
 # Blender MTL File: 'Pyramid.blend'
-# Material Count: 3
+# Material Count: 4
 
 newmtl None
 Ns 0
@@ -8,16 +8,16 @@ Kd 0.8 0.8 0.8
 Ks 0.8 0.8 0.8
 d 1
 illum 2
-map_Kd CheapEgyptianBrick.png
+map_Kd Egyptian Gold.png
 
-newmtl None_EgyptianBrick.png
+newmtl None_CheapEgyptianBrick.png.001
 Ns 0
 Ka 0.000000 0.000000 0.000000
 Kd 0.8 0.8 0.8
 Ks 0.8 0.8 0.8
 d 1
 illum 2
-map_Kd EgyptianBrick.png
+map_Kd CheapEgyptianBrick.png
 
 newmtl None_EgyptianBrick.png.001
 Ns 0
@@ -27,3 +27,12 @@ Ks 0.8 0.8 0.8
 d 1
 illum 2
 map_Kd EgyptianBrick.png
+
+newmtl None_Egyptian_White.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd Egyptian White.png

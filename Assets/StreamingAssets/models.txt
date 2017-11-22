@@ -1,22 +1,23 @@
-{"Id":"Pine", "ModelPath":"Midlands/Models/Pine.obj"}|
-{"Id":"Willow", "ModelPath":"Midlands/Models/Willow.obj"}|
+{"Id":"Pine", "ModelPaths":["Midlands/Models/Pine.obj"]}|
+{"Id":"Willow", "ModelPaths":["Midlands/Models/Willow.obj"]}|
 
-{"Id":"Palm", "ModelPath":"Desert/Models/Palm.obj"}|
+{"Id":"Palm", "ModelPaths":["Desert/Models/Palm.obj"]}|
 
-{"Id":"AngloCastle", "ModelPath":"Anglo/Models/Castle/Castle.obj"}|
+{"Id":"AngloCastle", "ModelPaths":["Anglo/Models/Castle/Castle.obj"]}|
 
-{"Id":"DwarfFortress", "ModelPath":"Dwarf/Models/Dwarf Fortress.obj"}|
+{"Id":"DwarfFortress", "ModelPaths":["Dwarf/Models/Dwarf Fortress.obj"]}|
 
-{"Id":"EgyptianCity", "ModelPath":"Egyptian/Models/Egyptian City.obj"}|
-{"Id":"EgyptianPyramid", "ModelPath":"Egyptian/Models/Pyramid.obj"}|
+{"Id":"EgyptianCity", "ModelPaths":["Egyptian/Models/Egyptian City.obj"]}|
+
+{"Id":"EgyptianPort", "ModelPaths":["Egyptian/Models/Egyptian Port.obj"]}|
+
+{"Id":"EgyptianPyramid", "ModelPaths":[
+	"Egyptian/Models/Pyramid.obj",
+	"Egyptian/Models/Pyramid Ruined.obj"
+]}|
 
 //OLD MODELS
 
-{"Id":"GiantMushroom", "ModelPath":"Underground/Models/GiantMushroom.obj"}|
-{"Id":"DwarfMushroom", "ModelPath":"Underground/Models/DwarfMushroom.obj"}|
+{"Id":"AngloBridge", "ModelPaths":["Anglo/Models/Bridge/Bridge.obj"]}|
 
-{"Id":"JungleTree", "ModelPath":"Jungle/Models/JungleTree.obj"}|
-
-{"Id":"AngloBridge", "ModelPath":"Anglo/Models/Bridge/Bridge.obj"}|
-
-{"Id":"DwarfBridge", "ModelPath":"Dwarf/Models/Dwarf Bridge.obj"}
+{"Id":"DwarfBridge", "ModelPaths":["Dwarf/Models/Dwarf Bridge.obj"]}

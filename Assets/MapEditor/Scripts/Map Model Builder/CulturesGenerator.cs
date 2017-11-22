@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Win32;
 using UnityEngine;
 
 public class CulturesGenerator
@@ -35,6 +36,31 @@ public class CulturesGenerator
 			SettlementTypeModel SettlementType = SettlementTypeParser.SettlementsData[settlementPlacementInfo.SettlementType];
 
 			Map.Map.Get(pos).Entities.Add(SettlementType.Entity);
+
+			if (SettlementType.PortEntity.model != null)
+			{
+				foreach (Int2 adjacentPoint in Map.Map.GetAdjacentPoints(pos))
+				{
+					if (Map.Map.Get(adjacentPoint).HasTrait(MapTileModel.TileTraits.Ocean))
+					{
+						EntityPlacementModel port = new EntityPlacementModel()
+						{
+							min = 1, max = 1,
+							model = SettlementType.PortEntity.model
+						};
+						if((pos - adjacentPoint).Equals(new Int2(-1, 0)))
+							port.placementMode = EntityPlacementModel.PlacementMode.Rot180.ToString();
+						if ((pos - adjacentPoint).Equals(new Int2(0, -1)))
+							port.placementMode = EntityPlacementModel.PlacementMode.Rot90.ToString();
+						if ((pos - adjacentPoint).Equals(new Int2(1, 0)))
+							port.placementMode = EntityPlacementModel.PlacementMode.Rot0.ToString();
+						if ((pos - adjacentPoint).Equals(new Int2(0, 1)))
+							port.placementMode = EntityPlacementModel.PlacementMode.Rot270.ToString();
+						Map.Map.Get(adjacentPoint).Entities.Add(port);
+					}
+				}
+			}
+
 			Map.Map.Get(pos).Traits.Add("Settled");
 			Map.Map.Get(pos).SetMaxHeight(0);
 
@@ -79,12 +105,21 @@ public class CulturesGenerator
 	{
 		float val = 0f;
 		foreach (MapTileModel tile in Map.Map.GetAdjacentValues(pos))
+			val += GetTileValue(tile, settlementType.TraitPreferences);
+		foreach (MapTileModel tile in Map.Map.GetDiagonalValues(pos))
+			val += GetTileValue(tile, settlementType.TraitPreferences) * .5f;
+		foreach (MapTileModel tile in Map.Map.GetTwoAwayAdjacentValues(pos))
+			val += GetTileValue(tile, settlementType.TraitPreferences) * .5f;
+		return val;
+	}
+
+	private float GetTileValue(MapTileModel tile, List<TraitPreferance> prefs)
+	{
+		float val = 0;
+		foreach (TraitPreferance traitPreferance in prefs)
 		{
-			foreach (TraitPreferance traitPreferance in settlementType.TraitPreferences)
-			{
-				if (tile.HasTrait(traitPreferance.Trait))
-					val += traitPreferance.Preference;
-			}
+			if (tile.HasTrait(traitPreferance.Trait))
+				val += traitPreferance.Preference;
 		}
 		return val;
 	}

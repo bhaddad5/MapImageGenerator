@@ -35,7 +35,6 @@ public class MapBuilder : MonoBehaviour
 		RealmParser.LoadRealms();
 		ModelsParser.LoadModels();
 		CultureParser.LoadCultures();
-		LocationParser.LoadLocations();
 		TerrainParser.LoadTerrainTypes();
 		OverlayParser.LoadOverlays();
 		TextChunkParser.LoadTextChunks();

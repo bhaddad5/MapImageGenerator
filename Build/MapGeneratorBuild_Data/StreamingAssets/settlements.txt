@@ -5,7 +5,7 @@
 "TraitPreferences":[
 	{"Trait":"Forest","Preference":-0.1},
 	{"Trait":"Swamp","Preference":-0.5},
-	{"Trait":"Settled","Preference":-0.5},
+	{"Trait":"Settled","Preference":-1},
 	{"Trait":"Mountain","Preference":-0.1}
 ]}
 |
@@ -23,10 +23,11 @@
 "SettlementTypeName":" City",
 "NameChunk":"EgyptCities",
 "Entity":{"model":"EgyptianCity","placementMode":"Center","min":1,"max":1},
+"PortEntity":{"model":"EgyptianPort","placementMode":"Center","min":1,"max":1},
 "TraitPreferences":[
 	{"Trait":"Fertile","Preference":0.3},
 	{"Trait":"Water","Preference":0.5},
-	{"Trait":"Settled","Preference":-0.5}
+	{"Trait":"Settled","Preference":-1}
 ]}
 |
 {"Id":"EgyptPyramid",
@@ -35,5 +36,5 @@
 "Entity":{"model":"EgyptianPyramid","placementMode":"Center","min":1,"max":1},
 "TraitPreferences":[
 	{"Trait":"Desert","Preference":0.5},
-	{"Trait":"Settled","Preference":-0.5}
+	{"Trait":"Settled","Preference":-1}
 ]}
