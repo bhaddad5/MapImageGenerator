@@ -9,7 +9,11 @@
 
 {"Id":"EgyptianCity", "ModelPaths":["Egyptian/Models/Egyptian City.obj"]}|
 
-{"Id":"EgyptianPort", "ModelPaths":["Egyptian/Models/Egyptian Port.obj"]}|
+{"Id":"EgyptianPort", "ModelPaths":[
+	"Egyptian/Models/Egyptian Port.obj",
+	"Egyptian/Models/Egyptian Port 2.obj",
+	"Egyptian/Models/Egyptian Port 3.obj"
+]}|
 
 {"Id":"EgyptianPyramid", "ModelPaths":[
 	"Egyptian/Models/Pyramid.obj",

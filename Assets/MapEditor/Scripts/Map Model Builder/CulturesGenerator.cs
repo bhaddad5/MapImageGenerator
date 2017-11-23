@@ -41,7 +41,8 @@ public class CulturesGenerator
 			{
 				foreach (Int2 adjacentPoint in Map.Map.GetAdjacentPoints(pos))
 				{
-					if (Map.Map.Get(adjacentPoint).HasTrait(MapTileModel.TileTraits.Ocean))
+					if (Map.Map.Get(adjacentPoint).HasTrait(MapTileModel.TileTraits.Ocean) &&
+						Map.Map.Get(adjacentPoint).Entities.Count == 0)
 					{
 						EntityPlacementModel port = new EntityPlacementModel()
 						{
@@ -57,6 +58,8 @@ public class CulturesGenerator
 						if ((pos - adjacentPoint).Equals(new Int2(0, 1)))
 							port.placementMode = EntityPlacementModel.PlacementMode.Rot270.ToString();
 						Map.Map.Get(adjacentPoint).Entities.Add(port);
+
+						break;
 					}
 				}
 			}
