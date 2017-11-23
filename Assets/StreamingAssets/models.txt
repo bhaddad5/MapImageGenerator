@@ -3,7 +3,11 @@
 
 {"Id":"Palm", "ModelPaths":["Desert/Models/Palm.obj"]}|
 
-{"Id":"AngloCastle", "ModelPaths":["Anglo/Models/Castle/Castle.obj"]}|
+{"Id":"AngloCastle", "ModelPaths":[
+	"Anglo/Models/Castle.obj",
+	"Anglo/Models/Castle 2.obj",
+	"Anglo/Models/Castle 3.obj"
+]}|
 
 {"Id":"DwarfFortress", "ModelPaths":["Dwarf/Models/Dwarf Fortress.obj"]}|
 

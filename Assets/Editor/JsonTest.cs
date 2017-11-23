@@ -107,8 +107,14 @@ public class JsonTests
 		{
 			TestMap2D.Set(mapPoint, new MapTileModel());
 		}
+
+		TestMap2D.Get(new Int2(0, 0)).TextEntry = new SettlementTextModel()
+		{
+			Text = "Hi",
+			BackgroundColor1 = Color.red
+		};
 		
-		Debug.Log(TestMap2D.ToSerializable());
+		Debug.Log(JsonUtility.ToJson(TestMap2D.ToSerializable()));
 	}
 
 	[MenuItem("Json Tests/Test Terrain Json")]

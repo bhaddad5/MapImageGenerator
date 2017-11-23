@@ -14,7 +14,7 @@ public class MapTileModel
 	}
 	public string KingdomId;
 	public List<EntityPlacementModel> Entities = new List<EntityPlacementModel>();
-	public MapTextModel TextEntry;
+	public SettlementTextModel TextEntry;
 
 	public List<EntityPlacementModel> GetEntites()
 	{
@@ -39,12 +39,12 @@ public class MapTileModel
 
 	public List<string> Traits = new List<string>();
 	public List<string> Overlays = new List<string>();
-	public float Height { get { return Mathf.Min(Terrain().Height, maxHeight); } }
-	private float maxHeight = 1000;
+	public float Height { get { return Mathf.Min(Terrain().Height, MaxHeight); } }
+	public float MaxHeight = 1000;
 
 	public void SetMaxHeight(float newMaxHeight)
 	{
-		maxHeight = newMaxHeight;
+		MaxHeight = newMaxHeight;
 	}
 
 	public List<string> GetOverlays()
@@ -64,14 +64,9 @@ public class MapTileModel
 }
 
 [Serializable]
-public class MapTextModel
+public class SettlementTextModel
 {
 	public string Text;
-}
-
-[Serializable]
-public class SettlementTextModel : MapTextModel
-{
 	public string SettlementDescription;
 	public StoredTexture BackgroundTexture;
 	public Vector4 BackgroundColor1;

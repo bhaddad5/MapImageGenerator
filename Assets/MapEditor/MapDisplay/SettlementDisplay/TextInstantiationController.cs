@@ -6,14 +6,14 @@ public class TextInstantiationController : MonoBehaviour
 {
 	public SettlementInfoDisplay SettlementInfoDisplay;
 
-	public void DisplayText(Vector3 position, MapTextModel textModel, Transform textParent)
+	public void DisplayText(Vector3 position, SettlementTextModel textModel, Transform textParent)
 	{
 		if (textModel is SettlementTextModel)
 		{
 			SettlementInfoDisplay display = Instantiate(SettlementInfoDisplay, textParent);
-			display.settlementDescr.text = (textModel as SettlementTextModel).SettlementDescription;
-			display.settlementName.text = (textModel as SettlementTextModel).Text;
-			display.heraldry.sprite = GetHeraldryTexture(textModel as SettlementTextModel);
+			display.settlementDescr.text = textModel.SettlementDescription;
+			display.settlementName.text = textModel.Text;
+			display.heraldry.sprite = GetHeraldryTexture(textModel);
 			display.transform.position = position;
 		}
 	}
