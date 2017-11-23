@@ -50,8 +50,15 @@ public class StoredModelEntry : ParsableData
 
 	public List<GameObject> ParsedObjs = new List<GameObject>();
 
-	public GameObject GetGameObject()
+	public GameObject GetGameObject(int index)
 	{
-		return ParsedObjs[UnityEngine.Random.Range(0, ParsedObjs.Count)];
+		if (index == -1)
+			return ParsedObjs[GetRandomIndex()];
+		else return ParsedObjs[index];
+	}
+
+	public int GetRandomIndex()
+	{
+		return UnityEngine.Random.Range(0, ParsedObjs.Count);
 	}
 }

@@ -35,7 +35,16 @@ public class CulturesGenerator
 
 			SettlementTypeModel SettlementType = SettlementTypeParser.SettlementsData[settlementPlacementInfo.SettlementType];
 
-			Map.Map.Get(pos).Entities.Add(SettlementType.Entity);
+			EntityPlacementModel settlement = new EntityPlacementModel()
+			{
+				min = 1,
+				max = 1,
+				model = SettlementType.Entity.model,
+				placementMode = EntityPlacementModel.PlacementMode.Center.ToString()
+			};
+			settlement.PreBakeModelIndex();
+
+			Map.Map.Get(pos).Entities.Add(settlement);
 
 			if (SettlementType.PortEntity.model != null)
 			{
@@ -47,8 +56,9 @@ public class CulturesGenerator
 						EntityPlacementModel port = new EntityPlacementModel()
 						{
 							min = 1, max = 1,
-							model = SettlementType.PortEntity.model
+							model = SettlementType.PortEntity.model,
 						};
+						port.PreBakeModelIndex();
 						if((pos - adjacentPoint).Equals(new Int2(-1, 0)))
 							port.placementMode = EntityPlacementModel.PlacementMode.Rot180.ToString();
 						if ((pos - adjacentPoint).Equals(new Int2(0, -1)))

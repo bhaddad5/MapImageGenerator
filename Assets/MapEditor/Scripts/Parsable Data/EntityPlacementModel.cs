@@ -23,7 +23,7 @@ public class EntityPlacementModel
 
 	public GameObject Model()
 	{
-		return ModelsParser.ModelData[model].GetGameObject();
+		return ModelsParser.ModelData[model].GetGameObject(modelIndex);
 	}
 
 	public int NumToPlace()
@@ -31,8 +31,14 @@ public class EntityPlacementModel
 		return UnityEngine.Random.Range(min, max + 1);
 	}
 
+	public void PreBakeModelIndex()
+	{
+		modelIndex = ModelsParser.ModelData[model].GetRandomIndex();
+	}
+
 	public string model;
-	public string placementMode;
+	public string placementMode = PlacementMode.Center.ToString();
 	public int min;
 	public int max;
+	public int modelIndex = -1;
 }
