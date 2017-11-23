@@ -15,6 +15,9 @@ public class MapBuilder : MonoBehaviour
 	public TMP_Dropdown SavedMapSelection;
 	public TMP_InputField SaveMapName;
 
+	public UiNumberMinMax Width;
+	public UiNumberMinMax Height;
+
 	public Transform TerrainMeshDisplay;
 	public Transform TextParent;
 
@@ -97,10 +100,7 @@ public class MapBuilder : MonoBehaviour
 	public void RebuildMap()
 	{
 		WorldModel world = WorldParser.WorldData[EnvironmentSelection.options[EnvironmentSelection.value].text];
-		CurrentMap = new MapModel(world.MapWidth, world.MapHeight);
-#if UNITY_EDITOR
-		CurrentMap = new MapModel(30, 30);
-#endif
+		CurrentMap = new MapModel(Width.Value, Height.Value);
 		GenerateMap(world);
 		StartCoroutine(DisplayMap());
 	}
