@@ -46,7 +46,7 @@ public class CameraControls : MonoBehaviour
 			transform.position += transform.right * 0.2f;
 
 		float zoom = Input.GetAxis("Mouse ScrollWheel") * 15f;
-		float newZoom = Mathf.Max(2, Mathf.Min(30f, transform.position.y - zoom));
+		float newZoom = Mathf.Max(1f, Mathf.Min(30f, transform.position.y - zoom));
 
 		transform.position = new Vector3(transform.position.x, newZoom, transform.position.z);
 	}

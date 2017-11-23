@@ -11,13 +11,9 @@ public class SettlementInfoDisplay : MonoBehaviour
 	public TextMeshProUGUI settlementDescr;
 	public Image crown;
 	public Image heraldry;
-	//public Settlement settlement;
-	// Use this for initialization
-	void Start () {
-		/*kingdomName.text = settlement.kingdom.name;
-		settlementName.text = settlement.name;
-		cultureName.text = settlement.kingdom.culture.CultureName;
-		crown.gameObject.SetActive(settlement == settlement.kingdom.settlements[0]);
-		heraldry.sprite = Sprite.Create(settlement.kingdom.heraldry, new Rect(0, 0, settlement.kingdom.heraldry.width, settlement.kingdom.heraldry.height), new Vector2(0.5f, 0.5f));*/
+
+	void Update()
+	{
+		transform.eulerAngles = new Vector3(transform.eulerAngles.x, Camera.main.transform.eulerAngles.y, transform.eulerAngles.z);
 	}
 }

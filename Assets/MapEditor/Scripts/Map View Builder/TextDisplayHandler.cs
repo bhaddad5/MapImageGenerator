@@ -10,7 +10,7 @@ public class TextDisplayHandler
 		{
 			if (Map.Map.Get(point).TextEntry != null)
 			{
-				instantiator.DisplayText(new Vector3(point.X, 0, point.Y), Map.Map.Get(point).TextEntry, textParent);
+				instantiator.DisplayText(new Vector3(point.X + 0.5f, 0, point.Y + 0.5f), Map.Map.Get(point).TextEntry, textParent);
 			}
 		}
 	}
