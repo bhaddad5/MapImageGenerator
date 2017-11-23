@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using TMPro;
+using UnityEngine.EventSystems;
 using UnityStandardAssets.Water;
 
 public class MapBuilder : MonoBehaviour
 {
 	public TMP_Dropdown EnvironmentSelection;
 	public TextMeshProUGUI displayText;
+
+	public TMP_Dropdown SavedMapSelection;
+	public TMP_InputField SaveMapName;
 
 	public Transform TerrainMeshDisplay;
 	public Transform TextParent;
@@ -41,6 +45,8 @@ public class MapBuilder : MonoBehaviour
 		SettlementTypeParser.ParseSettlementTypes();
 		ColorOptionsParser.ParseColorOptions();
 
+		PopulateSavedMaps();
+
 		foreach (WorldModel environment in WorldParser.WorldData.Values)
 		{
 			EnvironmentSelection.options.Add(new TMP_Dropdown.OptionData(environment.Id));
@@ -48,21 +54,39 @@ public class MapBuilder : MonoBehaviour
 		EnvironmentSelection.value = 1;
 	}
 
+	private void PopulateSavedMaps()
+	{
+		SavedMapSelection.ClearOptions();
+		foreach (string save in Directory.GetFiles(Application.streamingAssetsPath + "/SavedMaps"))
+		{
+			if(save.EndsWith(".realm"))
+				SavedMapSelection.options.Add(new TMP_Dropdown.OptionData(Path.GetFileName(save)));
+		}
+
+		SavedMapSelection.value = 0;
+	}
+
 	public void SaveMap()
 	{
+		string saveName = SaveMapName.text;
+		if (saveName.EndsWith(".realm"))
+			saveName = saveName.Substring(0, saveName.Length - 6);
+
 		string json = CurrentMap.ToJson();
 		Directory.CreateDirectory(Path.Combine(Application.streamingAssetsPath, "SavedMaps"));
-		string path = Path.Combine(Application.streamingAssetsPath, "SavedMaps/tempSave.realm");
+		string path = Path.Combine(Application.streamingAssetsPath, "SavedMaps/" + saveName + ".realm");
 		if(File.Exists(path))
 			File.Delete(path);
 		StreamWriter sw = File.CreateText(path);
 		sw.WriteLine(json);
 		sw.Close();
+
+		PopulateSavedMaps();
 	}
 
 	public void LoadMap()
 	{
-		string path = Path.Combine(Application.streamingAssetsPath, "SavedMaps/tempSave.realm");
+		string path = Path.Combine(Application.streamingAssetsPath, "SavedMaps/" + SavedMapSelection.options[SavedMapSelection.value].text);
 		if (File.Exists(path))
 		{
 			CurrentMap = MapModel.FromJson(File.ReadAllText(path));
