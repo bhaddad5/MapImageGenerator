@@ -152,6 +152,7 @@
     <Compile Include="Assets\MapEditor\Scripts\Parsable Data\WorldParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\User Interactions\CameraControls.cs" />
     <Compile Include="Assets\MapEditor\Scripts\User Interactions\LightController.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\User Interactions\UiToggler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ExternalAssets\JsonDotNet\Assemblies\AOT\Newtonsoft.Json.XML" />

@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CameraControls : MonoBehaviour
 {
+	public TMP_InputField InputField;
+
 	void Start()
 	{
 		float[] distances = new float[32];
@@ -14,6 +17,9 @@ public class CameraControls : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if (InputField.isFocused)
+			return;
+
 		float tiltChange = 0f;
 		if (Input.GetKey(KeyCode.Alpha1))
 			tiltChange = 1f;
