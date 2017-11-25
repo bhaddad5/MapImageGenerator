@@ -48,14 +48,19 @@ public class MapTileModel
 		return Terrain().Overlays.Concat(Overlays).ToList();
 	}
 
+	public List<string> GetTraits()
+	{
+		return Traits.Concat(Terrain().Traits).ToList();
+	}
+
 	public bool HasTrait(TileTraits trait)
 	{
-		return Traits.Contains(trait.ToString()) || Terrain().Traits.Contains(trait.ToString());
+		return GetTraits().Contains(trait.ToString());
 	}
 
 	public bool HasTrait(string trait)
 	{
-		return Traits.Contains(trait) || Terrain().Traits.Contains(trait);
+		return GetTraits().Contains(trait);
 	}
 }
 

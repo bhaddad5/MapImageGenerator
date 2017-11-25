@@ -59,7 +59,8 @@
 	{"StoredString":"Fell"},
 	{"StoredString":"Sunny"},
 	{"StoredString":"Bright"},
-	{"StoredString":"Burned"}
+	{"StoredString":"Burned"},
+	{"StoredString":"Stony"}
 ]}
 |
 {"Id":"AngloNouns",
@@ -90,12 +91,12 @@
 "TextOptions":[
 	{"StoredString":"%AngloPrefixes%%AngloSuffixes%"},
 	{"StoredString":"Castle %AngloPrefixes%%AngloSuffixes%"},
-	{"StoredString":"%AngloPrefixes%%AngloSuffixes% Hold"},
 	{"StoredString":"%AngloPrefixes%%AngloSuffixes% Castle"},
+	{"StoredString":"%AngloPrefixes%%AngloSuffixes% Hold"},
+	{"StoredString":"%AngloAdjectives% Hold"},
 	{"StoredString":"%AngloAdjectives% %AngloNouns%"},
 	{"StoredString":"%AngloAdjectives% %AngloNouns%"},
-	{"StoredString":"The %AngloAdjectives% %AngloNouns%"},
-	{"StoredString":"The %AngloAdjectives% %AngloNouns%"}
+	{"StoredString":"%AngloAdjectives% %AngloNouns%"}
 ]}
 |
 {"Id":"AngloCities",
@@ -251,26 +252,78 @@
 	{"StoredString":"Darkness"}
 ]}
 |
+{"Id":"EgyptNamesPre",
+"TextOptions":[
+	{"StoredString":"Ram"},
+	{"StoredString":"Nar"},
+	{"StoredString":"Tut"},
+	{"StoredString":"Imho"},
+	{"StoredString":"Nefer"},
+	{"StoredString":"Khu"},
+	{"StoredString":"Menka"},
+	{"StoredString":"Aken"},
+	{"StoredString":"Hudje"},
+	{"StoredString":"Djo"},
+	{"StoredString":"Men"},
+	{"StoredString":"Kha"},
+	{"StoredString":"Tutan"}
+]}
+|
+{"Id":"EgyptNamesSuff",
+"TextOptions":[
+	{"StoredString":"ses"},
+	{"StoredString":"mer"},
+	{"StoredString":"se"},
+	{"StoredString":"mose"},
+	{"StoredString":"es"},
+	{"StoredString":"tep"},
+	{"StoredString":"tari"},
+	{"StoredString":"kasokar"},
+	{"StoredString":"kamen"},
+	{"StoredString":"aten"},
+	{"StoredString":"eses"},
+	{"StoredString":"fa"},
+	{"StoredString":"fre"},
+	{"StoredString":"ser"}
+]}
+|
+{"Id":"EgyptNames",
+"TextOptions":[
+	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff%"},
+	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff%"},
+	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff%"},
+	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff%"},
+	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff% I"},
+	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff% II"},
+	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff% III"},
+	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff% IV"},
+	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff% V"},
+	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff% IV"},
+	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff% VII"}
+]}
+|
 {"Id":"EgyptCities",
 "TextOptions":[
 	{"StoredString":"%EgyptPre%%EgyptSuff%"},
-	{"StoredString":"Temple City of %EgyptPre%%EgyptSuff%"},
+	{"StoredString":"%EgyptPre%%EgyptSuff%"},
+	{"StoredString":"Temple City of %EgyptGods%"},
 	{"StoredString":"Great %EgyptPre%%EgyptSuff%"},
+	{"StoredString":"The City of %EgyptGods%"},
+	{"StoredString":"The City of %EgyptGods%"},
+	{"StoredString":"Port %EgyptPre%%EgyptSuff%","Conditions":["Ocean"]},
+	{"StoredString":"Port %EgyptPre%%EgyptSuff%","Conditions":["Ocean"]},
 	{"StoredString":"Port %EgyptPre%%EgyptSuff%","Conditions":["Ocean"]}
 ]}
 |
 {"Id":"EgyptPyramids",
 "TextOptions":[
-	{"StoredString":"Pyramid of %EgyptPre%%EgyptSuff%"},
-	{"StoredString":"Great Pyramid of %EgyptPre%%EgyptSuff%"},
-	{"StoredString":"Catacombs of %EgyptPre%%EgyptSuff%"},
-	{"StoredString":"Mortuary of %EgyptPre%%EgyptSuff%"},
+	{"StoredString":"Pyramid of %EgyptNames%"},
+	{"StoredString":"Great Pyramid of %EgyptNames%"},
+	{"StoredString":"Catacombs of %EgyptNames%"},
+	{"StoredString":"Mortuary of %EgyptNames%"},
+	{"StoredString":"Necropolis of %EgyptNames%"},
 	{"StoredString":"Pyramid of %EgyptGods%"},
 	{"StoredString":"Mortuary of %EgyptGods%"},
 	{"StoredString":"Catacombs of %EgyptGods%"},
-	{"StoredString":"Necropolis of %EgyptGods%"},
-	{"StoredString":"Necropolis of %EgyptPre%%EgyptSuff%"}
+	{"StoredString":"Necropolis of %EgyptGods%"}	
 ]}
-
-
-

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 public static class TextChunkParser
@@ -46,25 +47,23 @@ public class TextChunkModel : ParsableData
 
 	private string GetRandomTextOption(List<string> traits)
 	{
-		int startCheck = UnityEngine.Random.Range(0, TextOptions.Count);
-		for (int i = 0; i < TextOptions.Count; i++)
+		List<string> validOptions = new List<string>();
+
+		foreach (StoredStringModel option in TextOptions)
 		{
-			int offset = i;
-			if (i >= TextOptions.Count - startCheck)
-				offset = i - TextOptions.Count;
-
-			bool valid = true;
-			foreach (string condition in TextOptions[startCheck + offset].Conditions)
+			bool validOption = true;
+			foreach (string condition in option.Conditions)
 			{
-				if (!traits.Contains(condition))
-					valid = false;
+				validOption = traits.Contains(condition);
 			}
-
-			if (valid)
-				return TextOptions[startCheck + offset].StoredString;
+			if (validOption)
+				validOptions.Add(option.StoredString);
 		}
 
-		return TextOptions.First().StoredString;
+		if(validOptions.Count == 0)
+			validOptions.Add("!NO VALID STRING FOUND!");
+
+		return validOptions[UnityEngine.Random.Range(0, validOptions.Count)];
 	}
 }
 

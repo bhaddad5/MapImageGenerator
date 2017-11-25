@@ -99,6 +99,7 @@ public class MapBuilder : MonoBehaviour
 
 	public void RebuildMap()
 	{
+		Camera.main.transform.localPosition = new Vector3(Width.Value/2, 8f, Height.Value/4);
 		WorldModel world = WorldParser.WorldData[EnvironmentSelection.options[EnvironmentSelection.value].text];
 		CurrentMap = new MapModel(Width.Value, Height.Value);
 		GenerateMap(world);
@@ -128,8 +129,6 @@ public class MapBuilder : MonoBehaviour
 		{
 			Destroy(TextParent.GetChild(i).gameObject);
 		}
-
-		transform.localPosition = Vector3.zero;
 
 		if (ObjectParent != null)
 			Destroy(ObjectParent);
@@ -193,8 +192,6 @@ public class MapBuilder : MonoBehaviour
 		yield return null;
 
 		TextDisplayHandler.DisplayMapText(CurrentMap, TextInstantiationController, TextParent);
-
-		transform.localPosition -= new Vector3(CurrentMap.Map.Width / 2f, 0f, CurrentMap.Map.Height / 2f);
 
 		displayText.enabled = false;
 	}

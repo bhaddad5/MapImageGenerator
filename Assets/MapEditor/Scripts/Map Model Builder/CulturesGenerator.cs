@@ -75,14 +75,14 @@ public class CulturesGenerator
 				}
 			}
 
-			Map.Map.Get(pos).Traits.Add("Settled");
+			Map.Map.Get(pos).Traits.Add(MapTileModel.TileTraits.Settled.ToString());
 			Map.Map.Get(pos).SetMaxHeight(0);
 
 			List<string> traits = new List<string>();
-			traits = traits.Concat(Map.Map.Get(pos).Traits).ToList();
+			traits = traits.Concat(Map.Map.Get(pos).GetTraits()).ToList();
 			foreach (MapTileModel adjacentValue in Map.Map.GetAdjacentValues(pos))
 			{
-				traits = traits.Concat(adjacentValue.Traits).ToList();
+				traits = traits.Concat(adjacentValue.GetTraits()).ToList();
 			}
 
 			Map.Map.Get(pos).TextEntry = new SettlementTextModel()
