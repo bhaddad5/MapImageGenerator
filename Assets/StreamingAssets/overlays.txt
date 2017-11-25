@@ -45,3 +45,15 @@
 	"ThreeSides":{"Path":"Overlays/CoastFlatOverlay.png"},
 	"FourSides":{"Path":"Overlays/CoastOceanOverlay.png"}
 }
+|
+{
+	"Id":"DirtRoads",
+	"GroundTrait":"Road",
+	"OverlayLayer":"Overlay",
+	"NoSides":{"Path":"Overlays/RoadCircle.png"},
+	"OneSide":{"Path":"Overlays/RoadEnd.png"},
+	"TwoAdjSides":{"Path":"Overlays/RoadBend.png"},
+	"TwoOppSides":{"Path":"Overlays/RoadStraight.png"},
+	"ThreeSides":{"Path":"Overlays/RoadFork.png"},
+	"FourSides":{"Path":"Overlays/RoadCross.png"}
+}

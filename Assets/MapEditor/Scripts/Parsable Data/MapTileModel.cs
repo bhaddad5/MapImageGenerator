@@ -31,6 +31,7 @@ public class MapTileModel
 		River,
 		Ocean,
 		Settled,
+		Road,
 	}
 
 	public List<string> Traits = new List<string>();
