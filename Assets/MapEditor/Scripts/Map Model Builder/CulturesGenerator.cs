@@ -141,7 +141,7 @@ public class CulturesGenerator
 		return val;
 	}
 
-	private void BuildRoads()
+	/*private void BuildRoads()
 	{
 		foreach (KeyValuePair<Int2, CultureModel> settlement in settlements)
 		{
@@ -228,5 +228,85 @@ public class CulturesGenerator
 			roadPath.Add(maxNeighbor);
 			BuildRoadBack(roadDistField, roadPath);
 		}
+	}*/
+
+	private void BuildRoads()
+	{
+		foreach (KeyValuePair<Int2, CultureModel> settlement in settlements)
+		{
+			HashSet<Int2> settlementsHit = new HashSet<Int2>();
+			settlementsHit.Add(settlement.Key);
+			BuildRoadsFromSettlement(settlement.Key, settlementsHit);
+		}
+	}
+
+	private void BuildRoadsFromSettlement(Int2 settlement, HashSet<Int2> settlementsHit)
+	{
+		Int2 startTile = settlement;
+
+		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
+		frontierTiles.Insert(startTile, 3f);
+
+		Map2D<float> distMap = new Map2D<float>(Map.Map.Width, Map.Map.Height);
+
+		while (frontierTiles.Count > 0)
+		{
+			distMap.Set(frontierTiles.TopValue(), frontierTiles.TopKey());
+			float currDifficulty = frontierTiles.TopKey();
+			Int2 currTile = frontierTiles.Pop();
+			foreach (var tile in Map.Map.GetAdjacentPoints(currTile))
+			{
+				if (!distMap.Get(tile).Equals(0) ||
+				    Map.Map.Get(tile).HasTrait(MapTileModel.TileTraits.Ocean) ||
+					(Map.Map.Get(currTile).HasTrait(MapTileModel.TileTraits.River) && Map.Map.Get(tile).HasTrait(MapTileModel.TileTraits.River)))
+					continue;
+
+				if (Map.Map.Get(tile).HasTrait(MapTileModel.TileTraits.Settled))
+				{
+					Int2 sett = tile;
+					bool alreadyHit = false;
+					foreach (Int2 hit in settlementsHit)
+					{
+						if (hit.Equals(sett))
+							alreadyHit = true;
+					}
+					if (!alreadyHit)
+					{
+						settlementsHit.Add(tile);
+						BuildRoadBackFromTile(currTile, distMap);
+						BuildRoadsFromSettlement(settlement, settlementsHit);
+						return;
+					}
+				}
+
+				float difficulty = Map.Map.Get(tile).Difficulty;
+				if (currDifficulty - difficulty > 0)
+				{
+					frontierTiles.Insert(tile, currDifficulty - difficulty);
+					distMap.Set(tile, currDifficulty - difficulty);
+				}
+			}
+		}
+	}
+
+	private void BuildRoadBackFromTile(Int2 tile, Map2D<float> distMap)
+	{
+		if (Map.Map.Get(tile).HasTrait(MapTileModel.TileTraits.Road))
+			return;
+		if (!Map.Map.Get(tile).HasTrait(MapTileModel.TileTraits.Settled))
+		{
+			Map.Map.Get(tile).MaxDifficulty = 0.05f;
+			Map.Map.Get(tile).Traits.Add(MapTileModel.TileTraits.Road.ToString());
+			Map.Map.Get(tile).Overlays.Add("DirtRoads");
+		}
+		Int2 maxTile = tile;
+		foreach (var t in distMap.GetAdjacentPoints(tile))
+		{
+			if (distMap.Get(t) > distMap.Get(maxTile))
+				maxTile = t;
+		}
+
+		if (!maxTile.Equals(tile))
+			BuildRoadBackFromTile(maxTile, distMap);
 	}
 }

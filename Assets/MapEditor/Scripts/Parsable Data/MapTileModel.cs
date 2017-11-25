@@ -38,6 +38,8 @@ public class MapTileModel
 	public List<string> Overlays = new List<string>();
 	public float Height { get { return Mathf.Min(Terrain().Height, MaxHeight); } }
 	public float MaxHeight = 1000;
+	public float Difficulty { get { return Mathf.Min(Terrain().Difficulty, MaxDifficulty); } }
+	public float MaxDifficulty = 1000;
 
 	public void SetMaxHeight(float newMaxHeight)
 	{
