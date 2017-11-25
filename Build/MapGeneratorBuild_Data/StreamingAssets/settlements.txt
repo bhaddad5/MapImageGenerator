@@ -30,7 +30,7 @@
 "TraitPreferences":[
 	{"Trait":"Forest","Preference":0.1},
 	{"Trait":"Mountain","Preference":0.3},
-	{"Trait":"Settled","Preference":-0.5}
+	{"Trait":"Settled","Preference":-1}
 ]}
 |
 {"Id":"EgyptCity",

@@ -149,13 +149,54 @@
 	{"StoredString":"-serok","Conditions":["Ocean"]}
 ]}
 |
+{"Id":"DwarfNamesPre",
+"TextOptions":[
+	{"StoredString":"Gim"},
+	{"StoredString":"Grim"},
+	{"StoredString":"Bele"},
+	{"StoredString":"Thor"},
+	{"StoredString":"Un"},
+	{"StoredString":"Mora"},
+	{"StoredString":"Mura"},
+	{"StoredString":"Dwal"},
+	{"StoredString":"Thor"},
+	{"StoredString":"Grom"},
+	{"StoredString":"Mala"},
+	{"StoredString":"Bor"},
+	{"StoredString":"Bro"},
+	{"StoredString":"Ulth"},
+	{"StoredString":"Got"}
+]}
+|
+{"Id":"DwarfNamesSuff",
+"TextOptions":[
+	{"StoredString":"li"},
+	{"StoredString":"lok"},
+	{"StoredString":"gar"},
+	{"StoredString":"grim"},
+	{"StoredString":"rek"},
+	{"StoredString":"din"},
+	{"StoredString":"dar"},
+	{"StoredString":"in"},
+	{"StoredString":"brindal"},
+	{"StoredString":"kai"},
+	{"StoredString":"ri"},
+	{"StoredString":"er"},
+	{"StoredString":"lok"}
+]}
+|
 {"Id":"DwarfFortresses",
 "TextOptions":[
 	{"StoredString":"%DwarfPre%%DwarfSuff% Citadel"},
 	{"StoredString":"%DwarfPre%%DwarfSuff% Fortress"},
 	{"StoredString":"Fortress of %DwarfPre%%DwarfSuff%"},
 	{"StoredString":"Fort %DwarfPre%%DwarfSuff%"},
-	{"StoredString":"%DwarfPre%%DwarfSuff% Post"},
+	{"StoredString":"%DwarfNamesPre%%DwarfNamesSuff%'s Post"},
+	{"StoredString":"%DwarfNamesPre%%DwarfNamesSuff%'s Hold"},
+	{"StoredString":"%DwarfNamesPre%%DwarfNamesSuff%'s Stand"},
+	{"StoredString":"%DwarfNamesPre%%DwarfNamesSuff%'s Post"},
+	{"StoredString":"%DwarfNamesPre%%DwarfNamesSuff%'s Hold"},
+	{"StoredString":"%DwarfNamesPre%%DwarfNamesSuff%'s Stand"},
 	{"StoredString":"%DwarfPre%%DwarfSuff% Mountain","Conditions":["Mountains"]}
 ]}
 |
