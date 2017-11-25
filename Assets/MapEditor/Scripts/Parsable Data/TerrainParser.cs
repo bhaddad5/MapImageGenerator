@@ -47,15 +47,6 @@ public class TerrainModel : ParsableData
 	{
 		return 0.1f;
 	}
-
-	private Dictionary<string, float> Defense = new Dictionary<string, float>()
-	{
-		{MapTileModel.TileTraits.Water.ToString(), .3f },
-		{MapTileModel.TileTraits.Impassable.ToString(), .2f },
-		{MapTileModel.TileTraits.Fertile.ToString(), -.5f },
-		{MapTileModel.TileTraits.Forest.ToString(), -.3f },
-	};
-
 	
 	public float Height;
 	public StoredTexture Texture;
@@ -63,17 +54,6 @@ public class TerrainModel : ParsableData
 	public List<string> Traits = new List<string>();
 	public List<EntityPlacementModel> EntityPlacements = new List<EntityPlacementModel>();
 	public List<string> Overlays = new List<string>();
-
-	public float GetDefensibility()
-	{
-		float defense = 0;
-		foreach (string trait in Traits)
-		{
-			if (Defense.ContainsKey(trait))
-				defense += Defense[trait];
-		}
-		return defense;
-	}
 }
 
 [Serializable]

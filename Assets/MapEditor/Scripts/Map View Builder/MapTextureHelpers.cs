@@ -63,6 +63,7 @@ public class MapTextureHelpers
 	{
 		Texture2D tex = new Texture2D(colors.Width, colors.Height);
 		tex.SetPixels(colors.GetMapValuesFlipped().ToArray());
+		tex.wrapMode = TextureWrapMode.Clamp;
 		tex.Apply();
 		return tex;
 	}

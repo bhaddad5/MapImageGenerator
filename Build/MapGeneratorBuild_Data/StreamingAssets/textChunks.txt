@@ -35,6 +35,7 @@
 	{"StoredString":"ford","Conditions":["River"]},
 	{"StoredString":"brook","Conditions":["River"]},
 	{"StoredString":"field","Conditions":["Fertile"]},
+	{"StoredString":"wood","Conditions":["Forest"]},
 	{"StoredString":"ham"},
 	{"StoredString":"dun"},
 	{"StoredString":"wick"},
@@ -45,13 +46,66 @@
 	{"StoredString":"end"}
 ]}
 |
+{"Id":"AngloAdjectives",
+"TextOptions":[
+	{"StoredString":"Misty"},
+	{"StoredString":"West"},
+	{"StoredString":"East"},
+	{"StoredString":"High","Conditions":["Mountains"]},
+	{"StoredString":"Red"},
+	{"StoredString":"Blue"},
+	{"StoredString":"Black"},
+	{"StoredString":"Green"},
+	{"StoredString":"Fell"},
+	{"StoredString":"Sunny"},
+	{"StoredString":"Bright"},
+	{"StoredString":"Burned"}
+]}
+|
+{"Id":"AngloNouns",
+"TextOptions":[
+	{"StoredString":"Wood","Conditions":["Forest"]},
+	{"StoredString":"Forest","Conditions":["Forest"]},
+	{"StoredString":"Trees","Conditions":["Forest"]},
+	{"StoredString":"Mountain","Conditions":["Mountains"]},
+	{"StoredString":"Ford","Conditions":["River"]},
+	{"StoredString":"Brook","Conditions":["River"]},
+	{"StoredString":"Crossing","Conditions":["River"]},
+	{"StoredString":"River","Conditions":["River"]},
+	{"StoredString":"Moor","Conditions":["Swamp"]},
+	{"StoredString":"Marsh","Conditions":["Swamp"]},
+	{"StoredString":"Heath","Conditions":["Hills"]},
+	{"StoredString":"Hills","Conditions":["Hills"]},
+	{"StoredString":"Hill","Conditions":["Hills"]},
+	{"StoredString":"Cliffs","Conditions":["Ocean"]},
+	{"StoredString":"Cliff","Conditions":["Ocean"]},
+	{"StoredString":"Shore","Conditions":["Ocean"]},
+	{"StoredString":"Sands","Conditions":["Desert"]},
+	{"StoredString":"Fields","Conditions":["Fertile"]},
+	{"StoredString":"Farms","Conditions":["Fertile"]},
+	{"StoredString":"Field","Conditions":["Fertile"]}
+]}
+|
 {"Id":"AngloCastles",
 "TextOptions":[
 	{"StoredString":"%AngloPrefixes%%AngloSuffixes%"},
 	{"StoredString":"Castle %AngloPrefixes%%AngloSuffixes%"},
 	{"StoredString":"%AngloPrefixes%%AngloSuffixes% Hold"},
 	{"StoredString":"%AngloPrefixes%%AngloSuffixes% Castle"},
-	{"StoredString":"Port %AngloPrefixes%%AngloSuffixes%","Conditions":["Ocean"]}
+	{"StoredString":"%AngloAdjectives% %AngloNouns%"},
+	{"StoredString":"%AngloAdjectives% %AngloNouns%"},
+	{"StoredString":"The %AngloAdjectives% %AngloNouns%"},
+	{"StoredString":"The %AngloAdjectives% %AngloNouns%"}
+]}
+|
+{"Id":"AngloCities",
+"TextOptions":[
+	{"StoredString":"%AngloPrefixes%%AngloSuffixes%"},
+	{"StoredString":"Port %AngloPrefixes%%AngloSuffixes%","Conditions":["Ocean"]},
+	{"StoredString":"%AngloPrefixes%%AngloSuffixes% Harbor","Conditions":["Ocean"]},
+	{"StoredString":"%AngloPrefixes%%AngloSuffixes% Anchorage","Conditions":["Ocean"]},
+	{"StoredString":"%AngloAdjectives% %AngloNouns%"},
+	{"StoredString":"%AngloAdjectives% %AngloNouns%"}
 ]}
 |
 {"Id":"DwarfPre",

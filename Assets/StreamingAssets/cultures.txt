@@ -22,7 +22,8 @@
 ],
 "HeraldryBackgroundColorSource":"Vibrant",
 "SettlementTypes":[
-	{"SettlementType":"AngloCastle","PlacementsPer20Square":8}
+	{"SettlementType":"AngloCastle","PlacementsPer20Square":6},
+	{"SettlementType":"AngloCity","PlacementsPer20Square":3}
 ]}
 |
 {"Id":"Dwarf",

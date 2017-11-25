@@ -28,11 +28,7 @@ public class MapTileModel
 		Water,
 		Impassable,
 		Mountain,
-		Fertile,
-		Swamp,
-		Forest,
 		River,
-		Desert,
 		Ocean,
 		Settled,
 	}

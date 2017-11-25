@@ -15,6 +15,10 @@ public class MapGeneratorApi
 		TerrainDefaultFill("Ocean");
 		foreach (RealmPlacementModel realm in world.Realms)
 			ExecuteApiCommands(realm.Realm.PreRiverCommands, realm.MinLatitude, realm.MaxLatitude);
+
+		SetEdgesToOcean();
+		TerrainRandomizeEdges("Ocean", 2);
+
 		foreach (RealmPlacementModel realm in world.Realms)
 			ExecuteApiCommands(realm.Realm.RiverCommands, realm.MinLatitude, realm.MaxLatitude);
 		foreach (RealmPlacementModel realm in world.Realms)
@@ -419,6 +423,32 @@ public class MapGeneratorApi
 	{
 		return Map.Map.Get(point).HasTrait(MapTileModel.TileTraits.Ocean) || Map.Map.Get(point).HasTrait(MapTileModel.TileTraits.Mountain);
 	}
+
+
+	private void SetEdgesToOcean()
+	{
+		for(int i = 0; i < Map.Map.Width; i++)
+		{
+			for (int tilesIn = 0; tilesIn < 3; tilesIn++)
+			{
+				if(Helpers.Odds((4f - tilesIn)/3f))
+					Map.Map.Get(new Int2(i, tilesIn)).TerrainId = "Ocean";
+				if (Helpers.Odds((4f - tilesIn) / 3f))
+					Map.Map.Get(new Int2(i, Map.Map.Height - tilesIn - 1)).TerrainId = "Ocean";
+			}
+		}
+		for (int i = 0; i < Map.Map.Height; i++)
+		{
+			for (int tilesIn = 0; tilesIn < 3; tilesIn++)
+			{
+				if (Helpers.Odds((4f - tilesIn) / 3f))
+					Map.Map.Get(new Int2(tilesIn, i)).TerrainId = "Ocean";
+				if (Helpers.Odds((4f - tilesIn) / 3f))
+					Map.Map.Get(new Int2(Map.Map.Width - tilesIn - 1, i)).TerrainId = "Ocean";
+			}
+		}
+	}
+
 
 	private void ReplaceOceanCoastTiles()
 	{

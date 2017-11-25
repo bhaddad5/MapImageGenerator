@@ -48,7 +48,8 @@ public class CulturesGenerator
 
 			if (SettlementType.PortEntity.model != null)
 			{
-				foreach (Int2 adjacentPoint in Map.Map.GetAdjacentPoints(pos))
+				var adjRand = Map.Map.GetAdjacentPoints(pos).RandomEnumerate();
+				foreach (Int2 adjacentPoint in adjRand)
 				{
 					if (Map.Map.Get(adjacentPoint).HasTrait(MapTileModel.TileTraits.Ocean) &&
 						Map.Map.Get(adjacentPoint).Entities.Count == 0)

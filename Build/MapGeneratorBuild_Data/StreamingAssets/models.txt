@@ -9,6 +9,15 @@
 	"Anglo/Models/Castle 3.obj"
 ]}|
 
+{"Id":"AngloCity", "ModelPaths":[
+	"Anglo/Models/City 1.obj"
+]}|
+
+{"Id":"AngloPort", "ModelPaths":[
+	"Anglo/Models/Port.obj",
+	"Anglo/Models/Port 2.obj"
+]}|
+
 {"Id":"DwarfFortress", "ModelPaths":["Dwarf/Models/Dwarf Fortress.obj"]}|
 
 {"Id":"EgyptianCity", "ModelPaths":["Egyptian/Models/Egyptian City.obj"]}|

@@ -16,7 +16,9 @@
 "EntityPlacements":[
 	{"model":"Pine","min":0,"max":5,"placementMode":"Scattered"}
 ],
-"Traits":[]}
+"Traits":[
+	"Hills"
+]}
 |
 {"Id":"MidlandForest",
 "Texture":{"TexturePath":"Midlands/Terrain/Forest.png"},

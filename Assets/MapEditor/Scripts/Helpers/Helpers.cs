@@ -34,7 +34,7 @@ public static class Helpers
 		List<T> finalList = new List<T>();
 		if(list.Count > 0)
 		{
-			int startEnumerate = UnityEngine.Random.Range(0, finalList.Count - 1);
+			int startEnumerate = UnityEngine.Random.Range(0, list.Count - 1);
 			for (int i = 0; i < list.Count; i++)
 			{
 				int index = i + startEnumerate;
