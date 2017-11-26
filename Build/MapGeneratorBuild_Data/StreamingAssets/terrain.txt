@@ -96,7 +96,7 @@
 ]}
 |
 {"Id":"DesertForest",
-"Difficulty":50,
+"Difficulty":0.25,
 "Height":0.01,
 "Texture":{"TexturePath":"Desert/Terrain/Desert Farms.png"},
 "EntityPlacements":[

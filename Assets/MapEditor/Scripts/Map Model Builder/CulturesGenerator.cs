@@ -18,7 +18,7 @@ public class CulturesGenerator
 			BuildCulture(culture);
 		}
 
-		BuildRoads();
+		BuildAdjacencies();
 		return Map;
 	}
 
@@ -149,39 +149,47 @@ public class CulturesGenerator
 	private class SettlementNode
 	{
 		public Int2 SettlementTile;
+		public CultureModel Culture;
 		public readonly List<Int2> AdjacenctSettlements;
 
-		public SettlementNode(Int2 tile, List<Int2> adj)
+		public SettlementNode(Int2 tile, List<Int2> adj, CultureModel culture)
 		{
 			SettlementTile = tile;
 			AdjacenctSettlements = adj;
+			Culture = culture;
 		}
 
-		public Int2 GetAdjacent(List<Int2> including, List<Int2> excluding)
+		public Int2 GetAdjacent(List<Int2> including, List<Int2> excluding, Dictionary<Int2, CultureModel> settlements)
 		{
 			foreach (Int2 adjacenctSettlement in AdjacenctSettlements)
 			{
-				if(including.Contains(adjacenctSettlement) && !excluding.Contains(adjacenctSettlement))
+				if(including.Contains(adjacenctSettlement) && !excluding.Contains(adjacenctSettlement) &&
+				   settlements[adjacenctSettlement] == Culture)
 					return adjacenctSettlement;
 			}
 			return null;
 		}
 	}
 
-	private void BuildRoads()
+	private void BuildAdjacencies()
 	{
 		Dictionary<Int2, SettlementNode> adjacencies = new Dictionary<Int2, SettlementNode>();
 
-		foreach (KeyValuePair<Int2, CultureModel> settlement in settlements)
+		foreach (KeyValuePair<Int2, CultureModel> settlement in settlements.ToList().RandomEnumerate())
 		{
 			HashSet<Int2> settlementsHit = new HashSet<Int2>();
 			settlementsHit.Add(settlement.Key);
 			BuildRoadsFromSettlement(settlement.Key, settlementsHit);
 
-			adjacencies[settlement.Key] = new SettlementNode(settlement.Key, settlementsHit.ToList());
+			adjacencies[settlement.Key] = new SettlementNode(settlement.Key, settlementsHit.ToList(), settlement.Value);
 		}
 
-		while(adjacencies.Count > 0)
+		BuildKingdoms(adjacencies);
+	}
+
+	private void BuildKingdoms(Dictionary<Int2, SettlementNode> adjacencies)
+	{
+		while (adjacencies.Count > 0)
 		{
 			Dictionary<Int2, SettlementNode> Kingdom = new Dictionary<Int2, SettlementNode>();
 			int desiredKingdomSize = (int)Math.Max((Random.Range(.2f, 1f) * Random.Range(.2f, 1f) * 12), 1);
@@ -191,7 +199,7 @@ public class CulturesGenerator
 			{
 				foreach (var settlement in Kingdom)
 				{
-					Int2 adj = Kingdom[settlement.Key].GetAdjacent(adjacencies.Keys.ToList(), Kingdom.Keys.ToList());
+					Int2 adj = Kingdom[settlement.Key].GetAdjacent(adjacencies.Keys.ToList(), Kingdom.Keys.ToList(), settlements);
 					if (adj != null)
 					{
 						Kingdom[adj] = adjacencies[adj];
