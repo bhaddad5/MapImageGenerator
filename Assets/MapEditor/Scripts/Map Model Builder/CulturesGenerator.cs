@@ -1,12 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CulturesGenerator
 {
 	protected MapModel Map;
-	private List<KeyValuePair<Int2, CultureModel>> settlements = new List<KeyValuePair<Int2, CultureModel>>();
+	private Dictionary<Int2, CultureModel> settlements = new Dictionary<Int2, CultureModel>();
 
 	public MapModel GenerateMap(MapModel map, WorldModel world)
 	{
@@ -47,7 +49,7 @@ public class CulturesGenerator
 			settlement.PreBakeModelIndex();
 
 			Map.Map.Get(pos).Entities.Add(settlement);
-			settlements.Add(new KeyValuePair<Int2, CultureModel>(pos, culture));
+			settlements[pos] = culture;
 
 			if (SettlementType.PortEntity.model != null)
 			{
@@ -141,15 +143,71 @@ public class CulturesGenerator
 		return val;
 	}
 
+	private class SettlementNode
+	{
+		public Int2 SettlementTile;
+		public readonly List<Int2> AdjacenctSettlements;
+
+		public SettlementNode(Int2 tile, List<Int2> adj)
+		{
+			SettlementTile = tile;
+			AdjacenctSettlements = adj;
+		}
+
+		public Int2 GetAdjacent(List<Int2> including, List<Int2> excluding)
+		{
+			foreach (Int2 adjacenctSettlement in AdjacenctSettlements)
+			{
+				if(including.Contains(adjacenctSettlement) && !excluding.Contains(adjacenctSettlement))
+					return adjacenctSettlement;
+			}
+			return null;
+		}
+	}
+
 	private void BuildRoads()
 	{
+		Dictionary<Int2, SettlementNode> adjacencies = new Dictionary<Int2, SettlementNode>();
+
 		foreach (KeyValuePair<Int2, CultureModel> settlement in settlements)
 		{
 			HashSet<Int2> settlementsHit = new HashSet<Int2>();
 			settlementsHit.Add(settlement.Key);
 			BuildRoadsFromSettlement(settlement.Key, settlementsHit);
 
-			Debug.Log(Map.Map.Get(settlement.Key).TextEntry.Text + ", " + settlementsHit.Count);
+			adjacencies[settlement.Key] = new SettlementNode(settlement.Key, settlementsHit.ToList());
+		}
+
+		while(adjacencies.Count > 0)
+		{
+			Dictionary<Int2, SettlementNode> Kingdom = new Dictionary<Int2, SettlementNode>();
+			int desiredKingdomSize = (int)Math.Max((Random.Range(.2f, 1f) * Random.Range(.2f, 1f) * 12), 1);
+			Debug.Log(desiredKingdomSize);
+
+			var start = adjacencies.First();
+			Kingdom[start.Key] = start.Value;
+			for (int s = 1; s < desiredKingdomSize; s++)
+			{
+				foreach (var settlement in Kingdom)
+				{
+					Int2 adj = Kingdom[settlement.Key].GetAdjacent(adjacencies.Keys.ToList(), Kingdom.Keys.ToList());
+					if (adj != null)
+					{
+						Kingdom[adj] = adjacencies[adj];
+						break;
+					}
+				}
+			}
+			Debug.Log("Kingdom of " + Map.Map.Get(start.Key).TextEntry.Text);
+			Map.Map.Get(start.Key).TextEntry.Capitol = true;
+			foreach (Int2 settlement in Kingdom.Keys)
+			{
+				adjacencies.Remove(settlement);
+
+				Debug.Log(Map.Map.Get(settlement).TextEntry.Text);
+
+				Map.Map.Get(settlement).TextEntry.KingdomName = "Kingdom of " + Map.Map.Get(start.Key).TextEntry.Text;
+			}
 		}
 	}
 

@@ -72,6 +72,8 @@ public class SettlementTextModel
 {
 	public string Text;
 	public string SettlementDescription;
+	public string KingdomName;
+	public bool Capitol;
 	public StoredTexture BackgroundTexture;
 	public Vector4 BackgroundColor1;
 	public Vector4 BackgroundColor2;

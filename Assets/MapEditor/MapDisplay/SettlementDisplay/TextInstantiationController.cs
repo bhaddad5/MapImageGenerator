@@ -13,8 +13,10 @@ public class TextInstantiationController : MonoBehaviour
 			SettlementInfoDisplay display = Instantiate(SettlementInfoDisplay, textParent);
 			display.settlementDescr.text = textModel.SettlementDescription;
 			display.settlementName.text = textModel.Text;
+			display.kingdomName.text = textModel.KingdomName;
 			display.heraldry.sprite = GetHeraldryTexture(textModel);
 			display.transform.position = position;
+			display.crown.gameObject.SetActive(textModel.Capitol);
 		}
 	}
 
