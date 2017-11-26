@@ -189,6 +189,19 @@
 	{"StoredString":"lok"}
 ]}
 |
+{"Id":"DwarfMetals",
+"TextOptions":[
+	{"StoredString":"Golden"},
+	{"StoredString":"Silver"},
+	{"StoredString":"Iron"},
+	{"StoredString":"Bronze"},
+	{"StoredString":"Copper"},
+	{"StoredString":"Diamond"},
+	{"StoredString":"Emerald"},
+	{"StoredString":"Jade"},
+	{"StoredString":"Mithral"}
+]}
+|
 {"Id":"DwarfFortresses",
 "TextOptions":[
 	{"StoredString":"%DwarfPre%%DwarfSuff% Citadel"},
@@ -201,7 +214,23 @@
 	{"StoredString":"%DwarfNamesPre%%DwarfNamesSuff%'s Post"},
 	{"StoredString":"%DwarfNamesPre%%DwarfNamesSuff%'s Hold"},
 	{"StoredString":"%DwarfNamesPre%%DwarfNamesSuff%'s Stand"},
-	{"StoredString":"%DwarfPre%%DwarfSuff% Mountain","Conditions":["Mountains"]}
+	{"StoredString":"%DwarfPre%%DwarfSuff% Mountain","Conditions":["Mountains"]},
+	{"StoredString":"%DwarfMetals% Mountain","Conditions":["Mountains"]}
+]}
+|
+{"Id":"DwarfKingdoms",
+"TextOptions":[
+	{"StoredString":"Empire of %DwarfPre%%DwarfSuff%","Conditions":["Large"]},
+	{"StoredString":"The %DwarfPre%%DwarfSuff% Empire","Conditions":["Large"]},
+	{"StoredString":"The %DwarfPre% Holds","Conditions":["Medium"]},
+	{"StoredString":"The %DwarfPre% Holds","Conditions":["Small"]},
+	{"StoredString":"The Guilds of %n%","Conditions":["Small"]},
+	{"StoredString":"The %DwarfMetals% Guild of %n%","Conditions":["Small"]},
+	{"StoredString":"The Guilds of %n%","Conditions":["One"]},
+	{"StoredString":"The %DwarfMetals% Guild of %n%","Conditions":["One"]},
+	{"StoredString":"%DwarfNamesPre%%DwarfNamesSuff%'s Expidition"},
+	{"StoredString":"%DwarfNamesPre%%DwarfNamesSuff%'s Expidition"},
+	{"StoredString":"%DwarfNamesPre%%DwarfNamesSuff%'s Expidition"}
 ]}
 |
 {"Id":"EgyptPre",
@@ -278,6 +307,7 @@
 	{"StoredString":"Dark"},
 	{"StoredString":"Bright"},
 	{"StoredString":"Lost"},
+	{"StoredString":"Ancient"},
 	{"StoredString":"Fallen"}
 ]}
 |
@@ -292,6 +322,7 @@
 	{"StoredString":"Necromancer"},
 	{"StoredString":"Priesthood"},
 	{"StoredString":"Waters","Conditions":["Water"]},
+	{"StoredString":"Ships","Conditions":["Water"]},
 	{"StoredString":"Souls"},
 	{"StoredString":"Shadows"},
 	{"StoredString":"Sword"},
@@ -367,16 +398,35 @@
 "TextOptions":[
 	{"StoredString":"%EgyptPre%%EgyptSuff%"},
 	{"StoredString":"%EgyptPre%%EgyptSuff%"},
-	{"StoredString":"Temple City of %EgyptGods%"},
+	{"StoredString":"The Temple City of %EgyptGods%"},
 	{"StoredString":"Great %EgyptPre%%EgyptSuff%"},
 	{"StoredString":"Port %EgyptPre%%EgyptSuff%","Conditions":["Ocean"]},
 	{"StoredString":"Port %EgyptPre%%EgyptSuff%","Conditions":["Ocean"]},
 	{"StoredString":"Port %EgyptPre%%EgyptSuff%","Conditions":["Ocean"]}
 ]}
 |
+{"Id":"EgyptCityKingdoms",
+"TextOptions":[
+	{"StoredString":"Empire of %n%","Conditions":["Large"]},
+	{"StoredString":"Empire of %EgyptNames%","Conditions":["Large"]},
+	{"StoredString":"Eternal Empire of %n%","Conditions":["Large"]},
+	{"StoredString":"Kingdom of %EgyptNames%","Conditions":["Medium"]},
+	{"StoredString":"Kingdom of  %n%","Conditions":["Medium"]},
+	{"StoredString":"Province of  %n%","Conditions":["Medium"]},
+	{"StoredString":"Province of %n%","Conditions":["Small"]},
+	{"StoredString":" %n% Province","Conditions":["Small"]},
+	{"StoredString":" %n%","Conditions":["Small"]},
+	{"StoredString":"Trade Lords of  %n%","Conditions":["Small"]},
+	{"StoredString":"%MagicAdjectives% Priesthood of  %n%","Conditions":["Small"]},
+	{"StoredString":" %n%","Conditions":["One"]},
+	{"StoredString":"Trade Lords of  %n%","Conditions":["One"]},
+	{"StoredString":"%MagicAdjectives% Priesthood of %n%","Conditions":["One"]}
+]}
+|
 {"Id":"EgyptPyramids",
 "TextOptions":[
 	{"StoredString":"Pyramid of %EgyptNames%"},
+	{"StoredString":"The %MagicAdjectives% Pyramid"},
 	{"StoredString":"Great Pyramid of %EgyptNames%"},
 	{"StoredString":"Catacombs of %EgyptNames%"},
 	{"StoredString":"Mortuary of %EgyptNames%"},
@@ -386,4 +436,15 @@
 	{"StoredString":"Mortuary of the %MagicAdjectives% %MagicNouns%"},
 	{"StoredString":"Catacombs of the %MagicAdjectives% %MagicNouns%"},
 	{"StoredString":"Necropolis of the %MagicAdjectives% %MagicNouns%"}	
+]}
+|
+{"Id":"EgyptPyramidKingdoms",
+"TextOptions":[
+	{"StoredString":"Priesthood of the %n%"},
+	{"StoredString":"Risen of the %n%"},
+	{"StoredString":"The %MagicAdjectives% Priesthood"},
+	{"StoredString":"Cult of the %MagicAdjectives% %MagicNouns%"},
+	{"StoredString":"The %MagicAdjectives% Necromancer"},
+	{"StoredString":"Pharoh %EgyptNames%"},
+	{"StoredString":"Guardians of the %n%"}
 ]}

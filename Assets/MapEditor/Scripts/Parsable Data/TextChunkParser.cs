@@ -18,7 +18,7 @@ public class TextChunkModel : ParsableData
 {
 	public List<StoredStringModel> TextOptions = new List<StoredStringModel>();
 
-	public string GetText(List<string> traits)
+	public string GetText(List<string> traits, string n = null)
 	{
 		string res = "";
 		char[] chars = GetRandomTextOption(traits).ToCharArray();
@@ -36,8 +36,11 @@ public class TextChunkModel : ParsableData
 					}
 					else lookup += chars[j];
 				}
-
-				res += TextChunkParser.TextData[lookup].GetText(traits);
+				if (lookup == "n")
+				{
+					res += n;
+				}
+				else res += TextChunkParser.TextData[lookup].GetText(traits);
 			}
 			else res += chars[i];
 		}
