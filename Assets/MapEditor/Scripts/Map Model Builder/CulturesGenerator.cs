@@ -94,12 +94,15 @@ public class CulturesGenerator
 			{
 				Text = TextChunkParser.TextData[SettlementType.NameChunk].GetText(traits),
 				SettlementDescription = culture.CultureName + SettlementType.SettlementTypeName,
-				BackgroundTexture = culture.HeraldryBackgrounds[Random.Range(0, culture.HeraldryBackgrounds.Count)],
-				ForegroundTexture = culture.HeraldryForegrounds[Random.Range(0, culture.HeraldryForegrounds.Count)],
-				OverlayTexture = culture.HeraldryOverlayImage,
-				BackgroundColor1 = ColorOptionsParser.ColorOptions[culture.HeraldryBackgroundColorSource].GetRandColor(),
-				BackgroundColor2 = ColorOptionsParser.ColorOptions[culture.HeraldryBackgroundColorSource].GetRandColor(),
-				ForegroundColor = ColorOptionsParser.ColorOptions[culture.HeraldryForegroundColorSource].GetRandColor(),
+				SettlementHeraldry = new HeraldryModel()
+				{
+					BackgroundTexture = culture.HeraldryBackgrounds[Random.Range(0, culture.HeraldryBackgrounds.Count)],
+					ForegroundTexture = culture.HeraldryForegrounds[Random.Range(0, culture.HeraldryForegrounds.Count)],
+					OverlayTexture = culture.HeraldryOverlayImage,
+					BackgroundColor1 = ColorOptionsParser.ColorOptions[culture.HeraldryBackgroundColorSource].GetRandColor(),
+					BackgroundColor2 = ColorOptionsParser.ColorOptions[culture.HeraldryBackgroundColorSource].GetRandColor(),
+					ForegroundColor = ColorOptionsParser.ColorOptions[culture.HeraldryForegroundColorSource].GetRandColor(),
+				}
 			};
 		}
 	}
@@ -182,8 +185,6 @@ public class CulturesGenerator
 		{
 			Dictionary<Int2, SettlementNode> Kingdom = new Dictionary<Int2, SettlementNode>();
 			int desiredKingdomSize = (int)Math.Max((Random.Range(.2f, 1f) * Random.Range(.2f, 1f) * 12), 1);
-			Debug.Log(desiredKingdomSize);
-
 			var start = adjacencies.First();
 			Kingdom[start.Key] = start.Value;
 			for (int s = 1; s < desiredKingdomSize; s++)
@@ -198,15 +199,12 @@ public class CulturesGenerator
 					}
 				}
 			}
-			Debug.Log("Kingdom of " + Map.Map.Get(start.Key).TextEntry.Text);
 			Map.Map.Get(start.Key).TextEntry.Capitol = true;
 			foreach (Int2 settlement in Kingdom.Keys)
 			{
 				adjacencies.Remove(settlement);
-
-				Debug.Log(Map.Map.Get(settlement).TextEntry.Text);
-
 				Map.Map.Get(settlement).TextEntry.KingdomName = "Kingdom of " + Map.Map.Get(start.Key).TextEntry.Text;
+				Map.Map.Get(settlement).TextEntry.KingdomHeraldry = Map.Map.Get(start.Key).TextEntry.SettlementHeraldry;
 			}
 		}
 	}

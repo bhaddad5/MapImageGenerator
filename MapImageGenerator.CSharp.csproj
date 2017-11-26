@@ -130,7 +130,6 @@
     <Compile Include="Assets\MapEditor\Scripts\Map View Builder\MeshConstructor.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Map View Builder\ModelPlacer.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Map View Builder\OverlayDisplayHandler.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\Map View Builder\TextDisplayHandler.cs" />
     <Compile Include="Assets\MapEditor\Scripts\MapBuilder.cs" />
     <Compile Include="Assets\MapEditor\Scripts\OldCultureShit\Culture.cs" />
     <Compile Include="Assets\MapEditor\Scripts\OldCultureShit\Kingdom.cs" />

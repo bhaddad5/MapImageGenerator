@@ -5,41 +5,49 @@ using UnityEngine;
 public class TextInstantiationController : MonoBehaviour
 {
 	public SettlementInfoDisplay SettlementInfoDisplay;
+	public Sprite Transparent;
+	private Dictionary<string, Sprite> instantiatedHeraldry = new Dictionary<string, Sprite>();
 
 	public void DisplayText(Vector3 position, SettlementTextModel textModel, Transform textParent)
 	{
 		if (textModel is SettlementTextModel)
 		{
 			SettlementInfoDisplay display = Instantiate(SettlementInfoDisplay, textParent);
-			display.settlementDescr.text = textModel.SettlementDescription;
-			display.settlementName.text = textModel.Text;
-			display.kingdomName.text = textModel.KingdomName;
-			display.heraldry.sprite = GetHeraldryTexture(textModel);
+			display.SettlementDescr.text = textModel.SettlementDescription;
+			display.SettlementName.text = textModel.Text;
+			display.KingdomName.text = textModel.KingdomName;
 			display.transform.position = position;
-			display.crown.gameObject.SetActive(textModel.Capitol);
+			display.Crown.gameObject.SetActive(textModel.Capitol);
+			display.KingdomHeraldry.sprite = GetHeraldryTexture(textModel.KingdomHeraldry);
+			if (textModel.KingdomHeraldry.GetKey() != textModel.SettlementHeraldry.GetKey())
+				display.ProvinceHeraldry.sprite = GetHeraldryTexture(textModel.SettlementHeraldry);
+			else display.ProvinceHeraldry.sprite = Transparent;
 		}
 	}
 
-	private Sprite GetHeraldryTexture(SettlementTextModel textModel)
+	private Sprite GetHeraldryTexture(HeraldryModel heraldry)
 	{
-		Map2D<Color> background = textModel.BackgroundTexture.GetTexture();
-		Map2D<Color> foreground = textModel.ForegroundTexture.GetTexture();
-		Map2D<Color> overlay = textModel.OverlayTexture.GetTexture();
+		if (instantiatedHeraldry.ContainsKey(heraldry.GetKey()))
+			return instantiatedHeraldry[heraldry.GetKey()];
+
+		Map2D<Color> background = heraldry.BackgroundTexture.GetTexture();
+		Map2D<Color> foreground = heraldry.ForegroundTexture.GetTexture();
+		Map2D<Color> overlay = heraldry.OverlayTexture.GetTexture();
 
 		Map2D<Color> result = new Map2D<Color>(background);
 		foreach (Int2 mapPoint in result.GetMapPoints())
 		{
 			Color c = result.Get(mapPoint);
 			if (c.r.Equals(1f))
-				c = textModel.BackgroundColor1;
+				c = heraldry.BackgroundColor1;
 			else if (c.b.Equals(1f))
-				c = textModel.BackgroundColor2;
+				c = heraldry.BackgroundColor2;
 
 			Color foreBase = foreground.Get(mapPoint);
 			Color fore = new Color();
-			fore.r = foreBase.r + (1 - foreBase.r) * textModel.ForegroundColor.x;
-			fore.g = foreBase.g + (1 - foreBase.g) * textModel.ForegroundColor.y;
-			fore.b = foreBase.b + (1 - foreBase.b) * textModel.ForegroundColor.z;
+			fore.r = foreBase.r + (1 - foreBase.r) * heraldry.ForegroundColor.x;
+			fore.g = foreBase.g + (1 - foreBase.g) * heraldry.ForegroundColor.y;
+			fore.b = foreBase.b + (1 - foreBase.b) * heraldry.ForegroundColor.z;
 			fore.a = foreBase.a;
 
 			c = OverlayColors(c, fore);
@@ -50,7 +58,9 @@ public class TextInstantiationController : MonoBehaviour
 		Texture2D tex = new Texture2D(result.Width, result.Height);
 		tex.SetPixels(result.GetMapValuesFlipped().ToArray());
 		tex.Apply();
-		return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+		Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+		instantiatedHeraldry[heraldry.GetKey()] = sprite;
+		return sprite;
 	}
 
 	private Color OverlayColors(Color orig, Color over)

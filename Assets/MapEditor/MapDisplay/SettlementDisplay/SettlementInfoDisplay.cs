@@ -6,11 +6,12 @@ using UnityEngine.UI;
 
 public class SettlementInfoDisplay : MonoBehaviour
 {
-	public TextMeshProUGUI settlementName;
-	public TextMeshProUGUI kingdomName;
-	public TextMeshProUGUI settlementDescr;
-	public Image crown;
-	public Image heraldry;
+	public TextMeshProUGUI SettlementName;
+	public TextMeshProUGUI KingdomName;
+	public TextMeshProUGUI SettlementDescr;
+	public Image Crown;
+	public Image KingdomHeraldry;
+	public Image ProvinceHeraldry;
 
 	void Update()
 	{

@@ -111,7 +111,6 @@ public class JsonTests
 		TestMap2D.Get(new Int2(0, 0)).TextEntry = new SettlementTextModel()
 		{
 			Text = "Hi",
-			BackgroundColor1 = Color.red
 		};
 		
 		Debug.Log(JsonUtility.ToJson(TestMap2D.ToSerializable()));

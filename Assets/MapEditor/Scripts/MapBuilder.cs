@@ -191,7 +191,13 @@ public class MapBuilder : MonoBehaviour
 		displayText.text = "Unfurling Heraldry";
 		yield return null;
 
-		TextDisplayHandler.DisplayMapText(CurrentMap, TextInstantiationController, TextParent);
+		foreach (Int2 point in CurrentMap.Map.GetMapPoints())
+		{
+			if (CurrentMap.Map.Get(point).TextEntry != null)
+			{
+				TextInstantiationController.DisplayText(new Vector3(point.X + 0.5f, 0, point.Y + 0.5f), CurrentMap.Map.Get(point).TextEntry, TextParent);
+			}
+		}
 
 		displayText.enabled = false;
 	}

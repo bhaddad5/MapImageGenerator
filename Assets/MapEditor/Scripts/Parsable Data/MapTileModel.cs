@@ -74,10 +74,23 @@ public class SettlementTextModel
 	public string SettlementDescription;
 	public string KingdomName;
 	public bool Capitol;
+	public HeraldryModel SettlementHeraldry;
+	public HeraldryModel KingdomHeraldry;
+}
+
+[Serializable]
+public class HeraldryModel
+{
 	public StoredTexture BackgroundTexture;
 	public Vector4 BackgroundColor1;
 	public Vector4 BackgroundColor2;
 	public StoredTexture ForegroundTexture;
 	public Vector4 ForegroundColor;
 	public StoredTexture OverlayTexture;
+
+	public string GetKey()
+	{
+		return "" + BackgroundColor1 + BackgroundColor2 + ForegroundColor +
+		       BackgroundTexture + ForegroundTexture;
+	}
 }
