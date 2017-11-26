@@ -69,6 +69,8 @@
 	{"StoredString":"Forest","Conditions":["Forest"]},
 	{"StoredString":"Trees","Conditions":["Forest"]},
 	{"StoredString":"Mountain","Conditions":["Mountains"]},
+	{"StoredString":"Valley","Conditions":["Mountains"]},
+	{"StoredString":"Vale","Conditions":["Mountains"]},
 	{"StoredString":"Ford","Conditions":["River"]},
 	{"StoredString":"Brook","Conditions":["River"]},
 	{"StoredString":"Crossing","Conditions":["River"]},
@@ -77,6 +79,7 @@
 	{"StoredString":"Marsh","Conditions":["Swamp"]},
 	{"StoredString":"Heath","Conditions":["Hills"]},
 	{"StoredString":"Hills","Conditions":["Hills"]},
+	{"StoredString":"Vale","Conditions":["Hills"]},
 	{"StoredString":"Hill","Conditions":["Hills"]},
 	{"StoredString":"Cliffs","Conditions":["Ocean"]},
 	{"StoredString":"Cliff","Conditions":["Ocean"]},
@@ -84,6 +87,7 @@
 	{"StoredString":"Sands","Conditions":["Desert"]},
 	{"StoredString":"Fields","Conditions":["Fertile"]},
 	{"StoredString":"Farms","Conditions":["Fertile"]},
+	{"StoredString":"Meadow","Conditions":["Fertile"]},
 	{"StoredString":"Field","Conditions":["Fertile"]}
 ]}
 |
@@ -265,32 +269,51 @@
 	{"StoredString":"amun"}
 ]}
 |
+{"Id":"MagicAdjectives",
+"TextOptions":[
+	{"StoredString":"Forgotten"},
+	{"StoredString":"Cursed"},
+	{"StoredString":"Unholy"},
+	{"StoredString":"Holy"},
+	{"StoredString":"Dark"},
+	{"StoredString":"Bright"},
+	{"StoredString":"Lost"},
+	{"StoredString":"Fallen"}
+]}
+|
+{"Id":"MagicNouns",
+"TextOptions":[
+	{"StoredString":""},
+	{"StoredString":"Knowledge"},
+	{"StoredString":"Secrets"},
+	{"StoredString":"King"},
+	{"StoredString":"Kings"},
+	{"StoredString":"Gods"},
+	{"StoredString":"Necromancer"},
+	{"StoredString":"Priesthood"},
+	{"StoredString":"Waters","Conditions":["Water"]},
+	{"StoredString":"Souls"},
+	{"StoredString":"Shadows"},
+	{"StoredString":"Sword"},
+	{"StoredString":"Shield"},
+	{"StoredString":"Staff"},
+	{"StoredString":"Crown"},
+	{"StoredString":"Beast"},
+	{"StoredString":"Warrior"},
+	{"StoredString":"Tome"}
+]}
+|
 {"Id":"EgyptGods",
 "TextOptions":[
 	{"StoredString":"Kopehk"},
 	{"StoredString":"Osirion"},
-	{"StoredString":"the Fallen Gods"},
-	{"StoredString":"the Forgotten"},
-	{"StoredString":"Forgotten Souls"},
-	{"StoredString":"Forgotten Kings"},
 	{"StoredString":"Amath"},
 	{"StoredString":"Horai"},
 	{"StoredString":"Septra"},
 	{"StoredString":"the Sun"},
 	{"StoredString":"the Moon"},
 	{"StoredString":"the Stars"},
-	{"StoredString":"Shadows"},
-	{"StoredString":"the Lost"},
-	{"StoredString":"the Waters","Conditions":["Water"]},
-	{"StoredString":"the Sands","Conditions":["Desert"]},
-	{"StoredString":"the Creator"},
-	{"StoredString":"the Destroyer"},
-	{"StoredString":"the Sky"},
-	{"StoredString":"the Warrior"},
-	{"StoredString":"the Necromancer"},
-	{"StoredString":"Lost Knowledge"},
-	{"StoredString":"Secrets"},
-	{"StoredString":"Darkness"}
+	{"StoredString":"the Sky"}
 ]}
 |
 {"Id":"EgyptNamesPre",
@@ -331,9 +354,6 @@
 {"Id":"EgyptNames",
 "TextOptions":[
 	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff%"},
-	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff%"},
-	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff%"},
-	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff%"},
 	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff% I"},
 	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff% II"},
 	{"StoredString":"%EgyptNamesPre%%EgyptNamesSuff% III"},
@@ -349,8 +369,6 @@
 	{"StoredString":"%EgyptPre%%EgyptSuff%"},
 	{"StoredString":"Temple City of %EgyptGods%"},
 	{"StoredString":"Great %EgyptPre%%EgyptSuff%"},
-	{"StoredString":"The City of %EgyptGods%"},
-	{"StoredString":"The City of %EgyptGods%"},
 	{"StoredString":"Port %EgyptPre%%EgyptSuff%","Conditions":["Ocean"]},
 	{"StoredString":"Port %EgyptPre%%EgyptSuff%","Conditions":["Ocean"]},
 	{"StoredString":"Port %EgyptPre%%EgyptSuff%","Conditions":["Ocean"]}
@@ -364,7 +382,8 @@
 	{"StoredString":"Mortuary of %EgyptNames%"},
 	{"StoredString":"Necropolis of %EgyptNames%"},
 	{"StoredString":"Pyramid of %EgyptGods%"},
-	{"StoredString":"Mortuary of %EgyptGods%"},
-	{"StoredString":"Catacombs of %EgyptGods%"},
-	{"StoredString":"Necropolis of %EgyptGods%"}	
+	{"StoredString":"Pyramid of the %MagicAdjectives% %MagicNouns%"},
+	{"StoredString":"Mortuary of the %MagicAdjectives% %MagicNouns%"},
+	{"StoredString":"Catacombs of the %MagicAdjectives% %MagicNouns%"},
+	{"StoredString":"Necropolis of the %MagicAdjectives% %MagicNouns%"}	
 ]}
