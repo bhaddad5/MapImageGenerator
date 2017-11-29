@@ -7,7 +7,6 @@ using UnityEngine;
 [Serializable]
 public class MapModel
 {
-	public Dictionary<string, KingdomModel> Kingdoms = new Dictionary<string, KingdomModel>();
 	public Map2D<MapTileModel> Map;
 
 	public float OccurancesPer20Scaler(int minH, int maxH)
@@ -37,7 +36,7 @@ public class MapModel
 
 	public string ToJson()
 	{
-		var serializable = new SerializableMapModel(Kingdoms, Map);
+		var serializable = new SerializableMapModel(Map);
 		return JsonConvert.SerializeObject(serializable);
 	}
 
@@ -48,14 +47,12 @@ public class MapModel
 
 	public class SerializableMapModel
 	{
-		public List<KingdomModel> Kingdoms;
 		public Map2D<MapTileModel>.Map2DSerializable Map;
 
 		public SerializableMapModel(){}
 
-		public SerializableMapModel(Dictionary<string, KingdomModel> kingdoms, Map2D<MapTileModel> map)
+		public SerializableMapModel(Map2D<MapTileModel> map)
 		{
-			Kingdoms = kingdoms.Values.ToList();
 			Map = map.ToSerializable();
 		}
 
@@ -63,11 +60,6 @@ public class MapModel
 		{
 			MapModel newMapModel = new MapModel(Map.Width, Map.Height);
 			newMapModel.Map = Map.ToMap2D();
-
-			foreach (KingdomModel kingdom in Kingdoms)
-			{
-				newMapModel.Kingdoms[kingdom.Id] = kingdom;
-			}
 			return newMapModel;
 		}
 	}

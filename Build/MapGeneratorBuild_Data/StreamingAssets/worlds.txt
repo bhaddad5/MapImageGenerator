@@ -1,7 +1,8 @@
 {"Id":"Ternath",
 "Realms":[
-	{"RealmId":"Khemras","MinLatitude":0.0,"MaxLatitude":0.5},
-	{"RealmId":"Midland","MinLatitude":0.5,"MaxLatitude":1}
+	{"RealmId":"Khemras","MinLatitude":0.0,"MaxLatitude":0.3},
+	{"RealmId":"Latinum","MinLatitude":0.3,"MaxLatitude":0.6},
+	{"RealmId":"Midland","MinLatitude":0.6,"MaxLatitude":1}
 ],
 "Cultures":[
 	{"CultureId":"Anglo","MinLatitude":0.5,"MaxLatitude":1},

@@ -28,6 +28,24 @@
 }
 |
 {
+	"Id":"Latinum",
+	"DisplayName":"Latinum",
+	"PreRiverCommands":[
+		"TerrainRandomlyPlaceAlongLine MedMountain 4 4 20 1",
+		"TerrainRandomlyExpandFromTypes MedHills 2 5 MedMountain"
+	],
+	"RiverCommands":[
+		"CreateRivers 10 20"
+	],
+	"PostRiverCommands":[
+		"TerrainEncourageStartAlongWater MedFertile .15",
+		"TerrainExpandSimmilarTypes 3 MedFertile",
+		"TerrainRandomlyStart MedForest 0.05",
+		"TerrainExpandSimmilarTypes 3 MedForest"
+	]
+}
+|
+{
 	"Id":"Khemras",
 	"DisplayName":"Khemras",
 	"PreRiverCommands":[

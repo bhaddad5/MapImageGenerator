@@ -26,6 +26,33 @@
 	{"SettlementType":"AngloCity","PlacementsPer20Square":3}
 ]}
 |
+{"Id":"Roman",
+"CultureName":"Etrusian",
+"HeraldryOverlayImage":{"TexturePath":"Anglo/Heraldry/Overlay.png"},
+"HeraldryForegrounds":[
+	{"TexturePath":"Anglo/Heraldry/Symbols/Blank.png"},
+	{"TexturePath":"Anglo/Heraldry/Symbols/Dragon.png"},
+	{"TexturePath":"Anglo/Heraldry/Symbols/EagleHead.png"},
+	{"TexturePath":"Anglo/Heraldry/Symbols/Feather.png"},
+	{"TexturePath":"Anglo/Heraldry/Symbols/Gryphon.png"},
+	{"TexturePath":"Anglo/Heraldry/Symbols/Horse.png"}
+],
+"HeraldryForegroundColorSource":"Metals",
+"HeraldryBackgrounds":[
+	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_0.png"},
+	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_1.png"},
+	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_2.png"},
+	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_3.png"},
+	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_4.png"},
+	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_5.png"},
+	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_5.png"},
+	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_Ocean.png"}
+],
+"HeraldryBackgroundColorSource":"Vibrant",
+"SettlementTypes":[
+	{"SettlementType":"RomanCity","PlacementsPer20Square":6}
+]}
+|
 {"Id":"Dwarf",
 "CultureName":"Dwarven",
 "HeraldryOverlayImage":{"TexturePath":"Dwarf/Heraldry/Overlay.png"},

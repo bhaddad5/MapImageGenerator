@@ -103,6 +103,18 @@
 	{"StoredString":"%AngloAdjectives% %AngloNouns%"}
 ]}
 |
+{"Id":"AngloCastleKingdoms",
+"TextOptions":[
+	{"StoredString":"Kingdom of %n%"},
+	{"StoredString":"Kingdom of %AngloPrefixes%%AngloSuffixes%"},
+	{"StoredString":"Knights of %n%"},
+	{"StoredString":"Knights of the %MagicAdjectives% %MagicNouns%"},
+	{"StoredString":"%MagicAdjectives% Order of %n%"},
+	{"StoredString":"Barony of %n%","Conditions":["Small"]},
+	{"StoredString":"Bandit Lords of %n%","Conditions":["Small"]},
+	{"StoredString":"Bandit Lords of %n%","Conditions":["One"]}
+]}
+|
 {"Id":"AngloCities",
 "TextOptions":[
 	{"StoredString":"%AngloPrefixes%%AngloSuffixes%"},
@@ -111,6 +123,19 @@
 	{"StoredString":"%AngloPrefixes%%AngloSuffixes% Anchorage","Conditions":["Ocean"]},
 	{"StoredString":"%AngloAdjectives% %AngloNouns%"},
 	{"StoredString":"%AngloAdjectives% %AngloNouns%"}
+]}
+|
+{"Id":"AngloCityKingdoms",
+"TextOptions":[
+	{"StoredString":"Empire of %n%","Conditions":["Large"]},
+	{"StoredString":"The %AngloPrefixes%%AngloSuffixes% Empire","Conditions":["Large"]},
+	{"StoredString":"Kingdom of %n%"},
+	{"StoredString":"Kingdom of %AngloPrefixes%%AngloSuffixes%"},
+	{"StoredString":"Barony of %n%","Conditions":["Small"]},
+	{"StoredString":"%n%","Conditions":["Small"]},
+	{"StoredString":"%n%","Conditions":["One"]},
+	{"StoredString":"Free City of %n%","Conditions":["One"]},
+	{"StoredString":"Trade Princes of %n%","Conditions":["One"]}
 ]}
 |
 {"Id":"DwarfPre",
@@ -228,6 +253,7 @@
 	{"StoredString":"The %DwarfMetals% Guild of %n%","Conditions":["Small"]},
 	{"StoredString":"The Guilds of %n%","Conditions":["One"]},
 	{"StoredString":"The %DwarfMetals% Guild of %n%","Conditions":["One"]},
+	{"StoredString":"Freehold of %n%","Conditions":["One"]},
 	{"StoredString":"%DwarfNamesPre%%DwarfNamesSuff%'s Expidition"},
 	{"StoredString":"%DwarfNamesPre%%DwarfNamesSuff%'s Expidition"},
 	{"StoredString":"%DwarfNamesPre%%DwarfNamesSuff%'s Expidition"}
@@ -411,13 +437,12 @@
 	{"StoredString":"Empire of %EgyptNames%","Conditions":["Large"]},
 	{"StoredString":"Eternal Empire of %n%","Conditions":["Large"]},
 	{"StoredString":"Kingdom of %EgyptNames%","Conditions":["Medium"]},
-	{"StoredString":"Kingdom of  %n%","Conditions":["Medium"]},
-	{"StoredString":"Province of  %n%","Conditions":["Medium"]},
-	{"StoredString":"Province of %n%","Conditions":["Small"]},
-	{"StoredString":" %n% Province","Conditions":["Small"]},
+	{"StoredString":"Kingdom of %n%","Conditions":["Medium"]},
 	{"StoredString":" %n%","Conditions":["Small"]},
+	{"StoredString":"Trade Lords of  %n%","Conditions":["Medium"]},
+	{"StoredString":"%MagicAdjectives% Priesthood of %n%","Conditions":["Medium"]},
 	{"StoredString":"Trade Lords of  %n%","Conditions":["Small"]},
-	{"StoredString":"%MagicAdjectives% Priesthood of  %n%","Conditions":["Small"]},
+	{"StoredString":"%MagicAdjectives% Priesthood of %n%","Conditions":["Small"]},
 	{"StoredString":" %n%","Conditions":["One"]},
 	{"StoredString":"Trade Lords of  %n%","Conditions":["One"]},
 	{"StoredString":"%MagicAdjectives% Priesthood of %n%","Conditions":["One"]}
@@ -441,10 +466,70 @@
 {"Id":"EgyptPyramidKingdoms",
 "TextOptions":[
 	{"StoredString":"Priesthood of the %n%"},
-	{"StoredString":"Risen of the %n%"},
+	{"StoredString":"Ascendant of the %n%"},
+	{"StoredString":"Eternal Empire of the %n%"},
 	{"StoredString":"The %MagicAdjectives% Priesthood"},
 	{"StoredString":"Cult of the %MagicAdjectives% %MagicNouns%"},
 	{"StoredString":"The %MagicAdjectives% Necromancer"},
 	{"StoredString":"Pharoh %EgyptNames%"},
 	{"StoredString":"Guardians of the %n%"}
 ]}
+|
+{"Id":"RomanCityPrefixes",
+"TextOptions":[
+	{"StoredString":"Lat"},
+	{"StoredString":"Rem"},
+	{"StoredString":"Narb"},
+	{"StoredString":"Cart"},
+	{"StoredString":"Vir"},
+	{"StoredString":"Cap"},
+	{"StoredString":"Ost"},
+	{"StoredString":"Pomp"},
+	{"StoredString":"Agrig"},
+	{"StoredString":"Arim"},
+	{"StoredString":"Armin"},
+	{"StoredString":"Ant"}
+]}
+|
+{"Id":"RomanCitySuffixes",
+"TextOptions":[
+	{"StoredString":"ina"},
+	{"StoredString":"as"},
+	{"StoredString":"é"},
+	{"StoredString":"ago"},
+	{"StoredString":"agis"},
+	{"StoredString":"ia"},
+	{"StoredString":"eii"},
+	{"StoredString":"um"},
+	{"StoredString":"o"},
+	{"StoredString":"entum"},
+	{"StoredString":"polis"},
+	{"StoredString":"ium"}
+]}
+|
+{"Id":"RomanCities",
+"TextOptions":[
+	{"StoredString":"%RomanCityPrefixes%%RomanCitySuffixes%"}
+]}
+|
+{"Id":"RomanCityKingdoms",
+"TextOptions":[
+	{"StoredString":"Republic of %n%"},
+	{"StoredString":"Republic of %n%"},
+	{"StoredString":"Empire of %n%","Conditions":["Large"]},
+	{"StoredString":"The %n% Empire","Conditions":["Large"]},
+	{"StoredString":"Empire of %n%","Conditions":["Medium"]},
+	{"StoredString":"Kingdom of %n%","Conditions":["Medium"]},
+	{"StoredString":"Legions of %n%","Conditions":["Medium"]},
+	{"StoredString":"Kingdom of %n%","Conditions":["Small"]},
+	{"StoredString":"Legions of %n%","Conditions":["Small"]},
+	{"StoredString":"Kingdom of %n%","Conditions":["One"]},
+	{"StoredString":"Legions of %n%","Conditions":["One"]},
+	{"StoredString":"Free City of %n%","Conditions":["One"]}
+]}
+
+
+
+
+
+

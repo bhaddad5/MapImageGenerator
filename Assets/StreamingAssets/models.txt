@@ -1,6 +1,9 @@
 {"Id":"Pine", "ModelPaths":["Midlands/Models/Pine.obj"]}|
 {"Id":"Willow", "ModelPaths":["Midlands/Models/Willow.obj"]}|
 
+{"Id":"OliveTree", "ModelPaths":["Med/Models/OliveTree.obj"]}|
+{"Id":"CypressTree", "ModelPaths":["Med/Models/CypressTree.obj"]}|
+
 {"Id":"Palm", "ModelPaths":["Desert/Models/Palm.obj"]}|
 
 {"Id":"AngloCastle", "ModelPaths":[
@@ -11,6 +14,10 @@
 
 {"Id":"AngloCity", "ModelPaths":[
 	"Anglo/Models/City 1.obj"
+]}|
+
+{"Id":"RomanCity", "ModelPaths":[
+	"Roman/Models/RomanCity.obj"
 ]}|
 
 {"Id":"AngloPort", "ModelPaths":[
@@ -31,10 +38,4 @@
 {"Id":"EgyptianPyramid", "ModelPaths":[
 	"Egyptian/Models/Pyramid.obj",
 	"Egyptian/Models/Pyramid Ruined.obj"
-]}|
-
-//OLD MODELS
-
-{"Id":"AngloBridge", "ModelPaths":["Anglo/Models/Bridge/Bridge.obj"]}|
-
-{"Id":"DwarfBridge", "ModelPaths":["Dwarf/Models/Dwarf Bridge.obj"]}
+]}

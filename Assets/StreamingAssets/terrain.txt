@@ -105,3 +105,60 @@
 "Traits":[
 	"Forest"
 ]}
+|
+{"Id":"MedHills",
+"Difficulty":0.15,
+"Height":0.01,
+"Texture":{"TexturePath":"Med/Terrain/Hills.png"},
+"EntityPlacements":[
+	{"model":"CypressTree","min":0,"max":4,"placementMode":"Scattered"},
+	{"model":"OliveTree","min":0,"max":4,"placementMode":"Scattered"}
+],
+"Traits":[
+	"Hills"
+]}
+|
+{"Id":"MedFertile",
+"Difficulty":0.15,
+"Height":0.01,
+"Texture":{"TexturePath":"Med/Terrain/Farms.png"},
+"EntityPlacements":[
+	{"model":"OliveTree","min":0,"max":4,"placementMode":"Scattered"}
+],
+"Traits":[
+	"Fertile"
+]}
+|
+{"Id":"MedForest",
+"Difficulty":0.25,
+"Height":0.01,
+"Texture":{"TexturePath":"Med/Terrain/Hills.png"},
+"EntityPlacements":[
+	{"model":"CypressTree","min":12,"max":20,"placementMode":"Scattered"},
+	{"model":"OliveTree","min":6,"max":10,"placementMode":"Scattered"}
+],
+"Traits":[
+	"Forest"
+]}
+|
+{"Id":"MedMountain",
+"Difficulty":50,
+"Height":1.0,
+"Texture":{"TexturePath":"Med/Terrain/Mountains.png"},
+"EntityPlacements":[
+	{"model":"CypressTree","min":1,"max":4,"placementMode":"Scattered"},
+	{"model":"OliveTree","min":1,"max":4,"placementMode":"Scattered"}
+],
+"Traits":[
+	"Mountain",
+	"Impassable"
+]}
+
+
+
+
+
+
+
+
+

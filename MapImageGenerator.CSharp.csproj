@@ -131,11 +131,6 @@
     <Compile Include="Assets\MapEditor\Scripts\Map View Builder\ModelPlacer.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Map View Builder\OverlayDisplayHandler.cs" />
     <Compile Include="Assets\MapEditor\Scripts\MapBuilder.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\OldCultureShit\Culture.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\OldCultureShit\Kingdom.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\OldCultureShit\KingdomModel.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\OldCultureShit\RegionsGenerator.cs" />
-    <Compile Include="Assets\MapEditor\Scripts\OldCultureShit\Settlement.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Parsable Data\ColorOptionsParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Parsable Data\CultureParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Parsable Data\EntityPlacementModel.cs" />

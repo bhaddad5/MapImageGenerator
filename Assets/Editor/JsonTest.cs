@@ -94,7 +94,6 @@ public class JsonTests
 	public static void TestMapModelJson()
 	{
 		MapModel Map = new MapModel(5, 5);
-		Map.Kingdoms["a"] = new KingdomModel();
 
 		Debug.Log(Map.ToJson());
 	}

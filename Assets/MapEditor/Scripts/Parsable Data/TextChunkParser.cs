@@ -40,7 +40,12 @@ public class TextChunkModel : ParsableData
 				{
 					res += n;
 				}
-				else res += TextChunkParser.TextData[lookup].GetText(traits);
+				else
+				{
+					if(!TextChunkParser.TextData.ContainsKey(lookup))
+						UnityEngine.Debug.LogError("Cannot find text lookup table: " + lookup);
+					res += TextChunkParser.TextData[lookup].GetText(traits);
+				}
 			}
 			else res += chars[i];
 		}
