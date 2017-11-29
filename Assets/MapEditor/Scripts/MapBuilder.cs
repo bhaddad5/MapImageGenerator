@@ -225,8 +225,11 @@ public class MapBuilder : MonoBehaviour
 		{
 			if (CurrentMap.Map.Get(point).Port != null && CurrentMap.Map.Get(point).Port.SeaLanes.Count > 0)
 			{
-				var ship = Instantiate(TmpShip);
-				ship.SetupShipController(point, CurrentMap);
+				for (int i = 0; i < 3; i++)
+				{
+					var ship = Instantiate(TmpShip);
+					ship.SetupShipController(point, CurrentMap);
+				}
 			}
 		}
 	}

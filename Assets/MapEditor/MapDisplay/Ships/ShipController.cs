@@ -33,7 +33,7 @@ public class ShipController : MonoBehaviour
 					nextTile = currentCourse[i + 1];
 			}
 			Vector3 target = new Vector3(nextTile.X + 0.5f, 0, nextTile.Y + 0.5f);
-			transform.position = Vector3.MoveTowards(transform.position, target, 0.05f);
+			transform.position = Vector3.MoveTowards(transform.position, target, 0.01f);
 			transform.LookAt(target);
 		}
 	}
