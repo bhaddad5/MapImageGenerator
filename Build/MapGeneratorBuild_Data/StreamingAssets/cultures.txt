@@ -31,7 +31,6 @@
 "HeraldryOverlayImage":{"TexturePath":"Roman/Heraldry/Overlay.png"},
 "HeraldryForegrounds":[
 	{"TexturePath":"Roman/Heraldry/Symbols/WingedBolts.png"},
-	{"TexturePath":"Roman/Heraldry/Symbols/Dolphines.png"},
 	{"TexturePath":"Roman/Heraldry/Symbols/TinyWingedBolts.png"},
 	{"TexturePath":"Roman/Heraldry/Symbols/Scorpions.png"},
 	{"TexturePath":"Roman/Heraldry/Symbols/Olives.png"},

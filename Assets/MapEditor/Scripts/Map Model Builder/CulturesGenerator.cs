@@ -62,6 +62,11 @@ public class CulturesGenerator
 		for (int i = 0; i < numToPlace; i++)
 		{
 			Int2 pos = GetSettlementPlacementPos(SettlementTypeParser.SettlementsData[settlementPlacementInfo.SettlementType], minH, maxH);
+			if (pos == null)
+				continue;
+
+			Map.Map.Get(pos).Traits.Add(MapTileModel.TileTraits.Settled.ToString());
+			Map.Map.Get(pos).SetMaxHeight(0);
 
 			SettlementTypeModel SettlementType = SettlementTypeParser.SettlementsData[settlementPlacementInfo.SettlementType];
 
@@ -105,9 +110,6 @@ public class CulturesGenerator
 					}
 				}
 			}
-
-			Map.Map.Get(pos).Traits.Add(MapTileModel.TileTraits.Settled.ToString());
-			Map.Map.Get(pos).SetMaxHeight(0);
 
 			List<string> traits = new List<string>();
 			traits = traits.Concat(Map.Map.Get(pos).GetTraits()).ToList();

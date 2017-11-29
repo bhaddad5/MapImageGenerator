@@ -16,13 +16,17 @@
 	"Anglo/Models/City 1.obj"
 ]}|
 
+{"Id":"AngloPort", "ModelPaths":[
+	"Anglo/Models/Port.obj",
+	"Anglo/Models/Port 2.obj"
+]}|
+
 {"Id":"RomanCity", "ModelPaths":[
 	"Roman/Models/RomanCity.obj"
 ]}|
 
-{"Id":"AngloPort", "ModelPaths":[
-	"Anglo/Models/Port.obj",
-	"Anglo/Models/Port 2.obj"
+{"Id":"RomanPort", "ModelPaths":[
+	"Roman/Models/Port.obj"
 ]}|
 
 {"Id":"DwarfFortress", "ModelPaths":["Dwarf/Models/Dwarf Fortress.obj"]}|

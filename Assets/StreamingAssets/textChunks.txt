@@ -86,7 +86,6 @@
 	{"StoredString":"Shore","Conditions":["Ocean"]},
 	{"StoredString":"Sands","Conditions":["Desert"]},
 	{"StoredString":"Fields","Conditions":["Fertile"]},
-	{"StoredString":"Farms","Conditions":["Fertile"]},
 	{"StoredString":"Meadow","Conditions":["Fertile"]},
 	{"StoredString":"Field","Conditions":["Fertile"]}
 ]}
