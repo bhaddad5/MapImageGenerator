@@ -9,6 +9,7 @@ public class CulturesGenerator
 {
 	protected MapModel Map;
 	private Dictionary<Int2, SettlementInstance> settlements = new Dictionary<Int2, SettlementInstance>();
+	private Dictionary<Int2, PortInstance> ports = new Dictionary<Int2, PortInstance>();
 
 	private class SettlementInstance
 	{
@@ -36,6 +37,17 @@ public class CulturesGenerator
 		}
 	}
 
+	private class PortInstance
+	{
+		public Int2 PortTile;
+		public List<List<Int2>> SeaLanes = new List<List<Int2>>();
+
+		public PortInstance(Int2 tile)
+		{
+			PortTile = tile;
+		}
+	}
+
 	public MapModel GenerateMap(MapModel map, WorldModel world)
 	{
 		Map = map;
@@ -45,6 +57,16 @@ public class CulturesGenerator
 		}
 
 		BuildAdjacencies();
+
+		foreach (PortInstance port in ports.Values)
+		{
+			port.SeaLanes = FindShippingRoutesFromPort(port.PortTile, new Dictionary<Int2, List<Int2>>()).Values.ToList();
+			Map.Map.Get(port.PortTile).Port = new PortModel()
+			{
+				SeaLanes = port.SeaLanes
+			};
+		}
+
 		return Map;
 	}
 
@@ -105,6 +127,8 @@ public class CulturesGenerator
 						if ((pos - adjacentPoint).Equals(new Int2(0, 1)))
 							port.placementMode = EntityPlacementModel.PlacementMode.Rot270.ToString();
 						Map.Map.Get(adjacentPoint).Entities.Add(port);
+						Map.Map.Get(adjacentPoint).Traits.Add(MapTileModel.TileTraits.Port.ToString());
+						ports[adjacentPoint] = new PortInstance(adjacentPoint);
 
 						break;
 					}
@@ -284,5 +308,69 @@ public class CulturesGenerator
 				}
 			}
 		}
+	}
+
+	private Dictionary<Int2, List<Int2>> FindShippingRoutesFromPort(Int2 port, Dictionary<Int2, List<Int2>> portPaths)
+	{
+		Int2 startTile = port;
+
+		SortedDupList<Int2> frontierTiles = new SortedDupList<Int2>();
+		frontierTiles.Insert(startTile, 2f);
+
+		Map2D<float> distMap = new Map2D<float>(Map.Map.Width, Map.Map.Height);
+
+		while (frontierTiles.Count > 0)
+		{
+			distMap.Set(frontierTiles.TopValue(), frontierTiles.TopKey());
+			float currDifficulty = frontierTiles.TopKey();
+			Int2 currTile = frontierTiles.Pop();
+			foreach (var tile in Map.Map.GetAdjacentPoints(currTile))
+			{
+				if (!Map.Map.Get(tile).HasTrait(MapTileModel.TileTraits.Ocean) || !distMap.Get(tile).Equals(0))
+					continue;
+
+				if (Map.Map.Get(tile).HasTrait(MapTileModel.TileTraits.Port))
+				{
+					Int2 sett = tile;
+					bool alreadyHit = false;
+					foreach (Int2 hit in portPaths.Keys)
+					{
+						if (hit.Equals(sett))
+							alreadyHit = true;
+					}
+					if (!alreadyHit)
+					{
+						portPaths[tile] = BuildPathBackFromTile(tile, distMap, new List<Int2>());
+						portPaths[tile].Reverse();
+						portPaths = FindShippingRoutesFromPort(port, portPaths);
+						return portPaths;
+					}
+				}
+
+				float difficulty = Map.Map.Get(tile).Difficulty;
+				if (currDifficulty - difficulty > 0)
+				{
+					frontierTiles.Insert(tile, currDifficulty - difficulty);
+					distMap.Set(tile, currDifficulty - difficulty);
+				}
+			}
+		}
+		return portPaths;
+	}
+
+	private List<Int2> BuildPathBackFromTile(Int2 tile, Map2D<float> distMap, List<Int2> path)
+	{
+		path.Add(tile);
+		Int2 maxTile = tile;
+		foreach (var t in distMap.GetAdjacentPoints(tile))
+		{
+			if (distMap.Get(t) > distMap.Get(maxTile))
+				maxTile = t;
+		}
+
+		if (!maxTile.Equals(tile))
+			path = BuildPathBackFromTile(maxTile, distMap, path);
+		path.Add(maxTile);
+		return path;
 	}
 }

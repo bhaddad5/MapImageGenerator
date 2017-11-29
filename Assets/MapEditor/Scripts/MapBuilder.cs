@@ -33,6 +33,9 @@ public class MapBuilder : MonoBehaviour
 	private GameObject ObjectParent;
 	private MapModel CurrentMap;
 
+	//TODO: TMP DELETE!!!
+	public ShipController TmpShip;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -199,6 +202,8 @@ public class MapBuilder : MonoBehaviour
 			}
 		}
 
+		TmpPortSetup();
+
 		displayText.enabled = false;
 	}
 
@@ -212,6 +217,18 @@ public class MapBuilder : MonoBehaviour
 			mapChunkHeight++;
 		Map2D<int> mapChunks = new Map2D<int>(mapChunkWidth, mapChunkHeight);
 		return mapChunks;
+	}
+
+	private void TmpPortSetup()
+	{
+		foreach (Int2 point in CurrentMap.Map.GetMapPoints())
+		{
+			if (CurrentMap.Map.Get(point).Port != null && CurrentMap.Map.Get(point).Port.SeaLanes.Count > 0)
+			{
+				var ship = Instantiate(TmpShip);
+				ship.SetupShipController(point, CurrentMap);
+			}
+		}
 	}
 
 	public void QuitApp()

@@ -121,6 +121,7 @@
     <Compile Include="Assets\ExternalAssets\TextMesh Pro\Examples\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\MapEditor\MapDisplay\SettlementDisplay\SettlementInfoDisplay.cs" />
     <Compile Include="Assets\MapEditor\MapDisplay\SettlementDisplay\TextInstantiationController.cs" />
+    <Compile Include="Assets\MapEditor\MapDisplay\Ships\ShipController.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Helpers\Helpers.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Helpers\Map2D.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Map Model Builder\CulturesGenerator.cs" />

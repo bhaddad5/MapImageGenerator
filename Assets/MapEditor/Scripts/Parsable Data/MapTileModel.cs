@@ -15,6 +15,7 @@ public class MapTileModel
 	public string KingdomId;
 	public List<EntityPlacementModel> Entities = new List<EntityPlacementModel>();
 	public SettlementTextModel TextEntry;
+	public PortModel Port;
 
 	public List<EntityPlacementModel> GetEntites()
 	{
@@ -31,6 +32,7 @@ public class MapTileModel
 		River,
 		Ocean,
 		Settled,
+		Port,
 		Road,
 	}
 
@@ -92,5 +94,16 @@ public class HeraldryModel
 	{
 		return "" + BackgroundColor1 + BackgroundColor2 + ForegroundColor +
 		       BackgroundTexture + ForegroundTexture;
+	}
+}
+
+[Serializable]
+public class PortModel
+{
+	public List<List<Int2>> SeaLanes = new List<List<Int2>>();
+
+	public List<Int2> GetSeaLane()
+	{
+		return SeaLanes[UnityEngine.Random.Range(0, SeaLanes.Count)];
 	}
 }
