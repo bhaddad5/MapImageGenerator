@@ -495,7 +495,6 @@
 "TextOptions":[
 	{"StoredString":"ina"},
 	{"StoredString":"as"},
-	{"StoredString":"é"},
 	{"StoredString":"ago"},
 	{"StoredString":"agis"},
 	{"StoredString":"ia"},

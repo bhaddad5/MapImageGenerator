@@ -26,6 +26,27 @@
 	{"SettlementType":"AngloCity","PlacementsPer20Square":3}
 ]}
 |
+{"Id":"Roman",
+"CultureName":"Etrusian",
+"HeraldryOverlayImage":{"TexturePath":"Roman/Heraldry/Overlay.png"},
+"HeraldryForegrounds":[
+	{"TexturePath":"Roman/Heraldry/Symbols/WingedBolts.png"},
+	{"TexturePath":"Roman/Heraldry/Symbols/Dolphines.png"},
+	{"TexturePath":"Roman/Heraldry/Symbols/TinyWingedBolts.png"},
+	{"TexturePath":"Roman/Heraldry/Symbols/Scorpions.png"},
+	{"TexturePath":"Roman/Heraldry/Symbols/Olives.png"},
+	{"TexturePath":"Roman/Heraldry/Symbols/Wreaths.png"},
+	{"TexturePath":"Roman/Heraldry/Symbols/Trident.png"}
+],
+"HeraldryForegroundColorSource":"Metals",
+"HeraldryBackgrounds":[
+	{"TexturePath":"Roman/Heraldry/Backgrounds/Back0.png"}
+],
+"HeraldryBackgroundColorSource":"Vibrant",
+"SettlementTypes":[
+	{"SettlementType":"RomanCity","PlacementsPer20Square":6}
+]}
+|
 {"Id":"Dwarf",
 "CultureName":"Dwarven",
 "HeraldryOverlayImage":{"TexturePath":"Dwarf/Heraldry/Overlay.png"},

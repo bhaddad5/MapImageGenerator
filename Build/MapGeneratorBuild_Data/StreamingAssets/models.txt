@@ -16,6 +16,10 @@
 	"Anglo/Models/City 1.obj"
 ]}|
 
+{"Id":"RomanCity", "ModelPaths":[
+	"Roman/Models/RomanCity.obj"
+]}|
+
 {"Id":"AngloPort", "ModelPaths":[
 	"Anglo/Models/Port.obj",
 	"Anglo/Models/Port 2.obj"

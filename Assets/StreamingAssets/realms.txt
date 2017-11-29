@@ -39,7 +39,8 @@
 	],
 	"PostRiverCommands":[
 		"TerrainEncourageStartAlongWater MedFertile .15",
-		"TerrainExpandSimmilarTypes 3 MedFertile",
+		"TerrainEncourageStartAlongRiver MedFertile .15",
+		"TerrainExpandSimmilarTypes 4 MedFertile",
 		"TerrainRandomlyStart MedForest 0.05",
 		"TerrainExpandSimmilarTypes 3 MedForest"
 	]

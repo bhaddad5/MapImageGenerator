@@ -28,25 +28,18 @@
 |
 {"Id":"Roman",
 "CultureName":"Etrusian",
-"HeraldryOverlayImage":{"TexturePath":"Anglo/Heraldry/Overlay.png"},
+"HeraldryOverlayImage":{"TexturePath":"Roman/Heraldry/Overlay.png"},
 "HeraldryForegrounds":[
-	{"TexturePath":"Anglo/Heraldry/Symbols/Blank.png"},
-	{"TexturePath":"Anglo/Heraldry/Symbols/Dragon.png"},
-	{"TexturePath":"Anglo/Heraldry/Symbols/EagleHead.png"},
-	{"TexturePath":"Anglo/Heraldry/Symbols/Feather.png"},
-	{"TexturePath":"Anglo/Heraldry/Symbols/Gryphon.png"},
-	{"TexturePath":"Anglo/Heraldry/Symbols/Horse.png"}
+	{"TexturePath":"Roman/Heraldry/Symbols/WingedBolts.png"},
+	{"TexturePath":"Roman/Heraldry/Symbols/TinyWingedBolts.png"},
+	{"TexturePath":"Roman/Heraldry/Symbols/Scorpions.png"},
+	{"TexturePath":"Roman/Heraldry/Symbols/Olives.png"},
+	{"TexturePath":"Roman/Heraldry/Symbols/Wreaths.png"},
+	{"TexturePath":"Roman/Heraldry/Symbols/Trident.png"}
 ],
 "HeraldryForegroundColorSource":"Metals",
 "HeraldryBackgrounds":[
-	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_0.png"},
-	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_1.png"},
-	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_2.png"},
-	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_3.png"},
-	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_4.png"},
-	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_5.png"},
-	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_5.png"},
-	{"TexturePath":"Anglo/Heraldry/Backgrounds/Anglo_Back_Ocean.png"}
+	{"TexturePath":"Roman/Heraldry/Backgrounds/Back0.png"}
 ],
 "HeraldryBackgroundColorSource":"Vibrant",
 "SettlementTypes":[

@@ -25,6 +25,21 @@
 	{"Trait":"Mountain","Preference":-0.3}
 ]}
 |
+{"Id":"RomanCity",
+"SettlementTypeName":" City",
+"NameChunk":"RomanCities",
+"KingdomNameChunk":"RomanCityKingdoms",
+"Entity":{"model":"RomanCity","placementMode":"Center","min":1,"max":1},
+"PortEntity":{"model":"AngloPort","placementMode":"Center","min":1,"max":1},
+"TraitPreferences":[
+	{"Trait":"Forest","Preference":-0.1},
+	{"Trait":"Fertile","Preference":0.5},
+	{"Trait":"Ocean","Preference":0.5},
+	{"Trait":"River","Preference":0.5},
+	{"Trait":"Settled","Preference":-3},
+	{"Trait":"Mountain","Preference":-0.3}
+]}
+|
 {"Id":"DwarfFortress",
 "SettlementTypeName":" Fortress",
 "NameChunk":"DwarfFortresses",
