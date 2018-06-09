@@ -316,6 +316,7 @@
     <None Include="Assets\StreamingAssets\overlays.txt" />
     <None Include="Assets\StreamingAssets\realms.txt" />
     <None Include="Assets\StreamingAssets\settlements.txt" />
+    <None Include="Assets\StreamingAssets\ships.txt" />
     <None Include="Assets\StreamingAssets\terrain.txt" />
     <None Include="Assets\StreamingAssets\textChunks.txt" />
     <None Include="Assets\StreamingAssets\worlds.txt" />

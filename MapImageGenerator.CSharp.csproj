@@ -283,6 +283,7 @@
     <Compile Include="Assets\MapEditor\Scripts\Parsable Data\ParserHelpers.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Parsable Data\RealmParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Parsable Data\SettlementTypeParser.cs" />
+    <Compile Include="Assets\MapEditor\Scripts\Parsable Data\ShipsParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Parsable Data\TerrainParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Parsable Data\TextChunkParser.cs" />
     <Compile Include="Assets\MapEditor\Scripts\Parsable Data\WorldParser.cs" />
@@ -323,6 +324,7 @@
     <None Include="Assets\StreamingAssets\overlays.txt" />
     <None Include="Assets\StreamingAssets\realms.txt" />
     <None Include="Assets\StreamingAssets\settlements.txt" />
+    <None Include="Assets\StreamingAssets\ships.txt" />
     <None Include="Assets\StreamingAssets\terrain.txt" />
     <None Include="Assets\StreamingAssets\textChunks.txt" />
     <None Include="Assets\StreamingAssets\worlds.txt" />

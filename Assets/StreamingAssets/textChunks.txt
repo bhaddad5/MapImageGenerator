@@ -323,9 +323,25 @@
 	{"StoredString":"amun"}
 ]}
 |
+{"Id":"MancerTypes",
+"TextOptions":[
+	{"StoredString":"Necro"},
+	{"StoredString":"Necro"},
+	{"StoredString":"Necro"},
+	{"StoredString":"Cryo"},
+	{"StoredString":"Psycho"},
+	{"StoredString":"Pyro"},
+	{"StoredString":"Hydro"},
+	{"StoredString":"Occlo"},
+	{"StoredString":"Astro"},
+	{"StoredString":"Cosmo"},
+	{"StoredString":"Geo"}
+]}
+|
 {"Id":"MagicAdjectives",
 "TextOptions":[
 	{"StoredString":"Forgotten"},
+	{"StoredString":"Forbidden"},
 	{"StoredString":"Cursed"},
 	{"StoredString":"Unholy"},
 	{"StoredString":"Holy"},
@@ -344,7 +360,11 @@
 	{"StoredString":"King"},
 	{"StoredString":"Kings"},
 	{"StoredString":"Gods"},
-	{"StoredString":"Necromancer"},
+	{"StoredString":"%MancerTypes&mancer"},
+	{"StoredString":"%MancerTypes&mancer"},
+	{"StoredString":"%MancerTypes&mancer"},
+	{"StoredString":"%MancerTypes&mancer"},
+	{"StoredString":"%MancerTypes&mancer"},
 	{"StoredString":"Priesthood"},
 	{"StoredString":"Waters","Conditions":["Water"]},
 	{"StoredString":"Ships","Conditions":["Water"]},
@@ -469,7 +489,7 @@
 	{"StoredString":"Eternal Empire of the %n%"},
 	{"StoredString":"The %MagicAdjectives% Priesthood"},
 	{"StoredString":"Cult of the %MagicAdjectives% %MagicNouns%"},
-	{"StoredString":"The %MagicAdjectives% Necromancer"},
+	{"StoredString":"The %MagicAdjectives% %MancerTypes%mancer"},
 	{"StoredString":"Pharoh %EgyptNames%"},
 	{"StoredString":"Guardians of the %n%"}
 ]}
@@ -525,7 +545,66 @@
 	{"StoredString":"Legions of %n%","Conditions":["One"]},
 	{"StoredString":"Free City of %n%","Conditions":["One"]}
 ]}
-
+|
+{"Id":"ShipDescriptors",
+"TextOptions":[
+	{"StoredString":"Running"},
+	{"StoredString":"Silent"},
+	{"StoredString":"Sea"},
+	{"StoredString":"Bright"},
+	{"StoredString":"Brave"},
+	{"StoredString":"Golden"},
+	{"StoredString":"Silver"},
+	{"StoredString":"Flying"},
+	{"StoredString":"Brazen"},
+	{"StoredString":"Red"},
+	{"StoredString":"Blue"},
+	{"StoredString":"Ardent"},
+	{"StoredString":"Black"},
+	{"StoredString":"Bold"},
+	{"StoredString":"Faithful"},
+	{"StoredString":"Silken"},
+	{"StoredString":"Green"},
+	{"StoredString":"Yellow"},
+	{"StoredString":"Merry"}
+]}
+|
+{"Id":"ShipNouns",
+"TextOptions":[
+	{"StoredString":"Maid"},
+	{"StoredString":"Dolphine"},
+	{"StoredString":"Wind"},
+	{"StoredString":"Wench"},
+	{"StoredString":"Daughter"},
+	{"StoredString":"Fisherman"},
+	{"StoredString":"Son"},
+	{"StoredString":"Revenge"},
+	{"StoredString":"Vengence"},
+	{"StoredString":"Wave"},
+	{"StoredString":"Fish"},
+	{"StoredString":"Fin"},
+	{"StoredString":"Vixen"},
+	{"StoredString":"King"},
+	{"StoredString":"Queen"},
+	{"StoredString":"Prince"},
+	{"StoredString":"Princess"},
+	{"StoredString":"Witch"},
+	{"StoredString":"Dream"},
+	{"StoredString":"Claw"},
+	{"StoredString":"Midwife"},
+	{"StoredString":"Fury"},
+	{"StoredString":"Storm"},
+	{"StoredString":"Sword"},
+	{"StoredString":"Wraith"},
+	{"StoredString":"Lion"},
+	{"StoredString":"Hawk"}
+]}
+|
+{"Id":"ShipNames",
+"TextOptions":[
+	{"StoredString":"The %ShipDescriptors% %ShipNouns%"},
+	{"StoredString":"%ShipDescriptors% %ShipNouns%"}
+]}
 
 
 

@@ -1,0 +1,24 @@
+# Blender MTL File: 'Ship.blend'
+# Material Count: 2
+
+newmtl 02_barkas_One_Sided
+Ns 19.607843
+Ka 0.000000 0.000000 0.000000
+Kd 0.470400 0.470400 0.470400
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd Ship.png
+
+newmtl 02_barkas_Two_Sided
+Ns 19.607843
+Ka 0.000000 0.000000 0.000000
+Kd 0.470400 0.470400 0.470400
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd Ship.png

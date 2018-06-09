@@ -21,6 +21,10 @@
 	"Anglo/Models/Port 2.obj"
 ]}|
 
+{"Id":"AngloShip", "ModelPaths":[
+	"Anglo/Models/Ship.obj"
+]}|
+
 {"Id":"RomanCity", "ModelPaths":[
 	"Roman/Models/RomanCity.obj"
 ]}|
@@ -30,6 +34,8 @@
 ]}|
 
 {"Id":"DwarfFortress", "ModelPaths":["Dwarf/Models/Dwarf Fortress.obj"]}|
+
+{"Id":"DwarfPort", "ModelPaths":["Dwarf/Models/DwarfPort.obj"]}|
 
 {"Id":"EgyptianCity", "ModelPaths":["Egyptian/Models/Egyptian City.obj"]}|
 
